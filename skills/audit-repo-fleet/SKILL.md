@@ -41,4 +41,6 @@ For releases, audit version sources, generated artifacts, changelog/release note
 
 Before making a repository public or publishing an artifact, use `sensitive-info-audit` across the exact publication boundary and committed history. Treat unresolved high-confidence secret findings as **Protect now** blockers.
 
+When the fleet includes externally sourced hard-forked skills, use `sync-skill-upstreams` to check exact audited refs and preserve documented local changes during imports.
+
 When an Omarchy plugin fleet is being prepared for marketplace submission, verification, or update approval, use `audit-omarchy-plugin` for each candidate repository. Compare official findings and capabilities source-wide, but keep manual risks and dirty-worktree state repository-specific.

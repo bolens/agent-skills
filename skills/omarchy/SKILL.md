@@ -13,7 +13,7 @@ description: >
 
 # Omarchy Skill
 
-Manage [Omarchy](https://omarchy.org/) Linux systems - a beautiful, modern, opinionated Arch Linux distribution with Hyprland.
+Manage [Omarchy](https://omarchy.org/) Linux systems - a beautiful, fun, agentic Arch Linux distribution with Hyprland.
 
 This skill is for end-user customization on installed systems.
 It is not for contributing to Omarchy source code.
@@ -81,8 +81,6 @@ overwritten on the next `omarchy update`.
 - `~/.config/omarchy/hooks/` - Custom automation hooks
 
 If the request is to develop Omarchy itself, this skill is out of scope. Follow repository development instructions instead of this skill.
-
-For source-level audits of community plugins before marketplace submission, verification, or update approval, use `audit-omarchy-plugin` instead. Use this skill only for any separate installed-system or live-session validation the audit requires.
 
 ## Privilege Escalation
 

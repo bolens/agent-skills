@@ -9,20 +9,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS = ROOT / "skills"
+UPSTREAMS = json.loads((ROOT / "UPSTREAMS.json").read_text())["skills"]
 
-EXTERNAL = {
-    "archify": ("https://github.com/tt-a1i/archify", ".", None),
-    "caveman": ("https://github.com/JuliusBrussee/caveman", "caveman", None),
-    "caveman-commit": ("https://github.com/JuliusBrussee/caveman", "skills/caveman-commit", None),
-    "caveman-compress": ("https://github.com/JuliusBrussee/caveman", "caveman-compress", None),
-    "caveman-help": ("https://github.com/JuliusBrussee/caveman", "skills/caveman-help", None),
-    "caveman-review": ("https://github.com/JuliusBrussee/caveman", "skills/caveman-review", None),
-    "find-skills": ("https://github.com/vercel-labs/skills", "skills/find-skills", None),
-    "diagnose-crash": ("https://github.com/basecamp/omarchy", "default/agents/skills/diagnose-crash", "6dae136d113054f8e8613f172a89c507634ef230"),
-    "omarchy": ("https://github.com/basecamp/omarchy", "default/agents/skills/omarchy", "6dae136d113054f8e8613f172a89c507634ef230"),
-}
-
-AGENT_ONLY = {"caveman", "caveman-commit", "caveman-compress", "caveman-help", "caveman-review", "find-skills"}
+AGENT_ONLY = {"caveman", "caveman-commit", "caveman-compress", "caveman-help", "caveman-review", "find-skills", "migration", "safe-refactor", "verify-and-stop"}
 DUAL_TARGET = {"diagnose-crash", "omarchy"}
 
 
@@ -35,11 +24,13 @@ def records() -> list[dict[str, object]]:
             targets = [f"${{AGENTS_HOME:-$HOME/.agents}}/skills/{name}"]
         elif name in DUAL_TARGET:
             targets.append(f"${{AGENTS_HOME:-$HOME/.agents}}/skills/{name}")
-        if name in EXTERNAL:
-            url, source_path, source_ref = EXTERNAL[name]
-            origin = {"type": "git", "url": url, "path": source_path}
-            if source_ref:
-                origin["ref"] = source_ref
+        if name in UPSTREAMS:
+            source = UPSTREAMS[name]
+            origin = {"type": "git", "url": source["url"], "branch": source["branch"], "path": source["path"], "ref": source["audited_ref"]}
+            if source.get("preserve_paths"):
+                origin["preserve_paths"] = source["preserve_paths"]
+            if source.get("local_changes"):
+                origin["local_changes"] = source["local_changes"]
         else:
             origin = {
                 "type": "local-original",
@@ -55,12 +46,14 @@ def upstream_text(record: dict[str, object]) -> str:
     assert isinstance(origin, dict)
     lines = ["# Upstream", "", "This skill is maintained here as a **hard fork**.", ""]
     if origin["type"] == "git":
-        lines += [f"Original project: [{origin['url']}]({origin['url']})", "", f"Original path: `{origin['path']}`"]
-        if "ref" in origin:
-            lines += ["", f"Imported reference: `{origin['ref']}`"]
+        lines += [f"Original project: [{origin['url']}]({origin['url']})", "", f"Tracked branch: `{origin['branch']}`", "", f"Original path: `{origin['path']}`", "", f"Last audited reference: `{origin['ref']}`"]
+        if origin.get("preserve_paths"):
+            lines += ["", "Preserve during imports: " + ", ".join(f"`{path}`" for path in origin["preserve_paths"])]
+        if origin.get("local_changes"):
+            lines += ["", "Local changes to retain:"] + [f"- {change}" for change in origin["local_changes"]]
     else:
         lines += ["Original: locally authored personal skill", "", f"Original reference: `{origin['ref']}`", "", f"Initial import path: `{origin['imported_from']}`"]
-    lines += ["", "Updates are reviewed and merged manually. This fork does not track or represent upstream releases.", "", "See [`../../PROVENANCE.json`](../../PROVENANCE.json) for the machine-readable record.", ""]
+    lines += ["", "Updates are audited and merged manually. This fork does not track or represent upstream releases.", "", "See [`../../PROVENANCE.json`](../../PROVENANCE.json) for the machine-readable record.", ""]
     return "\n".join(lines)
 
 

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Sync skill upstreams"
+  short_description: "Audit upstream skill changes and retain local patches"
+  default_prompt: "Audit specialized skill upstreams and prepare safe hard-fork updates without losing local customizations."

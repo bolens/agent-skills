@@ -8,7 +8,12 @@
       "origin": {
         "type": "git",
         "url": "https://github.com/tt-a1i/archify",
-        "path": "."
+        "branch": "main",
+        "path": "archify",
+        "ref": "06dd052602dd9a369e4d034e24faef0917b5a60c",
+        "local_changes": [
+          "Keep the fast-uri security override at 3.1.6 or a later audited release."
+        ]
       },
       "install_targets": [
         "${CODEX_HOME:-$HOME/.codex}/skills/archify"
@@ -56,7 +61,12 @@
       "origin": {
         "type": "git",
         "url": "https://github.com/JuliusBrussee/caveman",
-        "path": "caveman"
+        "branch": "main",
+        "path": "skills/caveman",
+        "ref": "3b74643f4d910f496babd4e634b1ba7168816f14",
+        "preserve_paths": [
+          "agents"
+        ]
       },
       "install_targets": [
         "${AGENTS_HOME:-$HOME/.agents}/skills/caveman"
@@ -68,7 +78,9 @@
       "origin": {
         "type": "git",
         "url": "https://github.com/JuliusBrussee/caveman",
-        "path": "skills/caveman-commit"
+        "branch": "main",
+        "path": "skills/caveman-commit",
+        "ref": "3b74643f4d910f496babd4e634b1ba7168816f14"
       },
       "install_targets": [
         "${AGENTS_HOME:-$HOME/.agents}/skills/caveman-commit"
@@ -80,7 +92,12 @@
       "origin": {
         "type": "git",
         "url": "https://github.com/JuliusBrussee/caveman",
-        "path": "caveman-compress"
+        "branch": "main",
+        "path": "skills/caveman-compress",
+        "ref": "3b74643f4d910f496babd4e634b1ba7168816f14",
+        "preserve_paths": [
+          "agents"
+        ]
       },
       "install_targets": [
         "${AGENTS_HOME:-$HOME/.agents}/skills/caveman-compress"
@@ -92,7 +109,12 @@
       "origin": {
         "type": "git",
         "url": "https://github.com/JuliusBrussee/caveman",
-        "path": "skills/caveman-help"
+        "branch": "main",
+        "path": "skills/caveman-help",
+        "ref": "3b74643f4d910f496babd4e634b1ba7168816f14",
+        "preserve_paths": [
+          "agents"
+        ]
       },
       "install_targets": [
         "${AGENTS_HOME:-$HOME/.agents}/skills/caveman-help"
@@ -104,7 +126,9 @@
       "origin": {
         "type": "git",
         "url": "https://github.com/JuliusBrussee/caveman",
-        "path": "skills/caveman-review"
+        "branch": "main",
+        "path": "skills/caveman-review",
+        "ref": "3b74643f4d910f496babd4e634b1ba7168816f14"
       },
       "install_targets": [
         "${AGENTS_HOME:-$HOME/.agents}/skills/caveman-review"
@@ -176,8 +200,12 @@
       "origin": {
         "type": "git",
         "url": "https://github.com/basecamp/omarchy",
+        "branch": "quattro",
         "path": "default/agents/skills/diagnose-crash",
-        "ref": "6dae136d113054f8e8613f172a89c507634ef230"
+        "ref": "d3d23fdddef846ebb98b52122a6ece66211c0daf",
+        "local_changes": [
+          "Route cross-subsystem failures through workstation-health-triage."
+        ]
       },
       "install_targets": [
         "${CODEX_HOME:-$HOME/.codex}/skills/diagnose-crash",
@@ -202,7 +230,15 @@
       "origin": {
         "type": "git",
         "url": "https://github.com/vercel-labs/skills",
-        "path": "skills/find-skills"
+        "branch": "main",
+        "path": "skills/find-skills",
+        "ref": "435076e78988e1e6ec40d00b0b1d76bdbbc5419a",
+        "preserve_paths": [
+          "SKILL.md"
+        ],
+        "local_changes": [
+          "Keep Codex-native installation boundaries and source-first quality review instead of popularity-led recommendations."
+        ]
       },
       "install_targets": [
         "${AGENTS_HOME:-$HOME/.agents}/skills/find-skills"
@@ -257,13 +293,31 @@
       ]
     },
     {
+      "name": "migration",
+      "hard_fork": true,
+      "origin": {
+        "type": "git",
+        "url": "https://github.com/JuliusBrussee/caveman",
+        "branch": "main",
+        "path": "skills/migration",
+        "ref": "3b74643f4d910f496babd4e634b1ba7168816f14"
+      },
+      "install_targets": [
+        "${AGENTS_HOME:-$HOME/.agents}/skills/migration"
+      ]
+    },
+    {
       "name": "omarchy",
       "hard_fork": true,
       "origin": {
         "type": "git",
         "url": "https://github.com/basecamp/omarchy",
+        "branch": "quattro",
         "path": "default/agents/skills/omarchy",
-        "ref": "6dae136d113054f8e8613f172a89c507634ef230"
+        "ref": "d3d23fdddef846ebb98b52122a6ece66211c0daf",
+        "local_changes": [
+          "Keep desktop-session.md and its workstation health and config-drift routing."
+        ]
       },
       "install_targets": [
         "${CODEX_HOME:-$HOME/.codex}/skills/omarchy",
@@ -292,6 +346,20 @@
       },
       "install_targets": [
         "${CODEX_HOME:-$HOME/.codex}/skills/responsive-web-capture"
+      ]
+    },
+    {
+      "name": "safe-refactor",
+      "hard_fork": true,
+      "origin": {
+        "type": "git",
+        "url": "https://github.com/JuliusBrussee/caveman",
+        "branch": "main",
+        "path": "skills/safe-refactor",
+        "ref": "3b74643f4d910f496babd4e634b1ba7168816f14"
+      },
+      "install_targets": [
+        "${AGENTS_HOME:-$HOME/.agents}/skills/safe-refactor"
       ]
     },
     {
@@ -328,6 +396,18 @@
       },
       "install_targets": [
         "${CODEX_HOME:-$HOME/.codex}/skills/show-me-your-work"
+      ]
+    },
+    {
+      "name": "sync-skill-upstreams",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/sync-skill-upstreams",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/sync-skill-upstreams"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/sync-skill-upstreams"
       ]
     },
     {
@@ -388,6 +468,20 @@
       },
       "install_targets": [
         "${CODEX_HOME:-$HOME/.codex}/skills/unslop"
+      ]
+    },
+    {
+      "name": "verify-and-stop",
+      "hard_fork": true,
+      "origin": {
+        "type": "git",
+        "url": "https://github.com/JuliusBrussee/caveman",
+        "branch": "main",
+        "path": "skills/verify-and-stop",
+        "ref": "3b74643f4d910f496babd4e634b1ba7168816f14"
+      },
+      "install_targets": [
+        "${AGENTS_HOME:-$HOME/.agents}/skills/verify-and-stop"
       ]
     },
     {

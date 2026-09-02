@@ -1,4 +1,4 @@
-.PHONY: check-fast check test portability links hooks-install
+.PHONY: check-fast check test portability links hooks-install audit-upstreams
 
 check-fast:
 	python3 scripts/update-provenance.py --check
@@ -12,6 +12,9 @@ portability:
 
 links:
 	python3 scripts/link-installed.py --check
+
+audit-upstreams:
+	python3 scripts/audit-upstreams.py
 
 check: check-fast test portability links
 

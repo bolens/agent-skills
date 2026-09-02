@@ -8,6 +8,6 @@ Original reference: `local://codex/skills/improve-codebase-architecture`
 
 Initial import path: `${CODEX_HOME:-$HOME/.codex}/skills/improve-codebase-architecture`
 
-Updates are reviewed and merged manually. This fork does not track or represent upstream releases.
+Updates are audited and merged manually. This fork does not track or represent upstream releases.
 
 See [`../../PROVENANCE.json`](../../PROVENANCE.json) for the machine-readable record.

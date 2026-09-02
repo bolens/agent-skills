@@ -13,6 +13,7 @@ import target, and fork status. Each skill also contains an `UPSTREAM.md` pointe
 make check-fast
 make check
 python3 scripts/link-installed.py --check
+python3 scripts/audit-upstreams.py
 ```
 
 Run `python3 scripts/link-installed.py --apply` to replace configured installed
@@ -21,11 +22,15 @@ unless `--replace` is also supplied.
 
 Changes to third-party skills do not track upstream automatically. Review and
 merge upstream changes manually so local behavior is never overwritten.
+Exact audited commits and local overlays live in [`UPSTREAMS.json`](UPSTREAMS.json).
+A weekly read-only workflow reports when a tracked branch advances; it never
+merges upstream content.
 
 ## Repository map
 
 - `skills/`: canonical hard-forked skills
 - `PROVENANCE.json`: machine-readable origin and install-target registry
+- `UPSTREAMS.json`: tracked branches, audited commits, and local changes to retain
 - `scripts/validate.py`: skill, provenance, syntax, and portability checks
 - `scripts/link-installed.py`: idempotent installation symlinks
 - `tests/`: repository contract tests

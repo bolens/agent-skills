@@ -1,13 +1,11 @@
 ---
 name: caveman-commit
 description: >
-  Write terse commit messages from the actual diff, preserving intent and non-obvious reasoning.
-  Use when the user asks for a commit message, asks to commit changes, stages changes as part of
-  a commit workflow, or explicitly invokes caveman-commit. Follow the repository's commit
-  convention; use Conventional Commits only when the repository does or no convention exists.
+  Write a Conventional Commits message compressed to intent only. Use for
+  "write a commit", "commit message", /commit or /caveman-commit.
 ---
 
-Write commit messages terse and exact. Inspect the staged diff, or the intended diff when nothing is staged. Never infer the message from the conversation alone when repository evidence is available.
+Write commit messages terse and exact. Conventional Commits format. No fluff. Why over what.
 
 ## Rules
 
@@ -18,7 +16,6 @@ Write commit messages terse and exact. Inspect the staged diff, or the intended 
 - ≤50 chars when possible, hard cap 72
 - No trailing period
 - Match project convention for capitalization after the colon
-- If the repository uses another format, follow it instead of Conventional Commits
 
 **Body (only if needed):**
 - Skip entirely when subject is self-explanatory
@@ -30,7 +27,7 @@ Write commit messages terse and exact. Inspect the staged diff, or the intended 
 **What NEVER goes in:**
 - "This commit does X", "I", "we", "now", "currently" — the diff says what
 - "As requested by..." — use Co-authored-by trailer
-- "Generated with Claude Code" or any AI attribution
+- "Generated with Claude Code" or any AI attribution — unless the user's own rule requires an `Assisted-by`/AI-attribution trailer, then add it as a trailer
 - Emoji (unless project convention requires)
 - Restating the file name when scope already says it
 

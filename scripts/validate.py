@@ -19,6 +19,7 @@ def fail(message: str) -> None:
 
 
 manifest = json.loads((ROOT / "PROVENANCE.json").read_text())
+upstreams = json.loads((ROOT / "UPSTREAMS.json").read_text())["skills"]
 records = {entry["name"]: entry for entry in manifest["skills"]}
 directories = {path.name: path for path in SKILLS.iterdir() if path.is_dir()}
 if set(records) != set(directories):
@@ -45,6 +46,16 @@ for name, directory in sorted(directories.items()):
     upstream = directory / "UPSTREAM.md"
     if not upstream.is_file() or "hard fork" not in upstream.read_text().lower():
         fail(f"missing hard-fork pointer: {name}")
+    origin = records[name]["origin"]
+    if origin["type"] == "git":
+        if name not in upstreams:
+            fail(f"missing upstream tracking record: {name}")
+        if not re.fullmatch(r"[0-9a-f]{40}", origin.get("ref", "")):
+            fail(f"invalid audited upstream ref: {name}")
+
+unknown_upstreams = set(upstreams) - set(directories)
+if unknown_upstreams:
+    fail(f"upstream records without skills: {', '.join(sorted(unknown_upstreams))}")
 
 for path in ROOT.rglob("*.py"):
     if ".git" not in path.parts:

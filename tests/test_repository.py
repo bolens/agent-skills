@@ -21,6 +21,13 @@ class RepositoryContract(unittest.TestCase):
             self.assertIn(origin["type"], {"git", "local-original"})
             self.assertTrue(origin.get("url") or origin.get("ref"))
 
+    def test_git_sources_have_audited_refs(self) -> None:
+        for entry in self.manifest["skills"]:
+            origin = entry["origin"]
+            if origin["type"] == "git":
+                self.assertRegex(origin["ref"], r"^[0-9a-f]{40}$")
+                self.assertTrue(origin["branch"])
+
     def test_generated_upstream_pointers_exist(self) -> None:
         for entry in self.manifest["skills"]:
             pointer = ROOT / "skills" / entry["name"] / "UPSTREAM.md"

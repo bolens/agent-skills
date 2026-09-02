@@ -1,19 +1,15 @@
 ---
 name: caveman-review
 description: >
-  Format pull-request and code-review findings as terse, paste-ready comments without
-  weakening the underlying review. Use for PR reviews, requested review comments, or an
-  explicit caveman-review invocation. This is a presentation layer, not a substitute for
-  repository inspection, correctness analysis, or verification.
+  Compressed code review - one line per finding with location, problem and fix.
+  Use for /caveman-review, "review this PR", or "review the diff".
 ---
 
-Write verified review findings as terse, actionable comments. One line per ordinary finding. Location, problem, consequence, fix. No throat-clearing.
-
-Use the substantive review workflow selected for the task to find and validate issues. This skill controls the final comment style only. Do not reduce confidence requirements, omit evidence, or invent a fix to keep a comment short.
+Write code review comments terse and actionable. One line per finding. Location, problem, fix. No throat-clearing.
 
 ## Rules
 
-**Format:** `L<line>: <problem>. <fix>.` or `<file>:L<line>: ...` for multi-file diffs.
+**Format:** `L<line>: <problem>. <fix>.` — or `<file>:L<line>: ...` when reviewing multi-file diffs.
 
 **Severity prefix (optional, when mixed):**
 - `🔴 bug:` — broken behavior, will cause incident
@@ -54,4 +50,4 @@ Drop terse mode for: security findings (CVE-class bugs need full explanation + r
 
 ## Boundaries
 
-Reviews only. Do not write the code fix or change PR state unless the user separately asks. Run read-only checks when the review workflow calls for them. Output comments ready to paste into the PR. "stop caveman-review" or "normal mode" returns to the repository's normal review style.
+Reviews only — does not write the code fix, does not approve/request-changes, does not run linters. Output the comment(s) ready to paste into the PR. "stop caveman-review" or "normal mode": revert to verbose review style.

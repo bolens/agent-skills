@@ -12,6 +12,9 @@ All notable changes to this hard-fork collection are documented here.
   audit skills.
 - Add an Omarchy desktop-session diagnostic guide and focused cross-skill
   handoffs.
+- Add audited upstream tracking, a weekly drift check, and a guarded sync skill.
+- Add the Caveman `migration`, `safe-refactor`, and `verify-and-stop` skills to
+  cover previously unowned workflows.
 
 ### Changed
 
