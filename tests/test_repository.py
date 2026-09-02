@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import subprocess
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -32,6 +34,22 @@ class RepositoryContract(unittest.TestCase):
         for entry in self.manifest["skills"]:
             pointer = ROOT / "skills" / entry["name"] / "UPSTREAM.md"
             self.assertIn("hard fork", pointer.read_text().lower())
+
+    def test_fleet_inventory_handles_repositories_without_workflows(self) -> None:
+        inventory = ROOT / "skills" / "audit-repo-fleet" / "scripts" / "inventory.sh"
+        with tempfile.TemporaryDirectory() as directory:
+            fleet = Path(directory)
+            subprocess.run(["git", "init", "-q", str(fleet / "alpha")], check=True)
+            subprocess.run(["git", "init", "-q", str(fleet / "group" / "beta")], check=True)
+            output = subprocess.run(
+                [str(inventory), str(fleet)],
+                check=True,
+                capture_output=True,
+                text=True,
+            ).stdout
+        self.assertIn("alpha\t", output)
+        self.assertIn("group/beta\t", output)
+        self.assertEqual(3, len(output.splitlines()))
 
 
 if __name__ == "__main__":

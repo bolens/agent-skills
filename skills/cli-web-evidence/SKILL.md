@@ -44,7 +44,9 @@ Choose the smallest artifact that proves the behavior. Prefer a screenshot for s
 - Check console errors, failed requests, page errors, target URLs, and important DOM state alongside visual output.
 - Exercise the viewport sizes relevant to the task. For general responsive QA, include at least one narrow mobile and one desktop viewport.
 - When `responsive-web-capture` is installed, use its reusable script for standard or comprehensive multi-viewport audits. Prefer focused `--viewport` reruns while iterating, then use the requested final matrix. Pass the exact repository-native preview URL when the deployed site uses a non-root base path.
+- When quality scores, Core Web Vitals, accessibility, or performance regressions are in scope, use `web-quality-audit` for the measurement plan and this skill for the executable browser evidence. Do not substitute screenshots for those measurements.
 - Capture screenshots after the state under review is fully rendered. Use full-page captures for layout review and focused captures when they make a defect easier to see.
+- When SVG animation is under review, use the `svg-animation` skill's browser-verification contract. Inspect multiple animation phases and reduced motion; a single screenshot proves only one frame.
 - Inspect screenshots visually before claiming success. A successful automation exit code does not prove that the page looks correct.
 - Use `identify` to verify screenshot dimensions and format. Use `compare` or `magick compare` only when a reference image and a meaningful tolerance exist. Report the metric and tolerance with the diff artifact.
 - Use `montage` to make a labeled contact sheet when several viewports or states must be reviewed together. Preserve the original captures.

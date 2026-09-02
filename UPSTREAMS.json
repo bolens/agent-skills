@@ -2,6 +2,13 @@
   "schema_version": 1,
   "policy": "audited-hard-fork",
   "skills": {
+    "accessibility": {
+      "url": "https://github.com/addyosmani/web-quality-skills",
+      "branch": "main",
+      "path": "skills/accessibility",
+      "audited_ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
+      "local_changes": ["Route responsive visual evidence through responsive-web-capture and functional browser evidence through cli-web-evidence."]
+    },
     "archify": {
       "url": "https://github.com/tt-a1i/archify",
       "branch": "main",
@@ -42,6 +49,13 @@
       "path": "skills/caveman-review",
       "audited_ref": "3b74643f4d910f496babd4e634b1ba7168816f14"
     },
+    "core-web-vitals": {
+      "url": "https://github.com/addyosmani/web-quality-skills",
+      "branch": "main",
+      "path": "skills/core-web-vitals",
+      "audited_ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
+      "local_changes": ["Route viewport-sensitive metric fixes through responsive-web-capture and interaction proof through cli-web-evidence."]
+    },
     "diagnose-crash": {
       "url": "https://github.com/basecamp/omarchy",
       "branch": "quattro",
@@ -70,6 +84,13 @@
       "audited_ref": "d3d23fdddef846ebb98b52122a6ece66211c0daf",
       "local_changes": ["Keep desktop-session.md and its workstation health and config-drift routing."]
     },
+    "performance": {
+      "url": "https://github.com/addyosmani/web-quality-skills",
+      "branch": "main",
+      "path": "skills/performance",
+      "audited_ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
+      "local_changes": ["Require responsive and functional regression evidence when performance changes can affect those surfaces."]
+    },
     "safe-refactor": {
       "url": "https://github.com/JuliusBrussee/caveman",
       "branch": "main",
@@ -81,6 +102,13 @@
       "branch": "main",
       "path": "skills/verify-and-stop",
       "audited_ref": "3b74643f4d910f496babd4e634b1ba7168816f14"
+    },
+    "web-quality-audit": {
+      "url": "https://github.com/addyosmani/web-quality-skills",
+      "branch": "main",
+      "path": "skills/web-quality-audit",
+      "audited_ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
+      "local_changes": ["Coordinate comprehensive responsive capture and functional browser receipts while keeping evidence types separate."]
     }
   }
 }

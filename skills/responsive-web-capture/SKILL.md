@@ -22,7 +22,7 @@ The comprehensive matrix is intentionally expensive. Capture representative rout
 2. Capture the baseline before editing when visual comparison matters.
 3. Inspect every contact sheet and open suspicious original PNGs. A successful browser exit is not visual proof.
 4. After editing, recapture affected viewports during iteration, then run the appropriate final matrix.
-5. Run repository-native functional, accessibility, console/network, and link checks separately. This script proves rendering and dimensions; it does not replace interaction or accessibility testing.
+5. Run repository-native functional, console/network, and link checks separately. Use `web-quality-audit` for measured performance and accessibility, with `accessibility` or `core-web-vitals` for focused diagnosis. This script proves rendering and dimensions; it does not replace interaction, accessibility, or performance testing.
 6. Report the URL, matrix, screenshots, receipt, contact sheet availability, and any skipped browser/tool coverage.
 
 For sites deployed below a path such as `/project/`, start the repository-native server and pass its exact URL with `--url`. A root-mounted fallback can make absolute assets appear broken even when production is correct.

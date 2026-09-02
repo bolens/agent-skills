@@ -9,7 +9,7 @@ Default to a read-only audit. Treat each repository's constitution, `AGENTS.md`,
 
 ## Inventory
 
-Run `scripts/inventory.sh <workspace-root>` to collect deterministic local facts. The script does not fetch, install, test, or modify repositories; divergence is relative to existing local remote-tracking refs and may be stale.
+Run `scripts/inventory.sh <workspace-root> [max-depth]` to collect deterministic local facts. The default depth of 3 finds ordinary repositories while avoiding vendored repositories and test fixtures buried inside them. Increase it deliberately for deeper layouts. The script does not fetch, install, test, or modify repositories; divergence is relative to existing local remote-tracking refs and may be stale.
 
 Supplement the inventory only where it changes prioritization:
 
@@ -42,5 +42,9 @@ For releases, audit version sources, generated artifacts, changelog/release note
 Before making a repository public or publishing an artifact, use `sensitive-info-audit` across the exact publication boundary and committed history. Treat unresolved high-confidence secret findings as **Protect now** blockers.
 
 When the fleet includes externally sourced hard-forked skills, use `sync-skill-upstreams` to check exact audited refs and preserve documented local changes during imports.
+
+When the fleet includes runnable websites, use `web-quality-audit` for measured performance and accessibility, and `responsive-web-capture` for the requested visual viewport evidence.
+
+When the fleet includes operational Compose stacks, use `homelab-stack-triage` for a live service incident rather than treating repository health as runtime health. Use `backup-restore-verification` when backup recoverability is the question.
 
 When an Omarchy plugin fleet is being prepared for marketplace submission, verification, or update approval, use `audit-omarchy-plugin` for each candidate repository. Compare official findings and capabilities source-wide, but keep manual risks and dirty-worktree state repository-specific.

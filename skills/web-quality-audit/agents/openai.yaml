@@ -1,0 +1,4 @@
+interface:
+  display_name: Web Quality Audit
+  short_description: Measure performance, accessibility, and web quality
+  default_prompt: Audit this runnable website with measured evidence and separate verified failures from source hypotheses.

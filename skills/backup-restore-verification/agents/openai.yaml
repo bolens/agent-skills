@@ -1,0 +1,4 @@
+interface:
+  display_name: Backup Restore Verification
+  short_description: Prove backups can be safely recovered
+  default_prompt: Audit this backup path and perform only bounded, non-destructive restore proof.

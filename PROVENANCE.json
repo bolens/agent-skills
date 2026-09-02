@@ -3,6 +3,35 @@
   "fork_policy": "hard",
   "skills": [
     {
+      "name": "accessibility",
+      "hard_fork": true,
+      "origin": {
+        "type": "git",
+        "url": "https://github.com/addyosmani/web-quality-skills",
+        "branch": "main",
+        "path": "skills/accessibility",
+        "ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
+        "local_changes": [
+          "Route responsive visual evidence through responsive-web-capture and functional browser evidence through cli-web-evidence."
+        ]
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/accessibility"
+      ]
+    },
+    {
+      "name": "arch-update-recovery",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/arch-update-recovery",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/arch-update-recovery"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/arch-update-recovery"
+      ]
+    },
+    {
       "name": "archify",
       "hard_fork": true,
       "origin": {
@@ -41,6 +70,18 @@
       },
       "install_targets": [
         "${CODEX_HOME:-$HOME/.codex}/skills/audit-repo-fleet"
+      ]
+    },
+    {
+      "name": "backup-restore-verification",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/backup-restore-verification",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/backup-restore-verification"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/backup-restore-verification"
       ]
     },
     {
@@ -183,6 +224,23 @@
       ]
     },
     {
+      "name": "core-web-vitals",
+      "hard_fork": true,
+      "origin": {
+        "type": "git",
+        "url": "https://github.com/addyosmani/web-quality-skills",
+        "branch": "main",
+        "path": "skills/core-web-vitals",
+        "ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
+        "local_changes": [
+          "Route viewport-sensitive metric fixes through responsive-web-capture and interaction proof through cli-web-evidence."
+        ]
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/core-web-vitals"
+      ]
+    },
+    {
       "name": "create-verification-skill",
       "hard_fork": true,
       "origin": {
@@ -269,6 +327,18 @@
       ]
     },
     {
+      "name": "homelab-stack-triage",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/homelab-stack-triage",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/homelab-stack-triage"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/homelab-stack-triage"
+      ]
+    },
+    {
       "name": "improve-codebase-architecture",
       "hard_fork": true,
       "origin": {
@@ -322,6 +392,23 @@
       "install_targets": [
         "${CODEX_HOME:-$HOME/.codex}/skills/omarchy",
         "${AGENTS_HOME:-$HOME/.agents}/skills/omarchy"
+      ]
+    },
+    {
+      "name": "performance",
+      "hard_fork": true,
+      "origin": {
+        "type": "git",
+        "url": "https://github.com/addyosmani/web-quality-skills",
+        "branch": "main",
+        "path": "skills/performance",
+        "ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
+        "local_changes": [
+          "Require responsive and functional regression evidence when performance changes can affect those surfaces."
+        ]
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/performance"
       ]
     },
     {
@@ -396,6 +483,18 @@
       },
       "install_targets": [
         "${CODEX_HOME:-$HOME/.codex}/skills/show-me-your-work"
+      ]
+    },
+    {
+      "name": "svg-animation",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/svg-animation",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/svg-animation"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/svg-animation"
       ]
     },
     {
@@ -482,6 +581,23 @@
       },
       "install_targets": [
         "${AGENTS_HOME:-$HOME/.agents}/skills/verify-and-stop"
+      ]
+    },
+    {
+      "name": "web-quality-audit",
+      "hard_fork": true,
+      "origin": {
+        "type": "git",
+        "url": "https://github.com/addyosmani/web-quality-skills",
+        "branch": "main",
+        "path": "skills/web-quality-audit",
+        "ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
+        "local_changes": [
+          "Coordinate comprehensive responsive capture and functional browser receipts while keeping evidence types separate."
+        ]
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/web-quality-audit"
       ]
     },
     {

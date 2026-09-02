@@ -1,0 +1,4 @@
+interface:
+  display_name: Arch Update Recovery
+  short_description: Safely audit and recover Arch upgrades
+  default_prompt: Assess this Arch-family update or recovery issue, preserving rollback and live configuration.
