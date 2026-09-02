@@ -1,0 +1,4 @@
+interface:
+  display_name: "Domain Modeling"
+  short_description: "Clarify concepts, ownership, and decisions"
+  default_prompt: "Use $domain-modeling to clarify this repository's domain language and boundaries."

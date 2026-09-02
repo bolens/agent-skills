@@ -1,0 +1,370 @@
+{
+  "schema_version": 1,
+  "fork_policy": "hard",
+  "skills": [
+    {
+      "name": "archify",
+      "hard_fork": true,
+      "origin": {
+        "type": "git",
+        "url": "https://github.com/tt-a1i/archify",
+        "path": "."
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/archify"
+      ]
+    },
+    {
+      "name": "audit-omarchy-plugin",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/audit-omarchy-plugin",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/audit-omarchy-plugin"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/audit-omarchy-plugin"
+      ]
+    },
+    {
+      "name": "audit-repo-fleet",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/audit-repo-fleet",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/audit-repo-fleet"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/audit-repo-fleet"
+      ]
+    },
+    {
+      "name": "blast-radius",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/blast-radius",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/blast-radius"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/blast-radius"
+      ]
+    },
+    {
+      "name": "caveman",
+      "hard_fork": true,
+      "origin": {
+        "type": "git",
+        "url": "https://github.com/JuliusBrussee/caveman",
+        "path": "caveman"
+      },
+      "install_targets": [
+        "${AGENTS_HOME:-$HOME/.agents}/skills/caveman"
+      ]
+    },
+    {
+      "name": "caveman-commit",
+      "hard_fork": true,
+      "origin": {
+        "type": "git",
+        "url": "https://github.com/JuliusBrussee/caveman",
+        "path": "skills/caveman-commit"
+      },
+      "install_targets": [
+        "${AGENTS_HOME:-$HOME/.agents}/skills/caveman-commit"
+      ]
+    },
+    {
+      "name": "caveman-compress",
+      "hard_fork": true,
+      "origin": {
+        "type": "git",
+        "url": "https://github.com/JuliusBrussee/caveman",
+        "path": "caveman-compress"
+      },
+      "install_targets": [
+        "${AGENTS_HOME:-$HOME/.agents}/skills/caveman-compress"
+      ]
+    },
+    {
+      "name": "caveman-help",
+      "hard_fork": true,
+      "origin": {
+        "type": "git",
+        "url": "https://github.com/JuliusBrussee/caveman",
+        "path": "skills/caveman-help"
+      },
+      "install_targets": [
+        "${AGENTS_HOME:-$HOME/.agents}/skills/caveman-help"
+      ]
+    },
+    {
+      "name": "caveman-review",
+      "hard_fork": true,
+      "origin": {
+        "type": "git",
+        "url": "https://github.com/JuliusBrussee/caveman",
+        "path": "skills/caveman-review"
+      },
+      "install_targets": [
+        "${AGENTS_HOME:-$HOME/.agents}/skills/caveman-review"
+      ]
+    },
+    {
+      "name": "changelog-maintainer",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/changelog-maintainer",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/changelog-maintainer"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/changelog-maintainer"
+      ]
+    },
+    {
+      "name": "cli-web-evidence",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/cli-web-evidence",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/cli-web-evidence"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/cli-web-evidence"
+      ]
+    },
+    {
+      "name": "code-review",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/code-review",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/code-review"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/code-review"
+      ]
+    },
+    {
+      "name": "codebase-design",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/codebase-design",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/codebase-design"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/codebase-design"
+      ]
+    },
+    {
+      "name": "create-verification-skill",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/create-verification-skill",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/create-verification-skill"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/create-verification-skill"
+      ]
+    },
+    {
+      "name": "diagnose-crash",
+      "hard_fork": true,
+      "origin": {
+        "type": "git",
+        "url": "https://github.com/basecamp/omarchy",
+        "path": "default/agents/skills/diagnose-crash",
+        "ref": "6dae136d113054f8e8613f172a89c507634ef230"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/diagnose-crash",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/diagnose-crash"
+      ]
+    },
+    {
+      "name": "domain-modeling",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/domain-modeling",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/domain-modeling"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/domain-modeling"
+      ]
+    },
+    {
+      "name": "find-skills",
+      "hard_fork": true,
+      "origin": {
+        "type": "git",
+        "url": "https://github.com/vercel-labs/skills",
+        "path": "skills/find-skills"
+      },
+      "install_targets": [
+        "${AGENTS_HOME:-$HOME/.agents}/skills/find-skills"
+      ]
+    },
+    {
+      "name": "frontend-design",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/frontend-design",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/frontend-design"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/frontend-design"
+      ]
+    },
+    {
+      "name": "grilling",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/grilling",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/grilling"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/grilling"
+      ]
+    },
+    {
+      "name": "improve-codebase-architecture",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/improve-codebase-architecture",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/improve-codebase-architecture"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/improve-codebase-architecture"
+      ]
+    },
+    {
+      "name": "omarchy",
+      "hard_fork": true,
+      "origin": {
+        "type": "git",
+        "url": "https://github.com/basecamp/omarchy",
+        "path": "default/agents/skills/omarchy",
+        "ref": "6dae136d113054f8e8613f172a89c507634ef230"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/omarchy",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/omarchy"
+      ]
+    },
+    {
+      "name": "resolving-merge-conflicts",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/resolving-merge-conflicts",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/resolving-merge-conflicts"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/resolving-merge-conflicts"
+      ]
+    },
+    {
+      "name": "responsive-web-capture",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/responsive-web-capture",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/responsive-web-capture"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/responsive-web-capture"
+      ]
+    },
+    {
+      "name": "setup-pre-commit",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/setup-pre-commit",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/setup-pre-commit"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/setup-pre-commit"
+      ]
+    },
+    {
+      "name": "show-me-your-work",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/show-me-your-work",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/show-me-your-work"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/show-me-your-work"
+      ]
+    },
+    {
+      "name": "systematic-debugging",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/systematic-debugging",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/systematic-debugging"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/systematic-debugging"
+      ]
+    },
+    {
+      "name": "tdd",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/tdd",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/tdd"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/tdd"
+      ]
+    },
+    {
+      "name": "technical-writing",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/technical-writing",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/technical-writing"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/technical-writing"
+      ]
+    },
+    {
+      "name": "triage-dependency-updates",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/triage-dependency-updates",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/triage-dependency-updates"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/triage-dependency-updates"
+      ]
+    },
+    {
+      "name": "unslop",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/unslop",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/unslop"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/unslop"
+      ]
+    }
+  ]
+}

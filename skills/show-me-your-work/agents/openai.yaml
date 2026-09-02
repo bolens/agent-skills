@@ -1,0 +1,6 @@
+interface:
+  display_name: "Show me your work"
+  short_description: "Keep a reviewable decision trail"
+  default_prompt: "Use $show-me-your-work to log decisions during this task."
+policy:
+  allow_implicit_invocation: false

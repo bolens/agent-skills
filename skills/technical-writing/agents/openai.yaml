@@ -1,0 +1,6 @@
+interface:
+  display_name: "Technical writing"
+  short_description: "Apply a strict developer-writing standard"
+  default_prompt: "Use $technical-writing to revise this developer documentation."
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Changelog Maintainer"
+  short_description: "Audit and write concise reader-first changelogs"
+  default_prompt: "Audit or update this project changelog, preserving release facts while keeping entries concise and readable."

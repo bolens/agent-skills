@@ -1,0 +1,4 @@
+interface:
+  display_name: "Audit Omarchy Plugin"
+  short_description: "Preflight Omarchy marketplace approval risks"
+  default_prompt: "Use $audit-omarchy-plugin to audit this plugin before marketplace approval."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dependency Update Triage"
+  short_description: "Review dependency updates by risk"
+  default_prompt: "Use $triage-dependency-updates to assess and safely plan these dependency updates."

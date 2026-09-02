@@ -1,0 +1,6 @@
+interface:
+  display_name: "Create verification skill"
+  short_description: "Build a project-specific behavior verifier"
+  default_prompt: "Use $create-verification-skill to create a verifier for this project."
+policy:
+  allow_implicit_invocation: false

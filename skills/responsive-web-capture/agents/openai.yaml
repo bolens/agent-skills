@@ -1,0 +1,4 @@
+interface:
+  display_name: "Responsive Web Capture"
+  short_description: "Capture responsive evidence across viewport matrices"
+  default_prompt: "Capture this web frontend across a comprehensive responsive portrait and landscape matrix and produce inspectable evidence."

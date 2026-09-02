@@ -1,0 +1,4 @@
+interface:
+  display_name: "Improve Architecture"
+  short_description: "Find evidence-backed architecture improvements"
+  default_prompt: "Use $improve-codebase-architecture to prioritize maintainability improvements in this repository."

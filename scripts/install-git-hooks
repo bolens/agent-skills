@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+root=$(git rev-parse --show-toplevel)
+hooks=$root/.git/hooks
+mkdir -p "$hooks"
+cat >"$hooks/pre-commit" <<'HOOK'
+#!/usr/bin/env bash
+set -euo pipefail
+root=$(git rev-parse --show-toplevel)
+make -C "$root" check-fast
+HOOK
+chmod +x "$hooks/pre-commit"
+printf 'installed %s\n' "$hooks/pre-commit"

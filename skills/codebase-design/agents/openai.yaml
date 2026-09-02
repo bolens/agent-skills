@@ -1,0 +1,4 @@
+interface:
+  display_name: "Codebase Design"
+  short_description: "Design clear interfaces and module seams"
+  default_prompt: "Use $codebase-design to compare maintainable designs for this codebase change."

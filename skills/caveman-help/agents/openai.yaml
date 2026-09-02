@@ -1,0 +1,6 @@
+interface:
+  display_name: "Caveman help"
+  short_description: "Show the Caveman command reference"
+  default_prompt: "Use $caveman-help to show the Caveman reference card."
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Grill a Decision"
+  short_description: "Stress-test plans with focused questions"
+  default_prompt: "Use $grilling to challenge this plan's assumptions and trade-offs."

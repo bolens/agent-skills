@@ -1,0 +1,4 @@
+interface:
+  display_name: "CLI Web Evidence"
+  short_description: "Verify websites with CLI-driven visual evidence"
+  default_prompt: "Use command-line browser, image, or recording tools to verify this website and provide inspectable visual evidence."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Code Review"
+  short_description: "Review diffs for concrete regressions"
+  default_prompt: "Use $code-review to review these changes and lead with actionable findings."

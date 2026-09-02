@@ -1,0 +1,11 @@
+# Upstream
+
+This skill is maintained here as a **hard fork**.
+
+Original project: [https://github.com/vercel-labs/skills](https://github.com/vercel-labs/skills)
+
+Original path: `skills/find-skills`
+
+Updates are reviewed and merged manually. This fork does not track or represent upstream releases.
+
+See [`../../PROVENANCE.json`](../../PROVENANCE.json) for the machine-readable record.

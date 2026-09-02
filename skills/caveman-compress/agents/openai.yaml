@@ -1,0 +1,6 @@
+interface:
+  display_name: "Caveman compress"
+  short_description: "Compress a prose memory file"
+  default_prompt: "Use $caveman-compress to compress this memory file."
+policy:
+  allow_implicit_invocation: false

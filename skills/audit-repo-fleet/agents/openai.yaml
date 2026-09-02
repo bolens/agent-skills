@@ -1,0 +1,4 @@
+interface:
+  display_name: "Repo Fleet Audit"
+  short_description: "Audit health across all local repositories"
+  default_prompt: "Use $audit-repo-fleet to inventory my repository fleet and prioritize safe maintenance."

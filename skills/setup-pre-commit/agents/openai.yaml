@@ -1,0 +1,4 @@
+interface:
+  display_name: "Set Up Pre-Commit"
+  short_description: "Add fast checks using native tooling"
+  default_prompt: "Use $setup-pre-commit to add repository-appropriate commit-time checks."
