@@ -1,0 +1,4 @@
+interface:
+  display_name: "Managed config drift"
+  short_description: "Compare live Linux config with managed sources"
+  default_prompt: "Audit configuration ownership and drift without synchronizing or replacing files."

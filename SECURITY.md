@@ -11,3 +11,6 @@ and whether the behavior can expose secrets or mutate external state.
 
 Upstream vulnerabilities should also be reported to the original project linked
 from the affected skill's `UPSTREAM.md`.
+
+Before publishing changes, use the bundled `sensitive-info-audit` skill across
+the current tree and committed history.

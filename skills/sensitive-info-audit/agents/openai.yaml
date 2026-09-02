@@ -1,0 +1,4 @@
+interface:
+  display_name: "Sensitive information audit"
+  short_description: "Check publication scope for secrets and privacy data"
+  default_prompt: "Audit this publication candidate for secrets and sensitive information without exposing detected values."

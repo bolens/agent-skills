@@ -31,5 +31,8 @@ merge upstream changes manually so local behavior is never overwritten.
 - `tests/`: repository contract tests
 - `.specify/memory/constitution.md`: maintenance rules
 
+Public releases should pass `sensitive-info-audit`, including a history-aware
+scanner, before they are pushed.
+
 See [CONTRIBUTING.md](CONTRIBUTING.md) before changing a skill and
 [SECURITY.md](SECURITY.md) before reporting sensitive behavior.

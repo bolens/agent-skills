@@ -11,6 +11,8 @@ description: >
 
 # Diagnosing a Crash
 
+If crashes span multiple applications or occur alongside service, mount, resource, graphics, or session failures, use `workstation-health-triage` to collect the broader context before narrowing back to a specific core dump.
+
 Work from evidence. The goal is an honest account of what happened, not a
 plausible-sounding story.
 

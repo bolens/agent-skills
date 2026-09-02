@@ -46,6 +46,7 @@ matching guide before starting:
 - [`theming.md`](theming.md) - themes, backgrounds, and fonts
 - [`hooks.md`](hooks.md) - automation hooks that run on system events
 - [`capture.md`](capture.md) - screenshots, screen recordings, OCR text capture, and file sharing
+- [`desktop-session.md`](desktop-session.md) - Hyprland, UWSM, portals, audio, shell, lock, and GPU diagnostics
 - [`contributing.md`](contributing.md) - reporting Omarchy bugs and submitting fixes upstream
 
 ## Critical Safety Rules
@@ -230,6 +231,8 @@ omarchy system reboot           # Reboot
 **IMPORTANT:** Always run `omarchy debug` with `--no-sudo --print` flags to avoid interactive sudo prompts that will hang the terminal.
 
 ## Troubleshooting
+
+For a broad or cross-component desktop failure, read [`desktop-session.md`](desktop-session.md) and use `workstation-health-triage`. Use `managed-config-drift` when live configuration may have diverged from a managed repository or packaged default.
 
 ```bash
 # Get debug information (ALWAYS use these flags to avoid interactive prompts)

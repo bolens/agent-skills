@@ -245,6 +245,18 @@
       ]
     },
     {
+      "name": "managed-config-drift",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/managed-config-drift",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/managed-config-drift"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/managed-config-drift"
+      ]
+    },
+    {
       "name": "omarchy",
       "hard_fork": true,
       "origin": {
@@ -280,6 +292,18 @@
       },
       "install_targets": [
         "${CODEX_HOME:-$HOME/.codex}/skills/responsive-web-capture"
+      ]
+    },
+    {
+      "name": "sensitive-info-audit",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/sensitive-info-audit",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/sensitive-info-audit"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/sensitive-info-audit"
       ]
     },
     {
@@ -364,6 +388,18 @@
       },
       "install_targets": [
         "${CODEX_HOME:-$HOME/.codex}/skills/unslop"
+      ]
+    },
+    {
+      "name": "workstation-health-triage",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/workstation-health-triage",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/workstation-health-triage"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/workstation-health-triage"
       ]
     }
   ]

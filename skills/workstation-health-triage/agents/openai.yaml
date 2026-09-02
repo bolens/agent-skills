@@ -1,0 +1,4 @@
+interface:
+  display_name: "Workstation health triage"
+  short_description: "Correlate read-only Linux desktop health evidence"
+  default_prompt: "Audit this Linux workstation's health without changing it, then rank evidence-backed findings."
