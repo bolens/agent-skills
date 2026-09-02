@@ -16,12 +16,13 @@ import sys
 
 root = Path(sys.argv[1])
 excluded = {"omarchy", "diagnose-crash"}
+ignored_parts = {"node_modules", "__pycache__", ".venv", "venv"}
 pattern = re.compile(r"(?:/home|/Users)/[A-Za-z0-9._-]+")
 matches = []
 
 for path in (root / "skills").rglob("*"):
     relative = path.relative_to(root / "skills")
-    if not path.is_file() or relative.parts[0] in excluded:
+    if not path.is_file() or relative.parts[0] in excluded or ignored_parts.intersection(relative.parts):
         continue
     try:
         contents = path.read_text(encoding="utf-8")
