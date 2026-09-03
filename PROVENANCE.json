@@ -16,7 +16,9 @@
         ]
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/accessibility"
+        "${CODEX_HOME:-$HOME/.codex}/skills/accessibility",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/accessibility",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/accessibility"
       ]
     },
     {
@@ -28,7 +30,9 @@
         "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/arch-update-recovery"
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/arch-update-recovery"
+        "${CODEX_HOME:-$HOME/.codex}/skills/arch-update-recovery",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/arch-update-recovery",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/arch-update-recovery"
       ]
     },
     {
@@ -45,7 +49,9 @@
         ]
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/archify"
+        "${CODEX_HOME:-$HOME/.codex}/skills/archify",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/archify",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/archify"
       ]
     },
     {
@@ -57,7 +63,9 @@
         "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/audit-omarchy-plugin"
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/audit-omarchy-plugin"
+        "${CODEX_HOME:-$HOME/.codex}/skills/audit-omarchy-plugin",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/audit-omarchy-plugin",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/audit-omarchy-plugin"
       ]
     },
     {
@@ -69,7 +77,9 @@
         "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/audit-repo-fleet"
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/audit-repo-fleet"
+        "${CODEX_HOME:-$HOME/.codex}/skills/audit-repo-fleet",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/audit-repo-fleet",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/audit-repo-fleet"
       ]
     },
     {
@@ -81,7 +91,9 @@
         "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/backup-restore-verification"
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/backup-restore-verification"
+        "${CODEX_HOME:-$HOME/.codex}/skills/backup-restore-verification",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/backup-restore-verification",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/backup-restore-verification"
       ]
     },
     {
@@ -93,7 +105,9 @@
         "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/blast-radius"
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/blast-radius"
+        "${CODEX_HOME:-$HOME/.codex}/skills/blast-radius",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/blast-radius",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/blast-radius"
       ]
     },
     {
@@ -110,7 +124,8 @@
         ]
       },
       "install_targets": [
-        "${AGENTS_HOME:-$HOME/.agents}/skills/caveman"
+        "${AGENTS_HOME:-$HOME/.agents}/skills/caveman",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/caveman"
       ]
     },
     {
@@ -124,7 +139,8 @@
         "ref": "3b74643f4d910f496babd4e634b1ba7168816f14"
       },
       "install_targets": [
-        "${AGENTS_HOME:-$HOME/.agents}/skills/caveman-commit"
+        "${AGENTS_HOME:-$HOME/.agents}/skills/caveman-commit",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/caveman-commit"
       ]
     },
     {
@@ -141,7 +157,8 @@
         ]
       },
       "install_targets": [
-        "${AGENTS_HOME:-$HOME/.agents}/skills/caveman-compress"
+        "${AGENTS_HOME:-$HOME/.agents}/skills/caveman-compress",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/caveman-compress"
       ]
     },
     {
@@ -158,7 +175,8 @@
         ]
       },
       "install_targets": [
-        "${AGENTS_HOME:-$HOME/.agents}/skills/caveman-help"
+        "${AGENTS_HOME:-$HOME/.agents}/skills/caveman-help",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/caveman-help"
       ]
     },
     {
@@ -172,7 +190,8 @@
         "ref": "3b74643f4d910f496babd4e634b1ba7168816f14"
       },
       "install_targets": [
-        "${AGENTS_HOME:-$HOME/.agents}/skills/caveman-review"
+        "${AGENTS_HOME:-$HOME/.agents}/skills/caveman-review",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/caveman-review"
       ]
     },
     {
@@ -184,7 +203,9 @@
         "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/changelog-maintainer"
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/changelog-maintainer"
+        "${CODEX_HOME:-$HOME/.codex}/skills/changelog-maintainer",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/changelog-maintainer",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/changelog-maintainer"
       ]
     },
     {
@@ -196,7 +217,9 @@
         "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/cli-web-evidence"
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/cli-web-evidence"
+        "${CODEX_HOME:-$HOME/.codex}/skills/cli-web-evidence",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/cli-web-evidence",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/cli-web-evidence"
       ]
     },
     {
@@ -208,7 +231,9 @@
         "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/code-review"
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/code-review"
+        "${CODEX_HOME:-$HOME/.codex}/skills/code-review",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/code-review",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/code-review"
       ]
     },
     {
@@ -220,7 +245,9 @@
         "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/codebase-design"
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/codebase-design"
+        "${CODEX_HOME:-$HOME/.codex}/skills/codebase-design",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/codebase-design",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/codebase-design"
       ]
     },
     {
@@ -237,7 +264,9 @@
         ]
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/core-web-vitals"
+        "${CODEX_HOME:-$HOME/.codex}/skills/core-web-vitals",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/core-web-vitals",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/core-web-vitals"
       ]
     },
     {
@@ -249,7 +278,9 @@
         "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/create-verification-skill"
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/create-verification-skill"
+        "${CODEX_HOME:-$HOME/.codex}/skills/create-verification-skill",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/create-verification-skill",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/create-verification-skill"
       ]
     },
     {
@@ -267,7 +298,8 @@
       },
       "install_targets": [
         "${CODEX_HOME:-$HOME/.codex}/skills/diagnose-crash",
-        "${AGENTS_HOME:-$HOME/.agents}/skills/diagnose-crash"
+        "${AGENTS_HOME:-$HOME/.agents}/skills/diagnose-crash",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/diagnose-crash"
       ]
     },
     {
@@ -279,7 +311,9 @@
         "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/domain-modeling"
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/domain-modeling"
+        "${CODEX_HOME:-$HOME/.codex}/skills/domain-modeling",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/domain-modeling",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/domain-modeling"
       ]
     },
     {
@@ -299,7 +333,8 @@
         ]
       },
       "install_targets": [
-        "${AGENTS_HOME:-$HOME/.agents}/skills/find-skills"
+        "${AGENTS_HOME:-$HOME/.agents}/skills/find-skills",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/find-skills"
       ]
     },
     {
@@ -311,7 +346,9 @@
         "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/frontend-design"
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/frontend-design"
+        "${CODEX_HOME:-$HOME/.codex}/skills/frontend-design",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/frontend-design",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/frontend-design"
       ]
     },
     {
@@ -323,7 +360,9 @@
         "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/grilling"
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/grilling"
+        "${CODEX_HOME:-$HOME/.codex}/skills/grilling",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/grilling",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/grilling"
       ]
     },
     {
@@ -335,7 +374,9 @@
         "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/homelab-stack-triage"
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/homelab-stack-triage"
+        "${CODEX_HOME:-$HOME/.codex}/skills/homelab-stack-triage",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/homelab-stack-triage",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/homelab-stack-triage"
       ]
     },
     {
@@ -347,7 +388,9 @@
         "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/improve-codebase-architecture"
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/improve-codebase-architecture"
+        "${CODEX_HOME:-$HOME/.codex}/skills/improve-codebase-architecture",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/improve-codebase-architecture",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/improve-codebase-architecture"
       ]
     },
     {
@@ -359,7 +402,9 @@
         "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/managed-config-drift"
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/managed-config-drift"
+        "${CODEX_HOME:-$HOME/.codex}/skills/managed-config-drift",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/managed-config-drift",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/managed-config-drift"
       ]
     },
     {
@@ -373,7 +418,8 @@
         "ref": "3b74643f4d910f496babd4e634b1ba7168816f14"
       },
       "install_targets": [
-        "${AGENTS_HOME:-$HOME/.agents}/skills/migration"
+        "${AGENTS_HOME:-$HOME/.agents}/skills/migration",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/migration"
       ]
     },
     {
@@ -391,7 +437,8 @@
       },
       "install_targets": [
         "${CODEX_HOME:-$HOME/.codex}/skills/omarchy",
-        "${AGENTS_HOME:-$HOME/.agents}/skills/omarchy"
+        "${AGENTS_HOME:-$HOME/.agents}/skills/omarchy",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/omarchy"
       ]
     },
     {
@@ -408,7 +455,9 @@
         ]
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/performance"
+        "${CODEX_HOME:-$HOME/.codex}/skills/performance",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/performance",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/performance"
       ]
     },
     {
@@ -420,7 +469,9 @@
         "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/resolving-merge-conflicts"
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/resolving-merge-conflicts"
+        "${CODEX_HOME:-$HOME/.codex}/skills/resolving-merge-conflicts",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/resolving-merge-conflicts",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/resolving-merge-conflicts"
       ]
     },
     {
@@ -432,7 +483,9 @@
         "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/responsive-web-capture"
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/responsive-web-capture"
+        "${CODEX_HOME:-$HOME/.codex}/skills/responsive-web-capture",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/responsive-web-capture",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/responsive-web-capture"
       ]
     },
     {
@@ -446,7 +499,8 @@
         "ref": "3b74643f4d910f496babd4e634b1ba7168816f14"
       },
       "install_targets": [
-        "${AGENTS_HOME:-$HOME/.agents}/skills/safe-refactor"
+        "${AGENTS_HOME:-$HOME/.agents}/skills/safe-refactor",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/safe-refactor"
       ]
     },
     {
@@ -458,7 +512,9 @@
         "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/sensitive-info-audit"
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/sensitive-info-audit"
+        "${CODEX_HOME:-$HOME/.codex}/skills/sensitive-info-audit",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/sensitive-info-audit",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/sensitive-info-audit"
       ]
     },
     {
@@ -470,7 +526,9 @@
         "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/setup-pre-commit"
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/setup-pre-commit"
+        "${CODEX_HOME:-$HOME/.codex}/skills/setup-pre-commit",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/setup-pre-commit",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/setup-pre-commit"
       ]
     },
     {
@@ -482,7 +540,9 @@
         "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/show-me-your-work"
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/show-me-your-work"
+        "${CODEX_HOME:-$HOME/.codex}/skills/show-me-your-work",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/show-me-your-work",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/show-me-your-work"
       ]
     },
     {
@@ -494,7 +554,9 @@
         "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/svg-animation"
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/svg-animation"
+        "${CODEX_HOME:-$HOME/.codex}/skills/svg-animation",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/svg-animation",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/svg-animation"
       ]
     },
     {
@@ -506,7 +568,9 @@
         "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/sync-skill-upstreams"
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/sync-skill-upstreams"
+        "${CODEX_HOME:-$HOME/.codex}/skills/sync-skill-upstreams",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/sync-skill-upstreams",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/sync-skill-upstreams"
       ]
     },
     {
@@ -518,7 +582,9 @@
         "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/systematic-debugging"
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/systematic-debugging"
+        "${CODEX_HOME:-$HOME/.codex}/skills/systematic-debugging",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/systematic-debugging",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/systematic-debugging"
       ]
     },
     {
@@ -530,7 +596,9 @@
         "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/tdd"
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/tdd"
+        "${CODEX_HOME:-$HOME/.codex}/skills/tdd",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/tdd",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/tdd"
       ]
     },
     {
@@ -542,7 +610,9 @@
         "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/technical-writing"
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/technical-writing"
+        "${CODEX_HOME:-$HOME/.codex}/skills/technical-writing",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/technical-writing",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/technical-writing"
       ]
     },
     {
@@ -554,7 +624,9 @@
         "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/triage-dependency-updates"
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/triage-dependency-updates"
+        "${CODEX_HOME:-$HOME/.codex}/skills/triage-dependency-updates",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/triage-dependency-updates",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/triage-dependency-updates"
       ]
     },
     {
@@ -566,7 +638,9 @@
         "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/unslop"
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/unslop"
+        "${CODEX_HOME:-$HOME/.codex}/skills/unslop",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/unslop",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/unslop"
       ]
     },
     {
@@ -580,7 +654,8 @@
         "ref": "3b74643f4d910f496babd4e634b1ba7168816f14"
       },
       "install_targets": [
-        "${AGENTS_HOME:-$HOME/.agents}/skills/verify-and-stop"
+        "${AGENTS_HOME:-$HOME/.agents}/skills/verify-and-stop",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/verify-and-stop"
       ]
     },
     {
@@ -593,11 +668,14 @@
         "path": "skills/web-quality-audit",
         "ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
         "local_changes": [
-          "Coordinate comprehensive responsive capture and functional browser receipts while keeping evidence types separate."
+          "Coordinate comprehensive responsive capture and functional browser receipts while keeping evidence types separate.",
+          "Use an env-resolved Bash shebang so the analyzer works outside fixed /bin layouts."
         ]
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/web-quality-audit"
+        "${CODEX_HOME:-$HOME/.codex}/skills/web-quality-audit",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/web-quality-audit",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/web-quality-audit"
       ]
     },
     {
@@ -609,7 +687,9 @@
         "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/workstation-health-triage"
       },
       "install_targets": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/workstation-health-triage"
+        "${CODEX_HOME:-$HOME/.codex}/skills/workstation-health-triage",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/workstation-health-triage",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/workstation-health-triage"
       ]
     }
   ]

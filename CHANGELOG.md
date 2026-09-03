@@ -24,6 +24,8 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Changed
 
+- Install skills into shared Agent Skills and Claude homes for use by Cursor,
+  Gemini CLI, Copilot, OpenCode, Windsurf, Claude Code, and the Claude Agent SDK.
 - Capture whole-page web evidence with scroll-triggered rendering, overlapping
   top-to-bottom frames when needed, and coverage metadata.
 - Route SVG-specific motion work from frontend design and CLI web evidence to

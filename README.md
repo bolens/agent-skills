@@ -20,6 +20,17 @@ Run `python3 scripts/link-installed.py --apply` to replace configured installed
 copies with symlinks to this checkout. The command refuses unexpected targets
 unless `--replace` is also supplied.
 
+The managed global roots cover these clients:
+
+- `~/.codex/skills`: Codex
+- `~/.agents/skills`: Cursor, Gemini CLI, GitHub Copilot CLI and app, OpenCode,
+  Windsurf, and other Agent Skills compatible clients
+- `~/.claude/skills`: Claude Code and the Claude Agent SDK
+
+Set `CODEX_HOME`, `AGENTS_HOME`, or `CLAUDE_HOME` to override a root. The shared
+Agent Skills root avoids duplicate client-specific trees such as
+`~/.cursor/skills`, `~/.gemini/skills`, and `~/.config/opencode/skills`.
+
 Changes to third-party skills do not track upstream automatically. Review and
 merge upstream changes manually so local behavior is never overwritten.
 Exact audited commits and local overlays live in [`UPSTREAMS.json`](UPSTREAMS.json).

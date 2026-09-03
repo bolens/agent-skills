@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -34,6 +36,29 @@ class RepositoryContract(unittest.TestCase):
         for entry in self.manifest["skills"]:
             pointer = ROOT / "skills" / entry["name"] / "UPSTREAM.md"
             self.assertIn("hard fork", pointer.read_text().lower())
+
+    def test_skills_target_shared_and_claude_homes(self) -> None:
+        for entry in self.manifest["skills"]:
+            targets = entry["install_targets"]
+            name = entry["name"]
+            self.assertIn(f"${{AGENTS_HOME:-$HOME/.agents}}/skills/{name}", targets)
+            self.assertIn(f"${{CLAUDE_HOME:-$HOME/.claude}}/skills/{name}", targets)
+
+    def test_link_installer_supports_all_global_homes(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            env = {
+                **os.environ,
+                "CODEX_HOME": str(root / "codex"),
+                "AGENTS_HOME": str(root / "agents"),
+                "CLAUDE_HOME": str(root / "claude"),
+            }
+            installer = ROOT / "scripts" / "link-installed.py"
+            subprocess.run([sys.executable, str(installer), "--apply"], check=True, env=env, stdout=subprocess.DEVNULL)
+            subprocess.run([sys.executable, str(installer), "--check"], check=True, env=env)
+            for home in ("agents", "claude"):
+                for entry in self.manifest["skills"]:
+                    self.assertTrue((root / home / "skills" / entry["name"]).is_symlink())
 
     def test_fleet_inventory_handles_repositories_without_workflows(self) -> None:
         inventory = ROOT / "skills" / "audit-repo-fleet" / "scripts" / "inventory.sh"
