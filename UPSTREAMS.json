@@ -108,7 +108,10 @@
       "branch": "main",
       "path": "skills/web-quality-audit",
       "audited_ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
-      "local_changes": ["Coordinate comprehensive responsive capture and functional browser receipts while keeping evidence types separate."]
+      "local_changes": [
+        "Coordinate comprehensive responsive capture and functional browser receipts while keeping evidence types separate.",
+        "Use an env-resolved Bash shebang so the analyzer works outside fixed /bin layouts."
+      ]
     }
   }
 }

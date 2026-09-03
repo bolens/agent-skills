@@ -24,6 +24,9 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Changed
 
+- Replace Bash-based repository maintenance helpers with cross-platform Python,
+  support Git worktrees when installing hooks, and validate portable shebangs
+  and line endings.
 - Install skills into shared Agent Skills and Claude homes for use by Cursor,
   Gemini CLI, Copilot, OpenCode, Windsurf, Claude Code, and the Claude Agent SDK.
 - Capture whole-page web evidence with scroll-triggered rendering, overlapping

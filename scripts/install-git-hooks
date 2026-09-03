@@ -1,14 +1,6 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/bin/sh
+set -eu
 
-root=$(git rev-parse --show-toplevel)
-hooks=$root/.git/hooks
-mkdir -p "$hooks"
-cat >"$hooks/pre-commit" <<'HOOK'
-#!/usr/bin/env bash
-set -euo pipefail
-root=$(git rev-parse --show-toplevel)
-make -C "$root" check-fast
-HOOK
-chmod +x "$hooks/pre-commit"
-printf 'installed %s\n' "$hooks/pre-commit"
+script_dir=$(dirname "$0")
+script_dir=$(CDPATH='' cd "$script_dir" && pwd -P)
+exec python3 "$script_dir/install-git-hooks.py" "$@"

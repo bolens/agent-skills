@@ -60,6 +60,32 @@ class RepositoryContract(unittest.TestCase):
                 for entry in self.manifest["skills"]:
                     self.assertTrue((root / home / "skills" / entry["name"]).is_symlink())
 
+    def test_hook_installer_supports_linked_worktrees(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            repository = root / "repository"
+            worktree = root / "worktree"
+            subprocess.run(["git", "init", "-q", str(repository)], check=True)
+            subprocess.run(
+                ["git", "-C", str(repository), "-c", "user.name=Test", "-c", "user.email=test@example.invalid", "commit", "--allow-empty", "-qm", "initial"],
+                check=True,
+            )
+            subprocess.run(["git", "-C", str(repository), "worktree", "add", "--detach", "-q", str(worktree)], check=True)
+            installer = ROOT / "scripts" / "install-git-hooks.py"
+            subprocess.run([sys.executable, str(installer), "--repository", str(worktree)], check=True, stdout=subprocess.DEVNULL)
+            hook_path = subprocess.run(
+                ["git", "rev-parse", "--git-path", "hooks/pre-commit"],
+                cwd=worktree,
+                check=True,
+                capture_output=True,
+                text=True,
+            ).stdout.strip()
+            hook = Path(hook_path)
+            if not hook.is_absolute():
+                hook = worktree / hook
+            self.assertEqual("#!/bin/sh", hook.read_text(encoding="utf-8").splitlines()[0])
+            self.assertTrue(os.access(hook, os.X_OK))
+
     def test_fleet_inventory_handles_repositories_without_workflows(self) -> None:
         inventory = ROOT / "skills" / "audit-repo-fleet" / "scripts" / "inventory.sh"
         with tempfile.TemporaryDirectory() as directory:

@@ -8,7 +8,7 @@ test:
 	python3 -m unittest discover -s tests -v
 
 portability:
-	bash scripts/check-portability.sh
+	python3 scripts/check-portability.py
 
 links:
 	python3 scripts/link-installed.py --check
@@ -19,4 +19,4 @@ audit-upstreams:
 check: check-fast test portability links
 
 hooks-install:
-	bash scripts/install-git-hooks
+	python3 scripts/install-git-hooks.py

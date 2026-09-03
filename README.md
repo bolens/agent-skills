@@ -9,6 +9,10 @@ import target, and fork status. Each skill also contains an `UPSTREAM.md` pointe
 
 ## Maintenance
 
+Repository maintenance scripts require Python 3.9 or newer. Node.js 18 or newer
+is required to validate the bundled Archify fork. Bash is required only by
+skills whose runtime workflows use Bash.
+
 ```bash
 make check-fast
 make check
@@ -42,7 +46,9 @@ merges upstream content.
 - `skills/`: canonical hard-forked skills
 - `PROVENANCE.json`: machine-readable origin and install-target registry
 - `UPSTREAMS.json`: tracked branches, audited commits, and local changes to retain
-- `scripts/validate.py`: skill, provenance, syntax, and portability checks
+- `scripts/validate.py`: skill, provenance, and syntax checks
+- `scripts/check-portability.py`: portable-path, shebang, line-ending, and
+  ShellCheck validation
 - `scripts/link-installed.py`: idempotent installation symlinks
 - `tests/`: repository contract tests
 - `.specify/memory/constitution.md`: maintenance rules

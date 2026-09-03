@@ -8,6 +8,7 @@ import os
 from pathlib import Path
 import re
 import subprocess
+from typing import Optional
 
 SECRET_PATTERNS = {
     "private-key": re.compile(rb"-----BEGIN (?:RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----"),
@@ -23,7 +24,7 @@ PRIVACY_PATTERNS = {
 }
 
 
-def git_files(root: Path, include_untracked: bool) -> list[Path] | None:
+def git_files(root: Path, include_untracked: bool) -> Optional[list[Path]]:
     probe = subprocess.run(["git", "-C", str(root), "rev-parse", "--is-inside-work-tree"], capture_output=True)
     if probe.returncode:
         return None

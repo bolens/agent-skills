@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Read-only HTML quality analyzer (v2). No filesystem mutations.
 # stderr = human logs, stdout = structured JSON.
 set -euo pipefail
