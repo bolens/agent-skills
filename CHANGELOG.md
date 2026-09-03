@@ -24,6 +24,8 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Changed
 
+- Capture whole-page web evidence with scroll-triggered rendering, overlapping
+  top-to-bottom frames when needed, and coverage metadata.
 - Route SVG-specific motion work from frontend design and CLI web evidence to
   the SVG animation skill.
 - Mark every maintained skill as a hard fork and retain links or local origin

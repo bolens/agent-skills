@@ -46,6 +46,9 @@ Choose the smallest artifact that proves the behavior. Prefer a screenshot for s
 - When `responsive-web-capture` is installed, use its reusable script for standard or comprehensive multi-viewport audits. Prefer focused `--viewport` reruns while iterating, then use the requested final matrix. Pass the exact repository-native preview URL when the deployed site uses a non-root base path.
 - When quality scores, Core Web Vitals, accessibility, or performance regressions are in scope, use `web-quality-audit` for the measurement plan and this skill for the executable browser evidence. Do not substitute screenshots for those measurements.
 - Capture screenshots after the state under review is fully rendered. Use full-page captures for layout review and focused captures when they make a defect easier to see.
+- For whole-page visual analysis, capture the page from top to bottom rather than relying on only the initial and final viewport. Prefer the browser tool's native full-page screenshot when it faithfully captures the document. Before capture, scroll incrementally from the top to the bottom to trigger lazy-loaded content, waiting for visible loading and layout shifts to settle, then return to the top.
+- When native full-page capture is unreliable, take an ordered series of viewport screenshots from top to bottom. Common causes include sticky or fixed elements, nested scroll containers, virtualized content, canvas-heavy pages, and browser height limits. Use consistent viewport dimensions and 10-20% vertical overlap so no content falls between frames. Capture independently scrollable regions separately when they are in scope.
+- Preserve the ordered top-to-bottom frames and create a labeled contact sheet for analysis. Record the page's measured scroll height, viewport height, scroll positions, and frame count so coverage can be checked. Do not stitch overlapping frames into a purported pixel-accurate full-page image when fixed elements, animations, or layout changes would duplicate or distort content; use the contact sheet instead and note the limitation.
 - When SVG animation is under review, use the `svg-animation` skill's browser-verification contract. Inspect multiple animation phases and reduced motion; a single screenshot proves only one frame.
 - Inspect screenshots visually before claiming success. A successful automation exit code does not prove that the page looks correct.
 - Use `identify` to verify screenshot dimensions and format. Use `compare` or `magick compare` only when a reference image and a meaningful tolerance exist. Report the metric and tolerance with the diff artifact.
@@ -61,6 +64,7 @@ Report concise, reproducible evidence:
 - URL and viewport used;
 - interaction or state verified;
 - screenshot paths;
+- whole-page coverage details when applicable: native full-page capture or ordered scroll frames, measured page and viewport heights, scroll positions, overlap, and contact-sheet path;
 - diff, contact-sheet, or recording paths when those artifacts add proof;
 - relevant console, network, assertion, and exit-code results.
 
