@@ -4,6 +4,8 @@ Use after a verified merge when completing authorized delivery or an explicit br
 
 ## Verify the candidate
 
+Inventory local branches, their upstreams, linked worktrees, and related remote refs within the authorized repository scope. Include old leftovers whose feature was merged earlier, even if its PR head branch or upstream is already gone. Age, a `gone` upstream, or a shared name only identifies a candidate; none proves the work is complete. Routine delivery covers leftovers for that feature. A broader cleanup request can cover other completed features, with separate evidence for each.
+
 1. Confirm the host reports the PR as merged into the intended base. Record the PR, head repository, feature branch, merged head SHA, and resulting merge commit. Closed without merge is not sufficient. For local-only integration, verify the intended target contains the complete change.
 2. Read current local and remote refs. Compare the feature tips with the recorded merged head. Retain a branch that has advanced or diverged until its additional work is reviewed and integrated. A missing remote branch may mean the host already cleaned it up. A failed lookup does not prove absence.
 3. Check `git worktree list --porcelain` and task ownership. Retain branches used by active agents, dependent stacked PRs, release automation, or unfinished tasks. Never delete default, protected, release, or other long-lived branches as feature cleanup.
@@ -21,7 +23,7 @@ Delete only the named local feature branch after rechecking its tip under the Gi
 
 After squash or rebase integration, `-d` may refuse even though the exact work was merged. Use `-D` only when cleanup is already authorized, the exact local tip is verified as integrated, the recorded commit remains recoverable, no dependent work remains, and repository policy permits forced local deletion. Otherwise retain it with the reason. Never turn a deletion refusal into an automatic force retry.
 
-For the remote branch, verify the actual head repository and destination, including fork ownership. If already absent, record that and continue. If it exists, use a deletion guarded by the exact expected SHA so a concurrent push cannot be erased. Where Git and policy permit, the shape is:
+For each related remote branch, verify the actual repository and destination, including fork ownership and any additional remotes carrying that feature. Do not assume all remotes are owned by the user or that matching names contain the same work. Verify each tip's integration and completion independently, and delete only within existing authority. If already absent, record that and continue. If it exists, use a deletion guarded by the exact expected SHA so a concurrent push cannot be erased. Where Git and policy permit, the shape is:
 
 ```sh
 git push --force-with-lease=refs/heads/BRANCH:VERIFIED_HEAD_SHA REMOTE :refs/heads/BRANCH
