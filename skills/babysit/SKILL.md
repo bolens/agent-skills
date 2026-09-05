@@ -35,6 +35,8 @@ For standalone work, inspect the changes since the relevant published release an
 
 Prepare all permitted work before asking for any missing authority. Ask once for the concrete remaining action. Do not repeat an approval already given for that action and scope. Post review replies, resolve remote threads, or send messages only when the user has authorized that communication.
 
+Before preparing or updating the PR, use [Git hygiene freshness](../git-hygiene/references/freshness.md) to verify the current base and remote feature head, reconcile authorized updates locally, and validate the actual candidate. Keep this workflow as coordinator.
+
 ## Inspect the current PR
 
 Collect the full proposed diff against its actual base, commit list, review summaries, inline threads, and CI results using the available host connector or CLI. Include all pages of feedback. Check unresolved threads and late bot feedback as well as the overall review status.
@@ -77,7 +79,7 @@ A rerun is appropriate when evidence supports a transient failure and it is auth
 ## Follow through after fixes
 
 1. Run focused checks and the repository's required gate. Inspect the final diff, audit publication content when pushing, and create focused commits containing only task changes.
-2. Before pushing, compare the remote head with the head previously inspected. If someone else updated the branch, fetch and reconcile their changes without discarding them. Do not force-push unless explicitly authorized.
+2. Before pushing, refresh and compare both the intended base and remote feature head with the revisions previously inspected. If someone else updated the branch, fetch and reconcile their changes without discarding them. Do not force-push unless explicitly authorized.
 3. Push authorized fixes to the confirmed PR branch. Record the new head and watch checks for that revision. Some merge or queue checks test a synthetic commit. Verify that it contains the current PR head and required base instead of comparing SHA strings alone.
 4. Re-fetch review threads and check results after CI settles. Re-audit changed behavior and integration effects. A new head invalidates earlier approval or test evidence for affected code. Keep unrelated valid evidence rather than restarting every check. Track each finding as fixed, still present, declined with evidence, or blocked; verify fixes against their original failure scenario and inspect newly affected callers. Carry unresolved coverage gaps forward even when all reported findings are fixed.
 5. Repeat while there are supported findings or CI repairs within scope. Incorporate new user direction and report meaningful progress. Use bounded waits that leave the session responsive, respect host rate limits, and avoid busy polling. If the session or task deadline prevents further waiting, report pending checks with their links and head. Do not claim monitoring will continue after the session ends.
@@ -90,7 +92,7 @@ When release work is needed, read [references/release-follow-through.md](referen
 
 ## Clean up after merge
 
-After the host confirms the intended PR was merged, use [git-hygiene's branch cleanup](../git-hygiene/references/branch-cleanup.md) to remove the completed local and remote feature branches and release task-owned temporary worktrees within existing authority. Follow its checks for active agents, advanced tips, squash or rebase merges, and conditional remote deletion. This is part of merge follow-through when cleanup is authorized, not an optional reminder. If the host already deleted the remote branch, verify that state and finish eligible local cleanup.
+After the host confirms the intended PR was merged, apply [local checkout synchronization](../git-hygiene/references/freshness.md) before declaring completion. Fetch the merged base, fast-forward eligible task-owned retained checkouts, and report dirty, active, or divergent checkouts left unchanged. Then use [git-hygiene's branch cleanup](../git-hygiene/references/branch-cleanup.md) to remove the completed local and remote feature branches and release task-owned temporary worktrees within existing authority. Follow its checks for active agents, advanced tips, squash or rebase merges, and conditional remote deletion. This is part of merge follow-through when cleanup is authorized, not an optional reminder. If the host already deleted the remote branch, verify that state and finish eligible local cleanup.
 
 Keep the current babysit workflow as coordinator. Record any retained branch or worktree and the reason. A readiness-only endpoint does not trigger merge or cleanup.
 
@@ -102,7 +104,7 @@ Finish only when the requested endpoint is satisfied or a specific external bloc
 - audit outcome, reviewer focuses and completion state, whether verification was independent, and the disposition of all findings and nits, including anything declined, deferred, or still blocked
 - CI status for the current head, including pending, unrelated, or blocked checks
 - release decision and any prepared or completed release steps
-- branch and worktree cleanup results after merge, including anything retained and why
+- local checkout synchronization and branch/worktree cleanup results after merge, including target and local SHAs, anything retained, and why
 - the exact remaining action, if any
 
 Distinguish ready to merge, merged, release prepared, and release published. Never infer one from another. Do not merge merely to finish babysitting a PR whose requested endpoint was readiness.

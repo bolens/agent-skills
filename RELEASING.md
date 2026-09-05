@@ -39,7 +39,10 @@ unexecuted paths. Review the publication boundary using [SECURITY.md](SECURITY.m
 
 ## Push and merge
 
-Push the reviewed feature branch when authorized:
+Before submission or an update, follow [Git freshness](skills/git-hygiene/references/freshness.md)
+to refresh the intended base and existing feature head, reconcile intervening
+changes, and validate the resulting candidate. Push the reviewed feature branch
+when authorized:
 
 ```sh
 git push --set-upstream origin HEAD
@@ -68,6 +71,11 @@ The reviewed main commit is the delivery boundary. Installation or repointing
 links is a separate authorized action. Source changes in an already linked
 checkout are immediately visible to its clients, even before a merge. Keep that
 checkout at a stable path and do not remove it as temporary-worktree cleanup.
+
+After merge, fetch the verified base and fast-forward the clean, task-owned
+canonical checkout to that target. Confirm its HEAD and status, preserving and
+reporting any dirty, active, or divergent checkout that cannot be synchronized.
+Do not mistake refreshed remote-tracking refs for updated local files.
 
 After an authorized installation or synchronization of the canonical checkout:
 

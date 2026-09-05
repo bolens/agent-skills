@@ -1,6 +1,6 @@
 ---
 name: git-hygiene
-description: Coordinate Git writes, worktree isolation, focused commits, and integration for concurrent agents across repository surfaces. Use for shared-checkout work, parallel implementation, mixed staged changes, branch handoffs, or post-merge branch cleanup. Commit-message-only requests and read-only reviews keep their own workflows.
+description: Coordinate Git writes, worktree isolation, focused commits, and integration for concurrent agents across repository surfaces. Use for shared-checkout work, parallel implementation, mixed staged changes, branch handoffs, PR freshness checks, or post-merge synchronization and cleanup. Commit-message-only requests and read-only reviews keep their own workflows.
 ---
 
 # Git hygiene for concurrent agents
@@ -49,6 +49,10 @@ Linked worktrees have separate HEAD and index state but share repository data in
 Isolate test ports, databases, generated output directories, and writable caches when tests use shared resources. Worktrees alone do not isolate external services. Check repository support before using linked worktrees with submodules. Use a separate clone or serial work when the layout or tooling cannot support them.
 
 If agents must share one checkout, designate one Git writer for staging, committing, switching branches, merging, rebasing, and other repository mutations. Other agents edit only their assigned non-overlapping files and hand back changed paths and verification. Pause affected writers while collecting a stable diff, staging, running checks, and committing. Broad formatters and generators also count as writers. If coordination is unavailable, serialize writes rather than claim isolation.
+
+## Keep the working state current
+
+Use [branch and checkout freshness](references/freshness.md) when starting implementation, before submitting or updating a PR, and when a feature completes. Refresh the verified base and existing feature refs, reconcile intervening work under the assigned Git writer, and validate the resulting candidate. After a merge, fast-forward eligible task-owned local base checkouts and verify their actual HEAD and status. Fetching refs or merging on the host alone does not synchronize local files. Preserve dirty, active, divergent, or pinned checkouts and report any remaining synchronization work.
 
 ## Make focused commits
 
