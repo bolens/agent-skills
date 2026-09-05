@@ -74,6 +74,14 @@ owners even when agents edit different packages. Post-merge branch cleanup lives
 in this skill alongside local worktree cleanup. `babysit` invokes it during
 authorized merge follow-through.
 
+## CI workflows
+
+Use [ci-maintenance](skills/ci-maintenance/SKILL.md) to implement pipeline and
+reusable-workflow changes against applicable fleet standards. It covers native
+validation, event trust, required checks, consumer compatibility, and evidence.
+[setup-pre-commit](skills/setup-pre-commit/SKILL.md) owns local hooks, while
+[babysit](skills/babysit/SKILL.md) owns requested PR and release follow-through.
+
 ## Review workflows
 
 Use [code-review](skills/code-review/SKILL.md) to trace a diff through affected

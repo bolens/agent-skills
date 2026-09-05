@@ -6,6 +6,9 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Added
 
+- Add CI maintenance guidance for fleet baselines, reusable workflow contracts,
+  event trust, required-check coverage, and repository-native validation.
+
 - Add homelab stack maintenance for coordinated Compose, environment example,
   preparation, metadata, ingress, and generated documentation changes.
 

@@ -40,3 +40,5 @@ Follow the user's and repository's commit instructions. When a commit is require
 2. Run each underlying command directly.
 3. Exercise the hook against representative staged files when this can be done without disturbing the user's index; otherwise explain the limitation.
 4. Report runtime, files changed, and any checks intentionally left to CI.
+
+When the requested work also changes CI workflow structure or required-check coverage, use [ci-maintenance](../ci-maintenance/SKILL.md) for that contract while keeping staged-file behavior here. Reuse the same underlying validation commands. Hook-only work does not require a CI redesign.

@@ -50,3 +50,5 @@ When fleet work changes self-hosted homelab stack contracts, use [homelab-stack-
 When an Omarchy plugin fleet is being prepared for marketplace submission, verification, or update approval, use `audit-omarchy-plugin` for each candidate repository. Compare official findings and capabilities source-wide, but keep manual risks and dirty-worktree state repository-specific.
 
 When authorized maintenance includes repairing or merging specific PRs or preparing or publishing repository releases, automatically use [babysit](../babysit/SKILL.md) for each selected target. Carry each repository's endpoint, authority, and evidence separately, and return to an already active workflow. A fleet inventory or release-readiness assessment alone does not start follow-through.
+
+When fleet implementation adds or changes CI pipelines or shared workflow contracts, use [ci-maintenance](../ci-maintenance/SKILL.md) to resolve the applicable baseline and validate event, permission, and caller behavior. Return shared causes and affected consumers to the current fleet coordinator.

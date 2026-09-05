@@ -256,6 +256,20 @@
       ]
     },
     {
+      "name": "ci-maintenance",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/ci-maintenance",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/ci-maintenance"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/ci-maintenance",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/ci-maintenance",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/ci-maintenance"
+      ]
+    },
+    {
       "name": "cli-web-evidence",
       "hard_fork": true,
       "origin": {

@@ -108,3 +108,5 @@ Finish only when the requested endpoint is satisfied or a specific external bloc
 Distinguish ready to merge, merged, release prepared, and release published. Never infer one from another. Do not merge merely to finish babysitting a PR whose requested endpoint was readiness.
 
 When this PR is part of active fleet-wide implementation, return supported fixes or improvements to [the fleet shared-fix workflow](../audit-repo-fleet/references/shared-fixes.md) so maintained peers are checked and applicable changes are completed within scope. Keep each PR head, checks, and delivery authority separate. A standalone PR does not start a fleet sweep, and its merge does not complete outstanding fleet matches.
+
+When a supported PR repair changes CI triggers, permissions, reusable interfaces, or required-check behavior, use [ci-maintenance](../ci-maintenance/SKILL.md) for implementation and return its evidence to this coordinator. Keep isolated test failures in systematic-debugging and retain the requested delivery endpoint.
