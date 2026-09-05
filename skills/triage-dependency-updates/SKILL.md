@@ -51,4 +51,6 @@ A review or triage request is read-only. When implementation is requested:
 
 Use the changelog-maintainer skill when an update changes runtime requirements, compatibility, configuration, security exposure, or operator behavior. Keep routine dependency churn out of the changelog.
 
-Do not disable lifecycle-script protections, signature/checksum verification, security gates, or dependency automation merely to land an update. Do not stage, commit, push, merge, publish, deploy, or restart services without explicit authorization.
+Use `babysit` when the user wants an open dependency PR followed through review feedback, CI repairs, and any required release work. Keep dependency assessment here and let that workflow track the current PR head and remaining delivery steps.
+
+Do not disable lifecycle-script protections, signature/checksum verification, security gates, or dependency automation merely to land an update. Follow the user's and repository's commit instructions and stage only task changes. Push, merge, publish, deploy, or restart services only within the authority already granted for the task.

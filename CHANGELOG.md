@@ -6,6 +6,8 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Added
 
+- Add `babysit` to follow open PRs through separate audits, actionable review
+  feedback, CI repairs, and repository-specific release preparation and verification.
 - Add an SVG animation skill for geometry-safe, accessible, browser-native motion
   with multi-phase visual verification.
 - Add a canonical repository for the personal skill collection with provenance records,

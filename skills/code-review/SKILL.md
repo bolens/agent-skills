@@ -40,3 +40,5 @@ When the reviewed repository is an Omarchy plugin and the request concerns marke
 For each finding provide severity, confidence, `file:line`, the concrete failure scenario, and the smallest viable fix. Avoid compliments and summaries that bury findings. If no findings exist, say so and note residual risks or tests not run.
 
 Keep Spec and Standards labels when they clarify the source, but rank all defects by impact so the user knows what to fix first. Follow an explicitly requested output style such as `caveman-review`.
+
+When the user asks to address findings and follow an open PR through CI or release readiness, use `babysit` to coordinate that work. A one-off review remains read-only.

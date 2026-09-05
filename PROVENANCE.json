@@ -83,6 +83,20 @@
       ]
     },
     {
+      "name": "babysit",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/babysit",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/babysit"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/babysit",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/babysit",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/babysit"
+      ]
+    },
+    {
       "name": "backup-restore-verification",
       "hard_fork": true,
       "origin": {
