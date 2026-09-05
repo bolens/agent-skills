@@ -56,6 +56,18 @@ merges upstream content.
 Contract tests check that inline local links in skill entrypoints resolve. They
 do not verify remote URLs or section anchors.
 
+## Review workflows
+
+Use [code-review](skills/code-review/SKILL.md) to trace a diff through affected
+callers, contracts, failure paths, tests, and delivery boundaries. Its review
+receipt identifies the actual revisions, evidence, and remaining coverage gaps.
+Substantive PRs use independent agents with distinct relevant focuses when
+available and permitted.
+[caveman-review](skills/caveman-review/SKILL.md) compresses the findings while
+preserving that review depth. [babysit](skills/babysit/SKILL.md) carries findings
+and coverage through authorized PR or release follow-through, addressing nits
+from every independent review and recording each disposition.
+
 ## Web and design workflows
 
 | Task | Skill |

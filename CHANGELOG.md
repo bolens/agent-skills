@@ -36,6 +36,11 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Changed
 
+- Review changed contracts and consumers systematically, distinguish staged and
+  working-tree evidence, and carry coverage gaps through terse reviews and PR delivery.
+- Use independent reviewers with distinct focuses for substantive PRs when available,
+  and reconcile findings and actionable nits from every review before readiness.
+
 - Automatically route PR repairs and requested PR or release delivery from related
   skills to `babysit`, preserving local-only and read-only task limits.
 

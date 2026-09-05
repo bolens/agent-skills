@@ -43,13 +43,23 @@ Keep each finding tied to a path, behavior, or check and the commit it concerns.
 
 ## Run a separate audit
 
-Use `code-review` for an audit of the current diff before declaring the PR ready. The audit must be separate from the implementation pass and must include correctness, regressions, tests, repository standards, and release implications.
+Use `code-review` for an audit of the current diff before declaring the PR ready. The audit must be separate from the implementation pass and must include correctness, regressions, tests, repository standards, and release implications. Carry its coverage receipt: exact revisions, affected contracts and consumers inspected, execution evidence, and unresolved gaps. A reread of the diff or green CI alone does not replace that review. Treat missing evidence for a material security, data-integrity, or rollout boundary as unresolved readiness work; complete available inspection and report any external blocker rather than declaring that boundary verified.
 
-When a separate reviewer agent is available and delegation is permitted, give it the actual base and head, repository instructions, relevant requirements, and access to source and tests. Request a read-only review with evidence and severity. Do not prime it with the implementer's conclusions or desired verdict. Do not submit an approval review on behalf of the PR author.
+For substantive PRs, use multiple independent agents with distinct relevant focuses when available and delegation is permitted, following [code-review's independent review workflow](../code-review/references/independent-reviews.md). Start with behavior/contracts and tests/failure paths; add security or delivery review when warranted. Give each the fixed revisions, original requirements, source/test access, and its assigned focus. Ask every reviewer for both supported defects and actionable nits, plus coverage and evidence gaps. Keep their initial passes independent of the implementer's verdict and one another's conclusions. Do not submit an approval review on behalf of the PR author.
 
-If an independent reviewer is unavailable, perform a distinct review pass after implementation and state that it was a self-review. Do not claim independent verification. If the user explicitly requires an independent audit, complete the other work and report that requirement as pending.
+If independent review is unavailable, perform a distinct self-review after implementation and state the limitation. If an independent audit was explicitly required, leave that requirement pending while completing other permitted work.
 
-Evaluate every finding before editing. Fix supported defects and actionable nits that improve clarity, consistency, or maintainability within the PR's scope. Handle obvious small nits without a new permission round. Do not mechanically apply a suggestion that breaks behavior, conflicts with repository conventions, or expands the PR. Record why a finding was declined or deferred. Add regression coverage for behavioral fixes and use the relevant existing checks for prose or formatting nits.
+### Reconcile every review and nit
+
+Maintain one working review ledger covering all independent agents and host feedback, including late results, inline comments, review summaries, and bot comments. Track each assigned reviewer through completion or a reported failure/unavailability. Do not declare review complete while an assigned review is still pending, and do not stop after the first clean result.
+
+For each defect, nit, question, or material coverage gap, retain its source reviewer or thread, reviewed revision, affected location/behavior, proposed action, disposition, and verification. Deduplicate shared causes while retaining all originating reviews and unique requests. Conflicting suggestions require source inspection or a focused check, not majority vote.
+
+Evaluate every item before editing. Fix supported defects and actionable nits within the PR's scope, including nits raised only by a single independent reviewer. Handle obvious small corrections without another permission round. Do not mechanically apply a suggestion that breaks behavior, conflicts with repository conventions, or expands scope. Decline unsupported or incompatible suggestions with a concrete reason. Record deferred work and its impact on the requested endpoint instead of silently dropping it.
+
+An item is closed only when it is fixed with applicable evidence, answered with evidence, or declined/deferred with a reason. Defer does not mean ready: any remaining required correction or material readiness gap still blocks that claim. A low severity or `nit` label alone is not a reason to ignore an actionable correction. Keep the ledger in working notes unless an artifact or remote communication was requested.
+
+Use regression coverage for behavioral fixes and existing checks for prose or formatting nits. Return affected fixes and newly changed interactions to the relevant independent reviewers when available; verify each original concern against the updated candidate. If re-review is unavailable, perform and label local verification and report any still-required independent confirmation. Carry every review's remaining nits and gaps into the final receipt.
 
 ## Repair and verify CI
 
@@ -69,7 +79,7 @@ A rerun is appropriate when evidence supports a transient failure and it is auth
 1. Run focused checks and the repository's required gate. Inspect the final diff, audit publication content when pushing, and create focused commits containing only task changes.
 2. Before pushing, compare the remote head with the head previously inspected. If someone else updated the branch, fetch and reconcile their changes without discarding them. Do not force-push unless explicitly authorized.
 3. Push authorized fixes to the confirmed PR branch. Record the new head and watch checks for that revision. Some merge or queue checks test a synthetic commit. Verify that it contains the current PR head and required base instead of comparing SHA strings alone.
-4. Re-fetch review threads and check results after CI settles. Re-audit changed behavior and integration effects. A new head invalidates earlier approval or test evidence for affected code. Keep unrelated valid evidence rather than restarting every check.
+4. Re-fetch review threads and check results after CI settles. Re-audit changed behavior and integration effects. A new head invalidates earlier approval or test evidence for affected code. Keep unrelated valid evidence rather than restarting every check. Track each finding as fixed, still present, declined with evidence, or blocked; verify fixes against their original failure scenario and inspect newly affected callers. Carry unresolved coverage gaps forward even when all reported findings are fixed.
 5. Repeat while there are supported findings or CI repairs within scope. Incorporate new user direction and report meaningful progress. Use bounded waits that leave the session responsive, respect host rate limits, and avoid busy polling. If the session or task deadline prevents further waiting, report pending checks with their links and head. Do not claim monitoring will continue after the session ends.
 
 ## Handle release work
@@ -83,7 +93,7 @@ When release work is needed, read [references/release-follow-through.md](referen
 Finish only when the requested endpoint is satisfied or a specific external blocker remains after all independent work is complete. Report:
 
 - PR link and verified head
-- audit outcome, whether it was independent, and remaining findings or nits
+- audit outcome, reviewer focuses and completion state, whether verification was independent, and the disposition of all findings and nits, including anything declined, deferred, or still blocked
 - CI status for the current head, including pending, unrelated, or blocked checks
 - release decision and any prepared or completed release steps
 - the exact remaining action, if any
