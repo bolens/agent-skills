@@ -7,29 +7,21 @@
       "branch": "main",
       "path": "skills/accessibility",
       "audited_ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
-      "local_changes": [
-        "Route responsive visual evidence through responsive-web-capture and functional browser evidence through cli-web-evidence.",
-        "Route runtime and shared-component remediation to motion, asset, and design-system skills; verify explicit reduced-motion states rather than relying on a global duration reset."
-      ]
+      "local_changes": ["Route responsive visual evidence through responsive-web-capture and functional browser evidence through cli-web-evidence.", "Route runtime and shared-component remediation to motion, asset, and design-system skills; verify explicit reduced-motion states rather than relying on a global duration reset."]
     },
     "archify": {
       "url": "https://github.com/tt-a1i/archify",
       "branch": "main",
       "path": "archify",
       "audited_ref": "06dd052602dd9a369e4d034e24faef0917b5a60c",
-      "local_changes": [
-        "Keep the fast-uri security override at 3.1.6 or a later audited release.",
-        "Preserve the original error as cause when preview directory watching fails."
-      ]
+      "local_changes": ["Keep the fast-uri security override at 3.1.6 or a later audited release.", "Preserve the original error as cause when preview directory watching fails."]
     },
     "caveman": {
       "url": "https://github.com/JuliusBrussee/caveman",
       "branch": "main",
       "path": "skills/caveman",
       "audited_ref": "3b74643f4d910f496babd4e634b1ba7168816f14",
-      "preserve_paths": [
-        "agents"
-      ]
+      "preserve_paths": ["agents"]
     },
     "caveman-commit": {
       "url": "https://github.com/JuliusBrussee/caveman",
@@ -42,58 +34,43 @@
       "branch": "main",
       "path": "skills/caveman-compress",
       "audited_ref": "3b74643f4d910f496babd4e634b1ba7168816f14",
-      "preserve_paths": [
-        "agents"
-      ]
+      "preserve_paths": ["agents"]
     },
     "caveman-help": {
       "url": "https://github.com/JuliusBrussee/caveman",
       "branch": "main",
       "path": "skills/caveman-help",
       "audited_ref": "3b74643f4d910f496babd4e634b1ba7168816f14",
-      "preserve_paths": [
-        "agents"
-      ]
+      "preserve_paths": ["agents"]
     },
     "caveman-review": {
       "url": "https://github.com/JuliusBrussee/caveman",
       "branch": "main",
       "path": "skills/caveman-review",
       "audited_ref": "3b74643f4d910f496babd4e634b1ba7168816f14",
-      "local_changes": [
-        "Limit discovery to requested terse reviews, preserve evidence in compressed findings, and allow focused validation without autofix.",
-        "Keep code-review as the systematic review workflow, retain severity and coverage in terse output, and replace speculative examples and stale README triggers."
-      ]
+      "local_changes": ["Limit discovery to requested terse reviews, preserve evidence in compressed findings, and allow focused validation without autofix.", "Keep code-review as the systematic review workflow, retain severity and coverage in terse output, and replace speculative examples and stale README triggers."]
     },
     "core-web-vitals": {
       "url": "https://github.com/addyosmani/web-quality-skills",
       "branch": "main",
       "path": "skills/core-web-vitals",
       "audited_ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
-      "local_changes": [
-        "Route viewport-sensitive metric fixes through responsive-web-capture and interaction proof through cli-web-evidence."
-      ]
+      "local_changes": ["Route viewport-sensitive metric fixes through responsive-web-capture and interaction proof through cli-web-evidence."]
     },
     "diagnose-crash": {
       "url": "https://github.com/basecamp/omarchy",
       "branch": "quattro",
       "path": "default/agents/skills/diagnose-crash",
       "audited_ref": "d3d23fdddef846ebb98b52122a6ece66211c0daf",
-      "local_changes": [
-        "Route cross-subsystem failures through workstation-health-triage."
-      ]
+      "local_changes": ["Route cross-subsystem failures through workstation-health-triage."]
     },
     "find-skills": {
       "url": "https://github.com/vercel-labs/skills",
       "branch": "main",
       "path": "skills/find-skills",
       "audited_ref": "435076e78988e1e6ec40d00b0b1d76bdbbc5419a",
-      "preserve_paths": [
-        "SKILL.md"
-      ],
-      "local_changes": [
-        "Keep Codex-native installation boundaries and source-first quality review instead of popularity-led recommendations."
-      ]
+      "preserve_paths": ["SKILL.md"],
+      "local_changes": ["Keep Codex-native installation boundaries and source-first quality review instead of popularity-led recommendations."]
     },
     "migration": {
       "url": "https://github.com/JuliusBrussee/caveman",
@@ -106,19 +83,14 @@
       "branch": "quattro",
       "path": "default/agents/skills/omarchy",
       "audited_ref": "d3d23fdddef846ebb98b52122a6ece66211c0daf",
-      "local_changes": [
-        "Keep desktop-session.md and its workstation health and config-drift routing."
-      ]
+      "local_changes": ["Keep desktop-session.md and its workstation health and config-drift routing."]
     },
     "performance": {
       "url": "https://github.com/addyosmani/web-quality-skills",
       "branch": "main",
       "path": "skills/performance",
       "audited_ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
-      "local_changes": [
-        "Require responsive and functional regression evidence when performance changes can affect those surfaces.",
-        "Route measured animation and player costs through web-animation and animation-assets, including active motion and route re-entry evidence."
-      ]
+      "local_changes": ["Require responsive and functional regression evidence when performance changes can affect those surfaces.", "Route measured animation and player costs through web-animation and animation-assets, including active motion and route re-entry evidence."]
     },
     "safe-refactor": {
       "url": "https://github.com/JuliusBrussee/caveman",
@@ -131,10 +103,7 @@
       "branch": "main",
       "path": "skills/verify-and-stop",
       "audited_ref": "3b74643f4d910f496babd4e634b1ba7168816f14",
-      "local_changes": [
-        "Bind reused proof to the checked inputs and runtime conditions, and complete already-required delivery steps after verification.",
-        "Automatically hand already-requested PR or release follow-through to babysit without expanding validation-only tasks or restarting an active workflow."
-      ]
+      "local_changes": ["Bind reused proof to the checked inputs and runtime conditions, and complete already-required delivery steps after verification.", "Automatically hand already-requested PR or release follow-through to babysit without expanding validation-only tasks or restarting an active workflow."]
     },
     "web-quality-audit": {
       "url": "https://github.com/addyosmani/web-quality-skills",
