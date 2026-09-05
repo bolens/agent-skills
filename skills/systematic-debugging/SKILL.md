@@ -39,3 +39,5 @@ Use `tdd` when the user requests test-first work or a full red-green-refactor lo
 ## Stop conditions
 
 Carry forward authorization already given in the conversation. Ask only when the next action needs authority that has not been granted, missing access, or a consequential product decision that cannot be inferred. Prepare a concrete proposed change and complete independent diagnostics before requesting approval for a production mutation or destructive recovery. If the issue remains unresolved, report what is known, what was ruled out, and the next discriminating probe.
+
+When asked to repair CI on an open PR or carry a fix through PR or release delivery, automatically use [babysit](../babysit/SKILL.md) to coordinate the current head, audit, and remote checks. Keep diagnosis here and return the cause, fix, and verification evidence to an already active workflow. A diagnosis, status lookup, or local bug fix alone does not start follow-through.

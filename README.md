@@ -87,6 +87,11 @@ adding or migrating frameworks.
 | Backup validation and isolated application recovery drills | [backup-restore-verification](skills/backup-restore-verification/SKILL.md) |
 | PR follow-through or standalone release preparation/publication | [babysit](skills/babysit/SKILL.md) |
 
+Related review, repair, maintenance, and verification skills automatically use
+`babysit` when the requested endpoint includes PR follow-through or release
+preparation or publication. Local-only work and one-off audits keep their scope.
+Automatic selection does not grant push, merge, or publication authority.
+
 Public releases should pass `sensitive-info-audit`, including a history-aware
 scanner, before they are pushed.
 

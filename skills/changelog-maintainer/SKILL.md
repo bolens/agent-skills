@@ -40,4 +40,4 @@ For generated changelogs, fix the generator or template first, regenerate, then 
 
 Run the changelog check, Markdown lint, version-sync check, and release-note extraction relevant to the touched repository. Report rewritten releases, facts intentionally retained, automation added, and any release metadata that could not be verified. Editing a changelog does not authorize tagging, publishing, or rewriting Git history.
 
-Use `babysit` when changelog work is part of a request to follow an open PR through review, CI, and the repository's release playbook. An isolated changelog edit does not start that workflow.
+When changelog work belongs to requested PR follow-through or release preparation or publication, automatically use [babysit](../babysit/SKILL.md) to coordinate the remaining work, including releases without a PR. Return changelog evidence to an already active workflow. An isolated changelog edit does not start follow-through.

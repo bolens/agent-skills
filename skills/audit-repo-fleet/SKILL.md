@@ -48,3 +48,5 @@ When the fleet includes runnable websites, use `web-quality-audit` for measured 
 When the fleet includes operational Compose stacks, use `homelab-stack-triage` for a live service incident rather than treating repository health as runtime health. Use `backup-restore-verification` when backup recoverability is the question.
 
 When an Omarchy plugin fleet is being prepared for marketplace submission, verification, or update approval, use `audit-omarchy-plugin` for each candidate repository. Compare official findings and capabilities source-wide, but keep manual risks and dirty-worktree state repository-specific.
+
+When authorized maintenance includes repairing or merging specific PRs or preparing or publishing repository releases, automatically use [babysit](../babysit/SKILL.md) for each selected target. Carry each repository's endpoint, authority, and evidence separately, and return to an already active workflow. A fleet inventory or release-readiness assessment alone does not start follow-through.

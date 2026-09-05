@@ -36,6 +36,9 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Changed
 
+- Automatically route PR repairs and requested PR or release delivery from related
+  skills to `babysit`, preserving local-only and read-only task limits.
+
 - Align media preservation with the audio, image, video, and archive utility
   family, including image fidelity, archive extraction, and shared-tool validation.
 - Extend backup verification with isolated service recovery drills and let
