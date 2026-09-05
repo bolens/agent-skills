@@ -30,6 +30,8 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Changed
 
+- Ground frontend design in the product's existing identity, components, content,
+  and interaction states instead of requiring a new visual direction for every edit.
 - Verify animation geometry, instance cleanup, and runtime-specific reduced-motion
   states across the SVG, accessibility, performance, and browser-evidence workflows.
 - Replace Bash-based repository maintenance helpers with cross-platform Python,
