@@ -1,0 +1,4 @@
+interface:
+  display_name: "SVG design"
+  short_description: "Create consistent, reusable SVG artwork and icons"
+  default_prompt: "Use $svg-design to refine this SVG for the project's visual system and intended display sizes."

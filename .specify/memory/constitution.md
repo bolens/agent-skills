@@ -37,4 +37,4 @@ and symlink state.
 Exceptions require a documented reason in the affected skill. Amendments use
 semantic versioning.
 
-**Version**: 1.1.0 | **Ratified**: 2026-09-02
+**Version**: 1.1.1 | **Ratified**: 2026-09-02 | **Last Amended**: 2026-09-05

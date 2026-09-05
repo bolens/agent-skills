@@ -4,9 +4,14 @@ set -euo pipefail
 export GIT_OPTIONAL_LOCKS=0
 
 fleet_root=${1:-.}
+max_depth=${2:-3}
 
 if [[ ! -d $fleet_root ]]; then
   printf 'workspace root is not a directory: %s\n' "$fleet_root" >&2
+  exit 2
+fi
+if ! [[ $max_depth =~ ^[1-9][0-9]*$ ]]; then
+  printf 'max depth must be a positive integer: %s\n' "$max_depth" >&2
   exit 2
 fi
 fleet_root=$(cd -- "$fleet_root" && pwd -P)
@@ -35,7 +40,10 @@ while IFS= read -r -d '' git_dir; do
   last_commit=$(git -C "$repo" log -1 --format=%cs 2>/dev/null || printf unknown)
   [[ -f $repo/AGENTS.md ]] && agents=yes || agents=no
   [[ -f $repo/.specify/memory/constitution.md ]] && constitution=yes || constitution=no
-  workflows=$(find "$repo/.github/workflows" -maxdepth 1 -type f \( -name '*.yml' -o -name '*.yaml' \) -print 2>/dev/null | wc -l)
+  workflows=0
+  if [[ -d $repo/.github/workflows ]]; then
+    workflows=$(find "$repo/.github/workflows" -maxdepth 1 -type f \( -name '*.yml' -o -name '*.yaml' \) -print | wc -l)
+  fi
   updates=none
   if [[ -f $repo/.github/dependabot.yml && -f $repo/renovate.json ]]; then
     updates=dependabot,renovate
@@ -60,4 +68,4 @@ while IFS= read -r -d '' git_dir; do
     "$name" "$branch" "$upstream" "$tracked" "$untracked" "$ahead" \
     "$behind" "$last_commit" "$agents" "$constitution" "$workflows" \
     "$updates" "$manifest_text"
-done < <(find "$fleet_root" -name .git \( -type d -o -type f \) -print0 -prune)
+done < <(find "$fleet_root" -mindepth 1 -maxdepth "$max_depth" -name .git \( -type d -o -type f \) -print0 -prune)

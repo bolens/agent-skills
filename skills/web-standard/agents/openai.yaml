@@ -1,0 +1,4 @@
+interface:
+  display_name: "Web standard"
+  short_description: "Build native web behavior and compatibility fallbacks"
+  default_prompt: "Use $web-standard to implement and verify the web behavior in scope."

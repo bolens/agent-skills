@@ -1,33 +1,18 @@
 # caveman-review
 
-One-line PR comments. Location, problem, fix. No throat-clearing.
+Terse presentation for the same systematic review performed by
+[code-review](../code-review/SKILL.md). Use `/caveman-review` or request one-line
+findings. Ordinary review requests use `code-review`.
 
-## What it does
+Each finding keeps its location, impact, reachable failure, and smallest fix:
 
-Generates code review comments in `L<line>: <severity> <problem>. <fix>.` format. One line per finding. Severity emoji: 🔴 bug, 🟡 risk, 🔵 nit, ❓ question. Drops "I noticed that...", hedging, and restating what the diff already shows. Keeps exact line numbers, backticked symbols, and concrete fixes.
-
-Auto-clarity: drops terse mode for CVE-class security findings, architectural disagreements, and onboarding contexts where the author needs the *why*. Resumes terse for the rest.
-
-Output only — does not approve, request changes, or run linters.
-
-## How to invoke
-
-```
-/caveman-review
+```text
+save.ts:73: [P1] Save A's late response replaces newer B in the editor. Ignore responses for superseded revisions; reproduced with delayed A.
+client.py:23: question: Does the server deduplicate POST retries? Confirm before retrying an ambiguous timeout.
 ```
 
-Also triggers on "review this PR", "code review", "review the diff".
+Compression preserves evidence and uncertainty. Complex findings can use a
+paragraph. A final receipt identifies scope, checks, and material coverage gaps.
+Focused validation is allowed; edits and host review actions require authority.
 
-## Example output
-
-```
-L42: 🔴 bug: user can be null after .find(). Add guard before .email.
-L88-140: 🔵 nit: 50-line fn does 4 things. Extract validate/normalize/persist.
-L23: 🟡 risk: no retry on 429. Wrap in withBackoff(3).
-L107: ❓ q: why drop the cache here? Reads on next request will miss.
-```
-
-## See also
-
-- [`SKILL.md`](./SKILL.md) — full LLM-facing instructions
-- [Caveman README](../../README.md) — repo overview
+See [SKILL.md](SKILL.md) for the full instructions.

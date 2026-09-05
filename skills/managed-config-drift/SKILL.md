@@ -20,3 +20,5 @@ Use `scripts/compare-trees.py LIVE=MANAGED [...]` for bounded tree comparisons. 
 Read repository guidance and generator commands before judging a difference. Never copy, replace, delete, relink, refresh Omarchy configuration, or run a generator merely to make the audit clean. Propose an owner and direction for each reconciliation, then seek authorization.
 
 Use `omarchy` before touching live Omarchy or Hyprland configuration. Use `sensitive-info-audit` before adding previously untracked live configuration to Git.
+
+Use `arch-update-recovery` when drift was introduced by an Arch-family package transaction, `.pacnew`/`.pacsave` files, a snapshot rollback, or boot-chain regeneration. Use `backup-restore-verification` to prove a managed source can actually be recovered; a clean comparison alone does not prove that.

@@ -27,4 +27,7 @@ Do not restart services, mount filesystems, repair packages, delete caches, upda
 
 - Use `omarchy` and its desktop-session guide for Hyprland, UWSM, portals, PipeWire, Quickshell, display, or lock/idle problems.
 - Use `managed-config-drift` when symptoms may come from live configuration diverging from a managed repository or packaged default.
+- Use `arch-update-recovery` for Arch-family upgrade readiness, failed package transactions, boot-chain recovery, or post-upgrade verification.
+- Use `homelab-stack-triage` when the failing surface is a Compose service or its proxy, network, mount, or dependency path.
+- Use `backup-restore-verification` when the question is recoverability rather than general storage health.
 - Use `sensitive-info-audit` before publishing diagnostic bundles.

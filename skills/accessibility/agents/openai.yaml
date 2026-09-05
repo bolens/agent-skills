@@ -1,0 +1,4 @@
+interface:
+  display_name: Web Accessibility
+  short_description: Audit rendered WCAG 2.2 accessibility
+  default_prompt: Audit and improve this web interface using automated and manual accessibility evidence.

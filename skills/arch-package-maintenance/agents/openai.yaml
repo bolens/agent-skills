@@ -1,0 +1,4 @@
+interface:
+  display_name: "Arch package maintenance"
+  short_description: "Maintain local patches and verify Arch packages"
+  default_prompt: "Use $arch-package-maintenance to complete this task with repository-specific checks and inspectable evidence."

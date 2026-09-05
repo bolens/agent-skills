@@ -1,0 +1,4 @@
+interface:
+  display_name: "Web security"
+  short_description: "Verify application trust boundaries and defenses"
+  default_prompt: "Use $web-security to assess and verify the web application security boundary in scope."

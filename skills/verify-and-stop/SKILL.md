@@ -7,10 +7,12 @@ description: Prove existing work meets acceptance conditions without expanding s
 
 Translate acceptance conditions into smallest sufficient proof set.
 
-- Reuse still-current results with matching repository state.
+- Reuse results only when the checked files, dependencies, configuration, and relevant runtime conditions still match. Record the command and scope so a previous pass is not mistaken for proof of later changes.
 - Run focused checks before wider gates.
 - Distinguish pass, fail, unavailable, and blocked exactly.
 - Do not edit product code unless verification request includes fixes.
 - Do not add polish, cleanup, or unrelated tests after criteria pass.
 
-Stop immediately when acceptance proof is complete. Report commands, results, and unresolved risk only.
+Once acceptance proof is complete, end verification. Complete any remaining delivery steps already required by the user or repository instructions, such as a focused commit or requested artifact. Do not infer permission to push or publish from passing checks. Report results and any verification gaps without starting another improvement pass.
+
+If the broader task already includes PR follow-through or release preparation or publication, automatically use [babysit](../babysit/SKILL.md) for that remaining endpoint after verification. Return proof to an already active workflow without restarting it. A validation-only request ends with its results and does not start PR monitoring or release work.

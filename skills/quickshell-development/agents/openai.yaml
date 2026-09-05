@@ -1,0 +1,4 @@
+interface:
+  display_name: "Quickshell development"
+  short_description: "Build shell components with owned state and lifecycle"
+  default_prompt: "Use $quickshell-development to complete this task with repository-specific checks and inspectable evidence."

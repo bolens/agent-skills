@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design system"
+  short_description: "Maintain shared tokens, themes, and component states"
+  default_prompt: "Use $design-system to improve the shared tokens and components while preserving this project's conventions."

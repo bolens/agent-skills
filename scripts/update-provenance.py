@@ -11,19 +11,22 @@ ROOT = Path(__file__).resolve().parents[1]
 SKILLS = ROOT / "skills"
 UPSTREAMS = json.loads((ROOT / "UPSTREAMS.json").read_text())["skills"]
 
-AGENT_ONLY = {"caveman", "caveman-commit", "caveman-compress", "caveman-help", "caveman-review", "find-skills", "migration", "safe-refactor", "verify-and-stop"}
-DUAL_TARGET = {"diagnose-crash", "omarchy"}
+NO_CODEX_TARGET = {"caveman", "caveman-commit", "caveman-compress", "caveman-help", "caveman-review", "find-skills", "migration", "safe-refactor", "verify-and-stop"}
 
 
 def records() -> list[dict[str, object]]:
     result = []
     for directory in sorted(path for path in SKILLS.iterdir() if path.is_dir()):
         name = directory.name
-        targets = [f"${{CODEX_HOME:-$HOME/.codex}}/skills/{name}"]
-        if name in AGENT_ONLY:
-            targets = [f"${{AGENTS_HOME:-$HOME/.agents}}/skills/{name}"]
-        elif name in DUAL_TARGET:
-            targets.append(f"${{AGENTS_HOME:-$HOME/.agents}}/skills/{name}")
+        targets = []
+        if name not in NO_CODEX_TARGET:
+            targets.append(f"${{CODEX_HOME:-$HOME/.codex}}/skills/{name}")
+        targets.extend(
+            [
+                f"${{AGENTS_HOME:-$HOME/.agents}}/skills/{name}",
+                f"${{CLAUDE_HOME:-$HOME/.claude}}/skills/{name}",
+            ]
+        )
         if name in UPSTREAMS:
             source = UPSTREAMS[name]
             origin = {"type": "git", "url": source["url"], "branch": source["branch"], "path": source["path"], "ref": source["audited_ref"]}

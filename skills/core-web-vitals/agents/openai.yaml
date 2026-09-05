@@ -1,0 +1,4 @@
+interface:
+  display_name: Core Web Vitals
+  short_description: Diagnose LCP, INP, and CLS with evidence
+  default_prompt: Diagnose the failing Core Web Vital from field and lab evidence before proposing a fix.

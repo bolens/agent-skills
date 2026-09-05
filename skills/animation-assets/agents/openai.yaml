@@ -1,0 +1,4 @@
+interface:
+  display_name: "Lottie and Rive assets"
+  short_description: "Integrate authored animation assets and players"
+  default_prompt: "Use $animation-assets to integrate this Lottie or Rive asset with verified playback, fallback, and cleanup."

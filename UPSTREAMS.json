@@ -2,6 +2,13 @@
   "schema_version": 1,
   "policy": "audited-hard-fork",
   "skills": {
+    "accessibility": {
+      "url": "https://github.com/addyosmani/web-quality-skills",
+      "branch": "main",
+      "path": "skills/accessibility",
+      "audited_ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
+      "local_changes": ["Route responsive visual evidence through responsive-web-capture and functional browser evidence through cli-web-evidence.", "Route runtime and shared-component remediation to motion, asset, and design-system skills; verify explicit reduced-motion states rather than relying on a global duration reset."]
+    },
     "archify": {
       "url": "https://github.com/tt-a1i/archify",
       "branch": "main",
@@ -40,7 +47,15 @@
       "url": "https://github.com/JuliusBrussee/caveman",
       "branch": "main",
       "path": "skills/caveman-review",
-      "audited_ref": "3b74643f4d910f496babd4e634b1ba7168816f14"
+      "audited_ref": "3b74643f4d910f496babd4e634b1ba7168816f14",
+      "local_changes": ["Limit discovery to requested terse reviews, preserve evidence in compressed findings, and allow focused validation without autofix.", "Keep code-review as the systematic review workflow, retain severity and coverage in terse output, and replace speculative examples and stale README triggers."]
+    },
+    "core-web-vitals": {
+      "url": "https://github.com/addyosmani/web-quality-skills",
+      "branch": "main",
+      "path": "skills/core-web-vitals",
+      "audited_ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
+      "local_changes": ["Route viewport-sensitive metric fixes through responsive-web-capture and interaction proof through cli-web-evidence."]
     },
     "diagnose-crash": {
       "url": "https://github.com/basecamp/omarchy",
@@ -70,6 +85,13 @@
       "audited_ref": "d3d23fdddef846ebb98b52122a6ece66211c0daf",
       "local_changes": ["Keep desktop-session.md and its workstation health and config-drift routing."]
     },
+    "performance": {
+      "url": "https://github.com/addyosmani/web-quality-skills",
+      "branch": "main",
+      "path": "skills/performance",
+      "audited_ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
+      "local_changes": ["Require responsive and functional regression evidence when performance changes can affect those surfaces.", "Route measured animation and player costs through web-animation and animation-assets, including active motion and route re-entry evidence."]
+    },
     "safe-refactor": {
       "url": "https://github.com/JuliusBrussee/caveman",
       "branch": "main",
@@ -80,7 +102,20 @@
       "url": "https://github.com/JuliusBrussee/caveman",
       "branch": "main",
       "path": "skills/verify-and-stop",
-      "audited_ref": "3b74643f4d910f496babd4e634b1ba7168816f14"
+      "audited_ref": "3b74643f4d910f496babd4e634b1ba7168816f14",
+      "local_changes": ["Bind reused proof to the checked inputs and runtime conditions, and complete already-required delivery steps after verification.", "Automatically hand already-requested PR or release follow-through to babysit without expanding validation-only tasks or restarting an active workflow."]
+    },
+    "web-quality-audit": {
+      "url": "https://github.com/addyosmani/web-quality-skills",
+      "branch": "main",
+      "path": "skills/web-quality-audit",
+      "audited_ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
+      "local_changes": [
+        "Coordinate comprehensive responsive capture and functional browser receipts while keeping evidence types separate.",
+        "Use an env-resolved Bash shebang so the analyzer works outside fixed /bin layouts.",
+        "Link only bundled category skills; route SEO, platform behavior, security, and async-state findings without expanding a read-only audit into implementation.",
+        "Treat source maps as publication content to inspect and llms.txt as optional consumer-specific discovery, not automatic security or search verdicts."
+      ]
     }
   }
 }
