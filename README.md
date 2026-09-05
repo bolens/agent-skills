@@ -41,6 +41,8 @@ ownership, focused commits, and validation of the integrated result. It checks
 base and feature freshness before PR submission and synchronizes eligible local
 checkouts after a merge. It also owns cleanup of completed local branches,
 related remote branches, and temporary worktrees, including older leftovers.
+At feature completion, it removes task-owned temporary evidence and screenshot
+directories while preserving deliverables and artifacts still needed for review.
 
 During fleet-wide work, `audit-repo-fleet` checks maintained peers for the same
 cause or applicable improvement. Each repository keeps its own validation and

@@ -19,6 +19,8 @@ Before removing completed feature refs, follow [checkout freshness](freshness.md
 
 Clean up temporary local worktrees as part of the same post-merge endpoint, even when the host already removed the remote branch. Retain the main checkout and worktrees used as installed or deployed paths. Do not repoint symlinks or services as cleanup.
 
+Apply [temporary evidence cleanup](evidence-cleanup.md) before worktree removal, including task-owned screenshot and evidence directories outside the worktree. Preserve required artifacts at a retained location before deleting their containing worktree.
+
 Release only task-owned, inactive worktrees after inspecting staged, unstaged, untracked, and valuable ignored files. Preserve anything needed for recovery. Use `git worktree remove` without force for a temporary linked worktree. In a retained checkout owned by this task, switch to the intended base only when clean and no other agent uses it. If that base is checked out elsewhere, use a verified detached target or retain the checkout. Never switch another agent's checkout or force removal to unblock branch deletion.
 
 Delete only the named local feature branch after rechecking its tip under the Git writer's ownership. Prefer `git branch -d -- BRANCH`. Its safety check may use the branch's upstream, so successful deletion is not independent proof of integration into the intended base. Establish that proof first. [Git branch documentation](https://git-scm.com/docs/git-branch).

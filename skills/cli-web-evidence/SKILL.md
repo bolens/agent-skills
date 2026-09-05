@@ -41,4 +41,6 @@ Report the exact command or test, URL, browser, viewport, relevant emulation/sta
 
 Separate rendering evidence from functional assertions and measured quality. An incomplete capture is not a passing check. Keep partial artifacts for diagnosis and state what remains unverified. Once the requested evidence passes, stop unless a new failure justifies another run.
 
+Before the final handoff, apply [temporary evidence cleanup](../git-hygiene/references/evidence-cleanup.md). Retain requested captures and receipts as deliverables, and remove disposable task-owned runs once the feature is complete. If capture is an intermediate step, hand exact paths and retention needs to the feature owner. Report retained artifact paths rather than links to deleted scratch files.
+
 Website interactions remain within the user's authorized scope. Purchases, publishing, messages, and production-data changes require authorization for that action. Prefer local, preview, test, or read-only paths.

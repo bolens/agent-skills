@@ -94,9 +94,11 @@ When release work is needed, read [references/release-follow-through.md](referen
 
 After the host confirms the intended PR was merged, apply [local checkout synchronization](../git-hygiene/references/freshness.md) before declaring completion. Fetch the merged base, fast-forward eligible task-owned retained checkouts, and report dirty, active, or divergent checkouts left unchanged. Then use [git-hygiene's branch cleanup](../git-hygiene/references/branch-cleanup.md) to remove the completed local and remote feature branches and release task-owned temporary worktrees within existing authority. Follow its checks for active agents, advanced tips, squash or rebase merges, and conditional remote deletion. This is part of merge follow-through when cleanup is authorized, not an optional reminder. If the host already deleted the remote branch, verify that state and finish eligible local cleanup.
 
-Keep the current babysit workflow as coordinator. Record any retained branch or worktree and the reason. A readiness-only endpoint does not trigger merge or cleanup.
+Keep the current babysit workflow as coordinator. Record any retained branch or worktree and the reason. A readiness-only endpoint does not trigger merge or branch/worktree cleanup.
 
 ## Completion
+
+At the requested endpoint, apply [temporary evidence cleanup](../git-hygiene/references/evidence-cleanup.md) to task-owned evidence and screenshot directories, including readiness-only and standalone release work. Retain artifacts needed for pending review, diagnosis, or delivery. Report removed paths and any retained paths with their reason.
 
 Finish only when the requested endpoint is satisfied or a specific external blocker remains after all independent work is complete. Report:
 

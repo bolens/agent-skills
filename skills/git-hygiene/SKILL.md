@@ -78,6 +78,8 @@ Use [resolving-merge-conflicts](../resolving-merge-conflicts/SKILL.md) for an ow
 
 ## Handoff and cleanup
 
+At feature completion, including local-only endpoints, use [temporary evidence cleanup](references/evidence-cleanup.md) to remove task-owned scratch evidence and screenshot directories. Carry exact paths and retention needs across handoffs. Preserve deliverables and evidence still needed for review or diagnosis, and report removed or retained artifacts.
+
 Report integrated revisions, checks for that state, remaining changes and their owners, and retained worktrees or branches. After a verified merge, use [branch cleanup](references/branch-cleanup.md) to remove completed local feature branches, related remote branches, and temporary worktrees within existing authority. Include older leftovers for the completed feature; for a requested repository cleanup, apply the same checks to each older candidate. Do not equate a closed PR with a merge or a clean worktree with integrated commits.
 
 Before removing a task-created worktree, confirm its owner has finished, no processes depend on it, tracked and untracked work is preserved, and its commits are integrated or deliberately retained elsewhere. Inspect ignored outputs for anything valuable. Remove only that worktree using Git without force. Never run fleet-wide pruning, delete another task's branch, or remove active worktrees as incidental cleanup.

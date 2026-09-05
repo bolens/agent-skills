@@ -45,6 +45,9 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Changed
 
+- Clean up task-owned temporary evidence and screenshot directories at feature
+  completion, preserving deliverables, visual baselines, and pending review evidence.
+
 - Refresh base and feature revisions before PR submission, reconcile host-side
   updates locally, and verify eligible local checkouts are synchronized after merge.
 
