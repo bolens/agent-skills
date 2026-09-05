@@ -37,6 +37,20 @@
       ]
     },
     {
+      "name": "arch-package-maintenance",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/arch-package-maintenance",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/arch-package-maintenance"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/arch-package-maintenance",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/arch-package-maintenance",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/arch-package-maintenance"
+      ]
+    },
+    {
       "name": "arch-update-recovery",
       "hard_fork": true,
       "origin": {
@@ -468,6 +482,20 @@
       ]
     },
     {
+      "name": "media-preservation",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/media-preservation",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/media-preservation"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/media-preservation",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/media-preservation",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/media-preservation"
+      ]
+    },
+    {
       "name": "migration",
       "hard_fork": true,
       "origin": {
@@ -480,6 +508,20 @@
       "install_targets": [
         "${AGENTS_HOME:-$HOME/.agents}/skills/migration",
         "${CLAUDE_HOME:-$HOME/.claude}/skills/migration"
+      ]
+    },
+    {
+      "name": "network-exposure-verification",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/network-exposure-verification",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/network-exposure-verification"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/network-exposure-verification",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/network-exposure-verification",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/network-exposure-verification"
       ]
     },
     {
@@ -519,6 +561,20 @@
         "${CODEX_HOME:-$HOME/.codex}/skills/performance",
         "${AGENTS_HOME:-$HOME/.agents}/skills/performance",
         "${CLAUDE_HOME:-$HOME/.claude}/skills/performance"
+      ]
+    },
+    {
+      "name": "quickshell-development",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/quickshell-development",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/quickshell-development"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/quickshell-development",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/quickshell-development",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/quickshell-development"
       ]
     },
     {

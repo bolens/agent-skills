@@ -1,11 +1,17 @@
 ---
 name: babysit
-description: Follow an open pull request through a separate audit, actionable review nits, CI repairs caused by its changes, and the repository's release playbook when a release is needed. Use when asked to babysit a PR, follow it through, or get it ready to merge or release. Do not use for a one-off read-only review or CI status lookup.
+description: Follow an open pull request through a separate audit, actionable review nits, CI repairs caused by its changes, and the repository's release playbook when a release is needed. Use when asked to babysit a PR, follow it through, or get it ready to merge or release. Also use for standalone release preparation or follow-through under the repository playbook. Do not use for a one-off read-only review or CI status lookup.
 ---
 
-# Babysit a pull request
+# PR and release follow-through
 
-Carry the named PR to the requested endpoint. Keep an explicit record of the current head, audit findings, review feedback, checks, and release obligations. A push or a green local test run is an intermediate step.
+Carry the named PR or release to the requested endpoint. Keep an explicit record of the candidate commit, audit findings, applicable review feedback, checks, and release obligations. A push or a green local test run is an intermediate step.
+
+## Select the entry path
+
+For an open PR, follow the workflow below. For a standalone release request, identify the repository, release unit, intended source commit/version, destination, and requested endpoint. Read repository guidance and [release follow-through](references/release-follow-through.md). An open PR is not required. Skip PR lookup, review-thread polling, and merge steps unless the playbook actually uses a release PR.
+
+For standalone work, inspect the changes since the relevant published release and run a distinct audit of the candidate and release edits using `code-review`. Use an independent reviewer when available and permitted, otherwise identify the self-review. Repair supported issues within the requested release scope, run required gates, and verify artifacts for the intended commit. Carry forward existing publication authority; a preparation-only request ends with a concrete validated candidate. Report source/version, audit and check evidence, publication state, and remaining work without inventing a PR link.
 
 ## Establish the target and authority
 

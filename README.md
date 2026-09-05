@@ -76,6 +76,17 @@ Runtime-specific references are loaded only for the selected stack. Existing
 packages, component conventions, and requested formats take precedence over
 adding or migrating frameworks.
 
+## Media, packages, and operations
+
+| Task | Skill |
+|---|---|
+| Audio/image/video preservation, archive utilities, and batches | [media-preservation](skills/media-preservation/SKILL.md) |
+| PKGBUILDs, local patches, clean builds, and pinned rebuilds | [arch-package-maintenance](skills/arch-package-maintenance/SKILL.md) |
+| LAN/WAN/VPN reachability, firewalls, Docker, DNS, and TLS | [network-exposure-verification](skills/network-exposure-verification/SKILL.md) |
+| Quickshell/QML component and plugin implementation | [quickshell-development](skills/quickshell-development/SKILL.md) |
+| Backup validation and isolated application recovery drills | [backup-restore-verification](skills/backup-restore-verification/SKILL.md) |
+| PR follow-through or standalone release preparation/publication | [babysit](skills/babysit/SKILL.md) |
+
 Public releases should pass `sensitive-info-audit`, including a history-aware
 scanner, before they are pushed.
 

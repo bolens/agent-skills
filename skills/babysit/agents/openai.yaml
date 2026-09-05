@@ -1,4 +1,4 @@
 interface:
-  display_name: "Babysit a pull request"
-  short_description: "Follow PR audits, CI fixes, and release work"
-  default_prompt: "Use $babysit to follow this open PR through a separate audit, actionable nits, CI repairs, and the repository's release playbook where needed."
+  display_name: "PR and release follow-through"
+  short_description: "Follow PR fixes or standalone repository releases"
+  default_prompt: "Use $babysit to follow this PR or standalone release through its applicable audit, checks, repairs, and repository release playbook."

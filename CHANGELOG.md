@@ -6,6 +6,8 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Added
 
+- Add media preservation, Arch package maintenance, network exposure verification,
+  and Quickshell development workflows.
 - Add web security, technical SEO, and web-standard workflows, including native
   browser controls, compatibility fallbacks, and optional `llms.txt` verification.
 - Add form and async-data guidance for preserving drafts, ordering requests,
@@ -34,6 +36,10 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Changed
 
+- Align media preservation with the audio, image, video, and archive utility
+  family, including image fidelity, archive extraction, and shared-tool validation.
+- Extend backup verification with isolated service recovery drills and let
+  `babysit` follow standalone releases without requiring an open PR.
 - Make responsive captures preserve reruns, bound browser execution, isolate
   browser profiles, and record incomplete runs and requested motion settings.
 - Focus CLI web evidence on application readiness, comparable rendering states,

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Network exposure verification"
+  short_description: "Verify intended access across actual network paths"
+  default_prompt: "Use $network-exposure-verification to complete this task with repository-specific checks and inspectable evidence."

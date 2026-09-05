@@ -22,6 +22,8 @@ Arch does not support partial upgrades. Do not refresh package databases and the
 
 Use `backup-restore-verification` when the safety case depends on backup recovery rather than a local snapshot alone. Use `managed-config-drift` to review `.pacnew`, `.pacsave`, generated config, and packaged-default changes. Use `sensitive-info-audit` before publishing system logs or configuration bundles.
 
+Use [arch-package-maintenance](../arch-package-maintenance/SKILL.md) when a repair requires maintaining a PKGBUILD, rebasing a local patch, or validating the replacement for a pinned rebuild.
+
 ## Diagnose a failed upgrade
 
 Capture the exact command, transaction log, pacman log window, current booted kernel, installed kernel/modules, initramfs and boot entries, failed units, filesystem and snapshot state, and package ownership of conflicting files. Classify the failure before acting:
