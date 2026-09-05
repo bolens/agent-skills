@@ -43,4 +43,4 @@ For each finding provide severity, confidence, `file:line`, the concrete failure
 
 Keep Spec and Standards labels when they clarify the source, but rank all defects by impact so the user knows what to fix first. Follow an explicitly requested output style such as `caveman-review`.
 
-When the user asks to address findings and follow an open PR through CI or release readiness, use `babysit` to coordinate that work. A one-off review remains read-only.
+When the task includes addressing PR findings, getting a PR ready to merge, or preparing or publishing a release, automatically use [babysit](../babysit/SKILL.md) to coordinate that endpoint. Keep this review pass read-only and return findings to an already active babysit workflow. A one-off review does not start follow-through.

@@ -1,11 +1,24 @@
 ---
 name: babysit
-description: Follow an open pull request through a separate audit, actionable review nits, CI repairs caused by its changes, and the repository's release playbook when a release is needed. Use when asked to babysit a PR, follow it through, or get it ready to merge or release. Also use for standalone release preparation or follow-through under the repository playbook. Do not use for a one-off read-only review or CI status lookup.
+description: Follow an open pull request through a separate audit, actionable review nits, CI repairs caused by its changes, and the repository's release playbook when a release is needed. Use automatically when the requested task includes addressing PR feedback, fixing PR CI, getting a PR ready to merge, merging it, or preparing or publishing a repository release, even when babysit is not named. Do not use for a one-off read-only review or CI status lookup.
 ---
 
 # PR and release follow-through
 
 Carry the named PR or release to the requested endpoint. Keep an explicit record of the candidate commit, audit findings, applicable review feedback, checks, and release obligations. A push or a green local test run is an intermediate step.
+
+## Automatic handoffs
+
+Use this workflow when PR or release follow-through is part of the user's requested endpoint, including delivery already authorized earlier in the conversation. Other skills should enter it without asking whether to use `babysit`.
+
+- Address review comments or fix failing CI on an open PR: coordinate the repair, separate audit, and checks for the updated head.
+- Get a PR ready to merge or merge it: carry it to that endpoint under repository policy and existing authority.
+- Prepare or publish a release: follow the standalone release path when no PR is involved. Preparation ends with a validated candidate.
+- Complete implementation whose requested delivery includes a PR or release: enter this workflow once the PR exists or release preparation begins. Creating a PR alone does not imply permission to merge it.
+
+A local edit, commit-only task, one-off review, diagnostic request, status lookup, or readiness assessment alone does not start follow-through. An existing PR or a release-related file is not sufficient. Respect explicit limits such as "local fixes only", "review only", or "stop after pushing". Automatic selection grants no additional authority to push, merge, publish, deploy, or communicate.
+
+Keep one coordinating workflow. When `babysit` calls another skill for an audit, diagnosis, conflict resolution, or verification, return its findings and evidence to the current workflow instead of starting another babysit loop. Carry the target, requested endpoint, authorized actions, current head, completed evidence, and remaining work across handoffs.
 
 ## Select the entry path
 

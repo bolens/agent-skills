@@ -14,3 +14,5 @@ Translate acceptance conditions into smallest sufficient proof set.
 - Do not add polish, cleanup, or unrelated tests after criteria pass.
 
 Once acceptance proof is complete, end verification. Complete any remaining delivery steps already required by the user or repository instructions, such as a focused commit or requested artifact. Do not infer permission to push or publish from passing checks. Report results and any verification gaps without starting another improvement pass.
+
+If the broader task already includes PR follow-through or release preparation or publication, automatically use [babysit](../babysit/SKILL.md) for that remaining endpoint after verification. Return proof to an already active workflow without restarting it. A validation-only request ends with its results and does not start PR monitoring or release work.

@@ -51,6 +51,6 @@ A review or triage request is read-only. When implementation is requested:
 
 Use the changelog-maintainer skill when an update changes runtime requirements, compatibility, configuration, security exposure, or operator behavior. Keep routine dependency churn out of the changelog.
 
-Use `babysit` when the user wants an open dependency PR followed through review feedback, CI repairs, and any required release work. Keep dependency assessment here and let that workflow track the current PR head and remaining delivery steps.
+When the task includes repairing an open dependency PR, addressing its feedback, getting it ready to merge, or preparing or publishing a release, automatically use [babysit](../babysit/SKILL.md). Keep dependency assessment here and return versions, risk, and check evidence to that coordinating workflow. A dependency review or local upgrade alone does not start follow-through.
 
 Do not disable lifecycle-script protections, signature/checksum verification, security gates, or dependency automation merely to land an update. Follow the user's and repository's commit instructions and stage only task changes. Push, merge, publish, deploy, or restart services only within the authority already granted for the task.
