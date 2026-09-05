@@ -22,6 +22,20 @@
       ]
     },
     {
+      "name": "animation-assets",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/animation-assets",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/animation-assets"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/animation-assets",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/animation-assets",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/animation-assets"
+      ]
+    },
+    {
       "name": "arch-update-recovery",
       "hard_fork": true,
       "origin": {
@@ -301,6 +315,20 @@
       ]
     },
     {
+      "name": "design-system",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/design-system",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/design-system"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/design-system",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/design-system",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/design-system"
+      ]
+    },
+    {
       "name": "diagnose-crash",
       "hard_fork": true,
       "origin": {
@@ -577,6 +605,20 @@
       ]
     },
     {
+      "name": "svg-design",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/svg-design",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/svg-design"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/svg-design",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/svg-design",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/svg-design"
+      ]
+    },
+    {
       "name": "sync-skill-upstreams",
       "hard_fork": true,
       "origin": {
@@ -676,6 +718,20 @@
       "install_targets": [
         "${AGENTS_HOME:-$HOME/.agents}/skills/verify-and-stop",
         "${CLAUDE_HOME:-$HOME/.claude}/skills/verify-and-stop"
+      ]
+    },
+    {
+      "name": "web-animation",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/web-animation",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/web-animation"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/web-animation",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/web-animation",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/web-animation"
       ]
     },
     {

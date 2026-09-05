@@ -56,6 +56,22 @@ merges upstream content.
 Contract tests check that inline local links in skill entrypoints resolve. They
 do not verify remote URLs or section anchors.
 
+## Web and design workflows
+
+| Task | Skill |
+|---|---|
+| Page composition and visual direction | [frontend-design](skills/frontend-design/SKILL.md) |
+| Shared tokens, themes, variants, and component states | [design-system](skills/design-system/SKILL.md) |
+| Static vector artwork and reusable icons | [svg-design](skills/svg-design/SKILL.md) |
+| Moving SVG geometry, pivots, strokes, and morphs | [svg-animation](skills/svg-animation/SKILL.md) |
+| GSAP, Motion, native transitions, and other interface motion | [web-animation](skills/web-animation/SKILL.md) |
+| Lottie/dotLottie and Rive asset integration | [animation-assets](skills/animation-assets/SKILL.md) |
+| Browser interaction and responsive visual evidence | [cli-web-evidence](skills/cli-web-evidence/SKILL.md), [responsive-web-capture](skills/responsive-web-capture/SKILL.md) |
+
+Runtime-specific references are loaded only for the selected stack. Existing
+packages, component conventions, and requested formats take precedence over
+adding or migrating frameworks.
+
 Public releases should pass `sensitive-info-audit`, including a history-aware
 scanner, before they are pushed.
 
