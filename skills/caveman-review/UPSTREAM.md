@@ -10,6 +10,9 @@ Original path: `skills/caveman-review`
 
 Last audited reference: `3b74643f4d910f496babd4e634b1ba7168816f14`
 
+Local changes to retain:
+- Limit discovery to requested terse reviews, preserve evidence in compressed findings, and allow focused validation without autofix.
+
 Updates are audited and merged manually. This fork does not track or represent upstream releases.
 
 See [`../../PROVENANCE.json`](../../PROVENANCE.json) for the machine-readable record.

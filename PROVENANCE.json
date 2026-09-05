@@ -187,7 +187,10 @@
         "url": "https://github.com/JuliusBrussee/caveman",
         "branch": "main",
         "path": "skills/caveman-review",
-        "ref": "3b74643f4d910f496babd4e634b1ba7168816f14"
+        "ref": "3b74643f4d910f496babd4e634b1ba7168816f14",
+        "local_changes": [
+          "Limit discovery to requested terse reviews, preserve evidence in compressed findings, and allow focused validation without autofix."
+        ]
       },
       "install_targets": [
         "${AGENTS_HOME:-$HOME/.agents}/skills/caveman-review",

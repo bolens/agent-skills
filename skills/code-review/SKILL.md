@@ -12,10 +12,15 @@ Lead with actionable findings, ordered by severity. Do not modify files, stage c
 1. Read the applicable `AGENTS.md`, contributor docs, and relevant source-of-truth files.
 2. Use the fixed point supplied by the user. Otherwise infer the safest useful scope:
    - staged or unstaged request: corresponding local diff
-   - branch/PR request: merge-base with its upstream/default branch
+   - PR request: the PR's actual target branch and head, including non-default targets
+   - branch request: merge-base with the intended integration branch, inferred from repository guidance or the remote default when no other target is evident
    - ambiguous repository-wide request: ask rather than reviewing an arbitrary range
 3. Verify the reference and inspect both the diff and commit list. Preserve awareness of unrelated dirty-worktree changes.
 4. Find the originating spec or issue when locally available. A missing spec does not block correctness review.
+
+Do not use a feature branch's tracking ref as its integration base. After a push, `HEAD` and `origin/<feature>` can be identical while the PR still contains changes. Record the resolved base and head commits and use `git diff <base>...<head>` for the branch's proposed changes. If the target cannot be established, ask for that one missing reference. Do not report an empty diff as a clean review until the scope is confirmed.
+
+Read source and run checks against the reviewed revision. When the checkout contains other changes or a different head, inspect Git objects or use an isolated checkout for execution. Label results from a different state as partial evidence. Use focused tests or linters when they can resolve a suspected defect, with autofix disabled.
 
 ## Review lenses
 

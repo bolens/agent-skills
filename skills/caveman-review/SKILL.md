@@ -2,10 +2,13 @@
 name: caveman-review
 description: >
   Compressed code review - one line per finding with location, problem and fix.
-  Use for /caveman-review, "review this PR", or "review the diff".
+  Use for /caveman-review or when the user requests terse, one-line review findings.
+  Ordinary review requests use code-review.
 ---
 
 Write code review comments terse and actionable. One line per finding. Location, problem, fix. No throat-clearing.
+
+Use `code-review` for scope selection, source inspection, and validation when available. This skill controls presentation. Compression must preserve the failure scenario, evidence, and uncertainty needed to assess a finding.
 
 ## Rules
 
@@ -50,4 +53,4 @@ Drop terse mode for: security findings (CVE-class bugs need full explanation + r
 
 ## Boundaries
 
-Reviews only — does not write the code fix, does not approve/request-changes, does not run linters. Output the comment(s) ready to paste into the PR. "stop caveman-review" or "normal mode": revert to verbose review style.
+Review without modifying product files or posting a review unless the user requests those actions. Focused checks with autofix disabled are allowed when useful to verify a finding. Output comments ready to paste into the PR. "stop caveman-review" or "normal mode": return to normal review prose.
