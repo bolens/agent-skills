@@ -32,7 +32,7 @@ Treat a request to set up hooks as authorization to edit repository configuratio
 
 Add only the files and scripts needed for the selected framework. Keep commands usable outside the hook, preferably through existing package scripts or Make/task targets.
 
-Do not stage or commit changes unless the user explicitly asks. Do not replace an existing hook without describing what will be preserved.
+Follow the user's and repository's commit instructions. When a commit is required, stage only task changes and preserve unrelated staged or unstaged work. Do not replace an existing hook without describing what will be preserved.
 
 ## Verify
 

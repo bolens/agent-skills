@@ -10,6 +10,9 @@ Original path: `skills/verify-and-stop`
 
 Last audited reference: `3b74643f4d910f496babd4e634b1ba7168816f14`
 
+Local changes to retain:
+- Bind reused proof to the checked inputs and runtime conditions, and complete already-required delivery steps after verification.
+
 Updates are audited and merged manually. This fork does not track or represent upstream releases.
 
 See [`../../PROVENANCE.json`](../../PROVENANCE.json) for the machine-readable record.

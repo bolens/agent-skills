@@ -38,4 +38,4 @@ Use `tdd` when the user requests test-first work or a full red-green-refactor lo
 
 ## Stop conditions
 
-Stop and ask for direction when the next step needs new authority, production mutation, unavailable credentials, destructive recovery, or a product decision. If the issue remains unresolved, report what is known, what was ruled out, and the next discriminating probe.
+Carry forward authorization already given in the conversation. Ask only when the next action needs authority that has not been granted, missing access, or a consequential product decision that cannot be inferred. Prepare a concrete proposed change and complete independent diagnostics before requesting approval for a production mutation or destructive recovery. If the issue remains unresolved, report what is known, what was ruled out, and the next discriminating probe.
