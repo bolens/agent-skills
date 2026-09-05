@@ -45,6 +45,9 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Changed
 
+- Refresh base and feature revisions before PR submission, reconcile host-side
+  updates locally, and verify eligible local checkouts are synchronized after merge.
+
 - Include older completed feature branches and related remotes in scoped Git
   cleanup, verifying integration and ownership separately for every candidate.
 

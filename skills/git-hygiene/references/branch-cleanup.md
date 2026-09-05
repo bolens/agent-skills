@@ -15,6 +15,8 @@ Inventory local branches, their upstreams, linked worktrees, and related remote 
 
 Routine cleanup belongs to the authorized merge endpoint when the user or repository delivery policy includes it. Honor requests to retain branches and narrower endpoints such as readiness or local fixes. Carry existing cleanup authorization forward without asking again. If deletion authority is missing, complete the checks and report the exact remaining branch and action.
 
+Before removing completed feature refs, follow [checkout freshness](freshness.md) to synchronize eligible retained local base checkouts and record any retained stale state. A fetched tracking ref is not proof that the checkout advanced.
+
 Clean up temporary local worktrees as part of the same post-merge endpoint, even when the host already removed the remote branch. Retain the main checkout and worktrees used as installed or deployed paths. Do not repoint symlinks or services as cleanup.
 
 Release only task-owned, inactive worktrees after inspecting staged, unstaged, untracked, and valuable ignored files. Preserve anything needed for recovery. Use `git worktree remove` without force for a temporary linked worktree. In a retained checkout owned by this task, switch to the intended base only when clean and no other agent uses it. If that base is checked out elsewhere, use a verified detached target or retain the checkout. Never switch another agent's checkout or force removal to unblock branch deletion.

@@ -37,9 +37,10 @@ specialized workflows.
 ## How the skills work together
 
 For concurrent implementation, `git-hygiene` establishes worktree and file
-ownership, focused commits, and validation of the integrated result. After a
-verified merge, it also owns cleanup of completed local branches, related remote
-branches, and temporary worktrees, including older leftovers.
+ownership, focused commits, and validation of the integrated result. It checks
+base and feature freshness before PR submission and synchronizes eligible local
+checkouts after a merge. It also owns cleanup of completed local branches,
+related remote branches, and temporary worktrees, including older leftovers.
 
 During fleet-wide work, `audit-repo-fleet` checks maintained peers for the same
 cause or applicable improvement. Each repository keeps its own validation and
