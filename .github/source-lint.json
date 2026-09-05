@@ -1,0 +1,16 @@
+{
+  "python": [
+    "*"
+  ],
+  "javascript": [
+    "*.js",
+    "*.mjs",
+    "*.cjs"
+  ],
+  "exclude": [
+    "skills/archify/vendor/*",
+    "skills/archify/generated/*",
+    "skills/archify/renderers/shared/generated-validators.mjs"
+  ],
+  "notes": "Complements native repository checks. Managed Spec Kit files retain their dedicated integrity gate; imported snapshots and generated/native-checked surfaces are scoped separately. Generated AJV validators are verified by the native generator/tests."
+}
