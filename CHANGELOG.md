@@ -42,6 +42,9 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Changed
 
+- Keep homelab incident evidence private, distinguish preparation and validation
+  side effects, and connect stack fixes with exposure and dependency workflows.
+
 - Have `babysit` complete verified post-merge branch and temporary local worktree
   cleanup through `git-hygiene`, preserving active or unintegrated work.
 
