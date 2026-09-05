@@ -1,0 +1,4 @@
+interface:
+  display_name: "Forms and data state"
+  short_description: "Handle submissions, autosave, and async data races"
+  default_prompt: "Use $forms-and-data-state to implement and verify this form or async data workflow."

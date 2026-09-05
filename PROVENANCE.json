@@ -384,6 +384,20 @@
       ]
     },
     {
+      "name": "forms-and-data-state",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/forms-and-data-state",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/forms-and-data-state"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/forms-and-data-state",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/forms-and-data-state",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/forms-and-data-state"
+      ]
+    },
+    {
       "name": "frontend-design",
       "hard_fork": true,
       "origin": {
