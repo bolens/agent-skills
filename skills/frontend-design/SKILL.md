@@ -6,6 +6,10 @@ license: Complete terms in LICENSE.txt
 
 # Frontend design
 
+Modified from Anthropic's frontend-design skill. This fork rewrites the design
+workflow and adds local skill handoffs and browser verification. See
+[UPSTREAM.md](UPSTREAM.md) and [LICENSE.txt](LICENSE.txt).
+
 Make the visual direction fit the product, content, audience, and existing identity. A new campaign can justify a distinct visual language. A settings panel inside an established application usually needs continuity and clear behavior.
 
 ## Ground the direction

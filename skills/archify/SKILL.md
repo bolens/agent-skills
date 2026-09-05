@@ -12,6 +12,10 @@ metadata:
 
 Create a self-contained, interactive HTML diagram from a small typed JSON specification. Static output is the default; enable motion only when the user asks for a demo or presentation.
 
+Keep [LICENSE](LICENSE) and applicable [third-party notices](THIRD_PARTY_NOTICES.md)
+with distributed artifacts. Before selecting brand marks, check the intended use
+against their individual terms in [brand marks](references/brand-marks.md).
+
 ## Fast authoring path
 
 Use this bounded path for ordinary generation. Do not read the optional Viewer Runtime reference unless the user asks about those features.

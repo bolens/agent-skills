@@ -50,7 +50,12 @@ Review the generated diff. Hand edits to `PROVENANCE.json` or `UPSTREAM.md` will
 be replaced by the generator. A locally authored skill has no `UPSTREAMS.json`
 entry and receives a local-origin record. An imported skill needs a reviewed
 upstream entry with its source path, exact audited revision, and local changes.
-Preserve the upstream license and notices.
+Preserve the upstream license and notices inside each copied skill, including
+applicable ancestor files outside the imported subtree. Record `license.spdx`,
+`license.path`, `license.upstream_path`, and the exact copy's `license.sha256` in
+`UPSTREAMS.json`. Review the candidate revision's terms on every import, retain
+required modification notices, and keep separate licenses for bundled material.
+See [LICENSE.md](LICENSE.md) for the audited scope and distribution boundaries.
 
 Installed directories are symlinks to this checkout. Edit the source instead of
 copying changes into client homes. Installation is a separate action documented

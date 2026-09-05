@@ -14,7 +14,13 @@
         "local_changes": [
           "Route responsive visual evidence through responsive-web-capture and functional browser evidence through cli-web-evidence.",
           "Route runtime and shared-component remediation to motion, asset, and design-system skills; verify explicit reduced-motion states rather than relying on a global duration reset."
-        ]
+        ],
+        "license": {
+          "spdx": "MIT",
+          "path": "LICENSE",
+          "upstream_path": "LICENSE",
+          "sha256": "c122223ac43e86421958e18623979942c21b642951e2e3736dcb63eff13587c3"
+        }
       },
       "install_targets": [
         "${CODEX_HOME:-$HOME/.codex}/skills/accessibility",
@@ -73,10 +79,20 @@
         "branch": "main",
         "path": "archify",
         "ref": "06dd052602dd9a369e4d034e24faef0917b5a60c",
+        "preserve_paths": [
+          "licenses"
+        ],
         "local_changes": [
           "Keep the fast-uri security override at 3.1.6 or a later audited release.",
-          "Preserve the original error as cause when preview directory watching fails."
-        ]
+          "Preserve the original error as cause when preview directory watching fails.",
+          "Retain bundled dependency licenses, third-party attribution additions, and artifact/brand licensing guidance."
+        ],
+        "license": {
+          "spdx": "MIT",
+          "path": "LICENSE",
+          "upstream_path": "archify/LICENSE",
+          "sha256": "b799ab081703e7821ae5096d2c1abdf14bbdc75e8ea1c4045998c36ed6db9706"
+        }
       },
       "install_targets": [
         "${CODEX_HOME:-$HOME/.codex}/skills/archify",
@@ -165,7 +181,13 @@
         "ref": "3b74643f4d910f496babd4e634b1ba7168816f14",
         "preserve_paths": [
           "agents"
-        ]
+        ],
+        "license": {
+          "spdx": "MIT",
+          "path": "LICENSE",
+          "upstream_path": "LICENSE",
+          "sha256": "94fe75d355887f84ee7eefca68e06d8d082a23dad47a8e1f58a94d98900edf5b"
+        }
       },
       "install_targets": [
         "${AGENTS_HOME:-$HOME/.agents}/skills/caveman",
@@ -180,7 +202,13 @@
         "url": "https://github.com/JuliusBrussee/caveman",
         "branch": "main",
         "path": "skills/caveman-commit",
-        "ref": "3b74643f4d910f496babd4e634b1ba7168816f14"
+        "ref": "3b74643f4d910f496babd4e634b1ba7168816f14",
+        "license": {
+          "spdx": "MIT",
+          "path": "LICENSE",
+          "upstream_path": "LICENSE",
+          "sha256": "94fe75d355887f84ee7eefca68e06d8d082a23dad47a8e1f58a94d98900edf5b"
+        }
       },
       "install_targets": [
         "${AGENTS_HOME:-$HOME/.agents}/skills/caveman-commit",
@@ -198,7 +226,13 @@
         "ref": "3b74643f4d910f496babd4e634b1ba7168816f14",
         "preserve_paths": [
           "agents"
-        ]
+        ],
+        "license": {
+          "spdx": "MIT",
+          "path": "LICENSE",
+          "upstream_path": "LICENSE",
+          "sha256": "94fe75d355887f84ee7eefca68e06d8d082a23dad47a8e1f58a94d98900edf5b"
+        }
       },
       "install_targets": [
         "${AGENTS_HOME:-$HOME/.agents}/skills/caveman-compress",
@@ -216,7 +250,13 @@
         "ref": "3b74643f4d910f496babd4e634b1ba7168816f14",
         "preserve_paths": [
           "agents"
-        ]
+        ],
+        "license": {
+          "spdx": "MIT",
+          "path": "LICENSE",
+          "upstream_path": "LICENSE",
+          "sha256": "94fe75d355887f84ee7eefca68e06d8d082a23dad47a8e1f58a94d98900edf5b"
+        }
       },
       "install_targets": [
         "${AGENTS_HOME:-$HOME/.agents}/skills/caveman-help",
@@ -235,7 +275,13 @@
         "local_changes": [
           "Limit discovery to requested terse reviews, preserve evidence in compressed findings, and allow focused validation without autofix.",
           "Keep code-review as the systematic review workflow, retain severity and coverage in terse output, and replace speculative examples and stale README triggers."
-        ]
+        ],
+        "license": {
+          "spdx": "MIT",
+          "path": "LICENSE",
+          "upstream_path": "LICENSE",
+          "sha256": "94fe75d355887f84ee7eefca68e06d8d082a23dad47a8e1f58a94d98900edf5b"
+        }
       },
       "install_targets": [
         "${AGENTS_HOME:-$HOME/.agents}/skills/caveman-review",
@@ -323,7 +369,13 @@
         "ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
         "local_changes": [
           "Route viewport-sensitive metric fixes through responsive-web-capture and interaction proof through cli-web-evidence."
-        ]
+        ],
+        "license": {
+          "spdx": "MIT",
+          "path": "LICENSE",
+          "upstream_path": "LICENSE",
+          "sha256": "c122223ac43e86421958e18623979942c21b642951e2e3736dcb63eff13587c3"
+        }
       },
       "install_targets": [
         "${CODEX_HOME:-$HOME/.codex}/skills/core-web-vitals",
@@ -370,7 +422,13 @@
         "ref": "d3d23fdddef846ebb98b52122a6ece66211c0daf",
         "local_changes": [
           "Route cross-subsystem failures through workstation-health-triage."
-        ]
+        ],
+        "license": {
+          "spdx": "MIT",
+          "path": "LICENSE",
+          "upstream_path": "LICENSE",
+          "sha256": "717ba1949502290f8e47688ae2e323acd06c8ca47aec9f7596b15f678c1af4a2"
+        }
       },
       "install_targets": [
         "${CODEX_HOME:-$HOME/.codex}/skills/diagnose-crash",
@@ -406,7 +464,13 @@
         ],
         "local_changes": [
           "Keep Codex-native installation boundaries and source-first quality review instead of popularity-led recommendations."
-        ]
+        ],
+        "license": {
+          "spdx": "MIT",
+          "path": "LICENSE",
+          "upstream_path": "LICENSE",
+          "sha256": "661142e53c313d2bb5e1b055f5c0a39001450ff1b5e27b89dc4bc7de9a6352ca"
+        }
       },
       "install_targets": [
         "${AGENTS_HOME:-$HOME/.agents}/skills/find-skills",
@@ -431,9 +495,24 @@
       "name": "frontend-design",
       "hard_fork": true,
       "origin": {
-        "type": "local-original",
-        "ref": "local://codex/skills/frontend-design",
-        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/frontend-design"
+        "type": "git",
+        "url": "https://github.com/anthropics/skills",
+        "branch": "main",
+        "path": "skills/frontend-design",
+        "ref": "2235be7c60b551f5de82ade908fd3816455afcda",
+        "preserve_paths": [
+          "SKILL.md"
+        ],
+        "local_changes": [
+          "Retain the product-led rewrite, explicit user preferences, browser verification, and focused workflow handoffs.",
+          "Keep the Apache-2.0 modification notice in SKILL.md."
+        ],
+        "license": {
+          "spdx": "Apache-2.0",
+          "path": "LICENSE.txt",
+          "upstream_path": "skills/frontend-design/LICENSE.txt",
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+        }
       },
       "install_targets": [
         "${CODEX_HOME:-$HOME/.codex}/skills/frontend-design",
@@ -547,7 +626,13 @@
         "url": "https://github.com/JuliusBrussee/caveman",
         "branch": "main",
         "path": "skills/migration",
-        "ref": "3b74643f4d910f496babd4e634b1ba7168816f14"
+        "ref": "3b74643f4d910f496babd4e634b1ba7168816f14",
+        "license": {
+          "spdx": "MIT",
+          "path": "LICENSE",
+          "upstream_path": "LICENSE",
+          "sha256": "94fe75d355887f84ee7eefca68e06d8d082a23dad47a8e1f58a94d98900edf5b"
+        }
       },
       "install_targets": [
         "${AGENTS_HOME:-$HOME/.agents}/skills/migration",
@@ -579,7 +664,13 @@
         "ref": "d3d23fdddef846ebb98b52122a6ece66211c0daf",
         "local_changes": [
           "Keep desktop-session.md and its workstation health and config-drift routing."
-        ]
+        ],
+        "license": {
+          "spdx": "MIT",
+          "path": "LICENSE",
+          "upstream_path": "LICENSE",
+          "sha256": "717ba1949502290f8e47688ae2e323acd06c8ca47aec9f7596b15f678c1af4a2"
+        }
       },
       "install_targets": [
         "${CODEX_HOME:-$HOME/.codex}/skills/omarchy",
@@ -599,7 +690,13 @@
         "local_changes": [
           "Require responsive and functional regression evidence when performance changes can affect those surfaces.",
           "Route measured animation and player costs through web-animation and animation-assets, including active motion and route re-entry evidence."
-        ]
+        ],
+        "license": {
+          "spdx": "MIT",
+          "path": "LICENSE",
+          "upstream_path": "LICENSE",
+          "sha256": "c122223ac43e86421958e18623979942c21b642951e2e3736dcb63eff13587c3"
+        }
       },
       "install_targets": [
         "${CODEX_HOME:-$HOME/.codex}/skills/performance",
@@ -657,7 +754,13 @@
         "url": "https://github.com/JuliusBrussee/caveman",
         "branch": "main",
         "path": "skills/safe-refactor",
-        "ref": "3b74643f4d910f496babd4e634b1ba7168816f14"
+        "ref": "3b74643f4d910f496babd4e634b1ba7168816f14",
+        "license": {
+          "spdx": "MIT",
+          "path": "LICENSE",
+          "upstream_path": "LICENSE",
+          "sha256": "94fe75d355887f84ee7eefca68e06d8d082a23dad47a8e1f58a94d98900edf5b"
+        }
       },
       "install_targets": [
         "${AGENTS_HOME:-$HOME/.agents}/skills/safe-refactor",
@@ -844,7 +947,13 @@
         "local_changes": [
           "Bind reused proof to the checked inputs and runtime conditions, and complete already-required delivery steps after verification.",
           "Automatically hand already-requested PR or release follow-through to babysit without expanding validation-only tasks or restarting an active workflow."
-        ]
+        ],
+        "license": {
+          "spdx": "MIT",
+          "path": "LICENSE",
+          "upstream_path": "LICENSE",
+          "sha256": "94fe75d355887f84ee7eefca68e06d8d082a23dad47a8e1f58a94d98900edf5b"
+        }
       },
       "install_targets": [
         "${AGENTS_HOME:-$HOME/.agents}/skills/verify-and-stop",
@@ -879,7 +988,13 @@
           "Use an env-resolved Bash shebang so the analyzer works outside fixed /bin layouts.",
           "Link only bundled category skills; route SEO, platform behavior, security, and async-state findings without expanding a read-only audit into implementation.",
           "Treat source maps as publication content to inspect and llms.txt as optional consumer-specific discovery, not automatic security or search verdicts."
-        ]
+        ],
+        "license": {
+          "spdx": "MIT",
+          "path": "LICENSE",
+          "upstream_path": "LICENSE",
+          "sha256": "c122223ac43e86421958e18623979942c21b642951e2e3736dcb63eff13587c3"
+        }
       },
       "install_targets": [
         "${CODEX_HOME:-$HOME/.codex}/skills/web-quality-audit",
