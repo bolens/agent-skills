@@ -29,6 +29,8 @@ For sites deployed below a path such as `/project/`, start the repository-native
 
 Keep evidence task-scoped unless the repository defines a tracked visual-baseline location. Use authorized test data and keep sensitive artifacts out of tracked directories.
 
+Record each run's exact path for [temporary evidence cleanup](../git-hygiene/references/evidence-cleanup.md) at feature completion. Preserve requested screenshots, receipts, and visual baselines, then remove disposable task-owned run directories. The helper retains output for inspection and cannot determine feature completion. If handing off before completion, pass the paths and retention needs to the feature owner. Do not delete the shared `visual-evidence` root or another task's runs.
+
 The helper requests reduced motion by default and records that choice. Use `--motion browser-default` to omit the override. Neither mode freezes animations or verifies the actual media-query result. A fixed capture delay is not a deterministic animation phase. Use `web-animation` and the repository's runtime-aware harness when scroll pinning, enter/exit states, or canvas assets need controlled capture. This script's viewport matrix does not prove those behaviors.
 
 ## Capture limits and controls
