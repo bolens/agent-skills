@@ -109,3 +109,14 @@ or link target and recheck the links and affected skill resources. Preserve any
 independent installed copy and unrelated working changes. A repository rollback
 does not undo external actions an agent already performed. Assess and recover
 those through the affected system's own workflow.
+
+## Source lint
+
+The Source lint workflow checks maintained python, javascript files selected by
+[`.github/source-lint.json`](.github/source-lint.json) on every pull request
+and push to `main`. Existing native checks remain part of the merge gate.
+Use the [shared local reproduction instructions](https://github.com/bolens/.github/blob/7603518f305fb76f7bb1b9979f2692521f633b82/docs/source-lint.md)
+with the same tooling revision pinned in
+[the workflow](.github/workflows/source-lint.yml). Review exclusions when adding
+source files; generated and imported files retain their native validation.
+Require the new check to pass on the current PR head before merging.

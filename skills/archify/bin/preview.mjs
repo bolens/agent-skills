@@ -593,7 +593,7 @@ export async function startPreview(options) {
       });
     } catch (error) {
       await stop();
-      throw new Error(`Could not watch the input directory: ${error.message}`);
+      throw new Error(`Could not watch the input directory: ${error.message}`, { cause: error });
     }
   }
   pollTimer = setInterval(() => observeSource(), pollMs);
