@@ -107,6 +107,8 @@ adding or migrating frameworks.
 | LAN/WAN/VPN reachability, firewalls, Docker, DNS, and TLS | [network-exposure-verification](skills/network-exposure-verification/SKILL.md) |
 | Quickshell/QML component and plugin implementation | [quickshell-development](skills/quickshell-development/SKILL.md) |
 | Backup validation and isolated application recovery drills | [backup-restore-verification](skills/backup-restore-verification/SKILL.md) |
+| Homelab Compose stack, examples, preparation, and metadata changes | [homelab-stack-maintenance](skills/homelab-stack-maintenance/SKILL.md) |
+| Live homelab service diagnosis | [homelab-stack-triage](skills/homelab-stack-triage/SKILL.md) |
 | PR follow-through or standalone release preparation/publication | [babysit](skills/babysit/SKILL.md) |
 
 Related review, repair, maintenance, and verification skills automatically use
