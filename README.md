@@ -63,7 +63,8 @@ multiple agents write across repository surfaces. It covers worktree isolation,
 file ownership, a single Git writer for shared checkouts, focused staging, and
 validation after integration. Shared lockfiles and generated outputs need explicit
 owners even when agents edit different packages. Post-merge branch cleanup lives
-in this skill alongside local worktree cleanup.
+in this skill alongside local worktree cleanup. `babysit` invokes it during
+authorized merge follow-through.
 
 ## Review workflows
 

@@ -14,14 +14,14 @@ Independent check: unrelated staged changes survive the shared-checkout scenario
 ## US2: Integrate and clean up
 
 - [x] T004 [US2] Add cross-surface integration and cleanup guidance to skills/git-hygiene/SKILL.md.
-- [ ] T005 [US2] Add verified post-merge cleanup to skills/babysit/SKILL.md and skills/git-hygiene/references/branch-cleanup.md.
+- [x] T005 [US2] Add verified post-merge cleanup to skills/babysit/SKILL.md and skills/git-hygiene/references/branch-cleanup.md.
 
 Independent check: squash merge, advanced branch, active worktree, and separate repository scenarios preserve unfinished work.
 
 ## Validation and delivery
 
 - [x] T006 Evaluate specs/001-git-hygiene/quickstart.md scenarios, run repository checks, and record evidence there.
-- [ ] T007 Review task diffs, update CHANGELOG.md, and commit only task-owned changes.
+- [x] T007 Review task diffs, update CHANGELOG.md, and commit only task-owned changes.
 
 ## Dependencies and execution
 

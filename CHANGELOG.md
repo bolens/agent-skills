@@ -39,6 +39,9 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Changed
 
+- Have `babysit` complete verified post-merge branch and temporary local worktree
+  cleanup through `git-hygiene`, preserving active or unintegrated work.
+
 - Review changed contracts and consumers systematically, distinguish staged and
   working-tree evidence, and carry coverage gaps through terse reviews and PR delivery.
 - Use independent reviewers with distinct focuses for substantive PRs when available,
