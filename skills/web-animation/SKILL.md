@@ -25,6 +25,8 @@ Use the smallest suitable implementation, accounting for an existing library's l
 
 Use `svg-animation` alongside this skill when moving paths, pivots, masks, or SVG coordinate systems matter. Let the chosen runtime own timing and SVG guidance own geometry. Use `frontend-design` for the visual direction and `design-system` when motion tokens or shared components must be consistent.
 
+Use `web-standard` when a transition depends on native dialog/popover behavior, history navigation, or feature support. Keep native animation mechanics here and platform semantics there.
+
 ## Implement ownership and lifecycle
 
 - Give each animated property one owner. Separate layout placement and animated transforms into nested wrappers when CSS, a component primitive, and an animation engine would otherwise overwrite each other.

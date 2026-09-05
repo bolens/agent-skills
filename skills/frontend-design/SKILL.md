@@ -30,6 +30,8 @@ Create a distinctive detail when it serves the brief, such as a typographic trea
 
 Include relevant loading, empty, error, success, disabled, selected, and focus states. Ensure primary actions remain discoverable at narrow widths and with long content. Preserve the repository's semantic controls, form behavior, and component APIs while changing appearance.
 
+Use `forms-and-data-state` when submission, autosave, optimistic updates, or request ordering determines those states. Visual feedback must reflect confirmed data and preserve unsaved edits.
+
 Motion should clarify state, spatial relationships, or the visual idea. Use `web-animation` for GSAP, Motion, native transitions, or other runtime work. Use `svg-animation` for moving vector geometry and `animation-assets` for Lottie/dotLottie or Rive. Preserve the requested engine and avoid adding animation merely to make a static design feel more elaborate.
 
 Use `svg-design` for editable icons, sprites, or vector illustration. Reuse an established icon family. Use raster generation only when the required asset should be a bitmap, preserving the user's requested deliverable format.
@@ -41,6 +43,8 @@ Build from existing components and styling conventions. Keep selector ownership 
 Inspect a working first version early. Compare it with the brief and real content, then fix specific weaknesses in hierarchy, density, alignment, states, or behavior. Do not delay implementation until a design has been declared unique in the abstract.
 
 Use `cli-web-evidence` to drive the actual page and inspect narrow and desktop captures. Use `responsive-web-capture` for repeatable viewport coverage and `design-system` for shared component-state coverage. Use `accessibility` for focused semantic/keyboard checks and `performance` when runtime evidence indicates a cost. Apply Sites guidance when the project is hosted with Sites.
+
+Use `web-standard` when a native control, navigation pattern, or newer browser feature needs platform/compatibility verification. Use `technical-seo` for requested discoverability work on public pages, not for every visual edit.
 
 Verify reduced motion, focus visibility, overflow, and relevant themes. Review interactive states as well as the initial screen. A successful build is not visual proof, and a static screenshot is not interaction proof. Report what was inspected and any coverage gap.
 

@@ -62,6 +62,10 @@ do not verify remote URLs or section anchors.
 |---|---|
 | Page composition and visual direction | [frontend-design](skills/frontend-design/SKILL.md) |
 | Shared tokens, themes, variants, and component states | [design-system](skills/design-system/SKILL.md) |
+| Form submission, autosave, optimistic state, and data races | [forms-and-data-state](skills/forms-and-data-state/SKILL.md) |
+| Native controls, platform semantics, HTTP, and browser compatibility | [web-standard](skills/web-standard/SKILL.md), including its browser-native reference |
+| Authentication, authorization, sessions, and untrusted input | [web-security](skills/web-security/SKILL.md) |
+| Crawlability, metadata, canonicals, and optional agent discovery | [technical-seo](skills/technical-seo/SKILL.md) |
 | Static vector artwork and reusable icons | [svg-design](skills/svg-design/SKILL.md) |
 | Moving SVG geometry, pivots, strokes, and morphs | [svg-animation](skills/svg-animation/SKILL.md) |
 | GSAP, Motion, native transitions, and other interface motion | [web-animation](skills/web-animation/SKILL.md) |

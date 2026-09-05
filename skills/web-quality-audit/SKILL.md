@@ -18,10 +18,12 @@ Comprehensive quality review that combines live browser evidence with source ins
 1. Establish the audit target: representative URLs, important states and journeys, public versus authenticated access, and mobile/desktop scope.
 2. If a page can run, read [the measurement workflow](../performance/references/MEASUREMENT.md) and collect a minimal live baseline before searching the codebase broadly.
 3. Use runtime failures to localize source inspection. Keep measured findings separate from hypotheses found only in code.
-4. Categorize by user impact and confidence, then make or recommend specific fixes.
+4. Categorize by user impact and confidence, then recommend specific fixes. Implement them when the user requests changes.
 5. Re-run equivalent automated checks and the affected manual flows. Report what is verified and what still needs field or human validation.
 
 For broad responsive work, use `responsive-web-capture` to preserve the requested phone, tablet, desktop, 1440p, ultrawide, portrait, and landscape evidence. Use `cli-web-evidence` for functional browser flows, console/network checks, and inspectable receipts. Keep visual, functional, accessibility, and performance evidence distinct.
+
+Use `technical-seo` for crawl/indexing implementation, `web-standard` for native platform semantics and compatibility, `web-security` for a concrete trust-boundary finding, and `forms-and-data-state` for submission or async-state failures. Load only the category needed by the evidence. A broad quality audit does not authorize external penetration testing or a new framework.
 
 ## Tool routing
 
@@ -108,8 +110,8 @@ Chrome DevTools MCP's `lighthouse_audit` intentionally excludes performance. Its
 **Security:**
 * **HTTPS everywhere.** No mixed content. HSTS enabled.
 * **No vulnerable libraries.** Keep dependencies updated.
-* **CSP headers.** Content Security Policy to prevent XSS.
-* **No exposed source maps.** In production builds.
+* **CSP policy.** Verify the application's actual policy and legitimate flows; CSP supplements safe output handling.
+* **Publication content.** Inspect source maps and client bundles for secrets or sensitive content. Source-map presence alone is not a vulnerability.
 
 **Modern Standards:**
 * **No deprecated APIs.** Replace `document.write`, synchronous XHR, etc.
@@ -129,6 +131,7 @@ Use the Lighthouse Agentic Browsing results as technical signals for how well as
 * **Accessible interaction surface.** Semantic HTML, labels, names, roles, and states must expose meaningful controls in the accessibility tree.
 * **WebMCP integrations are valid when present.** Review registered tools, schemas, and form coverage; do not add WebMCP solely to raise an audit score.
 * **`llms.txt` is optional.** A valid file may help compatible tools discover curated content, but a Lighthouse pass does not prove that search or AI products will ingest, rank, or cite it.
+* **Verify the actual discovery path when in scope.** Use `technical-seo`'s crawl/render reference for served content, link freshness, and consumer-specific `llms.txt` evidence. Do not create the file solely to improve an audit score.
 * **Keep this category separate from SEO claims.** Agentic browsability is not evidence of search ranking or AI visibility.
 
 ## Severity levels
@@ -208,4 +211,6 @@ For detailed guidelines on specific areas:
 - [Core Web Vitals](../core-web-vitals/SKILL.md)
 - [Accessibility](../accessibility/SKILL.md)
 
-For SEO and best practices, use the sections above and the available live audit tools. This suite does not bundle separate skills for those categories.
+- [Technical SEO](../technical-seo/SKILL.md)
+- [Web standard and native implementation](../web-standard/SKILL.md)
+- [Web security](../web-security/SKILL.md)

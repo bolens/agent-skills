@@ -33,6 +33,8 @@ Read source and run checks against the reviewed revision. When the checkout cont
 
 Use independent sub-agents only when the user or active environment permits them and the diff is large enough to benefit. The review must work fully in one agent.
 
+Use `web-security` when a web change exposes a concrete authentication, authorization, session, or untrusted-input boundary that needs deeper verification. Do not expand every web diff into an external security audit.
+
 When the reviewed repository is an Omarchy plugin and the request concerns marketplace submission, verification, update approval, or release readiness, also use `audit-omarchy-plugin`. Keep its official scanner disposition separate from broader code-review findings.
 
 ## Output

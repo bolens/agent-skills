@@ -30,6 +30,10 @@ Verify narrow/wide containers, text zoom/reflow, themes, reduced motion, and rig
 
 Build stories or examples in the existing harness so the next change can reproduce these states. Use semantic queries and user interactions for behavioral tests. A screenshot assertion cannot prove focus trapping or a callback contract.
 
+Use `forms-and-data-state` for submission and async data lifecycles behind shared control states. Keep the component's visual API separate from ownership of server data and drafts.
+
+Use `web-standard` when choosing native dialogs, popovers, forms, or other primitives with browser-owned behavior. Preserve the existing component's contract and verify the supported-browser fallback before replacing it.
+
 ## Verify and deliver
 
 Run the repository's component tests, style/type checks, and visual comparisons for affected consumers. Inspect actual captures with `cli-web-evidence` or `responsive-web-capture`. Use `accessibility` for interaction/semantics findings. Automated accessibility results do not establish complete conformance.
