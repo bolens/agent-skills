@@ -1,6 +1,6 @@
 ---
 name: backup-restore-verification
-description: Verify that Linux, application, and homelab backups are current, complete, intact, and recoverable through bounded non-destructive restore drills. Use for backup audits, restore readiness, or recovery proof; do not overwrite live data by default.
+description: Verify that Linux, application, and homelab backups are current, complete, intact, and recoverable through bounded non-destructive restore drills. Use for backup audits, restore readiness, isolated service recovery drills, or recovery proof; do not overwrite live data by default.
 ---
 
 # Backup and restore verification
@@ -33,6 +33,8 @@ Collect the smallest sufficient proof:
 A successful restore command is not enough if the restored data cannot be parsed, opened, or used. For databases, prefer a dump validation or isolated disposable restore using the repository's documented engine/version. Do not attach a recovered database to a live application.
 
 Use `homelab-stack-triage` when a backup service or storage dependency is failing. Use `managed-config-drift` to compare restored configuration with its intended managed source. Use `migration` when backup format, repository backend, encryption, or schema changes are in scope. Use `workstation-health-triage` when disks, mounts, memory pressure, or host services may invalidate the backup path.
+
+For an application or stack recovery drill, read [isolated service recovery](references/service-recovery-drill.md). Verify isolation before startup, restore compatible dependencies, and prove a representative application operation. File restoration and healthy containers alone do not establish service recovery.
 
 ## Result
 
