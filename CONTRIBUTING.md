@@ -1,5 +1,8 @@
 # Contributing
 
+See [the delivery playbook](RELEASING.md) for pushing, merging, installation
+verification, and recovery.
+
 Edit the canonical copy under `skills/<name>/`. Read its `UPSTREAM.md` before
 changing behavior.
 
