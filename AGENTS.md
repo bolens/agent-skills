@@ -2,6 +2,7 @@
 
 Read `.specify/memory/constitution.md`, `README.md`, and the target skill's
 `SKILL.md` and `UPSTREAM.md` before editing.
+Use `RELEASING.md` for push, merge, delivery, and recovery guidance.
 
 - Treat every skill as a hard fork. Preserve its upstream link and source path.
 - Keep `PROVENANCE.json`, `UPSTREAM.md`, and install targets synchronized.
