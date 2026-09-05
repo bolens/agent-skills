@@ -45,6 +45,9 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Changed
 
+- Include older completed feature branches and related remotes in scoped Git
+  cleanup, verifying integration and ownership separately for every candidate.
+
 - Check maintained peers for shared fixes and applicable improvements during
   fleet implementation, with per-repository validation and explicit coverage.
 
