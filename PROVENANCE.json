@@ -564,6 +564,20 @@
       ]
     },
     {
+      "name": "quickshell-development",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/quickshell-development",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/quickshell-development"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/quickshell-development",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/quickshell-development",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/quickshell-development"
+      ]
+    },
+    {
       "name": "resolving-merge-conflicts",
       "hard_fork": true,
       "origin": {

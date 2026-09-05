@@ -45,6 +45,8 @@ Require behavioral regression coverage for each material risk. For asynchronous 
 
 Run graphical QML tests against a real Wayland session when the repository requires them. Report environmental skips separately from passing tests.
 
+When implementation fixes are requested, use [quickshell-development](../quickshell-development/SKILL.md) for QML ownership, reactive state, and helper lifecycle work. Keep this audit read-only until fixes are authorized.
+
 ## Report
 
 Lead with blockers, then `review-required` capabilities, then manual-review risks. For each item include evidence, impact, smallest fix, and the test that would prevent recurrence.
