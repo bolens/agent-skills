@@ -37,6 +37,20 @@
       ]
     },
     {
+      "name": "arch-package-maintenance",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/arch-package-maintenance",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/arch-package-maintenance"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/arch-package-maintenance",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/arch-package-maintenance",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/arch-package-maintenance"
+      ]
+    },
+    {
       "name": "arch-update-recovery",
       "hard_fork": true,
       "origin": {
