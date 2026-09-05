@@ -1,46 +1,73 @@
 ---
 name: code-review
-description: Perform a read-only review of a branch, pull request, commit range, staged changes, or working-tree diff for correctness, regressions, security, maintainability, test coverage, repository standards, and specification compliance. Use when the user asks to review code, a PR, a diff, work in progress, or changes since a revision.
+description: Perform an evidence-led, read-only review of a branch, pull request, commit, staged changes, or working-tree diff. Trace affected callers and contracts to find correctness, security, compatibility, lifecycle, test, and delivery regressions. Use for code or diff review; use improve-codebase-architecture for a broad architecture survey.
 ---
 
-# Code Review
+# Code review
 
-Lead with actionable findings, ordered by severity. Do not modify files, stage changes, post comments, or create reports unless the user explicitly asks.
+Lead with actionable findings ordered by impact. Keep the review read-only unless the user authorizes fixes or artifacts. Do not stage changes, post comments, or submit a host review merely because review was requested. A full review examines the changed behavior and affected contracts, not only edited lines.
 
-## Establish scope
+## Fix the review boundary
 
-1. Read the applicable `AGENTS.md`, contributor docs, and relevant source-of-truth files.
-2. Use the fixed point supplied by the user. Otherwise infer the safest useful scope:
-   - staged or unstaged request: corresponding local diff
-   - PR request: the PR's actual target branch and head, including non-default targets
-   - branch request: merge-base with the intended integration branch, inferred from repository guidance or the remote default when no other target is evident
-   - ambiguous repository-wide request: ask rather than reviewing an arbitrary range
-3. Verify the reference and inspect both the diff and commit list. Preserve awareness of unrelated dirty-worktree changes.
-4. Find the originating spec or issue when locally available. A missing spec does not block correctness review.
+Read applicable `AGENTS.md`, contributor guidance, requirements, and nearby source. Resolve the user's requested scope before choosing a diff:
 
-Do not use a feature branch's tracking ref as its integration base. After a push, `HEAD` and `origin/<feature>` can be identical while the PR still contains changes. Record the resolved base and head commits and use `git diff <base>...<head>` for the branch's proposed changes. If the target cannot be established, ask for that one missing reference. Do not report an empty diff as a clean review until the scope is confirmed.
+| Requested scope | Comparison |
+|---|---|
+| Staged changes | `git diff --cached` against `HEAD`, including staged additions and deletions |
+| Unstaged tracked changes | `git diff` against the index |
+| All uncommitted work | Inspect both layers and the combined tracked diff against `HEAD`; inventory untracked files and include relevant source without reading ignored data indiscriminately |
+| One commit | That commit against its parent; for a merge commit establish which parent or integration result the user means |
+| Two explicit revisions | Compare their trees with `git diff <old> <new>` unless the user requested a commit series or branch proposal |
+| Branch or PR proposal | Resolve actual target and head, record their SHAs and merge-base, then use `git diff <target>...<head>` |
 
-Read source and run checks against the reviewed revision. When the checkout contains other changes or a different head, inspect Git objects or use an isolated checkout for execution. Label results from a different state as partial evidence. Use focused tests or linters when they can resolve a suspected defect, with autofix disabled.
+For a root commit, compare against the empty tree using Git's root-diff support. For a requested commit series, inspect both the net change and relevant intermediate commits. Do not substitute the remote default for a PR's actual target, or the feature branch's tracking ref for its integration base. If scope remains ambiguous, ask for the missing boundary after inspecting available local context. An empty diff is not a clean review until its scope is confirmed.
 
-## Review lenses
+Record source freshness. Local remote-tracking refs may be stale. Do not claim current remote readiness without checking the host. A branch proposal diff does not prove compatibility with target changes since the merge-base; inspect those interactions when relevant and identify any tested merge result.
 
-- Correctness: logic errors, edge cases, error paths, compatibility, and regressions
-- Safety/security: trust boundaries, secrets, permissions, destructive behavior, and unsafe defaults
-- Tests: missing behavioral coverage and tests that cannot detect the regression
-- Repository standards: explicit local rules, generated-file contracts, architecture, and canonical tooling
-- Spec: missing requirements, wrong behavior, and unrequested scope
-- Maintainability/performance: only concrete problems introduced or exposed by the diff; avoid taste-only feedback
+Read and execute against the reviewed state. For staged work, unstaged fixes must not mask index defects. Use Git objects for inspection and an isolated snapshot when execution would otherwise include unrelated changes. Preserve modes, symlinks, and dependencies needed for that snapshot. Record what state a command actually tested. Do not stash, reset, or alter the user's checkout merely to review it.
 
-Use independent sub-agents only when the user or active environment permits them and the diff is large enough to benefit. The review must work fully in one agent.
+## Map changes to contracts
 
-Use `web-security` when a web change exposes a concrete authentication, authorization, session, or untrusted-input boundary that needs deeper verification. Do not expand every web diff into an external security audit.
+Inspect the full file inventory and diff, including additions, deletions, renames, permissions, symlinks, configuration, dependencies, generated output, tests, and documentation. Do not silently omit large or binary files; inspect their source or generation contract and mark unavailable evidence.
 
-When the reviewed repository is an Omarchy plugin and the request concerns marketplace submission, verification, update approval, or release readiness, also use `audit-omarchy-plugin`. Keep its official scanner disposition separate from broader code-review findings.
+For each meaningful change, trace the entry point through the changed implementation to its callers, data stores, external consumers, and tests. Search beyond the diff for affected call sites and alternate implementations. Identify the contract being changed: accepted inputs, output shape, error behavior, state transition, ownership, compatibility, or execution authority. For cross-file changes, verify both producer and consumer agree.
 
-## Output
+Maintain a compact working coverage map: changed behavior, affected boundary, inspected source/tests, result, and remaining evidence. Keep this in working notes unless an artifact was requested. Scale it to the task; a typo does not need a full matrix. Missing requirements are uncertainty to report, not permission to invent product behavior.
 
-For each finding provide severity, confidence, `file:line`, the concrete failure scenario, and the smallest viable fix. Avoid compliments and summaries that bury findings. If no findings exist, say so and note residual risks or tests not run.
+## Review in passes
 
-Keep Spec and Standards labels when they clarify the source, but rank all defects by impact so the user knows what to fix first. Follow an explicitly requested output style such as `caveman-review`.
+1. **Behavior and requirements.** Trace normal, boundary, and failure paths against the old behavior and stated requirements. Check removals and alternate entry points. Separate intentional behavior changes from regressions.
+2. **Boundary interactions.** Follow the applicable probes in [references/seam-probes.md](references/seam-probes.md) for interface compatibility, async state, persistence, trust, runtime, and delivery seams. Load deeper specialist guidance only where changed behavior crosses that boundary.
+3. **Tests and execution evidence.** Ask which concrete defect the existing tests would catch. Inspect assertions, fixtures, mocks, skipped cases, and whether the tests exercise the changed implementation. A passing test that duplicates the algorithm or mocks out the affected boundary is weak evidence. Use the smallest existing check or disposable reproduction that resolves a real uncertainty. Inspect commands before running them; a test label does not make live mutations or untrusted install hooks safe.
+4. **Challenge and reconcile.** Try to disprove each candidate finding by checking guards, callers, documented invariants, and the base version. Verify that the proposed correction would preserve valid behavior. Reconcile duplicates and finish the coverage map before issuing a verdict.
 
-When the task includes addressing PR findings, getting a PR ready to merge, or preparing or publishing a release, automatically use [babysit](../babysit/SKILL.md) to coordinate that endpoint. Keep this review pass read-only and return findings to an already active babysit workflow. A one-off review does not start follow-through.
+Do not demand new tests for every changed line. Report a test gap as actionable when it leaves a specific important behavior unverified, with the scenario and appropriate test boundary. Do not implement tests during a read-only review unless separately authorized; temporary reproductions may live outside the worktree.
+
+## Independent focused reviews
+
+For PRs with separable concerns, use multiple independent reviewer agents when available and delegation is permitted. Select distinct focuses from the actual changes, typically behavior/contracts and tests/failure paths, adding security or delivery review when those boundaries are affected. This is the default for substantive PRs, not a requirement to invent extra work for trivial edits. With limited slots, run reviewers in waves or combine related concerns. Read [references/independent-reviews.md](references/independent-reviews.md) for assignments, isolation, and reconciliation.
+
+If independent review is unavailable or prohibited, complete the review yourself and state the limitation. Do not call self-review independent or treat an unavailable reviewer as a clean result. Honor an explicit requirement for independent review by leaving that requirement pending while completing other permitted work.
+
+## Qualify findings
+
+A finding needs a reachable trigger, affected behavior, supporting source or reproduction, and a practical correction. State whether it was reproduced or established by source reasoning. Keep unresolved suspicions as questions or evidence gaps, with what would settle them. Low confidence does not make a hypothetical failure a defect.
+
+Compare against the base before attributing a defect to the change. Report pre-existing issues separately only when material to the requested scope. Group symptoms that share one cause and fix. Prefer a precise changed location and cite unchanged callers when they establish impact; identify old-side locations for deleted code.
+
+Use the repository's severity scale when defined. Otherwise:
+
+- **P0:** immediate, broadly reachable severe outage, data loss, or compromise requiring urgent containment.
+- **P1:** major supported-path failure or security/data-integrity defect that should block delivery.
+- **P2:** bounded correctness, compatibility, reliability, or meaningful verification defect needing correction.
+- **P3:** low-impact supported defect. Optional style preferences are nits, not blocking defects.
+
+Severity follows impact and reachability; confidence is separate. Do not require a vulnerability identifier to report a security defect or rank every possible race as a confirmed bug. Never invent findings to satisfy a quota, and do not stop at the first defect while unreviewed relevant changes remain.
+
+## Report and hand off
+
+For each finding give severity, confidence, location, trigger and consequence, evidence, and the smallest viable fix. Distinguish required corrections, optional nits when requested, and unresolved questions. Follow a requested terse format through [caveman-review](../caveman-review/SKILL.md), retaining enough evidence to assess each claim.
+
+After findings, give a brief receipt: reviewed revisions or local layers, important boundaries covered, checks and their tested state, and material gaps. Say "no actionable findings" when supported; if coverage is incomplete, state that alongside the result. Passing CI or a small defect count is not proof of comprehensive review. Do not claim independent verification for a self-review.
+
+When the task includes addressing PR findings, getting a PR ready to merge, or preparing or publishing a release, automatically use [babysit](../babysit/SKILL.md) to coordinate that endpoint. Return findings, coverage, checked revisions, and unresolved gaps to an already active workflow. Keep this review pass read-only. A one-off review does not start follow-through.
