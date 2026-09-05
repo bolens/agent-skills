@@ -27,6 +27,8 @@ Prefer service-local probes and existing health checks. Avoid broad log dumps. R
 
 Use `workstation-health-triage` when failures span Docker and the host, storage, graphics, network, or system services. Use `managed-config-drift` when the live Compose deployment may differ from its repository. Use `diagnose-crash` only for a host process with a systemd coredump.
 
+Use [network-exposure-verification](../network-exposure-verification/SKILL.md) when the question is which LAN, WAN, or VPN clients should reach a service, including expected denial. An availability diagnosis alone does not establish exposure policy.
+
 ## Mutations
 
 Before an authorized mutation, capture the current generation, container state, relevant logs, resolved config, mounts, networks, and image digest. State the expected effect and rollback.

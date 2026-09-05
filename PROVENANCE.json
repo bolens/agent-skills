@@ -511,6 +511,20 @@
       ]
     },
     {
+      "name": "network-exposure-verification",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/network-exposure-verification",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/network-exposure-verification"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/network-exposure-verification",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/network-exposure-verification",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/network-exposure-verification"
+      ]
+    },
+    {
       "name": "omarchy",
       "hard_fork": true,
       "origin": {
