@@ -772,6 +772,20 @@
       ]
     },
     {
+      "name": "web-security",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/web-security",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/web-security"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/web-security",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/web-security",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/web-security"
+      ]
+    },
+    {
       "name": "workstation-health-triage",
       "hard_fork": true,
       "origin": {
