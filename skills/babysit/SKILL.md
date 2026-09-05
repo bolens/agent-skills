@@ -1,6 +1,6 @@
 ---
 name: babysit
-description: Follow an open pull request through a separate audit, actionable review nits, CI repairs caused by its changes, and the repository's release playbook when a release is needed. Use automatically when the requested task includes addressing PR feedback, fixing PR CI, getting a PR ready to merge, merging it, or preparing or publishing a repository release, even when babysit is not named. Do not use for a one-off read-only review or CI status lookup.
+description: Follow an open pull request through a separate audit, actionable review nits, CI repairs caused by its changes, post-merge branch cleanup, and the repository's release playbook when a release is needed. Use automatically when the requested task includes addressing PR feedback, fixing PR CI, getting a PR ready to merge, merging it, or preparing or publishing a repository release, even when babysit is not named. Do not use for a one-off read-only review or CI status lookup.
 ---
 
 # PR and release follow-through
@@ -88,6 +88,12 @@ Determine whether the PR requires a new release from the repository's playbook, 
 
 When release work is needed, read [references/release-follow-through.md](references/release-follow-through.md) and follow the repository's actual sequence. Prepare release changes within the requested scope. Perform merge, tag, publish, or deployment steps only with the authority established above. If the playbook is missing or contradictory, inspect existing automation and recent releases, then ask only about consequential choices that remain unresolved.
 
+## Clean up after merge
+
+After the host confirms the intended PR was merged, use [git-hygiene's branch cleanup](../git-hygiene/references/branch-cleanup.md) to remove the completed local and remote feature branches and release task-owned temporary worktrees within existing authority. Follow its checks for active agents, advanced tips, squash or rebase merges, and conditional remote deletion. This is part of merge follow-through when cleanup is authorized, not an optional reminder. If the host already deleted the remote branch, verify that state and finish eligible local cleanup.
+
+Keep the current babysit workflow as coordinator. Record any retained branch or worktree and the reason. A readiness-only endpoint does not trigger merge or cleanup.
+
 ## Completion
 
 Finish only when the requested endpoint is satisfied or a specific external blocker remains after all independent work is complete. Report:
@@ -96,6 +102,7 @@ Finish only when the requested endpoint is satisfied or a specific external bloc
 - audit outcome, reviewer focuses and completion state, whether verification was independent, and the disposition of all findings and nits, including anything declined, deferred, or still blocked
 - CI status for the current head, including pending, unrelated, or blocked checks
 - release decision and any prepared or completed release steps
+- branch and worktree cleanup results after merge, including anything retained and why
 - the exact remaining action, if any
 
 Distinguish ready to merge, merged, release prepared, and release published. Never infer one from another. Do not merge merely to finish babysitting a PR whose requested endpoint was readiness.

@@ -5,6 +5,8 @@ description: Diagnose and resolve an in-progress Git merge, rebase, cherry-pick,
 
 # Resolve Git Conflicts
 
+When other agents are writing to the repository, use [git-hygiene](../git-hygiene/SKILL.md) to establish the integration owner and pause overlapping writes before resolving or continuing an operation.
+
 1. Read repository instructions. Inspect `git status`, the operation in progress, the conflict stages, relevant history, and the exact unmerged paths. Do not discard unrelated changes.
 2. Trace each side to its primary source: commits, tests, specs, issues, and nearby code. Use remote issue or PR data only when access is available and needed.
 3. Explain incompatible intent before choosing a side. Preserve both intents when they compose cleanly; otherwise follow the integration goal and record the trade-off. Do not invent unrelated behavior.

@@ -6,6 +6,9 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Added
 
+- Add `git-hygiene` for concurrent agent ownership, isolated worktrees, focused
+  commits, and validation across repository surfaces.
+
 - Add media preservation, Arch package maintenance, network exposure verification,
   and Quickshell development workflows.
 - Add web security, technical SEO, and web-standard workflows, including native
@@ -35,6 +38,9 @@ All notable changes to this hard-fork collection are documented here.
   `arch-update-recovery` for operational gaps specific to this fleet.
 
 ### Changed
+
+- Have `babysit` complete verified post-merge branch and temporary local worktree
+  cleanup through `git-hygiene`, preserving active or unintegrated work.
 
 - Review changed contracts and consumers systematically, distinguish staged and
   working-tree evidence, and carry coverage gaps through terse reviews and PR delivery.
