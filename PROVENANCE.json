@@ -800,6 +800,20 @@
       ]
     },
     {
+      "name": "web-standard",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/web-standard",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/web-standard"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/web-standard",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/web-standard",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/web-standard"
+      ]
+    },
+    {
       "name": "workstation-health-triage",
       "hard_fork": true,
       "origin": {
