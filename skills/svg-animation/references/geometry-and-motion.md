@@ -4,11 +4,15 @@
 
 An SVG transform can resolve against different boxes. Choose deliberately:
 
-- `transform-box: view-box` makes `transform-origin` coordinates align with the SVG `viewBox`. Use it for a known axle such as `12px 34px`.
-- `transform-box: fill-box` resolves the origin against the element's painted bounds. Pair it with relative origins such as `center`.
+- `transform-box: view-box` uses the nearest SVG viewport as the reference box. Inspect nested viewports and transforms before treating an origin as a coordinate in the outer drawing.
+- `transform-box: fill-box` uses the object's bounding box, excluding stroke. Pair it with relative origins such as `center`.
 - `transform-box: stroke-box` includes stroke extents when the visible outline defines the pivot.
 
 Do not combine `fill-box` with viewBox-coordinate origins. Browser interpolation can pivot around a surprising point, especially for groups with uneven bounds.
+
+For an explicit SVG user-space pivot, a nested group with `transform="translate(cx cy)"`, an inner animated rotation, and artwork centered around the local origin can make ownership easier to inspect. Do not let CSS, a library, and an SVG transform attribute independently write the same transform.
+
+Pointer coordinates are in screen/client space. Map them through the inverse `getScreenCTM()` of the relevant element before using them as local SVG coordinates. Account for a missing or non-invertible matrix. Do not subtract the container's pixel offset and assume that handles viewBox scaling, letterboxing, or nested transforms. [getScreenCTM](https://developer.mozilla.org/en-US/docs/Web/API/SVGGraphicsElement/getScreenCTM).
 
 ## Construction rules
 
@@ -48,6 +52,12 @@ Use a small closed motion range. The static position should remain plausible.
 ### Path travel
 
 Native `<animateMotion>` is appropriate for decorative path travel. Retain the path as static context and hide only the traveler under reduced motion. If path position carries meaning, replace the animation with a visible final-state marker.
+
+### Path drawing and morphing
+
+For stroke reveals, derive dash lengths from the actual path or use a deliberate normalized `pathLength`. Verify closed paths, caps, joins, and dashed artwork instead of assuming a unit-length recipe fits every path.
+
+Native path-data interpolation requires compatible path structure. Match commands, point order, winding, and subpaths, or use a morphing tool that explicitly handles normalization. A matching count of points alone does not guarantee a useful intermediate shape. Inspect intermediate frames for self-intersections and inverted holes. Keep the original authored geometry, and avoid destructive optimization that breaks morph correspondence. [SVG path data](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/d).
 
 ## Paint and containment
 

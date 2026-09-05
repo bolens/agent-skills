@@ -26,6 +26,8 @@ Use `responsive-web-capture` to verify orientation, reflow, zoom-adjacent narrow
 
 Use `svg-animation` when an accessibility defect depends on animated SVG geometry or motion; retain this skill's ownership of semantics, keyboard access, and WCAG evaluation.
 
+Use `web-animation` for GSAP, Motion, or other runtime-specific reduced-motion and focus/exit fixes. Use `animation-assets` for Lottie/Rive playback and semantic fallback. Use `design-system` when the defect belongs to shared component states or tokens rather than one page.
+
 ## WCAG Principles: POUR
 
 | Principle | Description |
@@ -289,19 +291,25 @@ function showSessionWarning() {
 
 ### Motion (2.3)
 
+Define a usable reduced-motion state for each effect. For example, adapt these selectors to an authored reveal and decorative loop:
+
 ```css
-/* Respect reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+  .decorative-loop, .reveal {
+    animation: none;
+    transition: none;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  html {
+    scroll-behavior: auto;
   }
 }
 ```
+
+CSS does not stop imperative timelines, canvas players, or every SVG animation. Apply the preference through the actual runtime too, including live changes when supported. Preserve essential state and focus without waiting for a completion event that reduced motion may remove. A near-zero duration alone does not prove that motion is accessible. Verify the real reduced-motion rendering and interaction.
 
 ---
 

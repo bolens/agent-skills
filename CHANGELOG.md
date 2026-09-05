@@ -30,6 +30,8 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Changed
 
+- Verify animation geometry, instance cleanup, and runtime-specific reduced-motion
+  states across the SVG, accessibility, performance, and browser-evidence workflows.
 - Replace Bash-based repository maintenance helpers with cross-platform Python,
   support Git worktrees when installing hooks, and validate portable shebangs
   and line endings.

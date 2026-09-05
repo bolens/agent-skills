@@ -11,6 +11,8 @@ Build motion that preserves the drawing's meaning at every frame, including when
 
 Inspect the rendered SVG and its `viewBox` before changing motion. Confirm that recognizable objects share the right geometry and attachment points. A basket belongs on its pole; a wheel rotates around its axle; liquid follows the glass silhouette. Fix those relationships before tuning timing.
 
+Use `svg-design` when the task also requires constructing or repairing static paths, icon families, IDs, symbols, or export geometry. Preserve an existing icon system rather than drawing a competing one for a small motion change.
+
 Separate static structure from moving parts with named groups or elements. Animate the smallest meaningful part. Do not rotate or translate a whole icon when only a crank, wheel, indicator, or particle should move.
 
 ## Choose the motion mechanism
@@ -18,7 +20,7 @@ Separate static structure from moving parts with named groups or elements. Anima
 - Prefer CSS transforms and opacity for short, independent icon motion. They are easy to pause, query, and disable.
 - Use SVG presentation properties for stroke drawing or color changes when the property must follow SVG geometry.
 - Use native SVG motion paths when an object must follow an authored path and a static fallback remains complete.
-- Use JavaScript only for input-dependent, stateful, or measured motion that CSS and SVG cannot express clearly.
+- Use the requested or existing GSAP, Motion, or other runtime when its sequencing, input, or lifecycle support fits the task. Use `web-animation` for runtime-specific integration and verification. Do not replace a selected library merely because a native alternative exists.
 
 Read [references/geometry-and-motion.md](references/geometry-and-motion.md) when transforms, path motion, clipping, masks, or responsive scaling are involved.
 
@@ -34,7 +36,7 @@ Avoid rapid flashes, large unexpected movement, and motion triggered solely by h
 
 Prefer `transform` and `opacity`. Keep animated filters, masks, gradients, large blurs, and path morphs small and justified. Reuse geometry with `<symbol>` and `<use>` only when it does not complicate styling or accessible names. Keep `viewBox`, explicit aspect ratio, or reserved layout dimensions stable so the SVG cannot cause layout shift.
 
-Do not add an animation library for motion that browser-native CSS or SVG can express. Avoid per-frame DOM writes. If JavaScript is necessary, batch reads before writes and use `requestAnimationFrame` only while motion is active.
+Avoid adding a library solely for a trivial effect, but account for the user's choice and existing dependencies. Give each transform or path property one animation owner. For JavaScript motion, batch layout reads before writes and run frame callbacks only while needed. Do not drive per-frame values through framework rerenders when the runtime can update them directly.
 
 ## Diagnose
 

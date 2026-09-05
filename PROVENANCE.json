@@ -12,7 +12,8 @@
         "path": "skills/accessibility",
         "ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
         "local_changes": [
-          "Route responsive visual evidence through responsive-web-capture and functional browser evidence through cli-web-evidence."
+          "Route responsive visual evidence through responsive-web-capture and functional browser evidence through cli-web-evidence.",
+          "Route runtime and shared-component remediation to motion, asset, and design-system skills; verify explicit reduced-motion states rather than relying on a global duration reset."
         ]
       },
       "install_targets": [
@@ -496,7 +497,8 @@
         "path": "skills/performance",
         "ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
         "local_changes": [
-          "Require responsive and functional regression evidence when performance changes can affect those surfaces."
+          "Require responsive and functional regression evidence when performance changes can affect those surfaces.",
+          "Route measured animation and player costs through web-animation and animation-assets, including active motion and route re-entry evidence."
         ]
       },
       "install_targets": [

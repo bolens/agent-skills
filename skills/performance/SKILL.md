@@ -24,6 +24,8 @@ Use `responsive-web-capture` when a performance change can alter layout across d
 
 Use `svg-animation` when a measured rendering or main-thread cost comes from animated SVG geometry, filters, masks, path morphs, or per-frame DOM work.
 
+Use `web-animation` to repair measured timeline, scroll, gesture, or lifecycle costs, and `animation-assets` for Lottie/Rive loading, renderer, or player costs. Measure active motion and repeated route entry, not only a static initial frame. A library choice or transform-only implementation is not proof of smooth rendering.
+
 Prefer a browser tool that records a performance trace and exposes focused insights. With Chrome DevTools MCP, use `performance_start_trace` and `performance_analyze_insight`; do not route performance through `lighthouse_audit`, which covers non-performance Lighthouse categories.
 
 ## Starting performance budget

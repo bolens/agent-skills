@@ -29,6 +29,8 @@ For sites deployed below a path such as `/project/`, start the repository-native
 
 Keep evidence task-scoped unless the repository defines a tracked visual-baseline location. Do not capture authenticated pages containing secrets or personal data without confirming the storage location and scope.
 
+For animated pages, record whether motion is running, reduced, or frozen. A fixed capture delay is not a deterministic animation phase. Use `web-animation` and the repository's runtime-aware harness when scroll pinning, enter/exit states, or canvas assets need controlled capture. This script's viewport matrix does not prove those behaviors.
+
 ## Script examples
 
 ```bash
