@@ -1,0 +1,4 @@
+interface:
+  display_name: "PR and release follow-through"
+  short_description: "Follow PR fixes or standalone repository releases"
+  default_prompt: "Use $babysit to follow this PR or standalone release through its applicable audit, checks, repairs, and repository release playbook."

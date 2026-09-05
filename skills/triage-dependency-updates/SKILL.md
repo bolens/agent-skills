@@ -51,4 +51,12 @@ A review or triage request is read-only. When implementation is requested:
 
 Use the changelog-maintainer skill when an update changes runtime requirements, compatibility, configuration, security exposure, or operator behavior. Keep routine dependency churn out of the changelog.
 
-Do not disable lifecycle-script protections, signature/checksum verification, security gates, or dependency automation merely to land an update. Do not stage, commit, push, merge, publish, deploy, or restart services without explicit authorization.
+When the task includes repairing an open dependency PR, addressing its feedback, getting it ready to merge, or preparing or publishing a release, automatically use [babysit](../babysit/SKILL.md). Keep dependency assessment here and return versions, risk, and check evidence to that coordinating workflow. A dependency review or local upgrade alone does not start follow-through.
+
+Do not disable lifecycle-script protections, signature/checksum verification, security gates, or dependency automation merely to land an update. Follow the user's and repository's commit instructions and stage only task changes. Push, merge, publish, deploy, or restart services only within the authority already granted for the task.
+
+When a homelab image update also changes environment keys, mounts, health checks, ingress, or preparation, use [homelab-stack-maintenance](../homelab-stack-maintenance/SKILL.md) to update those source contracts together. Keep version and compatibility assessment here and return to the active delivery workflow. An image-pin-only update does not require the broader stack workflow.
+
+During active fleet-wide dependency maintenance, use [the fleet shared-fix workflow](../audit-repo-fleet/references/shared-fixes.md) to check maintained peers for the same affected dependency, compatibility condition, or automation defect. Apply verified candidates where applicable and validate each repository. Do not assume every repository needs the same version or expand a local update into a fleet upgrade.
+
+When an Actions or runner dependency update requires changes to CI events, permissions, reusable interfaces, or check coverage, use [ci-maintenance](../ci-maintenance/SKILL.md) for that pipeline contract. Keep candidate selection and version evidence here. A compatible SHA-only update need not redesign CI.

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Web animation"
+  short_description: "Build and verify interface motion across runtimes"
+  default_prompt: "Use $web-animation to implement and verify the requested motion using this project's animation stack."

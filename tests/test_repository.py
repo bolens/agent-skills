@@ -1,8 +1,14 @@
 from __future__ import annotations
 
 import json
+import os
+import re
+import subprocess
+import sys
+import tempfile
 import unittest
 from pathlib import Path
+from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -32,6 +38,86 @@ class RepositoryContract(unittest.TestCase):
         for entry in self.manifest["skills"]:
             pointer = ROOT / "skills" / entry["name"] / "UPSTREAM.md"
             self.assertIn("hard fork", pointer.read_text().lower())
+
+    def test_skill_entrypoint_local_links_resolve(self) -> None:
+        # Check inline Markdown destinations used by the skill entrypoints.
+        # Ignore fenced examples, URLs, and same-page fragments.
+        for skill in sorted((ROOT / "skills").glob("*/SKILL.md")):
+            text = re.sub(r"(?ms)^(`{3,}|~{3,})[^\n]*\n.*?^\1\s*$", "", skill.read_text())
+            for target in re.findall(r"\]\(([^\s)]+)\)", text):
+                link = urlsplit(target)
+                if link.scheme or link.netloc or not link.path:
+                    continue
+                with self.subTest(skill=skill.parent.name, target=target):
+                    self.assertTrue(
+                        (skill.parent / unquote(link.path)).exists(),
+                        f"Missing local reference in {skill.relative_to(ROOT)}: {target}",
+                    )
+
+    def test_skills_target_shared_and_claude_homes(self) -> None:
+        for entry in self.manifest["skills"]:
+            targets = entry["install_targets"]
+            name = entry["name"]
+            self.assertIn(f"${{AGENTS_HOME:-$HOME/.agents}}/skills/{name}", targets)
+            self.assertIn(f"${{CLAUDE_HOME:-$HOME/.claude}}/skills/{name}", targets)
+
+    def test_link_installer_supports_all_global_homes(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            env = {
+                **os.environ,
+                "CODEX_HOME": str(root / "codex"),
+                "AGENTS_HOME": str(root / "agents"),
+                "CLAUDE_HOME": str(root / "claude"),
+            }
+            installer = ROOT / "scripts" / "link-installed.py"
+            subprocess.run([sys.executable, str(installer), "--apply"], check=True, env=env, stdout=subprocess.DEVNULL)
+            subprocess.run([sys.executable, str(installer), "--check"], check=True, env=env)
+            for home in ("agents", "claude"):
+                for entry in self.manifest["skills"]:
+                    self.assertTrue((root / home / "skills" / entry["name"]).is_symlink())
+
+    def test_hook_installer_supports_linked_worktrees(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            repository = root / "repository"
+            worktree = root / "worktree"
+            subprocess.run(["git", "init", "-q", str(repository)], check=True)
+            subprocess.run(
+                ["git", "-C", str(repository), "-c", "user.name=Test", "-c", "user.email=test@example.invalid", "commit", "--allow-empty", "-qm", "initial"],
+                check=True,
+            )
+            subprocess.run(["git", "-C", str(repository), "worktree", "add", "--detach", "-q", str(worktree)], check=True)
+            installer = ROOT / "scripts" / "install-git-hooks.py"
+            subprocess.run([sys.executable, str(installer), "--repository", str(worktree)], check=True, stdout=subprocess.DEVNULL)
+            hook_path = subprocess.run(
+                ["git", "rev-parse", "--git-path", "hooks/pre-commit"],
+                cwd=worktree,
+                check=True,
+                capture_output=True,
+                text=True,
+            ).stdout.strip()
+            hook = Path(hook_path)
+            if not hook.is_absolute():
+                hook = worktree / hook
+            self.assertEqual("#!/bin/sh", hook.read_text(encoding="utf-8").splitlines()[0])
+            self.assertTrue(os.access(hook, os.X_OK))
+
+    def test_fleet_inventory_handles_repositories_without_workflows(self) -> None:
+        inventory = ROOT / "skills" / "audit-repo-fleet" / "scripts" / "inventory.sh"
+        with tempfile.TemporaryDirectory() as directory:
+            fleet = Path(directory)
+            subprocess.run(["git", "init", "-q", str(fleet / "alpha")], check=True)
+            subprocess.run(["git", "init", "-q", str(fleet / "group" / "beta")], check=True)
+            output = subprocess.run(
+                [str(inventory), str(fleet)],
+                check=True,
+                capture_output=True,
+                text=True,
+            ).stdout
+        self.assertIn("alpha\t", output)
+        self.assertIn("group/beta\t", output)
+        self.assertEqual(3, len(output.splitlines()))
 
 
 if __name__ == "__main__":

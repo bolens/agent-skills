@@ -4,52 +4,52 @@ description: Guidance for distinctive, intentional visual design when building n
 license: Complete terms in LICENSE.txt
 ---
 
-# Frontend Design
+# Frontend design
 
-Approach this as the design lead at a small studio known for giving every client a visual identity that could not be mistaken for anyone else's. This client has already rejected proposals that felt templated, and is paying for a distinctive point of view: make deliberate, opinionated choices about palette, typography, and layout that are specific to this brief, and take one real aesthetic risk you can justify.
+Make the visual direction fit the product, content, audience, and existing identity. A new campaign can justify a distinct visual language. A settings panel inside an established application usually needs continuity and clear behavior.
 
-## Ground it in the subject
+## Ground the direction
 
-If the brief does not pin down what the product or subject is, pin it yourself before designing: name one concrete subject, its audience, and the page's single job, and state your choice. If there's any information in your memory about the human's preferences, context about what they're building, or designs you've made before – use that as a hint. The subject's own world, its materials, instruments, artifacts, and vernacular, is where distinctive choices come from. Build with the brief's real content and subject matter throughout.
+Inspect the supplied references, existing screens, components, tokens, typography, icons, and real content before designing. Honor explicit visual choices. Do not invent a client's history, rejection of earlier proposals, or demand for an aesthetic risk.
 
-## Design principles
+When the brief leaves the subject open, choose and state a concrete subject, audience, and primary job. Ask only when missing information would materially change the result. Use existing user preferences as evidence, not permission to override the current brief.
 
-For web designs, the hero is a thesis. Open with the most characteristic thing in the subject's world, in whatever form makes sense for it: a headline, an image, an animation, a live demo, an interactive moment. Be deliberate with your choice: a big number with a small label, supporting stats, and a gradient accent is the template answer, only use if that's truly the best option.
+For a new direction, form a compact plan for hierarchy, palette, typography, layout, and any signature element. Keep the amount of planning proportional to the change. A small UI repair does not need a new palette or type system. Use `design-system` when decisions belong in reusable tokens, variants, or component states.
 
-Typography carries the personality of the page. Pair the display and body faces deliberately, not the same families you would reach for on any other project, and set a clear type scale with intentional weights, widths, and spacing. Make the type treatment itself a memorable part of the design, not a neutral delivery vehicle for the content.
+## Compose with real content
 
-Structure is information. Structural devices, numbering, eyebrows, dividers, labels, should encode something true about the content, not decorate it. Many generic designs use numbered markers (01 / 02 / 03), but that's only appropriate if the content actually is a sequence - like a real process or a typed timeline where order carries information the reader needs. Question if choices like numbered markers actually make sense before incorporating them.
+Make the primary task and information hierarchy apparent before adding decoration. Choose page structure for the content. A marketing page may need a hero, while an editor or dashboard may need to open directly on the work.
 
-Leverage motion deliberately. Think about where and if animation can serve the subject: a page-load sequence, a scroll-triggered reveal, hover micro-interactions, ambient atmosphere. An orchestrated moment usually lands harder than scattered effects; choose what the direction calls for. However, sometimes less is more, and extra animation contributes to the feeling that the design is AI-generated.
+Typography should support hierarchy, density, reading length, and brand character. Reuse existing type roles where they work. A single well-chosen family can be sufficient. Verify fallback metrics, font availability, and long headings rather than choosing fonts only from a large static mockup.
 
-Match complexity to the vision. Maximalist directions need elaborate execution; minimal directions need precision in spacing, type, and detail. Elegance is executing the chosen vision well.
+Use spacing, alignment, grouping, and contrast to explain relationships. Numbering should represent an actual sequence or reference system. Avoid decorative statistics, fabricated testimonials, and unnecessary cards or separators. Use representative content lengths and realistic data density.
 
-Consider written content carefully. Often a design brief may not contain real content, and it's up to you to come up with copy. Copy can make a design feel as templated as the design itself. See the below section on writing for more guidance.
+Create a distinctive detail when it serves the brief, such as a typographic treatment, illustration, composition, or interaction. Do not require novelty in every control or reject a valid design because its palette resembles a common style. For reference-matching work, fidelity takes priority over unsolicited reinvention.
 
-## Process: brainstorm, explore, plan, critique, build, critique again
+## Design behavior alongside appearance
 
-For calibration: AI-generated design right now clusters around three looks: (1) a warm cream background (near #F4F1EA) with a high-contrast serif display and a terracotta accent; (2) a near-black background with a single bright acid-green or vermilion accent; (3) a broadsheet-style layout with hairline rules, zero border-radius, and dense newspaper-like columns. All three are legitimate for some briefs, but they are defaults rather than choices, and they appear regardless of subject. Where the brief pins down a visual direction, follow it exactly — the brief's own words always win, including when it asks for one of these looks. Where it leaves an axis free, don't spend that freedom on one of these defaults. Just like a human designer who's hired, there's often a careful balance between doing what you're good at and taking each project as a chance to experiment and learn.
+Include relevant loading, empty, error, success, disabled, selected, and focus states. Ensure primary actions remain discoverable at narrow widths and with long content. Preserve the repository's semantic controls, form behavior, and component APIs while changing appearance.
 
-Work in two passes. First, brainstorm a short design plan based on the human's design brief: create a compact token system with color, type, layout, and signature. Color: describe the palette as 4–6 named hex values. Type: the typefaces for 2+ roles (a characterful display face that's used with restraint, a complementary body face, and a utility face for captions or data if needed). Layout: a layout concept, using one-sentence prose descriptions and ASCII wireframes to ideate and compare. Signature: the single unique element this page will be remembered by that embodies the brief in an appropriate way.
+Use `forms-and-data-state` when submission, autosave, optimistic updates, or request ordering determines those states. Visual feedback must reflect confirmed data and preserve unsaved edits.
 
-Then review that plan against the brief before building: if any part of it reads like the generic default you would produce for any similar page (work through a similar prompt to see if you arrive somewhere similar) rather than a choice made for this specific brief — revise that part, say what you changed and why. Only after you've confirmed the relative uniqueness of your design plan should you start to write the code, following the revised plan exactly and deriving every color and type decision from it.
+Motion should clarify state, spatial relationships, or the visual idea. Use `web-animation` for GSAP, Motion, native transitions, or other runtime work. Use `svg-animation` for moving vector geometry and `animation-assets` for Lottie/dotLottie or Rive. Preserve the requested engine and avoid adding animation merely to make a static design feel more elaborate.
 
-When writing the code, be careful of structuring your CSS selector specificities. It's easy to generate CSS classes that cancel each other out (especially with a type-based selector like .section and a element-based selector like .cta). This can happen often with paddings/margins between sections.
+Use `svg-design` for editable icons, sprites, or vector illustration. Reuse an established icon family. Use raster generation only when the required asset should be a bitmap, preserving the user's requested deliverable format.
 
-Try to do a lot of this planning and iteration in your thinking, and only show ideas to the user when you have higher confidence it'll delight them.
+## Implement and inspect
 
-## Restraint and self-critique
+Build from existing components and styling conventions. Keep selector ownership clear and avoid broad element selectors that unexpectedly override component variants. Use container and content constraints when they better express responsive behavior than device labels.
 
-Spend your boldness in one place. Let the signature element be the one memorable thing, keep everything around it quiet and disciplined, and cut any decoration that does not serve the brief. Not taking a risk can be a risk itself! Build to a quality floor without announcing it: responsive down to mobile, visible keyboard focus, reduced motion respected. Critique your own work as you build. For website visual QA, use the `cli-web-evidence` skill: prefer the project's existing harness or CLI-driven Chrome/Chromium through Puppeteer, Playwright, or CDP; inspect screenshots at mobile and desktop sizes before claiming success. When `responsive-web-capture` is installed and the task needs repeatable orientation, ultrawide, or broad breakpoint evidence, use its standard or comprehensive matrix and inspect the generated contact sheet. Do not default to in-app browser control. Consider Chanel's advice: before leaving the house, take a look in the mirror and remove one accessory. Human creators have memory and always try to do something new, so if you have a space to quickly jot down notes about what you've tried, it can help you in future passes.
+Inspect a working first version early. Compare it with the brief and real content, then fix specific weaknesses in hierarchy, density, alignment, states, or behavior. Do not delay implementation until a design has been declared unique in the abstract.
 
-## More on writing in design
+Use `cli-web-evidence` to drive the actual page and inspect narrow and desktop captures. Use `responsive-web-capture` for repeatable viewport coverage and `design-system` for shared component-state coverage. Use `accessibility` for focused semantic/keyboard checks and `performance` when runtime evidence indicates a cost. Apply Sites guidance when the project is hosted with Sites.
 
-Words appear in a design for one reason: to make it easier to understand, and therefore easier to use. They are design material, not decoration. Bring the same intentionality to copy that you would bring to spacing and color. Before writing anything, ask what the design needs to say, and how it can best be said to help the person navigate the experience.
+Use `web-standard` when a native control, navigation pattern, or newer browser feature needs platform/compatibility verification. Use `technical-seo` for requested discoverability work on public pages, not for every visual edit.
 
-Write from the end user's side of the screen. Name things by what people control and recognize, never by how the system is built. A person manages notifications, not webhook config. Describe what something does in plain terms rather than selling it. Being specific is always better than being clever.
+Verify reduced motion, focus visibility, overflow, and relevant themes. Review interactive states as well as the initial screen. A successful build is not visual proof, and a static screenshot is not interaction proof. Report what was inspected and any coverage gap.
 
-Use active voice as default. A control should say exactly what happens when it's used: "Save changes," not "Submit." An action keeps the same name through the whole flow, so the button that says "Publish" produces a toast that says "Published." The vocabulary of an interface is the signposting for someone navigating the product. Cohesion and consistency are how people learn their way around.
+## Interface writing
 
-Treat failure and emptiness as moments for direction, not mood. Explain what went wrong and how to fix it, in the interface's voice rather than a person's. Errors don't apologize, and they are never vague about what happened. An empty screen is an invitation to act.
+Write from the user's task and vocabulary. Name actions precisely and keep the same term throughout a flow. Explain an error with a recoverable next step when one exists. Empty states should explain what belongs there and how to proceed.
 
-Keep the register conversational and tuned: plain verbs, sentence case, no filler, with tone matched to the brand and the audience. Let each element do exactly one job. A label labels, an example demonstrates, and nothing quietly does double duty.
+Use real claims and supplied facts. Mark temporary sample content honestly. Keep implementation details out of labels unless they help the user make a meaningful decision. Prefer clear, concise prose to slogans, filler, or promotional adjectives.

@@ -1,0 +1,4 @@
+interface:
+  display_name: Homelab Stack Triage
+  short_description: Trace failures through a Compose service path
+  default_prompt: Diagnose this homelab service failure without changing live state until the failure boundary is proven.

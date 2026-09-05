@@ -7,6 +7,7 @@ import argparse
 import json
 from pathlib import Path
 import subprocess
+from typing import Optional
 
 ROOT = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser()
@@ -14,7 +15,7 @@ parser.add_argument("--check", action="store_true", help="fail when an upstream 
 parser.add_argument("--json", action="store_true", dest="as_json")
 args = parser.parse_args()
 sources = json.loads((ROOT / "UPSTREAMS.json").read_text())["skills"]
-resolved: dict[tuple[str, str], tuple[str | None, str | None]] = {}
+resolved: dict[tuple[str, str], tuple[Optional[str], Optional[str]]] = {}
 results = []
 
 for name, source in sorted(sources.items()):

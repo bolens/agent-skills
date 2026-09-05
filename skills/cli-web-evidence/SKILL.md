@@ -1,69 +1,44 @@
 ---
 name: cli-web-evidence
-description: Verify websites and web applications from the command line using repository-native checks, Chrome or Chromium automation, screenshots, and inspectable evidence. Use for visual QA, responsive checks, browser-flow verification, or proof that a web change works. Do not use for general web research or when the user explicitly asks to control the in-app browser.
+description: Verify websites and web applications through CLI browser automation, screenshots, visual comparisons, and interaction evidence. Use for CLI web capture, visual QA, browser-flow verification, or proof that a web change works. Do not use for general web research or an explicit in-app browser request.
 ---
 
-# CLI Web Evidence
+# CLI web evidence
 
-Verify the real website through command-line tooling and leave evidence another person can inspect.
+Choose the smallest executable check that proves the requested behavior. Preserve inspectable artifacts and distinguish what was asserted, visually inspected, and left unverified.
 
-## Tool choice
+## Choose the tool and scope
 
-Prefer, in order:
+Discover the repository's build, preview, base path, browser tests, and visual baselines. Prefer its existing harness, then installed Playwright, Puppeteer, Cypress, or CDP tooling. Use direct headless Chrome only for simple rendering that needs no authenticated setup, interaction, or application-specific readiness. Reuse dependencies and browser binaries. Install missing tooling only when needed within the authorized task.
 
-1. The repository's existing browser tests, screenshot scripts, or visual-regression harness.
-2. Its installed Playwright, Puppeteer, Cypress, or Chrome DevTools Protocol tooling.
-3. A small Puppeteer script run with the repository's package manager, using an installed Chrome or Chromium executable.
-4. Direct Chrome/Chromium headless commands when a scripted interaction is unnecessary.
+For viewport PNGs, use [responsive-web-capture](../responsive-web-capture/SKILL.md). Its helper captures the initial viewport, with reduced motion by default. It does not establish full-page coverage, actual CSS viewport dimensions, application readiness, or mobile-device behavior. Use a scripted harness for those requirements.
 
-Do not use the in-app browser-control capability merely because a task involves a website. Use it only when the user explicitly requests it, when an existing authenticated in-app session is essential, or when CLI-driven Chrome cannot reach the required state. Explain that exception when it occurs.
+Use the in-app browser when explicitly requested, when its authenticated session is essential, or when CLI tools cannot reach the required state. Explain the reason for switching. Do not silently copy the user's browser profile into a test session.
 
-Reuse installed dependencies and browser binaries. Do not add packages, download a browser, or change project configuration unless the task requires it and the user has authorized that change.
+Select representative routes and states before multiplying viewports. During iteration, rerun the affected state and sizes near the relevant breakpoint. Use the requested final matrix once the focused checks pass. Different window sizes in Chromium do not prove Safari, Firefox, touch, high-DPI, zoom, or mobile browser behavior. Exercise those separately when relevant.
 
-## Local evidence tools
+## Establish reproducible state
 
-This machine has a CLI-first capture and inspection toolchain. Confirm availability with `command -v` before use because packages can change.
+Start the repository-native server in a managed session and retain its logs. Check the intended application identity and exact route/base path. HTTP readiness alone can point at a login page, error shell, stale build, or unrelated server. Stop only processes started for the task.
 
-- `chromium` and `google-chrome-stable`: headless page rendering, screenshots, print-to-PDF, and CDP targets.
-- ImageMagick 7: use `magick` as the primary entry point. `identify`, `compare`, `montage`, `convert`, and `mogrify` are also installed for metadata, visual diffs, contact sheets, conversion, and batch processing.
-- GraphicsMagick: use the `gm` entry point when its behavior or performance better fits the task. Do not confuse `gm compare` output with ImageMagick's `compare` command.
-- `vhs`: script or record deterministic terminal demonstrations. Keep the `.tape` source beside the generated GIF, WebM, or MP4 when reproducibility matters. Do not use `vhs publish` unless the user asks to upload the recording.
-- `wf-recorder`: record a Wayland output or selected geometry when motion, focus, drag-and-drop, or compositor behavior cannot be shown by screenshots.
-- `gpu-screen-recorder`: an alternative screen recorder when GPU capture is useful. It may require access to GPU and user configuration outside the sandbox.
-- `grim` and `slurp`: capture a Wayland screen or interactively select a region when compositor-level evidence is required.
-- `ffmpeg`: inspect, trim, transcode, extract frames, or create a contact sheet from recordings.
-- `pw-record`: capture PipeWire audio only when audio behavior is part of the requested proof.
+Install console, page-error, failed-request, and relevant HTTP-response observers before navigation. HTTP 4xx/5xx responses need explicit checks, since they may not appear as failed requests. Attribute failures to the tested path and distinguish expected cancellations from defects. Browser stderr alone is not a page-console or network audit.
 
-Choose the smallest artifact that proves the behavior. Prefer a screenshot for static layout, a before/after pair plus an image diff for visual changes, a `vhs` recording for terminal flows, and a short screen recording for motion or interaction that still images cannot establish.
+Navigate and exercise the user-visible path. Wait with a deadline for the state that matters: hydrated control, loaded data, dismissed loader, decoded image, or completed transition. Check fonts and in-scope image readiness when layout depends on them. `load`, a sleep, or global `networkidle` alone does not prove application readiness. Assert the resulting URL and meaningful DOM state. [Playwright readiness API](https://playwright.dev/docs/api/class-page#page-wait-for-load-state).
 
-## Verification workflow
+For comparisons, hold browser/version, viewport, device scale, theme, locale, test data, scroll position, and motion policy constant. Record relevant differences instead of masking them. Use fresh contexts for independent states, or deliberately reuse a context when testing navigation/session continuity. Keep authenticated test state private and out of tracked artifacts.
 
-- Discover the project's start, build, and test commands before inventing a harness.
-- Start local servers with the repository's normal command and capture their logs. Keep long-running processes in a managed terminal session and stop only processes started for this task.
-- Drive the user-visible path: load the page, perform relevant interactions, and wait for observable readiness rather than arbitrary sleeps.
-- Check console errors, failed requests, page errors, target URLs, and important DOM state alongside visual output.
-- Exercise the viewport sizes relevant to the task. For general responsive QA, include at least one narrow mobile and one desktop viewport.
-- When `responsive-web-capture` is installed, use its reusable script for standard or comprehensive multi-viewport audits. Prefer focused `--viewport` reruns while iterating, then use the requested final matrix. Pass the exact repository-native preview URL when the deployed site uses a non-root base path.
-- Capture screenshots after the state under review is fully rendered. Use full-page captures for layout review and focused captures when they make a defect easier to see.
-- Inspect screenshots visually before claiming success. A successful automation exit code does not prove that the page looks correct.
-- Use `identify` to verify screenshot dimensions and format. Use `compare` or `magick compare` only when a reference image and a meaningful tolerance exist. Report the metric and tolerance with the diff artifact.
-- Use `montage` to make a labeled contact sheet when several viewports or states must be reviewed together. Preserve the original captures.
-- Record with `vhs`, `wf-recorder`, or `gpu-screen-recorder` only when the requested behavior depends on time or interaction. Trim dead time and retain the source tape or exact recording command.
-- When visual comparison matters, preserve clearly named before/after images under a temporary evidence directory unless the repository defines an artifact location.
+## Capture and inspect
 
-## Evidence standard
+Read [capture and comparison](references/capture-and-comparison.md) for whole-page coverage, lazy loading, scroll frames, diffs, contact sheets, or recordings. Use an element or viewport capture when it proves the requested change. Inspect the actual images before declaring visual success. A successful process exit and matching PNG dimensions are insufficient.
 
-Report concise, reproducible evidence:
+Use [svg-animation](../svg-animation/SKILL.md), [web-animation](../web-animation/SKILL.md), or [animation-assets](../animation-assets/SKILL.md) for phase sampling, reduced motion, interruption, and teardown. Reduced-motion or animation-disabled screenshots prove their captured state, not playback or frame cost. Use [web-quality-audit](../web-quality-audit/SKILL.md) when measured accessibility or performance is requested.
 
-- exact command or existing test invoked;
-- URL and viewport used;
-- interaction or state verified;
-- screenshot paths;
-- diff, contact-sheet, or recording paths when those artifacts add proof;
-- relevant console, network, assertion, and exit-code results.
+Preserve the original baseline and capture each rerun separately. Use repository-defined artifact paths or task-scoped temporary storage. Avoid signed URLs, cookies, tokens, and personal data in receipts, traces, and screenshots. Use authorized test data where possible.
 
-Prefer a small JSON or text receipt next to screenshots when several pages or viewports are checked. Do not claim pixel-perfect or cross-browser coverage unless it was actually measured. Distinguish a rendering check from a functional assertion and note any skipped state that required unavailable credentials, services, or browser binaries.
+## Report evidence and stop
 
-## Safety and scope
+Report the exact command or test, URL, browser, viewport, relevant emulation/state, assertions, visual inspection result, and artifact paths. Include coverage limits and actionable console/network failures. For multiple captures, keep a receipt beside the originals with completed, failed, and skipped states. Do not infer clean coverage from missing output.
 
-Treat website interaction as an external action: do not submit purchases, publish content, send messages, alter production data, or bypass authentication without explicit authorization. Prefer local, preview, staging, test, or read-only paths. Screenshots may contain secrets or personal data; keep them in task-scoped temporary storage unless the user asks to retain them.
+Separate rendering evidence from functional assertions and measured quality. An incomplete capture is not a passing check. Keep partial artifacts for diagnosis and state what remains unverified. Once the requested evidence passes, stop unless a new failure justifies another run.
+
+Website interactions remain within the user's authorized scope. Purchases, publishing, messages, and production-data changes require authorization for that action. Prefer local, preview, test, or read-only paths.

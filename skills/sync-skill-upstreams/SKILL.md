@@ -20,3 +20,5 @@ Update only the upstream-owned subtree. Preserve every `preserve_paths` entry an
 Run the upstream skill's focused checks when they are self-contained, followed by `make check`. Record unavailable monorepo-only checks precisely. After the candidate passes, update `audited_ref`, regenerate provenance, inspect the complete repository diff, and commit the upstream import separately from unrelated local changes.
 
 Never let the scheduled audit or a dependency bot merge upstream skill content automatically. Publishing, pushing, or changing installed links still requires the authority granted by the user's request.
+
+When the requested import also includes PR follow-through or release preparation or publication, automatically use [babysit](../babysit/SKILL.md) once the PR exists or release preparation begins. Carry the reviewed upstream diff, preserved local changes, and check evidence into that workflow. A drift audit or local import alone does not start delivery.

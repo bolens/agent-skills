@@ -45,6 +45,8 @@ Require behavioral regression coverage for each material risk. For asynchronous 
 
 Run graphical QML tests against a real Wayland session when the repository requires them. Report environmental skips separately from passing tests.
 
+When implementation fixes are requested, use [quickshell-development](../quickshell-development/SKILL.md) for QML ownership, reactive state, and helper lifecycle work. Keep this audit read-only until fixes are authorized.
+
 ## Report
 
 Lead with blockers, then `review-required` capabilities, then manual-review risks. For each item include evidence, impact, smallest fix, and the test that would prevent recurrence.
@@ -60,3 +62,5 @@ Finish with:
 - submission/update metadata still needed
 
 Do not describe a clean baseline as a security audit or guarantee approval.
+
+When the broader task includes fixing an open plugin PR or preparing or publishing a plugin release, automatically use [babysit](../babysit/SKILL.md) to coordinate follow-through. Keep this audit read-only and return the candidate SHA, scanner disposition, and manual findings to an already active workflow. A readiness audit alone does not start follow-through or authorize marketplace submission.

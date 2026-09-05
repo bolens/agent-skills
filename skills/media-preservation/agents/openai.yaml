@@ -1,0 +1,4 @@
+interface:
+  display_name: "Media preservation"
+  short_description: "Verify media and archive utility workflows"
+  default_prompt: "Use $media-preservation to complete this task with repository-specific checks and inspectable evidence."

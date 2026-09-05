@@ -1,0 +1,4 @@
+interface:
+  display_name: Web Performance
+  short_description: Diagnose and improve measured web performance
+  default_prompt: Measure this site's performance, localize the bottleneck, and verify any improvement under equivalent conditions.

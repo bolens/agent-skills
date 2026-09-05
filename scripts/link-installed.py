@@ -15,7 +15,12 @@ ROOT = Path(__file__).resolve().parents[1]
 def expand(value: str) -> Path:
     codex = os.environ.get("CODEX_HOME", str(Path.home() / ".codex"))
     agents = os.environ.get("AGENTS_HOME", str(Path.home() / ".agents"))
-    return Path(value.replace("${CODEX_HOME:-$HOME/.codex}", codex).replace("${AGENTS_HOME:-$HOME/.agents}", agents))
+    claude = os.environ.get("CLAUDE_HOME", str(Path.home() / ".claude"))
+    return Path(
+        value.replace("${CODEX_HOME:-$HOME/.codex}", codex)
+        .replace("${AGENTS_HOME:-$HOME/.agents}", agents)
+        .replace("${CLAUDE_HOME:-$HOME/.claude}", claude)
+    )
 
 
 def main() -> int:
