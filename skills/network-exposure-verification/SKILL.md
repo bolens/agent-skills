@@ -24,3 +24,5 @@ Probe a bounded set of explicit endpoints from the relevant available clients. V
 For repairs, preserve the existing administrative path and prepare a tested recovery route and bounded rollback before applying potentially disconnecting changes. Apply only the authorized policy change. Recheck both intended access and denial from the same clients. Do not flush the firewall or remove protections to make a test pass.
 
 Use [homelab-stack-triage](../homelab-stack-triage/SKILL.md) for service/dependency failures and [web-security](../web-security/SKILL.md) for application identity/authorization. Report verified policy cells, contradictory evidence, and unavailable vantage points. Do not call WAN isolation proven from a LAN-only check.
+
+When an authorized exposure repair changes committed homelab Compose or ingress examples, use [homelab-stack-maintenance](../homelab-stack-maintenance/SKILL.md) for the affected environment, preparation, metadata, and documentation contracts. Return the evidence here for access/denial verification within the current requested endpoint. Repository readiness does not prove deployed isolation.

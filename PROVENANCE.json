@@ -455,6 +455,20 @@
       ]
     },
     {
+      "name": "homelab-stack-maintenance",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/homelab-stack-maintenance",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/homelab-stack-maintenance"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/homelab-stack-maintenance",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/homelab-stack-maintenance",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/homelab-stack-maintenance"
+      ]
+    },
+    {
       "name": "homelab-stack-triage",
       "hard_fork": true,
       "origin": {

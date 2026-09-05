@@ -6,6 +6,9 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Added
 
+- Add homelab stack maintenance for coordinated Compose, environment example,
+  preparation, metadata, ingress, and generated documentation changes.
+
 - Add `git-hygiene` for concurrent agent ownership, isolated worktrees, focused
   commits, and validation across repository surfaces.
 
@@ -38,6 +41,12 @@ All notable changes to this hard-fork collection are documented here.
   `arch-update-recovery` for operational gaps specific to this fleet.
 
 ### Changed
+
+- Check maintained peers for shared fixes and applicable improvements during
+  fleet implementation, with per-repository validation and explicit coverage.
+
+- Keep homelab incident evidence private, distinguish preparation and validation
+  side effects, and connect stack fixes with exposure and dependency workflows.
 
 - Have `babysit` complete verified post-merge branch and temporary local worktree
   cleanup through `git-hygiene`, preserving active or unintegrated work.

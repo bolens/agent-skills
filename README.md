@@ -56,6 +56,14 @@ merges upstream content.
 Contract tests check that inline local links in skill entrypoints resolve. They
 do not verify remote URLs or section anchors.
 
+## Fleet implementation
+
+[audit-repo-fleet](skills/audit-repo-fleet/SKILL.md) carries a confirmed fix or
+applicable improvement across maintained peers during fleet-wide implementation.
+It checks shared causes and consumers, adapts fixes per repository, and records
+coverage and blockers. Debugging, dependency maintenance, homelab maintenance,
+and PR follow-through return relevant findings to that coordinator.
+
 ## Concurrent repository work
 
 Use [git-hygiene](skills/git-hygiene/SKILL.md) alongside implementation skills when
@@ -107,6 +115,8 @@ adding or migrating frameworks.
 | LAN/WAN/VPN reachability, firewalls, Docker, DNS, and TLS | [network-exposure-verification](skills/network-exposure-verification/SKILL.md) |
 | Quickshell/QML component and plugin implementation | [quickshell-development](skills/quickshell-development/SKILL.md) |
 | Backup validation and isolated application recovery drills | [backup-restore-verification](skills/backup-restore-verification/SKILL.md) |
+| Homelab Compose stack, examples, preparation, and metadata changes | [homelab-stack-maintenance](skills/homelab-stack-maintenance/SKILL.md) |
+| Live homelab service diagnosis | [homelab-stack-triage](skills/homelab-stack-triage/SKILL.md) |
 | PR follow-through or standalone release preparation/publication | [babysit](skills/babysit/SKILL.md) |
 
 Related review, repair, maintenance, and verification skills automatically use
