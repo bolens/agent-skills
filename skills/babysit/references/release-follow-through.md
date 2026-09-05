@@ -4,6 +4,8 @@ Use the repository's release playbook as the source of truth. Read its reference
 
 ## Establish what is needed
 
+For an existing or partially published version, reconcile the published artifacts, tag, workflow attempt, and intended source commit before selecting a candidate. Newer default-branch code does not automatically belong to that version.
+
 - Determine whether the PR changes shipped behavior, compatibility, configuration, runtime requirements, or security exposure. Check whether those changes are already included in an unpublished release entry.
 - Identify the release unit in a monorepo. Follow its versioning policy rather than bumping every package.
 - Determine whether release preparation belongs in this PR, a dedicated release PR, or automation after merge. Check for an existing release PR, tag, or package version to avoid duplicate work.
