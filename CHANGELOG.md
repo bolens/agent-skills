@@ -36,6 +36,8 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Changed
 
+- Align media preservation with the audio, image, video, and archive utility
+  family, including image fidelity, archive extraction, and shared-tool validation.
 - Extend backup verification with isolated service recovery drills and let
   `babysit` follow standalone releases without requiring an open PR.
 - Make responsive captures preserve reruns, bound browser execution, isolate

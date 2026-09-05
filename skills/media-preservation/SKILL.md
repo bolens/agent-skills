@@ -1,11 +1,17 @@
 ---
 name: media-preservation
-description: Convert, remux, organize, and verify audio or video collections while preserving intended streams, metadata, chapters, artwork, and source integrity. Use for archival media workflows and resumable conversion batches, not generic image generation or browser recordings.
+description: Process and verify audio, image, video, and archive collections with repository-native utilities and explicit preservation contracts. Use for archival conversion, packaging, extraction, or utility development in these workflows, not generic image generation or browser recordings.
 ---
 
 # Media preservation
 
-Establish what must survive the transformation before choosing an encoder or converter. Prefer the repository's verified media utilities and format contracts over a new shell pipeline.
+Establish what must survive the transformation before choosing a converter, packager, or extractor. Prefer the repository's verified media utilities and format contracts over a new shell pipeline.
+
+## Select the workflow
+
+Read [utility family integration](references/utility-family.md) when using or extending `audio-utils`, `image-utils`, `video-utils`, or `archive-utils`/`archiving-utils`. Reuse each repository's current tools, shared engine, catalog, generation, and validation contract. Check implementation maturity instead of assuming all siblings expose identical flags or supported formats.
+
+For image transformation, archive packaging, or extraction, read [images and archival packages](references/images-and-archives.md). For audio/video, use the stream and playback checks below. Load only the references needed by the selected operation.
 
 ## Define the preservation contract
 
@@ -17,10 +23,10 @@ Read [validation and batch recovery](references/validation-and-batches.md) for l
 
 ## Transform and verify
 
-Use existing converters first. Quote paths, preserve unusual filenames, and handle output collisions explicitly. Build an explicit stream/metadata mapping compatible with the target container. An indiscriminate `-map 0` may include unsupported attachments or streams. Record intentional omissions and format limitations instead of silently dropping content.
+Use existing converters first. Quote paths, preserve unusual filenames, and handle output collisions explicitly. For audio/video, build an explicit stream/metadata mapping compatible with the target container. An indiscriminate `-map 0` may include unsupported attachments or streams. Record intentional omissions and format limitations instead of silently dropping content.
 
 Write to a distinct temporary output with an explicit format or suitable extension. Treat the process exit code as only one check. Validate decodeability and the promised properties before promoting output to its final path. Keep source checksums, tool versions, conversion options, and validation results in a compact manifest when the batch needs reproducibility.
 
 For archival packages, verify both file integrity and the media contract. Use [backup-restore-verification](../backup-restore-verification/SKILL.md) when the question concerns backup recoverability. Use [cli-web-evidence](../cli-web-evidence/SKILL.md) for browser recordings, not as the archival validation workflow.
 
-Report completed, failed, skipped, and intentionally lossy items. State exactly which streams and properties were compared. Do not describe an unverified batch or a checksum-only check as preservation proof.
+Report completed, failed, skipped, and intentionally lossy items. State exactly which streams, frames, archive members, and properties were compared where applicable. Do not describe an unverified batch or a checksum-only check as preservation proof.

@@ -80,7 +80,7 @@ adding or migrating frameworks.
 
 | Task | Skill |
 |---|---|
-| Media conversion, archival properties, and resumable batches | [media-preservation](skills/media-preservation/SKILL.md) |
+| Audio/image/video preservation, archive utilities, and batches | [media-preservation](skills/media-preservation/SKILL.md) |
 | PKGBUILDs, local patches, clean builds, and pinned rebuilds | [arch-package-maintenance](skills/arch-package-maintenance/SKILL.md) |
 | LAN/WAN/VPN reachability, firewalls, Docker, DNS, and TLS | [network-exposure-verification](skills/network-exposure-verification/SKILL.md) |
 | Quickshell/QML component and plugin implementation | [quickshell-development](skills/quickshell-development/SKILL.md) |
