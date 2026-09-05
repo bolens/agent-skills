@@ -1,5 +1,9 @@
 # Agent guidance
 
+Before Spec Kit planning or implementation, read
+`.specify/memory/project-guide.md` with the project constitution. It maps
+requirements to this repository's source, acceptance evidence, and validation.
+
 Read `.specify/memory/constitution.md`, `README.md`, and the target skill's
 `SKILL.md` and `UPSTREAM.md` before editing.
 Use `RELEASING.md` for push, merge, delivery, and recovery guidance.
@@ -22,3 +26,11 @@ Use `RELEASING.md` for push, merge, delivery, and recovery guidance.
 - Use concise commit messages that state the intent of the change. Do not leave a
   completed task uncommitted unless the user explicitly asks you not to commit.
 - Do not push, tag, or publish unless explicitly requested.
+
+## Spec-driven changes
+
+Use Spec Kit for new capabilities, architecture, security-sensitive behavior,
+migrations, and coordinated changes needing a written contract. Keep narrow
+fixes, dependency updates, and prose maintenance in the normal PR workflow.
+Retain completed feature directories under `specs/` as decision history; do not
+backfill specifications for already finished work.
