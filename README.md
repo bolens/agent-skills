@@ -85,7 +85,7 @@ clients using them. Skill discovery and invocation depend on the client.
 
 ## Maintain and validate
 
-Maintenance scripts require Python 3.9 or newer. Node.js 18 or newer is needed
+Use Python 3.10 or newer for maintenance, including the hook installer and tests. Node.js 18 or newer is needed
 for validation of the bundled Archify fork. Bash is required by skills that use
 Bash workflows. Individual skills may need additional tools for their tasks.
 
