@@ -6,6 +6,9 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Added
 
+- Add `git-hygiene` for concurrent agent ownership, isolated worktrees, focused
+  commits, and validation across repository surfaces.
+
 - Add media preservation, Arch package maintenance, network exposure verification,
   and Quickshell development workflows.
 - Add web security, technical SEO, and web-standard workflows, including native

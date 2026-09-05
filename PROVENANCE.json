@@ -427,6 +427,20 @@
       ]
     },
     {
+      "name": "git-hygiene",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/git-hygiene",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/git-hygiene"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/git-hygiene",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/git-hygiene",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/git-hygiene"
+      ]
+    },
+    {
       "name": "grilling",
       "hard_fork": true,
       "origin": {

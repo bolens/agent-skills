@@ -56,6 +56,15 @@ merges upstream content.
 Contract tests check that inline local links in skill entrypoints resolve. They
 do not verify remote URLs or section anchors.
 
+## Concurrent repository work
+
+Use [git-hygiene](skills/git-hygiene/SKILL.md) alongside implementation skills when
+multiple agents write across repository surfaces. It covers worktree isolation,
+file ownership, a single Git writer for shared checkouts, focused staging, and
+validation after integration. Shared lockfiles and generated outputs need explicit
+owners even when agents edit different packages. Post-merge branch cleanup lives
+in this skill alongside local worktree cleanup.
+
 ## Review workflows
 
 Use [code-review](skills/code-review/SKILL.md) to trace a diff through affected
