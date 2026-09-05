@@ -38,6 +38,8 @@ For GitHub Actions, read [events, trust, and required checks](references/github-
 
 ## Implement a compatible change
 
+For an audit-only request, report findings without editing workflows. Implement changes when authorized.
+
 Preserve existing workflow names and required status identities unless their migration is part of the task. Inspect dependencies on those names in settings, badges, automation, and reusable callers. A workflow edit alone cannot update host rulesets.
 
 Pin actions and reusable dependencies according to the fleet's immutable-reference policy. Verify the source repository, selected release/commit, action runtime requirements, and downloaded executable checksums where used. Use [triage-dependency-updates](../triage-dependency-updates/SKILL.md) for actual version candidates and compatibility. A pin update does not justify unrelated runtime upgrades.
