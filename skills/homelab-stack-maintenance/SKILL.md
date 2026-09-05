@@ -57,3 +57,5 @@ Keep one coordinating task. Pass the stack, allowed source files, intended behav
 - Use [git-hygiene](../git-hygiene/SKILL.md) for concurrent stack writers sharing helpers or generated outputs. Use [babysit](../babysit/SKILL.md) only when the requested endpoint includes PR or release follow-through.
 
 Report changed contracts, checks and skips, private evidence not accessed, and remaining deployment or data work. Commit under repository policy. Distinguish repository readiness from runtime verification.
+
+During active fleet-wide implementation, use [the fleet shared-fix workflow](../audit-repo-fleet/references/shared-fixes.md) when a stack change reveals a shared helper, environment, ingress, or metadata issue. Check other maintained stacks and repositories using that contract, fix confirmed matches, and keep private runtime files outside the search. A request limited to one stack keeps that limit.

@@ -35,7 +35,7 @@ For each recommendation include repository, evidence, impact, safe next action, 
 
 ## Act only when requested
 
-If the user asks to implement maintenance, work one risk-coherent batch at a time. Re-read that repository's guidance, preserve unrelated changes, run focused validation, and report exact results. Do not stage, commit, push, publish, deploy, update live services, or bulk-upgrade dependencies unless explicitly authorized.
+If the user asks to implement maintenance, work one risk-coherent batch at a time. Use [shared fixes](references/shared-fixes.md) to check the rest of the maintained fleet for the same cause or applicable improvement and complete confirmed matches within the authorized scope. This check is part of implementation, not an optional follow-up after the first fix. Re-read each repository's guidance, preserve unrelated changes, run focused validation, and report exact results. Follow its commit requirements for authorized implementation. Push, merge, publication, deployment, live-service changes, and bulk upgrades retain their own authorization boundaries.
 
 For releases, audit version sources, generated artifacts, changelog/release notes, packaging, CI, signing, and rollback. When changelog quality or edits are in scope, use the changelog-maintainer skill for reader-facing history and generator checks. A readiness request authorizes reporting, not publishing.
 
@@ -45,7 +45,7 @@ When the fleet includes externally sourced hard-forked skills, use `sync-skill-u
 
 When the fleet includes runnable websites, use `web-quality-audit` for measured performance and accessibility, and `responsive-web-capture` for the requested visual viewport evidence.
 
-When the fleet includes operational Compose stacks, use `homelab-stack-triage` for a live service incident rather than treating repository health as runtime health. Use `backup-restore-verification` when backup recoverability is the question.
+When the fleet includes Compose repository changes, use [homelab-stack-maintenance](../homelab-stack-maintenance/SKILL.md) for coordinated stack contracts and return shared patterns to the fleet check. For operational Compose stacks, use `homelab-stack-triage` for a live service incident rather than treating repository health as runtime health. Use `backup-restore-verification` when backup recoverability is the question.
 
 When an Omarchy plugin fleet is being prepared for marketplace submission, verification, or update approval, use `audit-omarchy-plugin` for each candidate repository. Compare official findings and capabilities source-wide, but keep manual risks and dirty-worktree state repository-specific.
 

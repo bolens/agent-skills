@@ -56,6 +56,14 @@ merges upstream content.
 Contract tests check that inline local links in skill entrypoints resolve. They
 do not verify remote URLs or section anchors.
 
+## Fleet implementation
+
+[audit-repo-fleet](skills/audit-repo-fleet/SKILL.md) carries a confirmed fix or
+applicable improvement across maintained peers during fleet-wide implementation.
+It checks shared causes and consumers, adapts fixes per repository, and records
+coverage and blockers. Debugging, dependency maintenance, homelab maintenance,
+and PR follow-through return relevant findings to that coordinator.
+
 ## Concurrent repository work
 
 Use [git-hygiene](skills/git-hygiene/SKILL.md) alongside implementation skills when
