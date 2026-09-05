@@ -7,6 +7,7 @@ import argparse
 import os
 from pathlib import Path
 import re
+import stat
 import subprocess
 from typing import Optional
 
@@ -40,22 +41,51 @@ parser.add_argument("path", nargs="?", default=".")
 parser.add_argument("--include-untracked", action="store_true")
 parser.add_argument("--max-bytes", type=int, default=5 * 1024 * 1024)
 args = parser.parse_args()
-root = Path(args.path).resolve()
-files = git_files(root, args.include_untracked)
-if files is None:
-    files = [path for path in root.rglob("*") if path.is_file() and ".git" not in path.parts]
+if args.max_bytes < 1:
+    parser.error("--max-bytes must be positive")
+root = Path(args.path).expanduser().absolute()
+try:
+    mode = root.lstat().st_mode
+except OSError:
+    parser.error("input path is missing or inaccessible")
+if stat.S_ISREG(mode) or stat.S_ISLNK(mode):
+    files = [root]
+    root = root.parent
+elif stat.S_ISDIR(mode):
+    files = git_files(root, args.include_untracked)
+    if files is None:
+        files = []
 
-secrets = warnings = skipped = 0
+        def traversal_error(error: OSError) -> None:
+            parser.error("directory traversal incomplete: " + str(error.filename))
+
+        for directory, names, filenames in os.walk(root, onerror=traversal_error):
+            names[:] = [name for name in names if name != ".git"]
+            parent = Path(directory)
+            files.extend(parent / name for name in filenames)
+            files.extend(parent / name for name in names if (parent / name).is_symlink())
+else:
+    parser.error("input must be a regular file, symlink, or directory")
+
+secrets = warnings = skipped = scanned = 0
 for path in files:
+    relative = path.relative_to(root)
     try:
-        if path.stat().st_size > args.max_bytes:
+        metadata = path.lstat()
+        if not (stat.S_ISREG(metadata.st_mode) or stat.S_ISLNK(metadata.st_mode)):
+            print(f"SKIP\t{relative}\tnot a regular file or symlink")
             skipped += 1
             continue
-        data = path.read_bytes()
-    except (OSError, PermissionError):
+        if metadata.st_size > args.max_bytes:
+            print(f"SKIP\t{relative}\texceeds --max-bytes")
+            skipped += 1
+            continue
+        data = os.fsencode(os.readlink(path)) if stat.S_ISLNK(metadata.st_mode) else path.read_bytes()
+    except OSError:
+        print(f"SKIP\t{relative}\tmissing or unreadable")
         skipped += 1
         continue
-    relative = path.relative_to(root)
+    scanned += 1
     for line_number, line in enumerate(data.splitlines(), start=1):
         for detector, pattern in SECRET_PATTERNS.items():
             if pattern.search(line):
@@ -66,5 +96,5 @@ for path in files:
                 print(f"REVIEW\t{relative}:{line_number}\t{detector}\t[value redacted]")
                 warnings += 1
 
-print(f"summary secrets={secrets} privacy_review={warnings} skipped={skipped}")
-raise SystemExit(1 if secrets else 0)
+print(f"summary secrets={secrets} privacy_review={warnings} skipped={skipped} scanned={scanned}")
+raise SystemExit(1 if secrets else 2 if skipped else 0)
