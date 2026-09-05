@@ -1,0 +1,4 @@
+interface:
+  display_name: "Technical SEO"
+  short_description: "Verify crawling, metadata, canonicals, and indexing"
+  default_prompt: "Use $technical-seo to implement and verify the web behavior in scope."

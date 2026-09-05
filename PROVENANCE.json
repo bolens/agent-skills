@@ -677,6 +677,20 @@
       ]
     },
     {
+      "name": "technical-seo",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/technical-seo",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/technical-seo"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/technical-seo",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/technical-seo",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/technical-seo"
+      ]
+    },
+    {
       "name": "technical-writing",
       "hard_fork": true,
       "origin": {
