@@ -2,11 +2,13 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import subprocess
 import sys
 import tempfile
 import unittest
 from pathlib import Path
+from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -36,6 +38,21 @@ class RepositoryContract(unittest.TestCase):
         for entry in self.manifest["skills"]:
             pointer = ROOT / "skills" / entry["name"] / "UPSTREAM.md"
             self.assertIn("hard fork", pointer.read_text().lower())
+
+    def test_skill_entrypoint_local_links_resolve(self) -> None:
+        # Check inline Markdown destinations used by the skill entrypoints.
+        # Ignore fenced examples, URLs, and same-page fragments.
+        for skill in sorted((ROOT / "skills").glob("*/SKILL.md")):
+            text = re.sub(r"(?ms)^(`{3,}|~{3,})[^\n]*\n.*?^\1\s*$", "", skill.read_text())
+            for target in re.findall(r"\]\(([^\s)]+)\)", text):
+                link = urlsplit(target)
+                if link.scheme or link.netloc or not link.path:
+                    continue
+                with self.subTest(skill=skill.parent.name, target=target):
+                    self.assertTrue(
+                        (skill.parent / unquote(link.path)).exists(),
+                        f"Missing local reference in {skill.relative_to(ROOT)}: {target}",
+                    )
 
     def test_skills_target_shared_and_claude_homes(self) -> None:
         for entry in self.manifest["skills"]:

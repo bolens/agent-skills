@@ -207,5 +207,5 @@ For detailed guidelines on specific areas:
 - [Performance Optimization](../performance/SKILL.md)
 - [Core Web Vitals](../core-web-vitals/SKILL.md)
 - [Accessibility](../accessibility/SKILL.md)
-- [SEO](../seo/SKILL.md)
-- [Best Practices](../best-practices/SKILL.md)
+
+For SEO and best practices, use the sections above and the available live audit tools. This suite does not bundle separate skills for those categories.

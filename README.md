@@ -53,6 +53,9 @@ merges upstream content.
 - `tests/`: repository contract tests
 - `.specify/memory/constitution.md`: maintenance rules
 
+Contract tests check that inline local links in skill entrypoints resolve. They
+do not verify remote URLs or section anchors.
+
 Public releases should pass `sensitive-info-audit`, including a history-aware
 scanner, before they are pushed.
 

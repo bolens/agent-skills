@@ -13,6 +13,7 @@ Last audited reference: `afa8da942115f2961fdbfa80807ea0b232ff6c00`
 Local changes to retain:
 - Coordinate comprehensive responsive capture and functional browser receipts while keeping evidence types separate.
 - Use an env-resolved Bash shebang so the analyzer works outside fixed /bin layouts.
+- Keep SEO and best-practices guidance self-contained instead of linking to skills absent from this suite.
 
 Updates are audited and merged manually. This fork does not track or represent upstream releases.
 
