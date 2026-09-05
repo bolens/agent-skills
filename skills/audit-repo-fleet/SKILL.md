@@ -45,7 +45,7 @@ When the fleet includes externally sourced hard-forked skills, use `sync-skill-u
 
 When the fleet includes runnable websites, use `web-quality-audit` for measured performance and accessibility, and `responsive-web-capture` for the requested visual viewport evidence.
 
-When the fleet includes Compose repository changes, use [homelab-stack-maintenance](../homelab-stack-maintenance/SKILL.md) for coordinated stack contracts and return shared patterns to the fleet check. For operational Compose stacks, use `homelab-stack-triage` for a live service incident rather than treating repository health as runtime health. Use `backup-restore-verification` when backup recoverability is the question.
+When fleet work changes self-hosted homelab stack contracts, use [homelab-stack-maintenance](../homelab-stack-maintenance/SKILL.md) and return shared patterns to the fleet check. Keep image-pin-only changes in [triage-dependency-updates](../triage-dependency-updates/SKILL.md) and ordinary application Docker development in its existing workflow. For operational Compose stacks, use `homelab-stack-triage` for a live service incident rather than treating repository health as runtime health. Use `backup-restore-verification` when backup recoverability is the question.
 
 When an Omarchy plugin fleet is being prepared for marketplace submission, verification, or update approval, use `audit-omarchy-plugin` for each candidate repository. Compare official findings and capabilities source-wide, but keep manual risks and dirty-worktree state repository-specific.
 
