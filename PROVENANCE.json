@@ -468,6 +468,20 @@
       ]
     },
     {
+      "name": "media-preservation",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/media-preservation",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/media-preservation"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/media-preservation",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/media-preservation",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/media-preservation"
+      ]
+    },
+    {
       "name": "migration",
       "hard_fork": true,
       "origin": {
