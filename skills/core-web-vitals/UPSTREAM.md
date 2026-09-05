@@ -10,6 +10,10 @@ Original path: `skills/core-web-vitals`
 
 Last audited reference: `afa8da942115f2961fdbfa80807ea0b232ff6c00`
 
+Upstream license: [MIT](LICENSE)
+
+License source: [LICENSE](https://github.com/addyosmani/web-quality-skills/blob/afa8da942115f2961fdbfa80807ea0b232ff6c00/LICENSE)
+
 Local changes to retain:
 - Route viewport-sensitive metric fixes through responsive-web-capture and interaction proof through cli-web-evidence.
 

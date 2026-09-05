@@ -45,6 +45,9 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Changed
 
+- Restore missing fork and Spec Kit licenses, correct frontend-design's Anthropic
+  provenance, retain bundled dependency notices, and check license-copy integrity.
+
 - Clean up task-owned temporary evidence and screenshot directories at feature
   completion, preserving deliverables, visual baselines, and pending review evidence.
 

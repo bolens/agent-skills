@@ -34,6 +34,8 @@ def records() -> list[dict[str, object]]:
                 origin["preserve_paths"] = source["preserve_paths"]
             if source.get("local_changes"):
                 origin["local_changes"] = source["local_changes"]
+            if source.get("license"):
+                origin["license"] = source["license"]
         else:
             origin = {
                 "type": "local-original",
@@ -50,6 +52,10 @@ def upstream_text(record: dict[str, object]) -> str:
     lines = ["# Upstream", "", "This skill is maintained here as a **hard fork**.", ""]
     if origin["type"] == "git":
         lines += [f"Original project: [{origin['url']}]({origin['url']})", "", f"Tracked branch: `{origin['branch']}`", "", f"Original path: `{origin['path']}`", "", f"Last audited reference: `{origin['ref']}`"]
+        if origin.get("license"):
+            license = origin["license"]
+            source_url = f"{origin['url']}/blob/{origin['ref']}/{license['upstream_path']}"
+            lines += ["", f"Upstream license: [{license['spdx']}]({license['path']})", "", f"License source: [{license['upstream_path']}]({source_url})"]
         if origin.get("preserve_paths"):
             lines += ["", "Preserve during imports: " + ", ".join(f"`{path}`" for path in origin["preserve_paths"])]
         if origin.get("local_changes"):

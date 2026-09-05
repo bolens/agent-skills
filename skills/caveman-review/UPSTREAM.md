@@ -10,6 +10,10 @@ Original path: `skills/caveman-review`
 
 Last audited reference: `3b74643f4d910f496babd4e634b1ba7168816f14`
 
+Upstream license: [MIT](LICENSE)
+
+License source: [LICENSE](https://github.com/JuliusBrussee/caveman/blob/3b74643f4d910f496babd4e634b1ba7168816f14/LICENSE)
+
 Local changes to retain:
 - Limit discovery to requested terse reviews, preserve evidence in compressed findings, and allow focused validation without autofix.
 - Keep code-review as the systematic review workflow, retain severity and coverage in terse output, and replace speculative examples and stale README triggers.

@@ -10,6 +10,10 @@ Original path: `skills/find-skills`
 
 Last audited reference: `435076e78988e1e6ec40d00b0b1d76bdbbc5419a`
 
+Upstream license: [MIT](LICENSE)
+
+License source: [LICENSE](https://github.com/vercel-labs/skills/blob/435076e78988e1e6ec40d00b0b1d76bdbbc5419a/LICENSE)
+
 Preserve during imports: `SKILL.md`
 
 Local changes to retain:

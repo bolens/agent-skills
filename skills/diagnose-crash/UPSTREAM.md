@@ -10,6 +10,10 @@ Original path: `default/agents/skills/diagnose-crash`
 
 Last audited reference: `d3d23fdddef846ebb98b52122a6ece66211c0daf`
 
+Upstream license: [MIT](LICENSE)
+
+License source: [LICENSE](https://github.com/basecamp/omarchy/blob/d3d23fdddef846ebb98b52122a6ece66211c0daf/LICENSE)
+
 Local changes to retain:
 - Route cross-subsystem failures through workstation-health-triage.
 

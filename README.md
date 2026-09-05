@@ -9,6 +9,9 @@ The collection includes locally authored skills and customized third-party
 skills. Every skill is maintained as a hard fork with recorded provenance.
 Upstream changes are reviewed manually so they preserve local behavior.
 
+Licenses remain specific to each source. See [LICENSE.md](LICENSE.md) for retained
+notices, bundled material, and the requirements for copying or updating a fork.
+
 ## Find a workflow
 
 Start with the skill that owns the task. Its `SKILL.md` describes when to use it,
