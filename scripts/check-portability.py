@@ -3,6 +3,8 @@
 
 from __future__ import annotations
 
+import hashlib
+import json
 import re
 import shutil
 import subprocess
@@ -64,9 +66,34 @@ def main() -> int:
             if HOME_PATH.search(line):
                 problems.append(f"{relative}:{line_number}: machine-specific home path")
 
+    # Spec Kit owns these helpers. Preserve its hashes instead of forking them
+    # to satisfy local style rules, but still reject tampering and invalid Bash.
+    manifest_path = ROOT / ".specify/integrations/speckit.manifest.json"
+    managed = {}
+    if manifest_path.exists():
+        try:
+            manifest = json.loads(manifest_path.read_text())
+            managed = manifest["files"]
+            if not isinstance(managed, dict):
+                raise ValueError("files must be an object")
+        except (OSError, ValueError, KeyError, TypeError) as exc:
+            problems.append(f"{manifest_path.relative_to(ROOT)}: invalid manifest: {exc}")
+            managed = {}
+
     checker = shutil.which("shellcheck")
+    owned_scripts = []
+    for path in shell_scripts(paths):
+        relative = path.relative_to(ROOT).as_posix()
+        if relative.startswith(".specify/scripts/bash/") and relative in managed:
+            if hashlib.sha256(path.read_bytes()).hexdigest() != managed[relative]:
+                problems.append(f"{relative}: managed-file hash mismatch")
+            result = subprocess.run(["bash", "-n", str(path)], check=False)
+            if result.returncode:
+                problems.append(f"{relative}: Bash syntax failed")
+        else:
+            owned_scripts.append(path)
     if checker:
-        for path in shell_scripts(paths):
+        for path in owned_scripts:
             result = subprocess.run([checker, str(path)], check=False)
             if result.returncode:
                 problems.append(f"{path.relative_to(ROOT)}: ShellCheck failed")
