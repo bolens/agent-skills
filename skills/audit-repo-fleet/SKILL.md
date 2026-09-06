@@ -48,6 +48,8 @@ For each recommendation include repository, evidence, impact, safe next action, 
 
 If the user asks to implement maintenance, work one risk-coherent batch at a time. Use [shared fixes](references/shared-fixes.md) to check the rest of the maintained fleet for the same cause or applicable improvement and complete confirmed matches within the authorized scope. This check is part of implementation, not an optional follow-up after the first fix. Re-read each repository's guidance, preserve unrelated changes, run focused validation, and report exact results. Follow its commit requirements for authorized implementation. Push, merge, publication, deployment, live-service changes, and bulk upgrades retain their own authorization boundaries.
 
+For maintenance across repositories or long-running checks, use [execution evidence](references/execution-evidence.md) to record task state, native command results, candidate freshness, bounded retries, and dependency joins. The optional `scripts/evidence.py` helper keeps private records under each worktree's Git directory. It does not replace repository checks, authorization, or required CI.
+
 For releases, audit version sources, generated artifacts, changelog/release notes, packaging, CI, signing, and rollback. When changelog quality or edits are in scope, use the changelog-maintainer skill for reader-facing history and generator checks. A readiness request authorizes reporting, not publishing.
 
 Before making a repository public or publishing an artifact, use `sensitive-info-audit` across the exact publication boundary and committed history. Treat unresolved high-confidence secret findings as **Protect now** blockers.
