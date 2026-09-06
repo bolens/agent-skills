@@ -1,5 +1,25 @@
 # Third-party notices
 
+## Local fork notice additions
+
+This fork retains additional full license copies in `licenses/`:
+
+- [Ajv MIT license](licenses/ajv-LICENSE), from
+  [Ajv 8.20.0](https://github.com/ajv-validator/ajv/blob/v8.20.0/LICENSE).
+  `renderers/shared/generated-validators.mjs` and its generator inline the
+  adapted `ucs2length` runtime helper. Evgeny Poberezkin's notice is retained.
+- [Simple Icons CC0 text](licenses/simple-icons-LICENSE.md) and
+  [disclaimer](licenses/simple-icons-DISCLAIMER.md), copied from version 16.29.0.
+- [JavaScript logo MIT license](licenses/javascript-LICENSE), retaining
+  Christopher Williams's copyright notice from the logo source linked below.
+- [Apache-2.0 text](licenses/Apache-2.0.txt), for the Apache-mark entries below.
+
+These copies supplement the upstream attribution below. When distributing a
+diagram or export, retain the licenses for included code and the notices and
+attribution required by its selected marks. Share-alike and non-commercial terms
+still apply to the relevant artwork. Where the intended use cannot satisfy a
+mark's terms, omit that mark and use a semantic symbol or text label.
+
 Archify includes optional vector data for third-party brand marks. These marks
 are provided only to identify technologies and services in user-authored
 diagrams. Their inclusion does not imply sponsorship, endorsement, partnership,

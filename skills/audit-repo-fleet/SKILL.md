@@ -7,6 +7,12 @@ description: Audit and maintain a directory containing multiple Git repositories
 
 Default to a read-only audit. Treat each repository's constitution, `AGENTS.md`, contributor docs, manifests, and native task runner as authoritative for that repository.
 
+For broad source exploration, use [bounded context work](references/context-work.md):
+search before reading, use the local bounded reader for source excerpts, and keep
+durable corrections in existing project memory. The reference also defines
+focused handoffs when delegation is permitted and checkpoint rules for explicitly
+requested recurring reports.
+
 ## Inventory
 
 Run `scripts/inventory.sh <workspace-root> [max-depth]` to collect deterministic local facts. The default depth of 3 finds ordinary repositories while avoiding vendored repositories and test fixtures buried inside them. Increase it deliberately for deeper layouts. The script does not fetch, install, test, or modify repositories; divergence is relative to existing local remote-tracking refs and may be stale.
@@ -22,6 +28,11 @@ Supplement the inventory only where it changes prioritization:
 
 Never fetch every remote or run every repository's full suite merely to make the report look complete. Ask before network-heavy or long-running fleet operations.
 
+For a repeat audit with prior evidence, read [comparing audit runs](references/comparing-runs.md).
+Compare like-for-like repository identities and check scopes, and separate new
+findings from rechecks, unresolved conflicts, and unavailable observations.
+An omitted repository or failed check cannot close an earlier finding.
+
 ## Prioritize
 
 Rank evidence-backed work into:
@@ -36,6 +47,8 @@ For each recommendation include repository, evidence, impact, safe next action, 
 ## Act only when requested
 
 If the user asks to implement maintenance, work one risk-coherent batch at a time. Use [shared fixes](references/shared-fixes.md) to check the rest of the maintained fleet for the same cause or applicable improvement and complete confirmed matches within the authorized scope. This check is part of implementation, not an optional follow-up after the first fix. Re-read each repository's guidance, preserve unrelated changes, run focused validation, and report exact results. Follow its commit requirements for authorized implementation. Push, merge, publication, deployment, live-service changes, and bulk upgrades retain their own authorization boundaries.
+
+For maintenance across repositories or long-running checks, use [execution evidence](references/execution-evidence.md) to record task state, native command results, candidate freshness, bounded retries, and dependency joins. The optional `scripts/evidence.py` helper keeps private records under each worktree's Git directory. It does not replace repository checks, authorization, or required CI.
 
 For releases, audit version sources, generated artifacts, changelog/release notes, packaging, CI, signing, and rollback. When changelog quality or edits are in scope, use the changelog-maintainer skill for reader-facing history and generator checks. A readiness request authorizes reporting, not publishing.
 

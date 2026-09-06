@@ -14,6 +14,11 @@ Check tool availability with `command -v`. Prefer ImageMagick's `magick identify
 
 Compare matching routes, states, dimensions, and rendering conditions. Keep originals beside the diff and record the metric, threshold, and differing region. Do not resize an image to force a passing comparison. Apply any approved masks consistently and report what they exclude. Font rasterization and platform differences can produce pixel noise that requires inspection rather than a larger unexplained tolerance.
 
+When the engine differs, follow [browser backend evidence](browser-backends.md)
+to separate unavailable capabilities and failed captures from rendering
+differences. A lower pixel-difference score cannot compensate for missing page
+content or a setting the backend ignored.
+
 For ImageMagick comparison, handle exit status deliberately: 0 means similar under the selected settings, 1 indicates a difference, and 2 indicates an error. A shell using `set -e` must still retain and inspect a difference result. Check the installed version's behavior and the repository's tolerance policy before interpreting a metric. [ImageMagick compare](https://imagemagick.org/script/compare.php).
 
 A contact sheet is a navigation aid. Label each tile with its viewport/state, preserve originals, and open full-resolution images for small text, clipping, or suspicious regions. Report sheet generation failure separately from capture failure.

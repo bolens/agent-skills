@@ -64,6 +64,12 @@ Use the repository's severity scale when defined. Otherwise:
 
 Severity follows impact and reachability; confidence is separate. Do not require a vulnerability identifier to report a security defect or rank every possible race as a confirmed bug. Never invent findings to satisfy a quota, and do not stop at the first defect while unreviewed relevant changes remain.
 
+For consequential patches, distinguish the impact of a wrong change, regression
+likelihood, relevant test protection, recoverability, and confidence in the
+assessment. Strong tests can reduce uncertainty and likelihood without reducing
+the consequence of failure. Neither a short diff nor high confidence grants
+merge authority. Keep this assessment separate from a vulnerability's severity.
+
 ## Report and hand off
 
 For each finding give severity, confidence, location, trigger and consequence, evidence, and the smallest viable fix. Distinguish required corrections, optional nits when requested, and unresolved questions. Follow a requested terse format through [caveman-review](../caveman-review/SKILL.md), retaining enough evidence to assess each claim.

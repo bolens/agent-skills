@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import ast
+import hashlib
 import json
 import re
 import subprocess
@@ -52,6 +53,29 @@ for name, directory in sorted(directories.items()):
             fail(f"missing upstream tracking record: {name}")
         if not re.fullmatch(r"[0-9a-f]{40}", origin.get("ref", "")):
             fail(f"invalid audited upstream ref: {name}")
+        license = upstreams[name].get("license")
+        if not isinstance(license, dict) or any(
+            not isinstance(license.get(field), str) or not license[field]
+            for field in ("spdx", "path", "upstream_path", "sha256")
+        ):
+            fail(f"missing upstream license metadata: {name}")
+        if origin.get("license") != license:
+            fail(f"stale generated license metadata: {name}")
+        for field in ("path", "upstream_path"):
+            relative = Path(license[field])
+            if relative.is_absolute() or ".." in relative.parts:
+                fail(f"invalid license {field}: {name}")
+        license_path = directory / license["path"]
+        if (
+            not license_path.is_file()
+            or license_path.is_symlink()
+            or not license_path.resolve().is_relative_to(directory.resolve())
+        ):
+            fail(f"missing bundled upstream license: {name}")
+        if not re.fullmatch(r"[0-9a-f]{64}", license["sha256"]):
+            fail(f"invalid upstream license digest: {name}")
+        if hashlib.sha256(license_path.read_bytes()).hexdigest() != license["sha256"]:
+            fail(f"upstream license copy changed without audit: {name}")
 
 unknown_upstreams = set(upstreams) - set(directories)
 if unknown_upstreams:

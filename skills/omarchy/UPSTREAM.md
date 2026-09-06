@@ -10,6 +10,10 @@ Original path: `default/agents/skills/omarchy`
 
 Last audited reference: `d3d23fdddef846ebb98b52122a6ece66211c0daf`
 
+Upstream license: [MIT](LICENSE)
+
+License source: [LICENSE](https://github.com/basecamp/omarchy/blob/d3d23fdddef846ebb98b52122a6ece66211c0daf/LICENSE)
+
 Local changes to retain:
 - Keep desktop-session.md and its workstation health and config-drift routing.
 

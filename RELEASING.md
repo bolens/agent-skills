@@ -54,8 +54,11 @@ and resolve actionable feedback, including review nits. For substantive changes,
 use the [independent review workflow](skills/code-review/references/independent-reviews.md)
 when reviewers are available and permitted.
 
-The repository's required CI check is `validate` in
-[`.github/workflows/ci.yml`](.github/workflows/ci.yml). It runs the portable gate.
+The `validate` job in [`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs
+the portable gate and requires the selected Archify jobs to succeed. The separate
+Source lint workflow runs language lint and workflow-security checks. Verify
+current host protection settings as well as the committed workflows; YAML alone
+does not establish which status names the host requires.
 Require applicable checks on the current PR head. New commits or a base refresh
 need checks for that updated state. A green run on an older head or a queued
 merge is not completion evidence.
@@ -112,11 +115,36 @@ those through the affected system's own workflow.
 
 ## Source lint
 
-The Source lint workflow checks maintained python, javascript files selected by
-[`.github/source-lint.json`](.github/source-lint.json) on every pull request
-and push to `main`. Existing native checks remain part of the merge gate.
+The [Source lint workflow](.github/workflows/source-lint.yml) checks Python and
+JavaScript files selected by [`.github/source-lint.json`](.github/source-lint.json)
+on pull requests, pushes to `main`, and manual dispatch. Its second reusable job
+runs actionlint and enables the zizmor security audit. Existing native checks
+remain part of the merge gate; `make check` does not run these shared tools.
 Use the [shared local reproduction instructions](https://github.com/bolens/.github/blob/7603518f305fb76f7bb1b9979f2692521f633b82/docs/source-lint.md)
 with the same tooling revision pinned in
 [the workflow](.github/workflows/source-lint.yml). Review exclusions when adding
 source files; generated and imported files retain their native validation.
-Require the new check to pass on the current PR head before merging.
+Require the applicable source and workflow-security checks to pass on the current
+PR head before merging.
+
+## Archify test coverage
+
+With Node 22 active, `make test-archify` fetches the exact `UPSTREAMS.json` audited revision into a
+temporary workspace, replaces its entire Archify directory with this local
+fork, installs locked test dependencies, and runs the native generated-file,
+golden, and complete Node test suite. The upstream parent directory supplies
+website and release fixtures absent from the packaged skill. Its notice checker
+requires this fork's pinned Simple Icons version and mirrors the packaged notice
+into the temporary repository root; all disclosure and byte-match checks remain.
+The temporary index includes the fork files, and its ZIP fixture is rebuilt for
+the fork before reproducibility tests. It does not verify the upstream release
+ZIP or publish an archive. Installed skills and links are untouched. Network
+access is required.
+
+CI uses two exhaustive Node test shards and a separate serialized WebM/site
+integration job, with Chrome enabled. Reproduce with `make test-archify
+ARCHIFY_TEST_ARGS=--shard=1/2` (then 2/2), or `ARCHIFY_TEST_ARGS=--browser`.
+Set `ARCHIFY_CHROME` to a headless Chrome executable for browser coverage.
+Dorny selects these jobs for Archify, provenance, runner, or workflow changes;
+main, scheduled, and manual runs validate the full fork. The existing required
+`validate` job also requires every selected Archify job to succeed.

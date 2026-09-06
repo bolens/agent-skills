@@ -34,6 +34,8 @@ Record assignments in the existing task channel or repository convention:
 
 Assign shared manifests, lockfiles, schemas, migrations, generated clients, root configuration, and changelogs explicitly. Separate directories can still share a contract. Give each shared file one writer at a time. Agree on interface changes before consumers depend on them. Workers request a scope change before editing outside their assignment.
 
+For work with several dependent units or a failed handoff, use [work-unit dependencies and correction](references/work-units.md). Define acceptance evidence before assignment, preserve unaffected accepted work, and return failures to their responsible owner. This applies to serial coordination too and does not grant permission to delegate.
+
 ## Choose workspace isolation
 
 Prefer a distinct branch and worktree for each independent writer. Select a verified base SHA and unused branch and directory names. For example, after replacing the values with this task's assignment:
@@ -77,6 +79,8 @@ For multiple repositories, record a separate branch, revision, status, and check
 Use [resolving-merge-conflicts](../resolving-merge-conflicts/SKILL.md) for an owned interrupted integration. Use [babysit](../babysit/SKILL.md) when the requested endpoint includes PR follow-through or release work. Push, merge, and publication require the existing authority for that destination and action.
 
 ## Handoff and cleanup
+
+At feature completion, including local-only endpoints, use [temporary evidence cleanup](references/evidence-cleanup.md) to remove task-owned scratch evidence and screenshot directories. Carry exact paths and retention needs across handoffs. Preserve deliverables and evidence still needed for review or diagnosis, and report removed or retained artifacts.
 
 Report integrated revisions, checks for that state, remaining changes and their owners, and retained worktrees or branches. After a verified merge, use [branch cleanup](references/branch-cleanup.md) to remove completed local feature branches, related remote branches, and temporary worktrees within existing authority. Include older leftovers for the completed feature; for a requested repository cleanup, apply the same checks to each older candidate. Do not equate a closed PR with a merge or a clean worktree with integrated commits.
 

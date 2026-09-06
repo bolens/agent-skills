@@ -4,6 +4,13 @@ Use a brand mark only when a real product, provider, model family, channel, or
 service identity helps the reader. Semantic `type` still explains what the node
 does; `brand` explains whose product it is.
 
+Before selecting or capturing a mark, check its provenance and
+[third-party terms](../THIRD_PARTY_NOTICES.md) against the intended use. Retain
+required attribution and license copies with delivered HTML and exports. The
+catalogue includes share-alike and non-commercial artwork. If its terms cannot
+be satisfied, omit `brand` and use the semantic symbol or a text label. A brand's
+presence in the catalogue or on a public website is not blanket permission.
+
 ## Agent decision path
 
 1. Search the built-in catalogue when the request names a recognizable brand:

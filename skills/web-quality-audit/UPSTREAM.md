@@ -10,6 +10,10 @@ Original path: `skills/web-quality-audit`
 
 Last audited reference: `afa8da942115f2961fdbfa80807ea0b232ff6c00`
 
+Upstream license: [MIT](LICENSE)
+
+License source: [LICENSE](https://github.com/addyosmani/web-quality-skills/blob/afa8da942115f2961fdbfa80807ea0b232ff6c00/LICENSE)
+
 Local changes to retain:
 - Coordinate comprehensive responsive capture and functional browser receipts while keeping evidence types separate.
 - Use an env-resolved Bash shebang so the analyzer works outside fixed /bin layouts.

@@ -30,6 +30,14 @@ Treat these as reasoning aids, not rules. A thin adapter can be valuable for iso
 
 ## Design
 
+Before adding structure, check whether existing code, the standard library, a platform capability, or an installed dependency already meets the requirement. Name the concrete candidate and compare its contract with the callers' needs. A matching API name is insufficient: check errors, ordering, lifetime, concurrency, and supported runtimes where they matter.
+
+Include retaining the current design as an option when no demonstrated problem requires a change. Remove speculative extensions from proposals, but preserve requested behavior. Prefer the option with the lowest maintenance cost that satisfies the contract, even when it needs more lines or an additional dependency.
+
+For example, a bounded memoization helper does not replace a cache that requires expiration, tenant isolation, or cross-process invalidation. A native control is a candidate only if it supports the required interactions and accessibility behavior. Keep validation, recovery, and useful test coverage in the comparison.
+
+When a proposed simplification accepts a known limit, state that limit, an observable trigger for revisiting it, and the likely next step. Use the project's existing decision or debt convention if documentation is authorized. Do not create branded comments or a separate ledger for ordinary implementation choices.
+
 Prefer small interfaces that hide policy and enable behavior-level tests. Dependency injection and pure returns are useful when they reduce coupling, but do not force them over idiomatic repository patterns.
 
 For consequential designs, produce at least two genuinely different options and compare compatibility, migration cost, testability, locality, and operational risk. Read [DESIGN-IT-TWICE.md](DESIGN-IT-TWICE.md) and [DEEPENING.md](DEEPENING.md) when deeper alternatives are needed. Sub-agents are optional.

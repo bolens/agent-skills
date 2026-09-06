@@ -10,6 +10,10 @@ Original path: `skills/performance`
 
 Last audited reference: `afa8da942115f2961fdbfa80807ea0b232ff6c00`
 
+Upstream license: [MIT](LICENSE)
+
+License source: [LICENSE](https://github.com/addyosmani/web-quality-skills/blob/afa8da942115f2961fdbfa80807ea0b232ff6c00/LICENSE)
+
 Local changes to retain:
 - Require responsive and functional regression evidence when performance changes can affect those surfaces.
 - Route measured animation and player costs through web-animation and animation-assets, including active motion and route re-entry evidence.
