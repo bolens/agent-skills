@@ -2,3 +2,7 @@ __pycache__/
 *.pyc
 .venv/
 .DS_Store
+
+# Local tooling and runtime artifacts
+node_modules/
+.ruff_cache/
