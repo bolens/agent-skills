@@ -68,6 +68,16 @@ class ContextReadTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertLessEqual(len(result.stdout), 24 * 1024)
 
+    def test_exact_encoded_byte_boundary(self):
+        sample = self.run_reader(b"x")
+        self.assertEqual(sample.returncode, 0, sample.stderr)
+        overhead = len(sample.stdout) - 1
+        payload = b"x" * (24 * 1024 - overhead)
+        result = self.run_reader(payload)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(len(result.stdout), 24 * 1024)
+        self.assert_rejected(self.run_reader(payload + b"x"))
+
     def test_utf8_crlf_and_missing_final_newline(self):
         result = self.run_reader("caf\u00e9\r\nlast".encode())
         self.assertEqual(result.returncode, 0, result.stderr)
