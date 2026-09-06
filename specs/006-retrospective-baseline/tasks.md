@@ -99,4 +99,15 @@ was appended. The completion bookkeeping here is maintained by implementation.
 
 The blast-radius source/provenance repair and original-source audit were committed
 as `07d2625`. The retrospective records, discovery, and policy exception are
-committed separately. No push or merge is part of this completion.
+committed separately. The initial local completion did not include publication.
+
+## Subsequent source delivery verification
+
+PR #27 merged the retrofit at `cc9d07d227df429156e892437f59ee1b0192b02f`.
+Later changes through `1785f954fbea2a5a30d1f923534c4e5ac23e5cef` retain that
+baseline and passed CI, Source lint, and the main-push workflow. The current
+portable gate passed all 53 tests, provenance/registry validation, and portability.
+The canonical installed checkout's link check passed without repointing links.
+These are distinct current-source and installation observations; historical counts
+above remain attached to their original checks. No unavailable live-system or
+external-agent procedure is promoted to completed runtime evidence.
