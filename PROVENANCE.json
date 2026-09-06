@@ -13,7 +13,8 @@
         "ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
         "local_changes": [
           "Route responsive visual evidence through responsive-web-capture and functional browser evidence through cli-web-evidence.",
-          "Route runtime and shared-component remediation to motion, asset, and design-system skills; verify explicit reduced-motion states rather than relying on a global duration reset."
+          "Route runtime and shared-component remediation to motion, asset, and design-system skills; verify explicit reduced-motion states rather than relying on a global duration reset.",
+          "Keep the evidence workflow in SKILL.md and load principles, criterion examples, and testing detail through issue-specific references."
         ],
         "license": {
           "spdx": "MIT",
@@ -716,7 +717,8 @@
         "local_changes": [
           "Require responsive and functional regression evidence when performance changes can affect those surfaces.",
           "Route measured animation and player costs through web-animation and animation-assets, including active motion and route re-entry evidence.",
-          "Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior."
+          "Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior.",
+          "Keep measurement and task routing in SKILL.md; load budgets, loading, images, fonts, caching, runtime, and third-party examples only for the measured issue."
         ],
         "license": {
           "spdx": "MIT",
@@ -1030,7 +1032,8 @@
           "Use an env-resolved Bash shebang so the analyzer works outside fixed /bin layouts.",
           "Link only bundled category skills; route SEO, platform behavior, security, and async-state findings without expanding a read-only audit into implementation.",
           "Treat source maps as publication content to inspect and llms.txt as optional consumer-specific discovery, not automatic security or search verdicts.",
-          "Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior."
+          "Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior.",
+          "Keep recurring maintenance checklists in an opt-in reference without expanding one-off audit scope."
         ],
         "license": {
           "spdx": "MIT",
