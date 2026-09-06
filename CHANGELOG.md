@@ -13,6 +13,9 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Added
 
+- Add optional local Sentrux snapshots and structural comparisons on Linux x86_64,
+  with verified runtime artifacts, retained license notices, and explicit source scopes.
+
 - Add `release-packaging` for language/build-conditional distribution targets,
   native source/binary/main variants, lean installations, and current-platform
   compatibility. Connect release, Arch, CI, dependency, and fleet workflows.
