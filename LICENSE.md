@@ -27,11 +27,18 @@ of the material.
 | [Web Quality Skills](https://github.com/addyosmani/web-quality-skills/blob/afa8da942115f2961fdbfa80807ea0b232ff6c00/LICENSE), four skill subtrees | MIT, with Addy Osmani's notice already retained in each skill's `LICENSE`. |
 | [Archify](https://github.com/tt-a1i/archify/blob/06dd052602dd9a369e4d034e24faef0917b5a60c/archify/LICENSE), `archify/` | MIT for Archify code, retaining both tt-a1i and Cocoon AI copyright notices. Bundled material has separate terms in [its third-party notices](skills/archify/THIRD_PARTY_NOTICES.md). |
 | [Anthropic frontend-design](https://github.com/anthropics/skills/tree/2235be7c60b551f5de82ade908fd3816455afcda/skills/frontend-design) | Apache-2.0, retained in `skills/frontend-design/LICENSE.txt`. `SKILL.md` identifies local modifications. No applicable upstream NOTICE file was present at that revision. |
+| [pstack](https://github.com/cursor/plugins/blob/93b00b89ef425a9c1bac0d0b317dfc49c930ac99/pstack/LICENSE), `blast-radius` | MIT, with Lauren Tan's notice retained in `skills/blast-radius/LICENSE`. The other pstack workflows audited here were not imported. |
 
 The original frontend-design import at repository commit `32224e7` matches the
 Anthropic revision above except for its local browser-verification paragraph.
 Later local rewrites remain recorded as modifications. The old local-original
 provenance was incorrect and has been replaced without importing newer behavior.
+
+The `blast-radius` source at `8e51a4f` matches the pstack revision above except
+for the removed Cursor invocation flag. Its local-original label was incorrect.
+The corrected provenance retains the current invocation policy and records the
+local companion-workflow repair. See the
+[original-source audit](docs/audits/2026-09-05-pstack-companions.md).
 
 ## Spec Kit integration
 

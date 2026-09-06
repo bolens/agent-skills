@@ -48,6 +48,17 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Changed
 
+- Add an explicitly requested retrospective Spec Kit baseline mapping all 61
+  registered skills to contracts, source-audit dispositions, and evidence limits.
+  Repair `blast-radius` steps that depended on unavailable companion workflows
+  and correct its pstack origin and retained license after auditing the originals.
+  See the [specification index](specs/README.md).
+
+- Refine architecture audits with comparable structural evidence and web animation
+  with deterministic playback-clock guidance after reviewing Netviz and Sentrux.
+  Defer both application installs. See the
+  [source assessment](docs/audits/2026-09-05-netviz-sentrux.md).
+
 - Add wide-event and error-handling guidance to systematic debugging, with
   operation-local context, preserved failure semantics, sensitive-field
   exclusion before logging, and leak-test expectations. See the

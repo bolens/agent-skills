@@ -21,6 +21,7 @@ Use the smallest suitable implementation, accounting for an existing library's l
 | React layout, enter/exit, gestures, scroll-linked values | [Motion for React](references/motion.md) |
 | CSS/WAAPI, View Transitions, native scroll timelines | [Browser-native motion](references/native.md) |
 | Anime.js, React Spring, Vue, Svelte, Three.js/R3F boundaries | [Other runtimes](references/other-runtimes.md) |
+| Custom playback with seeking, reverse, rate changes, or synchronized tracks | [Playback clocks](references/playback-clocks.md) |
 | Lottie/dotLottie or Rive playback and asset handoff | `animation-assets` |
 
 Use `svg-animation` alongside this skill when moving paths, pivots, masks, or SVG coordinate systems matter. Let the chosen runtime own timing and SVG guidance own geometry. Use `frontend-design` for the visual direction and `design-system` when motion tokens or shared components must be consistent.

@@ -162,9 +162,25 @@
       "name": "blast-radius",
       "hard_fork": true,
       "origin": {
-        "type": "local-original",
-        "ref": "local://codex/skills/blast-radius",
-        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/blast-radius"
+        "type": "git",
+        "url": "https://github.com/cursor/plugins",
+        "branch": "main",
+        "path": "pstack/skills/blast-radius",
+        "ref": "93b00b89ef425a9c1bac0d0b317dfc49c930ac99",
+        "preserve_paths": [
+          "agents"
+        ],
+        "local_changes": [
+          "Keep current invocation policy and agents metadata; do not restore the Cursor-specific disable-model-invocation field.",
+          "Replace unavailable how, why, and arena dependencies with direct history inspection, code-review routing, and a permitted local fallback.",
+          "Preserve read-only assessment boundaries, isolated proof, explicit evidence gaps, and impact/likelihood/confidence separation."
+        ],
+        "license": {
+          "spdx": "MIT",
+          "path": "LICENSE",
+          "upstream_path": "pstack/LICENSE",
+          "sha256": "bc957ca6bee02792566a1a028d105e02e247c6e77cf057061674273da77b200e"
+        }
       },
       "install_targets": [
         "${CODEX_HOME:-$HOME/.codex}/skills/blast-radius",

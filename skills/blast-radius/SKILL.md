@@ -7,7 +7,9 @@ description: "Find what a change could break somewhere else before it ships, bey
 
 Find what a change breaks somewhere else, before it ships. Use for "blast radius of X", "what could this break", or reviewing a small diff you don't trust yet.
 
-Companion to `how` and `why`. `how` tells you what the code does. `why` tells you why it's shaped that way. Blast radius tells you what it breaks somewhere else.
+Use [code-review](../code-review/SKILL.md) to establish the requested diff and review boundary. Focus this workflow on effects beyond that diff. Inspect source and history directly; no companion explanation skill is required.
+
+Keep an impact assessment read-only. Run probes against isolated fixtures or the repository's existing test environment, preserving unrelated work. A request to prove a safety assumption does not authorize live-system writes, external-model context transfers, or publication.
 
 Listing the callers is not the job. The agent can grep those in a second. The job is the breakage grep won't show you.
 
@@ -29,12 +31,12 @@ Any safety fact you can't get to step 4, say so out loud. Don't write it up as s
 
 ## Steps
 
-1. Read the change. The diff, the symbols it adds, changes, and deletes, and what it now does differently, including the part the diff doesn't spell out. Use `why` step 2 to pull the PR and commits.
+1. Read the change, including added, changed, and deleted symbols and behavior not obvious from the diff. Inspect relevant `git log`, `git show`, and `git blame` history and available PR context. Record the reviewed revisions and separate documented intent from inference. Missing PR access does not prevent local source inspection, but remains an evidence limit.
 2. Find the one fact it's safe because of. Most changes that look scary are safe because of a single fact, like "this call only drops already-dead cache entries and does nothing else". Find that fact. If it holds, most of the scary cases die at once. Spend your time here, not on a long list of maybes.
 3. Look where grep stops. Read the source of the library you call, and check its pinned version and any local patch. Work out when things run: microtasks, unmount and teardown, Solid versus React. Follow what a symbol search misses: the JSON an API returns, a DB column, a wire format, another language reading the same bytes, a feature flag, code three hops downstream.
-4. Be honest about each risk. Give it a real chance of happening and a real cost if it does. Keep the risks you confirmed; list the ones you checked and cleared separately. Same rules as `why`. Cite a real `file:line`, a search that finds nothing is still an answer, and never make up a caller or an API.
+4. Separate impact, likelihood, and confidence. Keep confirmed risks apart from checked-and-cleared paths and unresolved assumptions. Cite actual source locations and inspected consumers. A search with no matches does not prove the absence of dynamic or external callers.
 5. Prove the one fact. Write a script or test that runs the real code, run it, and paste what happened. If you can't prove it cheaply, mark it unproven. Don't round up.
-6. For a big or wide change, run it as an `arena`. Ask several models the same question and merge the answers. Different models catch different real bugs.
+6. For a broad change, use code-review's [independent review procedure](../code-review/references/independent-reviews.md) when delegation is available, permitted, and useful. Assign concrete boundaries and reconcile findings against evidence. Otherwise finish the assessment locally and state the review coverage; no separate orchestration or model service is required.
 
 ## What to hand back
 
