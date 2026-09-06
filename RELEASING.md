@@ -1,5 +1,7 @@
 # Delivery playbook
 
+[Documentation](docs/README.md)
+
 This collection delivers reviewed hard forks through `main`. There are no
 versioned packages, release tags, or release-artifact publication steps.
 Provenance remains authoritative in `UPSTREAMS.json`, generated

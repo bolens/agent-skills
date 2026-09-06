@@ -1,5 +1,7 @@
 # Contributing
 
+[Documentation](docs/README.md)
+
 This repository is the canonical source for the installed skill collection.
 Change instructions under `skills/<name>/`, preserve their origin and local
 customizations, and validate the behavior the change is meant to support.

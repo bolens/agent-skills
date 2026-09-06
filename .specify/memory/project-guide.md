@@ -1,5 +1,7 @@
 # Agent skills project guide
 
+[Documentation](../../docs/README.md)
+
 Use this guide with [AGENTS.md](../../AGENTS.md) and the
 [constitution](constitution.md) before Spec Kit planning or implementation.
 It maps this collection's requirements to source ownership and acceptance

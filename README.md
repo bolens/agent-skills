@@ -1,5 +1,7 @@
 # Agent skills
 
+[Documentation](docs/README.md)
+
 Personal agent skills for software development, repository maintenance, web
 interfaces, and Linux homelab operations. This is the source of truth for the
 skills I use across my repositories, with shared instructions for concurrent
