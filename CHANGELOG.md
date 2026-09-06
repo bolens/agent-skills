@@ -6,6 +6,9 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Added
 
+- Add bounded source excerpts, focused worker handoffs, and durable correction
+  guidance to fleet maintenance.
+
 - Add CI maintenance guidance for fleet baselines, reusable workflow contracts,
   event trust, required-check coverage, and repository-native validation.
 
