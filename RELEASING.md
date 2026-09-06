@@ -120,3 +120,25 @@ with the same tooling revision pinned in
 [the workflow](.github/workflows/source-lint.yml). Review exclusions when adding
 source files; generated and imported files retain their native validation.
 Require the new check to pass on the current PR head before merging.
+
+## Archify test coverage
+
+With Node 22 active, `make test-archify` fetches the exact `UPSTREAMS.json` audited revision into a
+temporary workspace, replaces its entire Archify directory with this local
+fork, installs locked test dependencies, and runs the native generated-file,
+golden, and complete Node test suite. The upstream parent directory supplies
+website and release fixtures absent from the packaged skill. Its notice checker
+requires this fork's pinned Simple Icons version and mirrors the packaged notice
+into the temporary repository root; all disclosure and byte-match checks remain.
+The temporary index includes the fork files, and its ZIP fixture is rebuilt for
+the fork before reproducibility tests. It does not verify the upstream release
+ZIP or publish an archive. Installed skills and links are untouched. Network
+access is required.
+
+CI uses two exhaustive Node test shards and a separate serialized WebM/site
+integration job, with Chrome enabled. Reproduce with `make test-archify
+ARCHIFY_TEST_ARGS=--shard=1/2` (then 2/2), or `ARCHIFY_TEST_ARGS=--browser`.
+Set `ARCHIFY_CHROME` to a headless Chrome executable for browser coverage.
+Dorny selects these jobs for Archify, provenance, runner, or workflow changes;
+main, scheduled, and manual runs validate the full fork. The existing required
+`validate` job also requires every selected Archify job to succeed.

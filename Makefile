@@ -1,4 +1,4 @@
-.PHONY: check-fast check test portability links hooks-install audit-upstreams
+.PHONY: check-fast check test test-archify portability links hooks-install audit-upstreams
 
 check-fast:
 	python3 scripts/update-provenance.py --check
@@ -20,3 +20,8 @@ check: check-fast test portability links
 
 hooks-install:
 	python3 scripts/install-git-hooks.py
+
+# Fetches the recorded upstream test workspace; never changes installed links.
+ARCHIFY_TEST_ARGS ?=
+test-archify:
+	python3 scripts/test_archify.py $(ARCHIFY_TEST_ARGS)

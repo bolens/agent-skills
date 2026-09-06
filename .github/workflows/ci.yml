@@ -16,7 +16,83 @@ permissions:
   contents: read
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      pull-requests: read
+    outputs:
+      archify: ${{ github.event_name != 'pull_request' || steps.paths.outputs.archify == 'true' }}
+    steps:
+      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4
+        id: paths
+        if: github.event_name == 'pull_request'
+        with:
+          filters: |
+            archify:
+              - 'skills/archify/**'
+              - 'scripts/test_archify.py'
+              - 'tests/test_archify_runner.py'
+              - 'UPSTREAMS.json'
+              - 'PROVENANCE.json'
+              - 'Makefile'
+              - '.github/workflows/ci.yml'
+
+  archify:
+    name: Archify tests (${{ matrix.shard }}/2)
+    needs: changes
+    if: needs.changes.outputs.archify == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: '22'
+      - uses: browser-actions/setup-chrome@48483d551c22a1fe6154c6a195ccc6d5773dc8c4 # v2
+        id: chrome
+        with:
+          install-dependencies: true
+      - name: Test local fork in its audited upstream workspace
+        env:
+          ARCHIFY_CHROME: ${{ steps.chrome.outputs.chrome-path }}
+          ARCHIFY_CHROME_NO_SANDBOX: '1'
+        run: make test-archify ARCHIFY_TEST_ARGS=--shard=${{ matrix.shard }}/2
+
+  archify-browser:
+    name: Archify WebM and site integration
+    needs: changes
+    if: needs.changes.outputs.archify == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: '22'
+      - uses: browser-actions/setup-chrome@48483d551c22a1fe6154c6a195ccc6d5773dc8c4 # v2
+        id: chrome
+        with:
+          install-dependencies: true
+      - name: Install WebM decoder
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y ffmpeg
+      - name: Run serialized browser integration
+        env:
+          ARCHIFY_CHROME: ${{ steps.chrome.outputs.chrome-path }}
+          ARCHIFY_CHROME_NO_SANDBOX: '1'
+        run: make test-archify ARCHIFY_TEST_ARGS=--browser
+
   validate:
+    needs: [changes, archify, archify-browser]
+    if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -33,3 +109,18 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y shellcheck
       - name: Validate hard forks
         run: make check-fast test portability
+      - name: Require selected Archify checks
+        env:
+          NEEDS_JSON: ${{ toJSON(needs) }}
+        run: |
+          python3 - <<'PYTHON'
+          import json
+          import os
+          import sys
+          jobs = json.loads(os.environ["NEEDS_JSON"])
+          selected = jobs["changes"].get("outputs", {}).get("archify")
+          expected = "success" if selected == "true" else "skipped"
+          valid = jobs["changes"]["result"] == "success" and selected in ("true", "false")
+          valid &= all(jobs[name]["result"] == expected for name in ("archify", "archify-browser"))
+          sys.exit(0 if valid else 1)
+          PYTHON
