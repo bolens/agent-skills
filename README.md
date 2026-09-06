@@ -185,3 +185,8 @@ See [SECURITY.md](SECURITY.md) for sensitive reports.
 ## Reproducible development
 
 Use the [development environment guide](docs/development-environments.md) for the pinned devenv shell and local Docker, Podman, and Apple container adapters. The portable Make targets remain the validation contract.
+
+## License scope and attribution
+
+See [third-party notices](THIRD_PARTY_NOTICES.md) for the project license scope,
+retained upstream notices, and dependency or asset exceptions.

@@ -5,8 +5,10 @@ rewriting, or selectively importing upstream changes does not remove the
 upstream license conditions. A provenance link is not a substitute for a
 required license or copyright notice.
 
-Repository-authored maintenance scripts and documentation are copyright the
-repository owner. No separate license is granted for them at this time.
+Original skills, maintenance scripts, and documentation authored by bolens are
+licensed under [MIT](LICENSE), copyright (c) 2026 bolens. This grant covers only
+material owned by bolens. Imported skills and bundled material retain the
+licenses and notices listed below, including Apache-2.0 where applicable.
 
 See `PROVENANCE.json` and each `skills/*/UPSTREAM.md` before redistribution.
 
