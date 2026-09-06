@@ -45,6 +45,11 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Changed
 
+- Refine repeat fleet audits and skill evaluations after reviewing the memory
+  engineering article: compare compatible evidence, retain unresolved findings,
+  and record why prior conclusions change. See the
+  [audit](docs/audits/2026-09-05-memory-engineering.md).
+
 - Refine CI and debugging guidance after auditing Paul Solt's app-building
   articles: preserve process failures through output pipelines, retain useful
   diagnostics, and bind runtime and API evidence to the tested build. See the

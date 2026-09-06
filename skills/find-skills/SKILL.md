@@ -34,6 +34,14 @@ Recommend a skill only when it adds non-obvious procedures, maintained domain kn
 
 Reject generic prompt collections, stale migrations, duplicate workflows, and host-specific skills that would misroute Codex.
 
+When revisiting an audited candidate, recover its source revision, verdict, and
+reason from existing records. Recheck the facts that could change that verdict,
+such as compatibility, license, or overlap with newly installed skills. Separate
+fresh evidence from repeated promotion, and trace apparent corroboration to its
+original source. Retain the earlier decision and explain what supersedes it;
+an old assessment is not automatically false or current. Correct a mistaken
+source identity or evaluation criterion where it originated, within task scope.
+
 ## Report
 
 Give a short verdict for each serious candidate: what it adds, what overlaps, compatibility risks, and the source link. Say plainly when nothing is worth installing.
