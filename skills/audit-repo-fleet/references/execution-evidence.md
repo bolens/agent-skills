@@ -81,6 +81,10 @@ an external prerequisite is unavailable.
 Concurrent identical commands are rejected while their run lock exists. SIGINT
 and SIGTERM during command execution stop the child process tree, save an
 interrupted receipt, and release the run lock. Their exit codes are 130 and 143.
+Cancellation remains accepted through final candidate verification and the first
+terminal receipt write. The runner then seals the outcome, applies any cancellation
+already received, and finishes receipt and lock cleanup without accepting another
+cancellation. A completed write cannot be rolled back by a later signal.
 An uncatchable kill or host failure can leave a running receipt and lock. Inspect
 the recorded PID and ownership before removing that exact stale lock. Never infer
 completion from a missing process or delete another invocation's lock.

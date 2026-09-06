@@ -87,8 +87,10 @@ def records(directory):
                 raise ValueError("missing receipt fields")
             if type(record.get("version")) is not int or record["version"] != 1:
                 raise ValueError("unsupported receipt version")
-            if not all(isinstance(record[key], str) and record[key] for key in ("id", "label", "status")):
+            if not all(isinstance(record[key], str) and record[key] for key in ("id", "status")):
                 raise ValueError("invalid receipt identity or status")
+            if not isinstance(record["label"], str):
+                raise ValueError("invalid receipt label")
             if not isinstance(record["command"], list) or not record["command"] or not all(isinstance(arg, str) for arg in record["command"]):
                 raise ValueError("invalid receipt command")
             candidate = record["candidate"]
@@ -165,13 +167,13 @@ def execute_locked(args, root, before, directory, command, cancellation):
         os.chmod(out.name, 0o600)
         os.chmod(err.name, 0o600)
         try:
-            if not cancellation:
+            if cancellation["signal"] is None:
                 process = subprocess.Popen(command, cwd=root, stdin=subprocess.DEVNULL, stdout=out, stderr=err,
                                            start_new_session=os.name == "posix")
                 record["pid"] = process.pid
                 save(receipt, record)
                 deadline = time.monotonic() + args.timeout
-                while not cancellation:
+                while cancellation["signal"] is None:
                     remaining = deadline - time.monotonic()
                     if remaining <= 0:
                         raise subprocess.TimeoutExpired(command, args.timeout)
@@ -180,12 +182,12 @@ def execute_locked(args, root, before, directory, command, cancellation):
                         break
                     except subprocess.TimeoutExpired:
                         continue
-            if cancellation:
+            if cancellation["signal"] is not None:
                 if process:
                     stop_process(process)
                 record["status"] = "interrupted"
-                record["signal"] = cancellation[0]
-                code = 128 + cancellation[0]
+                record["signal"] = cancellation["signal"]
+                code = 128 + cancellation["signal"]
             else:
                 record["status"] = "passed" if code == 0 else "failed"
         except FileNotFoundError as exc:
@@ -217,13 +219,24 @@ def execute_locked(args, root, before, directory, command, cancellation):
         record["status"] = "unverified"
         record["verification_error"] = str(exc)
         code = 125
-    if cancellation and record["status"] != "interrupted":
-        if process and process.poll() is None:
+    def apply_cancellation():
+        nonlocal code
+        if cancellation["signal"] is None or record["status"] == "interrupted":
+            return False
+        if process:
             stop_process(process)
         record["status"] = "interrupted"
-        record["signal"] = cancellation[0]
-        code = record["exit_code"] = 128 + cancellation[0]
+        record["signal"] = cancellation["signal"]
+        code = record["exit_code"] = 128 + cancellation["signal"]
+        return True
+
+    apply_cancellation()
     save(receipt, record)
+    # Seal the outcome after persistence. Signals received during save still
+    # count, but signals after this completion boundary cannot change the result.
+    cancellation["completed"] = True
+    if apply_cancellation():
+        save(receipt, record)
     print(json.dumps({"status": record["status"], "receipt": str(receipt), "exit_code": record["exit_code"]}))
     return code if 0 <= code <= 255 else 1
 
@@ -262,14 +275,14 @@ def main(argv=None):
     args = parser.parse_args(argv)
     if args.operation == "run" and (not 0 < args.timeout <= 86400 or not 1 <= args.max_attempts <= 10):
         parser.error("timeout must be 0–86400 seconds (exclusive zero); max-attempts must be 1–10")
-    cancellation = []
+    cancellation = {"signal": None, "completed": False}
     previous_handlers = {}
 
     def request_cancellation(signum, _frame):
         # Defer cleanup to the execution loop. Raising here can interrupt Popen
         # before ownership is recorded, or interrupt receipt/lock cleanup.
-        if not cancellation:
-            cancellation.append(signum)
+        if not cancellation["completed"] and cancellation["signal"] is None:
+            cancellation["signal"] = signum
 
     try:
         if args.operation == "run":
