@@ -1,6 +1,6 @@
 ---
 name: babysit
-description: Carry requested PR fixes, merges, and releases through review, validation, and delivery. Excludes one-off read-only reviews and status checks.
+description: Automatically coordinate requested PR feedback and CI fixes, merge preparation, merges, and releases through review and delivery. Excludes one-off read-only reviews and status checks.
 ---
 
 # PR and release follow-through
