@@ -62,8 +62,8 @@ test('generated proof gallery matches its sources, receipts, and checked-in arti
     .every((entry) => entry.engineeringProfile === null));
 
   for (const entry of manifest.entries) {
-    const artifact = path.join(generatedRoot, entry.artifact.replace(/^gallery\//, 'gallery/'));
-    const source = path.join(generatedRoot, entry.input.replace(/^gallery\//, 'gallery/'));
+    const artifact = path.join(generatedRoot, entry.artifact);
+    const source = path.join(generatedRoot, entry.input);
     assert.ok(fs.existsSync(artifact), `${entry.id}: artifact missing`);
     assert.ok(fs.existsSync(source), `${entry.id}: source missing`);
     assert.equal(sha256(artifact), entry.artifactSha256, `${entry.id}: artifact digest drift`);
