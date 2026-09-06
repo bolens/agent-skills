@@ -740,6 +740,20 @@
       ]
     },
     {
+      "name": "release-packaging",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/release-packaging",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/release-packaging"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/release-packaging",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/release-packaging",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/release-packaging"
+      ]
+    },
+    {
       "name": "resolving-merge-conflicts",
       "hard_fork": true,
       "origin": {

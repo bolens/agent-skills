@@ -12,6 +12,7 @@ identifies existing behavior, source coverage, and verification limits.
 | [004 Bounded context](004-bounded-context/spec.md) | Source excerpts, handoffs, and durable corrections |
 | [005 Fleet evidence](005-fleet-evidence/spec.md) | Bounded checks tied to repository revisions |
 | [006 Retrospective baseline](006-retrospective-baseline/spec.md) | Collection coverage and completion assessment at `8e51a4f` |
+| [007 Release packaging](007-release-packaging/spec.md) | Conditional ecosystem targets, native variants, and lean current-platform builds |
 
 The retrospective baseline contains contracts for
 [maintenance](006-retrospective-baseline/contracts/maintenance.md),

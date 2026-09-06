@@ -52,7 +52,9 @@ If the user asks to implement maintenance, work one risk-coherent batch at a tim
 
 For maintenance across repositories or long-running checks, use [execution evidence](references/execution-evidence.md) to record task state, native command results, candidate freshness, bounded retries, and dependency joins. The optional `scripts/evidence.py` helper keeps private records under each worktree's Git directory. It does not replace repository checks, authorization, or required CI.
 
-For releases, audit version sources, generated artifacts, changelog/release notes, packaging, CI, signing, and rollback. When changelog quality or edits are in scope, use the changelog-maintainer skill for reader-facing history and generator checks. A readiness request authorizes reporting, not publishing.
+For portability maintenance, prioritize current stable/rolling distributions and current supported platforms. Identify avoidable distro-specific paths, utilities, runtime assumptions, and missing platform evidence. Treat legacy compatibility as required only when the user or repository states it; retain existing promises until deliberately migrated.
+
+For releases, audit version sources, generated artifacts, changelog/release notes, packaging, CI, signing, and rollback. Use [release-packaging](../release-packaging/SKILL.md) for language/build-conditional targets, source/bin/main variant mappings, modern platform coverage, and lean installation evidence. When changelog quality or edits are in scope, use the changelog-maintainer skill for reader-facing history and generator checks. A readiness request authorizes reporting, not publishing.
 
 Before making a repository public or publishing an artifact, use `sensitive-info-audit` across the exact publication boundary and committed history. Treat unresolved high-confidence secret findings as **Protect now** blockers.
 

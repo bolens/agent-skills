@@ -37,6 +37,7 @@ specialized workflows.
 | Verify browser behavior across screen sizes | [cli-web-evidence](skills/cli-web-evidence/SKILL.md), [responsive-web-capture](skills/responsive-web-capture/SKILL.md) |
 | Maintain Compose stacks or diagnose a live homelab service | [homelab-stack-maintenance](skills/homelab-stack-maintenance/SKILL.md), [homelab-stack-triage](skills/homelab-stack-triage/SKILL.md) |
 | Verify backups and network exposure | [backup-restore-verification](skills/backup-restore-verification/SKILL.md), [network-exposure-verification](skills/network-exposure-verification/SKILL.md) |
+| Prepare portable release packages and lean installations | [release-packaging](skills/release-packaging/SKILL.md) |
 | Maintain Arch packages, desktop components, and media utilities | [arch-package-maintenance](skills/arch-package-maintenance/SKILL.md), [quickshell-development](skills/quickshell-development/SKILL.md), [media-preservation](skills/media-preservation/SKILL.md) |
 
 ## How the skills work together

@@ -41,6 +41,8 @@ Keep commit-time checks bounded through [setup-pre-commit](../setup-pre-commit/S
 
 For GitHub Actions, read [events, trust, and required checks](references/github-actions.md) before changing triggers, permissions, reusable calls, caches, artifacts, or merge gates. For other providers, verify equivalent behavior in that provider's documentation rather than translating GitHub syntax mechanically.
 
+For build and packaging matrices, prefer broad coverage of current stable/rolling platforms and current supported toolchains. Add legacy runtime lanes only for explicit user or repository compatibility requirements. Preserve existing support promises until deliberately migrated. Use [release-packaging](../release-packaging/SKILL.md) to select targets from language, build tooling, application type, and OS/ABI evidence; keep pipeline events and permissions here. Pin tested tool versions and monitor updates instead of confusing current-version preference with mutable CI inputs.
+
 ## Implement a compatible change
 
 For an audit-only request, report findings without editing workflows. Implement changes when authorized.

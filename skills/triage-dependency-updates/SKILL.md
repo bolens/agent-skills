@@ -31,6 +31,8 @@ Check recent update logs or bot PRs when available before calling monitoring ope
 
 Preserve an explicitly chosen updater such as Renovate instead of adding duplicate PR automation. Where Dependabot cannot cover a pin, document the existing updater or manual review owner and cadence. Prefer dependencies with supported automated updates when otherwise suitable, without replacing a working dependency solely for bot support. Keep audit-only work read-only and retain normal review and CI for bot updates.
 
+Prefer current stable dependency/toolchain releases that work across the declared current platforms. Do not retain old versions solely for hypothetical legacy systems. An explicit compatibility promise still needs an authorized migration before raising its floor. Check cross-platform native libraries, runtime support, and package availability before selecting a candidate; newest on one distribution is not evidence for all targets. Use [release-packaging](../release-packaging/SKILL.md) when the update changes shipped ABI/runtime or packaging support.
+
 ## Assess risk
 
 Raise risk for:

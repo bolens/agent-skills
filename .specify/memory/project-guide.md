@@ -105,6 +105,24 @@ Preserve explicit repository updater choices and report unsupported or unverifie
 coverage. The owning contract is
 [dependency monitoring guidance](../../skills/triage-dependency-updates/SKILL.md#prefer-immutable-pins-with-update-monitoring).
 
+## Current-platform portability and packaging
+
+The user's 2026-09-06 requests prioritize broad compatibility across current
+stable/rolling distributions and supported platforms over old dependency versions.
+Keep shared builds portable and isolate necessary platform integration. Legacy
+support requires an explicit user or repository contract; migrate existing promises
+deliberately. Current-version preference does not mean floating build inputs.
+
+Use [release-packaging](../../skills/release-packaging/SKILL.md) for the default
+assessment of Arch, Nix, Flatpak/Flathub, Scoop, Homebrew, Chocolatey, DEB, RPM,
+and WinGet, plus archives, AppImage, Snap, Alpine, Gentoo, Guix, FreeBSD, native
+installers, language registries, and OCI. The user explicitly made every target
+conditional on repository language and available build options. Also verify
+application type, native dependencies, platform support, and destination policy.
+Map source/bin/main variants to native semantics and measure installed runtime
+cost without stripping required functionality or licenses. This supersedes any
+assumption that broad portability requires targeting the oldest available system.
+
 ## Preserve managed integration files
 
 Keep `.specify/templates/`, `.specify/scripts/`, and generated Codex skills under

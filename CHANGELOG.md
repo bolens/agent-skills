@@ -6,6 +6,10 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Added
 
+- Add `release-packaging` for language/build-conditional distribution targets,
+  native source/binary/main variants, lean installations, and current-platform
+  compatibility. Connect release, Arch, CI, dependency, and fleet workflows.
+
 - Add bounded source excerpts, focused worker handoffs, and durable correction
   guidance to fleet maintenance.
 
