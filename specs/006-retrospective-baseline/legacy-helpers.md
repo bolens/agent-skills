@@ -28,6 +28,12 @@ remote heads and reports drift; it does not import remote code or update audit r
 check-fast gate at its configured Git hook location. Normal hook execution and
 portable gates remain separate from installed-link checks.
 
+The [shared editor tasks](../../.vscode/README.md), integrated from e62917e,
+invoke check-fast, test, portability, links, check, or diff-whitespace explicitly
+from the workspace. They preserve the same gate boundaries: links/check inspect
+canonical installations and do not authorize repointing them to a worktree.
+Recommendations do not install extensions or native tools automatically.
+
 Acceptance: generated drift fails check mode; an installer conflict retains its
 sentinel while independent mappings can proceed; invalid metadata and unavailable
 required portability tools fail explicitly. Existing fixtures:
