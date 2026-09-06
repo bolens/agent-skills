@@ -45,6 +45,11 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Changed
 
+- Add wide-event and error-handling guidance to systematic debugging, with
+  operation-local context, preserved failure semantics, sensitive-field
+  exclusion before logging, and leak-test expectations. See the
+  [source assessment](docs/audits/2026-09-05-wide-events.md).
+
 - Refine repeat fleet audits and skill evaluations after reviewing the memory
   engineering article: compare compatible evidence, retain unresolved findings,
   and record why prior conclusions change. See the

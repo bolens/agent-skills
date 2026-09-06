@@ -29,8 +29,11 @@ the shell and task runner using [command evidence](../ci-maintenance/references/
 
 When runtime state is missing, add temporary, scoped instrumentation at the
 suspected boundary. Correlate events with the actual process/build and request
-or object, exercise the failing scenario, then remove or reduce diagnostic noise after the
-hypothesis is resolved. Avoid broad verbose logging of user data or credentials.
+or object, exercise the failing scenario, then remove or reduce diagnostic noise
+after the hypothesis is resolved. For ongoing error diagnostics, read
+[wide events and safe error handling](references/wide-events.md). Prefer useful
+structured context over scattered messages or raw object dumps. Keep retained
+diagnostics bounded and exclude sensitive data before it enters logging buffers.
 For uncertain API behavior, check the project's dependency or SDK version against
 the relevant primary documentation section. A local documentation cache needs
 source/version identity and freshness checks; a search-index hit is a locator,
