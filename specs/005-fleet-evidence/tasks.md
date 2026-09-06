@@ -5,8 +5,8 @@
 - [x] Implement bounded verification records and regression coverage.
 - [x] Document task state, retry, scheduling, review, and privacy contracts.
 - [x] Audit maintained consumers in the owner-authorized scope and customize missing project guidance.
-- [ ] Run native gates, perform a separate review, and deliver focused PRs.
-- [ ] Verify merged revisions and clean up completed task worktrees.
+- [x] Run native gates, perform a separate review, and deliver focused consumer PRs.
+- [x] Verify consumer merge revisions and clean up completed consumer task worktrees.
 
 ## Authorized implementation pass
 
@@ -25,5 +25,8 @@ cross-destination writes remain pending explicit approval after automatic review
 rejected the proposed synchronization. These external conditions are not passed
 checks and do not authorize changing installed client links.
 
-This record will close delivery and cleanup only after the remaining source PRs
-and their merge-revision checks are observed.
+All 27 other source repositories have merged delivery PRs and successful workflows
+on their exact merge revisions. Their completed task worktrees were removed after
+checking the merged heads and preserving original user checkouts. This collection
+PR records that consumer completion; its own checks, merge verification, and
+worktree cleanup follow the normal delivery playbook.
