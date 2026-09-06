@@ -21,6 +21,7 @@ Local changes to retain:
 - Preserve the original error as cause when preview directory watching fails.
 - Retain bundled dependency licenses, third-party attribution additions, and artifact/brand licensing guidance.
 - Keep notice mutation tests independent of the pinned Simple Icons version.
+- Retain parse5 8.0.1 or a later audited release for HTML test parsing; its entities 8 dependency requires Node 20.19 or newer, within the documented Node 22 test harness.
 
 Updates are audited and merged manually. This fork does not track or represent upstream releases.
 

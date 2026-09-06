@@ -17,7 +17,7 @@
       "branch": "main",
       "path": "archify",
       "audited_ref": "06dd052602dd9a369e4d034e24faef0917b5a60c",
-      "local_changes": ["Keep the fast-uri security override at 3.1.6 or a later audited release.", "Preserve the original error as cause when preview directory watching fails.", "Retain bundled dependency licenses, third-party attribution additions, and artifact/brand licensing guidance.", "Keep notice mutation tests independent of the pinned Simple Icons version."]
+      "local_changes": ["Keep the fast-uri security override at 3.1.6 or a later audited release.", "Preserve the original error as cause when preview directory watching fails.", "Retain bundled dependency licenses, third-party attribution additions, and artifact/brand licensing guidance.", "Keep notice mutation tests independent of the pinned Simple Icons version.", "Retain parse5 8.0.1 or a later audited release for HTML test parsing; its entities 8 dependency requires Node 20.19 or newer, within the documented Node 22 test harness."]
     },
     "caveman": {
       "license": {"spdx": "MIT", "path": "LICENSE", "upstream_path": "LICENSE", "sha256": "94fe75d355887f84ee7eefca68e06d8d082a23dad47a8e1f58a94d98900edf5b"},
