@@ -11,6 +11,12 @@ Choose the smallest executable check that proves the requested behavior. Preserv
 
 Discover the repository's build, preview, base path, browser tests, and visual baselines. Prefer its existing harness, then installed Playwright, Puppeteer, Cypress, or CDP tooling. Use direct headless Chrome only for simple rendering that needs no authenticated setup, interaction, or application-specific readiness. Reuse dependencies and browser binaries. Install missing tooling only when needed within the authorized task.
 
+When considering another engine such as Obscura, or a remote CDP/MCP endpoint,
+read [browser backend evidence](references/browser-backends.md). Protocol
+connectivity does not prove rendering, emulation, or diagnostic support. Verify
+the required effects and retain the product's supported browsers as acceptance
+targets.
+
 For viewport PNGs, use [responsive-web-capture](../responsive-web-capture/SKILL.md). Its helper captures the initial viewport, with reduced motion by default. It does not establish full-page coverage, actual CSS viewport dimensions, application readiness, or mobile-device behavior. Use a scripted harness for those requirements.
 
 Use the in-app browser when explicitly requested, when its authenticated session is essential, or when CLI tools cannot reach the required state. Explain the reason for switching. Do not silently copy the user's browser profile into a test session.
@@ -26,6 +32,11 @@ Install console, page-error, failed-request, and relevant HTTP-response observer
 Navigate and exercise the user-visible path. Wait with a deadline for the state that matters: hydrated control, loaded data, dismissed loader, decoded image, or completed transition. Check fonts and in-scope image readiness when layout depends on them. `load`, a sleep, or global `networkidle` alone does not prove application readiness. Assert the resulting URL and meaningful DOM state. [Playwright readiness API](https://playwright.dev/docs/api/class-page#page-wait-for-load-state).
 
 For comparisons, hold browser/version, viewport, device scale, theme, locale, test data, scroll position, and motion policy constant. Record relevant differences instead of masking them. Use fresh contexts for independent states, or deliberately reuse a context when testing navigation/session continuity. Keep authenticated test state private and out of tracked artifacts.
+
+With snapshot-based interaction tools, refresh the snapshot after navigation,
+tab changes, or DOM-changing actions. Resolve the current target before acting
+and assert the resulting state. A previous element reference is not a durable
+selector or proof that a click reached the intended control.
 
 ## Capture and inspect
 

@@ -45,6 +45,11 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Changed
 
+- Refine CLI browser evidence after auditing Obscura: verify backend effects,
+  distinguish incomplete captures from fidelity differences, refresh snapshot
+  references, and check control-session ownership. See the
+  [source audit](docs/audits/2026-09-05-obscura.md).
+
 - Refine coordinated work and verification with explicit dependency reasons,
   checks that can reject bad results, scoped correction receipts, and evidence
   reuse tied to dependency changes. Record the source assessment and validation
