@@ -30,3 +30,7 @@ workflow. A spec, a checked task, and a passing static test are different eviden
 
 - [Development environments](007-development-environments/spec.md): [plan](007-development-environments/plan.md),
   [tasks and delivery evidence](007-development-environments/tasks.md).
+
+The 2026-09-06 legacy extension adds [all 62 skill capabilities](006-retrospective-baseline/legacy-capabilities.md),
+[executable helpers](006-retrospective-baseline/legacy-helpers.md), and
+[Archify commands and viewer behavior](006-retrospective-baseline/legacy-archify.md).

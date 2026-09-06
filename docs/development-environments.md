@@ -11,7 +11,7 @@ repo-check
 devenv test
 ```
 
-The shell supplies Python, Node.js, Bash, Git, Make, ShellCheck, and common text utilities. `repo-check` calls `make check-fast test portability`. Installed skill links belong to the canonical checkout; development containers do not install or repoint them. The separate Archify browser workspace remains an explicit `make test-archify` operation.
+The shell supplies Python, Node.js, Bash, Git, Make, ShellCheck, jq, ripgrep, and common text utilities. `repo-check` calls `make check-fast test portability`. Installed skill links belong to the canonical checkout; development containers do not install or repoint them. The separate Archify browser workspace remains an explicit `make test-archify` operation.
 
 Commit `devenv.lock` with deliberate input updates. Local state and `devenv.local.nix` / `devenv.local.yaml` overrides are ignored. Existing Nix cache settings are used without changing daemon trust.
 

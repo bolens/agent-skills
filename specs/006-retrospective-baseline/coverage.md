@@ -86,3 +86,14 @@ remain intact. Deferred upstream applications are covered as decisions in
 
 For future registered additions, add a row linked to the new or amended contract.
 Do not expand this historical baseline's tested scope merely by changing a count.
+
+## Capability extension: 2026-09-06
+
+The current registry contains 62 skills at `c0bfd04`. The original 61-row inventory
+above remains historical. [Individual legacy contracts](legacy-capabilities.md)
+map all 62 current entrypoints to concrete observable procedures and negative
+acceptance cases, including release-packaging under original feature 008.
+[Executable helper contracts](legacy-helpers.md) cover maintenance and operational
+commands; [Archify contracts](legacy-archify.md) cover its five families, 14 CLI
+commands, reader interactions and exports. Current repair requirements FR-009–012
+and their fixture evidence extend, rather than rewrite, the original audit.
