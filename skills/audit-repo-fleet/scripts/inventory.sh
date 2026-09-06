@@ -29,7 +29,9 @@ while IFS= read -r -d '' git_dir; do
   name=${repo#"$fleet_root"/}
   [[ $name == "$repo" ]] && name=$(basename "$repo")
 
-  if ! bare=$(git -C "$repo" rev-parse --is-bare-repository 2>/dev/null); then
+  # Validate this marker before discovery can fall back to an enclosing repo.
+  if ! git rev-parse --resolve-git-dir "$git_dir" >/dev/null 2>&1 ||
+      ! bare=$(git -C "$repo" rev-parse --is-bare-repository 2>/dev/null); then
     printf 'unavailable repository: %s\n' "$name" >&2
     result=1
     continue

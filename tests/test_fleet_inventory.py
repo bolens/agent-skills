@@ -60,6 +60,16 @@ class FleetInventoryTests(unittest.TestCase):
         self.assertEqual(rows["linked"]["untracked"], "1")
         self.assertIn("excluded bare repository: storage", result.stderr)
 
+    def test_invalid_nested_marker_does_not_fall_back_to_parent_repository(self):
+        self.git(self.root, "init", "-q")
+        (self.root / "invalid" / ".git").mkdir(parents=True)
+        self.repository("valid")
+        result, rows = self.inventory()
+        self.assertEqual(result.returncode, 1)
+        self.assertNotIn("invalid", rows)
+        self.assertEqual(rows["valid"]["tracked_changes"], "0")
+        self.assertIn("unavailable repository: invalid", result.stderr)
+
     def test_unreadable_index_is_unknown_and_other_repositories_continue(self):
         broken = self.repository("broken")
         (broken / ".git" / "index").write_bytes(b"broken index")
