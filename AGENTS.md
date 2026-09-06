@@ -1,17 +1,14 @@
 # Agent guidance
 
-Before Spec Kit planning or implementation, read
-`.specify/memory/project-guide.md` with the project constitution. It maps
-requirements to this repository's source, acceptance evidence, and validation.
+[Documentation](docs/README.md) maps architecture, deployment, state, and document ownership.
 
 Read the target skill's `SKILL.md` before changing its instructions. Use
-`README.md` to locate workflows and `CONTRIBUTING.md` for validation and source
-ownership. Read the constitution for maintenance-policy changes and `UPSTREAM.md`
-with `UPSTREAMS.json` when changing fork provenance, imported content, or local
-customizations. Use `RELEASING.md` for push, merge, delivery, and recovery.
+[README.md](README.md) to locate workflows and [CONTRIBUTING.md](CONTRIBUTING.md) for validation and source
+ownership. Read the constitution for maintenance-policy changes and the affected skill's `UPSTREAM.md` with `UPSTREAMS.json` when changing fork provenance, imported content, or local
+customizations. Use [RELEASING.md](RELEASING.md) for push, merge, delivery, and recovery.
 
 - Treat every skill as a hard fork. Preserve its upstream link and source path.
-- Keep `PROVENANCE.json`, `UPSTREAM.md`, and install targets synchronized.
+- Keep generated provenance, per-skill upstream pointers, and install targets synchronized.
 - Do not update a fork from upstream without reviewing the complete diff.
 - Preserve every path and local change recorded in `UPSTREAMS.json` during an import.
 - Keep skill descriptions narrow and discriminating. Remove scaffold TODOs.
@@ -29,25 +26,19 @@ customizations. Use `RELEASING.md` for push, merge, delivery, and recovery.
   completed task uncommitted unless the user explicitly asks you not to commit.
 - Do not push, tag, or publish unless explicitly requested.
 
-## Spec-driven changes
+## Planning and evidence
 
-Use Spec Kit for new capabilities, architecture, security-sensitive behavior,
-migrations, and coordinated changes needing a written contract. Keep narrow
-fixes, dependency updates, and prose maintenance in the normal PR workflow.
-Retain completed feature directories under `specs/` as decision history. Do not
-backfill completed work unless the user explicitly requests it. Label requested
-retrofits as retrospective, record the assessed revision and evidence limits,
-and preserve original feature history.
+Use the [project guide](.specify/memory/project-guide.md) and
+[constitution](.specify/memory/constitution.md) for substantial changes. The guide
+owns Spec Kit scope, retained history, retrospective requirements, and acceptance
+evidence. Prose maintenance uses the normal repository workflow.
 
 ## Context and handoffs
 
-- Locate source with targeted searches before reading. For exploratory reads of
-  files over 350 lines, select relevant ranges. Read required guidance and actual
-  source before edits or correctness claims; summaries do not replace them.
-- When delegation is permitted, give each worker one question or concrete output,
-  allowed paths, and a check. Return findings with source locations, changed paths,
-  and verification gaps. Keep final review with the coordinating agent.
-- Record durable user corrections in the [project guide](.specify/memory/project-guide.md)
-  or owning contract with scope, reason, and evidence. Replace superseded advice;
-  read relevant corrections before reusing assumptions. Keep temporary progress
-  in task notes and preserve existing authority rules.
+- Search before reading. Use bounded source excerpts for exploratory reads over
+  350 lines, and inspect required guidance and actual source before editing.
+- When delegation is permitted, assign a bounded question or output, paths, and
+  check. Return source locations, changes, and verification gaps for final review.
+- Keep durable corrections in the [project guide](.specify/memory/project-guide.md)
+  or owning contract. Replace superseded advice and read it before reuse.
+  Temporary progress belongs in task notes. Preserve existing authority rules.

@@ -1,5 +1,7 @@
 # Agent Skills Constitution
 
+[Documentation](../../docs/README.md)
+
 ## Core principles
 
 ### I. Repository is canonical
