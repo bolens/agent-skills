@@ -174,3 +174,7 @@ Review the complete upstream diff before updating a fork, preserve its recorded
 local changes, and keep provenance and installation targets synchronized.
 
 See [SECURITY.md](SECURITY.md) for sensitive reports.
+
+## Reproducible development
+
+Use the [development environment guide](docs/development-environments.md) for the pinned devenv shell and local Docker, Podman, and Apple container adapters. The portable Make targets remain the validation contract.
