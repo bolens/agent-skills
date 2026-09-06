@@ -52,6 +52,15 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Changed
 
+- Make skill selection boundaries clearer and load accessibility and performance
+  guidance by observed issue. Keep broad audit coverage and make recurring
+  maintenance opt-in.
+- Give stalled Archify repairs one bounded diagnostic escalation while preserving
+  validation and diagram meaning.
+- Distinguish unavailable fleet inventory evidence from clean repositories,
+  including invalid nested Git markers, and compare repeat audits using compatible
+  observations.
+
 - Add requirement-driven older-browser support guidance covering support matrices,
   syntax transforms, targeted polyfills, loading order, production delivery,
   minimum-version testing, and deliberate retirement of compatibility layers.
