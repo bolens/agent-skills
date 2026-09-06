@@ -28,8 +28,8 @@ python3 -m scripts <absolute_filepath>
 - call Claude to compress
 - validate output (no tokens)
 - if errors: cherry-pick fix with Claude (targeted fixes only, no recompression)
-- retry up to 2 times
-- if still failing after 2 retries: report error to user, leave original file untouched
+- validate at most 2 candidates (one repair retry)
+- if still failing after the repair retry: report error to user, leave original file untouched
 
 4. Return result to user
 

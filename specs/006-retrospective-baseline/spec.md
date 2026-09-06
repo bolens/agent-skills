@@ -109,3 +109,27 @@ fleet. A skill can be a complete guidance workflow without bundling an applicati
 The user requested retrospective specs, but did not authorize new external-model
 context transfers or publishing. Netviz remains a candidate for manual editing;
 Archify remains the generated-diagram default for both network and system topics.
+
+## Corrective requirements from the 2026-09-06 capability audit
+
+These requirements extend the historical baseline. They do not rewrite its evidence.
+
+- **FR-009**: Compression staging MUST use task-owned temporary paths, preserve an
+  existing neighboring `.caveman-staged` file, and clean temporary candidates after
+  success, rejection or exceptions. Failed validation MUST leave source bytes intact.
+- **FR-010**: Skill help MUST describe capabilities actually packaged in this
+  collection. Decision-trail review MUST use only available, scoped evidence and
+  permitted reviewers. An unavailable transcript or independent review MUST remain
+  an explicit evidence gap without preventing authorized local work or inventing
+  a host transcript path, companion skill, or successful review.
+- **FR-011**: Read-only directory comparison MUST return an unavailable result
+  (exit 2) when traversal or file reading fails, continue independent mappings,
+  and never present an incomplete tree as equal. The health collector MUST return
+  nonzero without a success message when its requested report cannot be written.
+  Individual unavailable health probes remain explicitly labeled observations.
+- **FR-012**: HTML analysis, plugin preflight, and pollution discovery MUST expose
+  failed file discovery or HTML file reading as incomplete rather than clean evidence. Pollution
+  search MUST distinguish an observed creator (exit 1), an inconclusive search
+  (exit 2: pre-existing target, no tests, discovery or test execution failure),
+  and a completed search without the requested target (exit 0). None proves
+  other tests, other side effects, or a whole application safe.

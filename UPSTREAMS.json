@@ -61,7 +61,8 @@
       "branch": "main",
       "path": "skills/caveman-compress",
       "audited_ref": "3b74643f4d910f496babd4e634b1ba7168816f14",
-      "preserve_paths": ["agents"]
+      "preserve_paths": ["agents"],
+      "local_changes": ["Use an owned temporary directory for candidate validation; preserve neighboring staging files and clean scratch candidates on every exit."]
     },
     "caveman-help": {
       "license": {"spdx": "MIT", "path": "LICENSE", "upstream_path": "LICENSE", "sha256": "94fe75d355887f84ee7eefca68e06d8d082a23dad47a8e1f58a94d98900edf5b"},
@@ -69,7 +70,8 @@
       "branch": "main",
       "path": "skills/caveman-help",
       "audited_ref": "3b74643f4d910f496babd4e634b1ba7168816f14",
-      "preserve_paths": ["agents"]
+      "preserve_paths": ["agents"],
+      "local_changes": ["Describe packaged skill modes and current sibling formats without claiming absent automatic configuration hooks or guaranteed compression savings."]
     },
     "caveman-review": {
       "license": {"spdx": "MIT", "path": "LICENSE", "upstream_path": "LICENSE", "sha256": "94fe75d355887f84ee7eefca68e06d8d082a23dad47a8e1f58a94d98900edf5b"},
@@ -172,7 +174,7 @@
       "branch": "main",
       "path": "skills/web-quality-audit",
       "audited_ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
-      "local_changes": ["Coordinate comprehensive responsive capture and functional browser receipts while keeping evidence types separate.", "Use an env-resolved Bash shebang so the analyzer works outside fixed /bin layouts.", "Link only bundled category skills; route SEO, platform behavior, security, and async-state findings without expanding a read-only audit into implementation.", "Treat source maps as publication content to inspect and llms.txt as optional consumer-specific discovery, not automatic security or search verdicts.", "Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior.", "Keep recurring maintenance checklists in an opt-in reference without expanding one-off audit scope."]
+      "local_changes": ["Report failed HTML discovery or reads as incomplete and preserve newline filenames in JSON findings.", "Coordinate comprehensive responsive capture and functional browser receipts while keeping evidence types separate.", "Use an env-resolved Bash shebang so the analyzer works outside fixed /bin layouts.", "Link only bundled category skills; route SEO, platform behavior, security, and async-state findings without expanding a read-only audit into implementation.", "Treat source maps as publication content to inspect and llms.txt as optional consumer-specific discovery, not automatic security or search verdicts.", "Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior.", "Keep recurring maintenance checklists in an opt-in reference without expanding one-off audit scope."]
     }
   }
 }

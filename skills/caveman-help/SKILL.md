@@ -26,9 +26,9 @@ Mode stick until changed or session end.
 
 | Skill | Trigger | What it do |
 |-------|---------|-----------|
-| **caveman-commit** | `/caveman-commit` | Terse commit messages. Conventional Commits. ≤50 char subject. |
-| **caveman-review** | `/caveman-review` | One-line PR comments: `L42: bug: user null. Add guard.` |
-| **caveman-compress** | `/caveman-compress <file>` | Compress .md files to caveman prose. Saves ~46% input tokens. |
+| **caveman-commit** | `/caveman-commit` | Conventional Commit messages. Aim for 50 characters, maximum 72. |
+| **caveman-review** | `/caveman-review` | Terse findings: `file:line: [P2] trigger and consequence. Fix.` |
+| **caveman-compress** | `/caveman-compress <file>` | Compress supported prose files with a preserved backup. Savings depend on the input. |
 | **caveman-help** | `/caveman-help` | This card. |
 
 ## Deactivate
@@ -39,23 +39,12 @@ Say "stop caveman" or "normal mode". Resume anytime with `/caveman`.
 
 Keep user's language by default. User write Portuguese → reply Portuguese caveman. Compress the style, not the language. Technical terms, code, commands, commit types, and exact error strings stay verbatim unless user ask for translation.
 
-## Configure Default Mode
+## Select a mode in this collection
 
-Default mode = `full`. Change it:
-
-**Environment variable** (highest priority):
-```bash
-export CAVEMAN_DEFAULT_MODE=ultra
-```
-
-**Config file** (`~/.config/caveman/config.json`):
-```json
-{ "defaultMode": "lite" }
-```
-
-Set `"off"` to disable auto-activation on session start. User can still activate manually with `/caveman`.
-
-Resolution: env var > config file > `full`.
+The packaged skill defaults to `full`. Select another mode explicitly with the
+commands above. This collection does not include automatic session-activation
+hooks or a configuration reader. Setting `CAVEMAN_DEFAULT_MODE` or editing an
+upstream config file does not configure these packaged skills.
 
 ## More
 

@@ -668,50 +668,53 @@ def _compress_file_locked(filepath: Path) -> bool:
         return False
     # Step 2: Validate + Retry. Each candidate is staged and validated next
     # to the source; the live file is written only once one passes (#544).
-    staging_path = filepath.with_name(filepath.name + ".caveman-staged")
-    for attempt in range(MAX_RETRIES):
-        print(f"\nValidation attempt {attempt + 1}")
+    with tempfile.TemporaryDirectory(
+        prefix=filepath.name + ".caveman-", dir=filepath.parent,
+    ) as temporary:
+        staging_path = Path(temporary) / "candidate.md"
+        for attempt in range(MAX_RETRIES):
+            print(f"\nValidation attempt {attempt + 1}")
 
-        _write_target(staging_path, compressed, backup_path, newline)
-        result = validate(backup_path, staging_path)
+            _write_target(staging_path, compressed, backup_path, newline)
+            result = validate(backup_path, staging_path)
 
-        if result.is_valid:
-            print("Validation passed")
-            _write_target(filepath, compressed, backup_path, newline)
-            staging_path.unlink(missing_ok=True)
-            return True
+            if result.is_valid:
+                print("Validation passed")
+                _write_target(filepath, compressed, backup_path, newline)
+                staging_path.unlink(missing_ok=True)
+                return True
 
-        print("❌ Validation failed:")
-        for err in result.errors:
-            print(f"   - {err}")
+            print("❌ Validation failed:")
+            for err in result.errors:
+                print(f"   - {err}")
 
-        if attempt == MAX_RETRIES - 1:
-            staging_path.unlink(missing_ok=True)
-            backup_path.unlink(missing_ok=True)
-            print("Failed after retries: original left untouched")
-            return False
+            if attempt == MAX_RETRIES - 1:
+                staging_path.unlink(missing_ok=True)
+                backup_path.unlink(missing_ok=True)
+                print("Failed after retries: original left untouched")
+                return False
 
-        print("Fixing with Claude...")
-        fixed = call_claude(
-            build_fix_prompt(original_text, compressed, result.errors)
-        )
+            print("Fixing with Claude...")
+            fixed = call_claude(
+                build_fix_prompt(original_text, compressed, result.errors)
+            )
 
-        if fixed is None or not fixed.strip():
-            print("❌ Fix attempt aborted: Claude returned an empty response.")
-            print("   Skipping this attempt.")
-            continue
+            if fixed is None or not fixed.strip():
+                print("❌ Fix attempt aborted: Claude returned an empty response.")
+                print("   Skipping this attempt.")
+                continue
 
-        # Guard against a prose preamble smuggled in ahead of the real fixed
-        # content (issue #588). Only enforced when the original starts with a
-        # structural anchor (frontmatter `---` or a heading) — plain-prose
-        # first lines get legitimately rewritten by compression, and requiring
-        # them verbatim would reject every valid fix.
-        anchor = first_nonblank_line(original_text)
-        if anchor.startswith(("---", "#")) and first_nonblank_line(fixed) != anchor:
-            print("❌ Fix attempt aborted: output does not start with the original's first line.")
-            print("   Possible preamble leak. Skipping this attempt.")
-            continue
+            # Guard against a prose preamble smuggled in ahead of the real fixed
+            # content (issue #588). Only enforced when the original starts with a
+            # structural anchor (frontmatter `---` or a heading) — plain-prose
+            # first lines get legitimately rewritten by compression, and requiring
+            # them verbatim would reject every valid fix.
+            anchor = first_nonblank_line(original_text)
+            if anchor.startswith(("---", "#")) and first_nonblank_line(fixed) != anchor:
+                print("❌ Fix attempt aborted: output does not start with the original's first line.")
+                print("   Possible preamble leak. Skipping this attempt.")
+                continue
 
-        compressed = fixed
+            compressed = fixed
 
-    return False
+        return False

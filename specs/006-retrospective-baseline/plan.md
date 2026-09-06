@@ -69,3 +69,25 @@ Use `quickstart.md` for a manifest comparison, local path and requirement checks
 Spec Kit discovery, and existing repository gates. Manual domain scenarios verify
 instruction consistency only. Report skipped application and host tests. No new
 unit tests are needed for prose-only changes; existing behavioral tests still run.
+
+## Capability extension: 2026-09-06
+
+Audit the current 62-skill registry at `c0bfd04` without altering historical counts.
+Map each entrypoint's observable procedure and negative acceptance; separately map
+executable helpers and Archify's CLI/viewer/export capabilities. Preserve original
+features 001–008 and the existing domain requirements.
+
+The extension repairs FR-009–012 at their existing helper boundaries: owned
+compression staging, truthful help/review instructions, incomplete tree/report
+handling, and incomplete file/test discovery. Use disposable filesystem/process
+fixtures and synthetic model/host command responses. Keep upstream revisions and
+licenses intact; record changes to imported forks and regenerate provenance.
+Adopt both shared Spec Kit workflow references and their tooling refs together at
+verified `c161a6757130ea687def9eb1e81c6a4190488f07`.
+
+Run `make check-fast test portability` from the isolated worktree, review local
+spec links and exact registry coverage, then use the native Archify fetched suite
+because provenance changes select it in CI. Do not repoint installed links or run
+live host probes/model requests as substitutes for fixtures. Finish with a separate
+self-review of the complete candidate, sensitive-data scans, checked PR integration
+and exact merged-revision CI. Hosted delivery evidence is recorded separately.

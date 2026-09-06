@@ -111,3 +111,48 @@ The canonical installed checkout's link check passed without repointing links.
 These are distinct current-source and installation observations; historical counts
 above remain attached to their original checks. No unavailable live-system or
 external-agent procedure is promoted to completed runtime evidence.
+
+## Phase 9: Capability extension, 2026-09-06
+
+These tasks extend the audit to the current source; earlier completion statements
+remain attached to their earlier scope.
+
+- [x] T015 Inventory all 62 current registered entrypoints and map individual observable/negative contracts in legacy-capabilities.md (FR-001, FR-003).
+- [x] T016 Map executable helper, Archify CLI/family/viewer/export and supporting maintenance contracts in legacy-helpers.md and legacy-archify.md (FR-003, FR-007).
+- [x] T017 Reproduce neighboring-file destruction during compression; use owned staging and verify success, rejection and exception preservation (FR-009).
+- [x] T018 Correct help for packaged selection/commit/review behavior and work-log instructions for available evidence and permitted review capabilities (FR-010).
+- [x] T019 Reproduce incomplete tree comparison and report-opening false success; retain independent mapping progress and report failure truthfully (FR-011).
+- [x] T020 Reproduce hidden file-discovery failures and inconclusive pollution searches; retain source/fixture state and distinguish observed creation from unavailable proof (FR-012).
+- [x] T021 Preserve audited upstream refs and licenses, regenerate local-change provenance, and adopt paired verified shared Spec Kit workflow/tooling pins.
+- [x] T022 Run final portable and selected Archify gates; review registry/link consistency and all task-owned changes (FR-005, FR-007).
+- [ ] T023 Scan and commit the reviewed changes, merge after current PR checks, and record exact main-revision delivery evidence (FR-006).
+
+T015–T016 establish scope; discovered T017–T020 precede T021–T023. Local
+`make check-fast test portability` currently passes 81 tests with no skips.
+The compression fixture failed all three new preservation cases before repair;
+tree/report fixtures failed both cases; discovery fixtures reproduced five false
+success/inconclusive outcomes, while observed creation already returned failure.
+Model replies and optional host validators are synthetic fixture seams. Real
+loopback socket tests run in a permitted environment. Current Archify and hosted
+results remain pending until separately recorded.
+
+Local extended verification: 81 portable tests passed with no skips. The full
+Archify suite passed 1,022 tests with four explicit skips: external MCO checkout,
+non-Node-22 packaging negative case, and two site cases delegated to browser
+integration. The serialized browser gate passed seven tests. The skipped MCO
+fixture and alternate Node runtime remain unexecuted here; no broader claim is
+made. Shared source lint and 324 local spec destinations passed. Separate local
+self-review inspected the complete candidate; no independent reviewer ran. The
+value-redacting scan examined 663 files, with no secrets or skips; 18 privacy
+review hits are existing attribution/example/test values, including the new
+reserved fixture address. Commit-range scanners and hosted delivery follow.
+
+Integration note: remote main advanced to `93c7301` with prospectively specified
+Sentrux analysis. Rebased before publication, preserved both changelog entries
+and original 009, and linked its helpers without importing or executing a runtime.
+The range comparison showed only changelog context changed by integration.
+
+The integrated portable gate passed all 95 tests with no skips, including the
+existing Sentrux fixtures. The refreshed map has 330 local destinations and 62
+unique registered skill contracts. Archify runtime/test bytes are unchanged by
+the integration, so its completed native results remain applicable.

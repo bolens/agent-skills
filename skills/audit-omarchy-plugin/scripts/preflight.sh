@@ -55,16 +55,20 @@ else
 fi
 
 scan_files=()
-while IFS= read -r -d '' file; do scan_files+=("$file"); done < <(
-  find "$repo" \
+discovered=$(mktemp) || exit 2
+trap 'rm -f -- "$discovered"' EXIT
+if ! find "$repo" \
     \( -path "$repo/.git" -o -path "$repo/.github" -o -path "$repo/node_modules" \
        -o -path "$repo/docs" -o -path "$repo/test" -o -path "$repo/tests" \
        -o -path "$repo/fixtures" \) -prune -o -type f \
     \( -name '*.qml' -o -name '*.js' -o -name '*.mjs' -o -name '*.sh' -o -name '*.bash' \
        -o -name '*.py' -o -name '*.rb' -o -name '*.pl' -o -name '*.lua' -o -name '*.fish' \
        -o -name '*.zsh' -o -name '*.desktop' -o -name '*.service' -o -name '*.sudoers' \
-       -o -name '*.toml' -o -name '*.yaml' -o -name '*.yml' \) -print0
-)
+       -o -name '*.toml' -o -name '*.yaml' -o -name '*.yml' \) -print0 >"$discovered"; then
+  error 'source file discovery failed; preflight is incomplete'
+  exit 2
+fi
+while IFS= read -r -d '' file; do scan_files+=("$file"); done <"$discovered"
 
 probe() {
   local message=$1 pattern=$2 matches=''
