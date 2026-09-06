@@ -25,3 +25,6 @@ to distinguish completed adaptations from deferred tools and unverified hosts.
 Preserve original history. New capabilities need their own prospective contract
 or an explicit amendment. Ordinary prose maintenance remains in the normal
 workflow. A spec, a checked task, and a passing static test are different evidence.
+
+- [Development environments](007-development-environments/spec.md): [plan](007-development-environments/plan.md),
+  [tasks and delivery evidence](007-development-environments/tasks.md).
