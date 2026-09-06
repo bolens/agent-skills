@@ -13,6 +13,10 @@ fi
 
 POLLUTION_CHECK="$1"
 TEST_PATTERN="$2"
+if [ -e "$POLLUTION_CHECK" ] || [ -L "$POLLUTION_CHECK" ]; then
+  echo "Inconclusive: target already exists; preserve it and use an isolated fixture."
+  exit 2
+fi
 
 echo "🔍 Searching for test that creates: $POLLUTION_CHECK"
 echo "Test pattern: $TEST_PATTERN"
@@ -25,32 +29,43 @@ TEST_PATTERN="${TEST_PATTERN#./}"
 # like src/**/*.test.ts would skip src/top.test.ts; also try the pattern
 # with '**/' collapsed to cover files directly under the base directory.
 TEST_FILES=()
+discovered=$(mktemp)
+trap 'rm -f -- "$discovered"' EXIT
+if ! find . -type f \( -path "./$TEST_PATTERN" -o -path "./${TEST_PATTERN//\*\*\//}" \) -print0 >"$discovered"; then
+  echo "Inconclusive: test discovery failed." >&2
+  exit 2
+fi
 while IFS= read -r -d '' test_file; do
   TEST_FILES+=("$test_file")
-done < <(find . \( -path "./$TEST_PATTERN" -o -path "./${TEST_PATTERN//\*\*\//}" \) -print0)
+done <"$discovered"
 TOTAL=${#TEST_FILES[@]}
+if [ "$TOTAL" -eq 0 ]; then
+  echo "Inconclusive: no matching tests."
+  exit 2
+fi
 
 echo "Found $TOTAL test files"
 echo ""
 
 COUNT=0
+incomplete=0
 for TEST_FILE in "${TEST_FILES[@]}"; do
   COUNT=$((COUNT + 1))
 
   # Skip if pollution already exists
-  if [ -e "$POLLUTION_CHECK" ]; then
+  if [ -e "$POLLUTION_CHECK" ] || [ -L "$POLLUTION_CHECK" ]; then
     echo "⚠️  Pollution already exists before test $COUNT/$TOTAL"
     echo "   Skipping: $TEST_FILE"
-    continue
+    exit 2
   fi
 
   echo "[$COUNT/$TOTAL] Testing: $TEST_FILE"
 
   # Run the test
-  npm test "$TEST_FILE" > /dev/null 2>&1 || true
+  npm test "$TEST_FILE" > /dev/null 2>&1 || incomplete=1
 
   # Check if pollution appeared
-  if [ -e "$POLLUTION_CHECK" ]; then
+  if [ -e "$POLLUTION_CHECK" ] || [ -L "$POLLUTION_CHECK" ]; then
     echo ""
     echo "🎯 FOUND POLLUTER!"
     echo "   Test: $TEST_FILE"
@@ -67,5 +82,9 @@ for TEST_FILE in "${TEST_FILES[@]}"; do
 done
 
 echo ""
-echo "✅ No polluter found - all tests clean!"
+if [ "$incomplete" -ne 0 ]; then
+  echo "Inconclusive: a test failed; no creator of the requested target was observed."
+  exit 2
+fi
+echo "No creator of the requested target was observed in the selected tests."
 exit 0

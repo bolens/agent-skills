@@ -12,7 +12,7 @@ in
   process.manager.implementation = "overmind";
   packages = with pkgs; [
     bashInteractive coreutils findutils gawk git gnugrep gnumake gnused
-    nodejs_24 python3 shellcheck
+    nodejs_24 python3 shellcheck jq ripgrep
   ];
   scripts.repo-check.exec = "make check-fast test portability";
   enterTest = "repo-check";

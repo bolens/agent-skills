@@ -15,6 +15,7 @@ Upstream license: [MIT](LICENSE)
 License source: [LICENSE](https://github.com/addyosmani/web-quality-skills/blob/afa8da942115f2961fdbfa80807ea0b232ff6c00/LICENSE)
 
 Local changes to retain:
+- Report failed HTML discovery or reads as incomplete and preserve newline filenames in JSON findings.
 - Coordinate comprehensive responsive capture and functional browser receipts while keeping evidence types separate.
 - Use an env-resolved Bash shebang so the analyzer works outside fixed /bin layouts.
 - Link only bundled category skills; route SEO, platform behavior, security, and async-state findings without expanding a read-only audit into implementation.

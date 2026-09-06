@@ -72,8 +72,19 @@ collect() {
 
 if [ -n "$output" ]; then
   umask 077
-  collect >"$output"
-  printf 'wrote %s\n' "$output"
+  if ! exec 3>"$output"; then
+    printf 'could not open %s\n' "$output" >&2
+    exit 1
+  fi
+  # The copy process reports write failures even when individual probes continue.
+  if collect | cat >&3; then
+    exec 3>&-
+    printf 'wrote %s\n' "$output"
+  else
+    exec 3>&-
+    printf 'could not write %s\n' "$output" >&2
+    exit 1
+  fi
 else
   collect
 fi

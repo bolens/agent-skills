@@ -6,6 +6,11 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Fixed
 
+- Preserve neighboring files during compression and report incomplete directory,
+  discovery, pollution-search, and health-report operations as failures.
+- Align Caveman help with packaged behavior and keep unavailable reviewer or
+  transcript evidence explicit in work logs.
+
 - Stop fleet check descendants on SIGTERM and retain interruption evidence so
   cancelled checks release their retry locks.
 - Reject incompatible or inconsistent fleet receipts instead of reporting a
@@ -15,6 +20,8 @@ All notable changes to this hard-fork collection are documented here.
 
 - Add optional local Sentrux snapshots and structural comparisons on Linux x86_64,
   with verified runtime artifacts, retained license notices, and explicit source scopes.
+- Specify all 62 registered skill capabilities, executable helpers, and Archify
+  commands, viewer interactions, and export boundaries.
 
 - Add `release-packaging` for language/build-conditional distribution targets,
   native source/binary/main variants, lean installations, and current-platform

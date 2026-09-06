@@ -252,6 +252,9 @@
         "preserve_paths": [
           "agents"
         ],
+        "local_changes": [
+          "Use an owned temporary directory for candidate validation; preserve neighboring staging files and clean scratch candidates on every exit."
+        ],
         "license": {
           "spdx": "MIT",
           "path": "LICENSE",
@@ -275,6 +278,9 @@
         "ref": "3b74643f4d910f496babd4e634b1ba7168816f14",
         "preserve_paths": [
           "agents"
+        ],
+        "local_changes": [
+          "Describe packaged skill modes and current sibling formats without claiming absent automatic configuration hooks or guaranteed compression savings."
         ],
         "license": {
           "spdx": "MIT",
@@ -1032,6 +1038,7 @@
         "path": "skills/web-quality-audit",
         "ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
         "local_changes": [
+          "Report failed HTML discovery or reads as incomplete and preserve newline filenames in JSON findings.",
           "Coordinate comprehensive responsive capture and functional browser receipts while keeping evidence types separate.",
           "Use an env-resolved Bash shebang so the analyzer works outside fixed /bin layouts.",
           "Link only bundled category skills; route SEO, platform behavior, security, and async-state findings without expanding a read-only audit into implementation.",

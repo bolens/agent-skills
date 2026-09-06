@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Read-only HTML quality analyzer (v2). No filesystem mutations.
+# Read-only HTML quality analyzer (v2). Only private temporary discovery state.
 # stderr = human logs, stdout = structured JSON.
 set -euo pipefail
 
@@ -31,19 +31,31 @@ TARGET="$1"
 ISSUES=()
 WARNINGS=()
 
+has_html() {
+  local status=0
+  grep -qi -- "$1" "$2" || status=$?
+  if [ "$status" -gt 1 ]; then
+    fail "incomplete_scan" "HTML file could not be inspected" "Resolve file read errors and rerun"
+  fi
+  return "$status"
+}
+
 analyze_html() {
   local file="$1"
   echo "Analyzing: $file" >&2
 
-  grep -qi "<!doctype html>"     "$file" || ISSUES+=("$file:0: Missing HTML5 doctype")
-  grep -qi 'charset.*utf-8'      "$file" || WARNINGS+=("$file:0: Missing or non-UTF-8 charset")
-  grep -qi 'name="viewport"'     "$file" || ISSUES+=("$file:0: Missing viewport meta tag")
-  grep -qi '<html[^>]*lang='     "$file" || ISSUES+=("$file:0: Missing lang attribute on <html>")
-  grep -qi '<title>'             "$file" || ISSUES+=("$file:0: Missing <title> tag")
+  has_html "<!doctype html>" "$file" || ISSUES+=("$file:0: Missing HTML5 doctype")
+  has_html 'charset.*utf-8' "$file" || WARNINGS+=("$file:0: Missing or non-UTF-8 charset")
+  has_html 'name="viewport"' "$file" || ISSUES+=("$file:0: Missing viewport meta tag")
+  has_html '<html[^>]*lang=' "$file" || ISSUES+=("$file:0: Missing lang attribute on <html>")
+  has_html '<title>' "$file" || ISSUES+=("$file:0: Missing <title> tag")
 
   # <img> without alt — two-pass replaces broken PCRE lookahead
-  local alt_count=0
+  local alt_count=0 tags='' status=0
+  tags=$(grep -noE '<img[^>]*>' "$file") || status=$?
+  [ "$status" -le 1 ] || fail "incomplete_scan" "Image-tag inspection failed" "Resolve file read errors and rerun"
   while IFS=: read -r ln tag; do
+    [ -n "$ln" ] || continue
     if grep -qE 'alt=' <<<"$tag"; then continue; fi
     if [ "$alt_count" -ge "$MAX_PER_CATEGORY_PER_FILE" ]; then
       WARNINGS+=("$file:0: <img>-without-alt findings truncated (>${MAX_PER_CATEGORY_PER_FILE} in this file)")
@@ -51,25 +63,33 @@ analyze_html() {
     fi
     WARNINGS+=("$file:$ln: <img> without alt attribute")
     alt_count=$((alt_count + 1))
-  done < <(grep -noE '<img[^>]*>' "$file" || true)
+  done <<<"$tags"
 
   # Non-HTTPS URLs with line numbers
-  local http_count=0
+  local http_count=0 urls=''
+  status=0
+  urls=$(grep -noE 'http://[^"'\''[:space:]>]*' "$file") || status=$?
+  [ "$status" -le 1 ] || fail "incomplete_scan" "URL inspection failed" "Resolve file read errors and rerun"
   while IFS=: read -r ln _; do
+    [ -n "$ln" ] || continue
     if [ "$http_count" -ge "$MAX_PER_CATEGORY_PER_FILE" ]; then
       WARNINGS+=("$file:0: Non-HTTPS URL findings truncated (>${MAX_PER_CATEGORY_PER_FILE} in this file)")
       break
     fi
     WARNINGS+=("$file:$ln: Non-HTTPS URL")
     http_count=$((http_count + 1))
-  done < <(grep -noE 'http://[^"'\''[:space:]>]*' "$file" || true)
+  done <<<"$urls"
 }
 
-# Process substitution keeps arrays in main shell (fixes v1 subshell bug)
+# A checked manifest preserves discovery failures and keeps arrays in this shell.
 if [ -d "$TARGET" ]; then
+  discovered=$(mktemp)
+  trap 'rm -f -- "$discovered"' EXIT
+  find "$TARGET" -type f \( -name "*.html" -o -name "*.htm" \) -print0 >"$discovered" || \
+    fail "incomplete_scan" "HTML file discovery failed" "Resolve traversal errors and rerun"
   while IFS= read -r -d '' file; do
     analyze_html "$file"
-  done < <(find "$TARGET" \( -name "*.html" -o -name "*.htm" \) -print0)
+  done <"$discovered"
 elif [ -f "$TARGET" ]; then
   analyze_html "$TARGET"
 else
@@ -80,7 +100,7 @@ issue_total=${#ISSUES[@]}
 warning_total=${#WARNINGS[@]}
 
 to_json_array() {
-  printf '%s\n' "$@" | jq -Rs 'split("\n") | map(select(length > 0))'
+  printf '%s\0' "$@" | jq -Rs 'split("\u0000") | map(select(length > 0))'
 }
 
 if [ "$issue_total" -gt 0 ]; then

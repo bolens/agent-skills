@@ -25,11 +25,16 @@ def fingerprint(path: Path) -> tuple[str, str]:
 
 def inventory(root: Path, excludes: set[str]) -> dict[Path, tuple[str, str]]:
     result: dict[Path, tuple[str, str]] = {}
-    for path in root.rglob("*"):
-        relative = path.relative_to(root)
-        if any(part in excludes for part in relative.parts):
-            continue
-        result[relative] = fingerprint(path)
+    def traversal_error(error: OSError) -> None:
+        raise error
+
+    for directory, names, files in os.walk(root, onerror=traversal_error):
+        names[:] = [name for name in names if name not in excludes]
+        for name in names + files:
+            if name in excludes:
+                continue
+            path = Path(directory) / name
+            result[path.relative_to(root)] = fingerprint(path)
     return result
 
 
@@ -49,7 +54,12 @@ for mapping in args.mapping:
         print("UNAVAILABLE: both paths must be directories")
         status = 2
         continue
-    left, right = inventory(live, set(args.exclude)), inventory(managed, set(args.exclude))
+    try:
+        left, right = inventory(live, set(args.exclude)), inventory(managed, set(args.exclude))
+    except OSError as error:
+        print(f"UNAVAILABLE: comparison incomplete: {error}")
+        status = 2
+        continue
     differences = 0
     for relative in sorted(left.keys() | right.keys()):
         if relative not in left:
