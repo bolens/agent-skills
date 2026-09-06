@@ -15,7 +15,7 @@ kind, supported OS/ABI, and destination policy. WinGet is explicitly retained.
 
 **Language/Version**: Markdown skill instructions and generated JSON provenance.
 **Primary Dependencies**: Existing provenance generator, installer, repository checks, and current primary packaging documentation.
-**Storage**: Canonical `skills/` and prospective `specs/007-release-packaging/`.
+**Storage**: Canonical `skills/` and prospective `specs/008-release-packaging/`.
 **Testing**: Static gates, bounded scenario review, skill validation, installed-link verification.
 **Target Platform**: Linux plus conditional macOS, Windows, FreeBSD, and language/runtime targets.
 **Project Type**: Reusable skill collection, no actual application packaging in this task.
@@ -48,7 +48,7 @@ skills/arch-package-maintenance/SKILL.md
 skills/ci-maintenance/SKILL.md
 skills/triage-dependency-updates/SKILL.md
 skills/audit-repo-fleet/SKILL.md
-specs/007-release-packaging/
+specs/008-release-packaging/
   spec.md
   plan.md
   research.md

@@ -5,11 +5,11 @@
 
 ## Phase 1: Setup
 
-- [x] T001 Read repository and affected-skill guidance; record scope in specs/007-release-packaging/spec.md.
+- [x] T001 Read repository and affected-skill guidance; record scope in specs/008-release-packaging/spec.md.
 
 ## Phase 2: Foundation
 
-- [x] T002 Verify native ecosystem semantics and user portability preferences in specs/007-release-packaging/research.md.
+- [x] T002 Verify native ecosystem semantics and user portability preferences in specs/008-release-packaging/research.md.
 
 ## Phase 3: User story 1 - Supported variants
 
@@ -39,8 +39,8 @@
 
 ## Phase 6: Verification and commit
 
-- [x] T011 Validate bounded scenarios from specs/007-release-packaging/quickstart.md and record review evidence in specs/007-release-packaging/verification.md.
-- [x] T012 Run skill validation and repository checks, inspect the final diff, and commit task-owned paths; record results in specs/007-release-packaging/verification.md.
+- [x] T011 Validate bounded scenarios from specs/008-release-packaging/quickstart.md and record review evidence in specs/008-release-packaging/verification.md.
+- [x] T012 Run skill validation and repository checks, inspect the final diff, and commit task-owned paths; record results in specs/008-release-packaging/verification.md.
 
 ## Dependencies and execution
 

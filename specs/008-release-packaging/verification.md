@@ -45,3 +45,10 @@ FR-005 through FR-007: modern target contract, payload/closure checks, and clean
 artifact verification. FR-008: recorded main commit and update ownership.
 FR-009: release, Arch, CI, dependency, and fleet handoffs. FR-010: generated local
 hard-fork provenance, 62-skill validation, and managed installation links.
+
+## Integration note
+
+Before PR submission, main advanced to `ab05a51` and added feature 007 for
+development environments. This unpublished packaging feature moved to directory
+008 to preserve unique sequential numbering. Its original feature branch remains
+`007-release-packaging`; branch and spec-directory names are independent.
