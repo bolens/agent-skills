@@ -4,9 +4,11 @@ This repository is the canonical source for the installed skill collection.
 Change instructions under `skills/<name>/`, preserve their origin and local
 customizations, and validate the behavior the change is meant to support.
 
-Read the [constitution](.specify/memory/constitution.md),
-[agent guidance](AGENTS.md), and affected skill's `SKILL.md` and `UPSTREAM.md`
-before editing. Use [RELEASING.md](RELEASING.md) for PRs, merges, and recovery.
+Use [agent guidance](AGENTS.md) to select the contracts relevant to a change.
+Read the affected skill before changing its instructions, and its `UPSTREAM.md`
+when changing imported content or recorded customizations. Read the
+[constitution](.specify/memory/constitution.md) for maintenance-policy changes.
+Use [RELEASING.md](RELEASING.md) for PRs, merges, and recovery.
 Report sensitive findings through [SECURITY.md](SECURITY.md).
 
 ## Choose the scope

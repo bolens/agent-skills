@@ -4,9 +4,11 @@ Before Spec Kit planning or implementation, read
 `.specify/memory/project-guide.md` with the project constitution. It maps
 requirements to this repository's source, acceptance evidence, and validation.
 
-Read `.specify/memory/constitution.md`, `README.md`, and the target skill's
-`SKILL.md` and `UPSTREAM.md` before editing.
-Use `RELEASING.md` for push, merge, delivery, and recovery guidance.
+Read the target skill's `SKILL.md` before changing its instructions. Use
+`README.md` to locate workflows and `CONTRIBUTING.md` for validation and source
+ownership. Read the constitution for maintenance-policy changes and `UPSTREAM.md`
+with `UPSTREAMS.json` when changing fork provenance, imported content, or local
+customizations. Use `RELEASING.md` for push, merge, delivery, and recovery.
 
 - Treat every skill as a hard fork. Preserve its upstream link and source path.
 - Keep `PROVENANCE.json`, `UPSTREAM.md`, and install targets synchronized.
