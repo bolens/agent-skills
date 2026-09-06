@@ -45,6 +45,11 @@ An omitted repository or failed check cannot close an earlier finding.
 
 For commit and release consistency, use [semantic conventions](../git-hygiene/references/semantic-conventions.md) to compare documented policy with recent commit messages, PR titles, merge strategy, and version automation. Distinguish intentional native or repository exceptions from drift. Keep audits read-only and avoid rewriting historical commits or inventing releases for unversioned repositories.
 
+For optional local dependency measurements across repositories with source code, use
+[the Sentrux runner](references/sentrux.md). Establish parser coverage and explicit
+source scopes before adopting comparisons. Keep private fleet profiles outside
+public repositories.
+
 ## Prioritize
 
 Rank evidence-backed work into:

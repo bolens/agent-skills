@@ -46,20 +46,19 @@ change is verified, not when an arbitrary score reaches its maximum.
 
 ## Optional Sentrux use
 
-Sentrux is a candidate analyzer, not a required or bundled dependency. Before
-using another revision, recheck its startup behavior, parser coverage, and
-CLI/MCP differences. The reviewed revision is recorded in the
-[source audit](../../../docs/audits/2026-09-05-netviz-sentrux.md).
+Use the [local Sentrux runner](../../audit-repo-fleet/references/sentrux.md) for
+verified, isolated 0.5.7 snapshots and comparison identity on Linux x86_64 when
+the selected language produces useful dependency evidence. It remains optional.
+The [runtime audit](../../../docs/audits/2026-09-06-sentrux-runtime.md) records
+executed fixtures, coverage limits, retained notices, and distribution boundaries.
 
-At that revision, startup can download native grammar libraries and launch a
-telemetry/update request before parsing commands. The grammar checksum function
-does not verify its declared hash. Do not treat `--help`, an analytics command,
-or the absence of source-upload code as proof of offline execution. A future
-trial should verify artifacts and use an isolated home with outbound networking
-blocked before starting the process. Disabling grammar downloads without supplying
-verified grammars can leave the scan incomplete.
+Native Sentrux scans Git-tracked source and can miss new files. The runner copies
+selected tracked and non-ignored untracked code into a temporary Git snapshot.
+It retains scope, revision, content hashes, runtime identity, and baseline metrics
+outside source. Do not substitute a partial graph or MCP rule response for full
+policy coverage. Verify actual import sites and native behavior independently.
 
-Its CLI offers `check`, `gate --save`, and `gate`; saving writes
-`.sentrux/baseline.json`. Its MCP rule response can report truncation and omit
-configured rules. Verify actual coverage and retain the baseline identity outside
-the tool's metric snapshot. A partial MCP pass is not a complete architecture gate.
+Before upgrading, review startup behavior, parser coverage, CLI/MCP differences,
+artifact integrity, and license obligations again. The earlier
+[source audit](../../../docs/audits/2026-09-05-netviz-sentrux.md) remains historical
+evidence. A new runtime or scope requires compatible baselines from both sides.

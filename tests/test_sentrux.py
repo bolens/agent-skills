@@ -1,0 +1,115 @@
+import importlib.util
+import json
+import shutil
+from pathlib import Path
+import tempfile
+import unittest
+from unittest.mock import patch
+
+ROOT = Path(__file__).resolve().parents[1]
+SCRIPTS = ROOT / 'skills/audit-repo-fleet/scripts'
+
+
+def load(name):
+    spec = importlib.util.spec_from_file_location(name, SCRIPTS / (name + '.py'))
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+runner = load('sentrux')
+setup = load('prepare-sentrux')
+
+
+class SentruxTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.repo = Path(self.temp.name).resolve() / 'repo'
+        self.repo.mkdir()
+        runner.git(self.repo, 'init', '-q')
+        self.scope = {'include': ['src/*'], 'extensions': {'.py': 'python'}}
+        (self.repo / 'src').mkdir()
+
+    def test_snapshot_includes_changes_and_new_files_without_staging(self):
+        tracked = self.repo / 'src/old.py'
+        tracked.write_text('old = 1\n')
+        runner.git(self.repo, 'add', '--', 'src/old.py')
+        tracked.write_text('old = 2\n')
+        (self.repo / 'src/new.py').write_text('new = 1\n')
+        (self.repo / '.gitignore').write_text('src/ignored.py\n')
+        (self.repo / 'src/ignored.py').write_text('secret = 1\n')
+        before = runner.git(self.repo, 'ls-files', '--stage')
+        selected = runner.selected_files(self.repo, self.scope)
+        self.assertEqual({'src/old.py', 'src/new.py'}, set(selected))
+        self.assertEqual(b'old = 2\n', selected['src/old.py'])
+        self.assertEqual(before, runner.git(self.repo, 'ls-files', '--stage'))
+
+    def test_context_is_kept_and_exclusions_apply(self):
+        (self.repo / 'src/main.py').write_text('pass\n')
+        (self.repo / 'src/generated.py').write_text('pass\n')
+        (self.repo / 'package.json').write_text('{}\n')
+        self.scope.update(context=['package.json'], exclude=['src/generated.py'])
+        self.assertEqual({'src/main.py', 'package.json'}, set(runner.selected_files(self.repo, self.scope)))
+
+    def test_symlink_is_rejected(self):
+        outside = self.repo.parent / 'outside.py'
+        outside.write_text('secret = 1\n')
+        (self.repo / 'src/link.py').symlink_to(outside)
+        with self.assertRaisesRegex(ValueError, 'Non-regular'):
+            runner.selected_files(self.repo, self.scope)
+
+    def test_empty_and_oversized_sources_fail(self):
+        with self.assertRaisesRegex(ValueError, 'Empty scope'):
+            runner.selected_files(self.repo, self.scope)
+        (self.repo / 'src/large.py').write_bytes(b'x' * (512 * 1024 + 1))
+        with self.assertRaisesRegex(ValueError, 'parse limit'):
+            runner.selected_files(self.repo, self.scope)
+
+    def test_comparison_rejects_changed_identity(self):
+        runner.compatible({'identity': {'scope': 'a'}}, {'scope': 'a'})
+        with self.assertRaisesRegex(ValueError, 'Incompatible'):
+            runner.compatible({'identity': {'scope': 'a'}}, {'scope': 'b'})
+
+    def test_bad_archive_does_not_create_runtime(self):
+        archive = self.repo.parent / 'bad.tar.gz'
+        archive.write_bytes(b'not the published archive')
+        runtime = self.repo.parent / 'runtime'
+        with self.assertRaisesRegex(ValueError, 'SHA-256 mismatch'):
+            setup.prepare(archive, runtime)
+        self.assertFalse(runtime.exists())
+
+    def test_runtime_rejects_modified_grammars_and_missing_notices(self):
+        runtime = self.repo.parent / 'runtime'
+        grammar = runtime / '.sentrux/plugins/python/grammars/linux-x86_64.so'
+        grammar.parent.mkdir(parents=True)
+        grammar.write_bytes(b'fixture grammar')
+        (runtime / 'grammars.json').write_text(json.dumps({
+            'python/grammars/linux-x86_64.so': runner.digest(grammar.read_bytes())}))
+        (runtime / '.sentrux/telemetry_opt_out').touch()
+        shutil.copytree(setup.NOTICES, runtime / 'notices')
+        binary = self.repo.parent / 'sentrux'
+        binary.write_bytes(b'fixture binary')
+        with patch.object(runner, 'BINARY_SHA256', runner.digest(binary.read_bytes())), \
+                patch.object(runner.platform, 'system', return_value='Linux'), \
+                patch.object(runner.platform, 'machine', return_value='x86_64'):
+            runner.runtime_identity(runtime, binary, self.scope)
+            grammar.write_bytes(b'changed')
+            with self.assertRaisesRegex(ValueError, 'Grammar manifest mismatch'):
+                runner.runtime_identity(runtime, binary, self.scope)
+            grammar.write_bytes(b'fixture grammar')
+            (runtime / 'notices/python-LICENSE').unlink()
+            with self.assertRaises(OSError):
+                runner.runtime_identity(runtime, binary, self.scope)
+
+    def test_retained_notices_match_provenance(self):
+        record = json.loads((setup.NOTICES / 'provenance.json').read_text())
+        self.assertEqual(record['binary_sha256'], runner.BINARY_SHA256)
+        self.assertEqual(record['source_license_sha256'], runner.digest((setup.NOTICES / 'SENTRUX-LICENSE').read_bytes()))
+        for grammar in record['grammars']:
+            path = setup.NOTICES / (grammar['language'] + '-LICENSE')
+            self.assertEqual(grammar['notice_sha256'], runner.digest(path.read_bytes()))
+
+
+if __name__ == '__main__':
+    unittest.main()
