@@ -19,6 +19,7 @@ Read only the reference needed:
 
 - [Browser-native implementation](references/browser-native.md): forms, dialogs/popovers, events, observers, URL/history, and ownership.
 - [Compatibility and HTTP](references/compatibility-and-http.md): progressive enhancement, feature detection, caching, fetch, and response behavior.
+- [Required older-browser support](references/older-browser-support.md): explicit support matrices, syntax transforms, targeted polyfills, delivery, and minimum-version testing.
 
 Native animation and View Transitions belong to `web-animation`. Data mutation state belongs to `forms-and-data-state`. Use `design-system` when replacing or wrapping a shared primitive changes its public contract.
 
@@ -32,7 +33,7 @@ Native animation and View Transitions belong to `web-animation`. Data mutation s
 
 ## Verify and report
 
-Use the repository's validators and browser harness. Verify the specific feature in representative current target engines and any required fallback path, using browser tooling that is actually available. Viewport emulation is not testing another browser engine.
+Use the repository's validators and browser harness. Verify the specific feature in representative current engines, explicitly required older versions, and their fallback paths, using browser tooling that is actually available. Viewport emulation is not testing another browser engine.
 
 Test direct load, enhanced interaction, keyboard behavior, relevant history navigation, and repeated initialization/teardown. Exercise partial initialization or unavailable feature paths when they affect essential content. A full no-JavaScript workflow is required only when the product contract calls for it, not as an automatic rewrite of every application.
 

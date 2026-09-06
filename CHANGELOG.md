@@ -52,6 +52,10 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Changed
 
+- Add requirement-driven older-browser support guidance covering support matrices,
+  syntax transforms, targeted polyfills, loading order, production delivery,
+  minimum-version testing, and deliberate retirement of compatibility layers.
+
 - Prefer latest stable web features and maintained tool versions across web
   standards, frontend design, design systems, animation, performance, and quality
   audits. Require legacy compatibility only for explicit contracts, retain current

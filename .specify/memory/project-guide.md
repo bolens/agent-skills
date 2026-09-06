@@ -136,6 +136,12 @@ Retain accessibility, reduced motion, SSR correctness, and loading/error recover
 This replaces any assumption that all new features must wait for long-established
 Baseline status or that every asset needs old-browser fallback encodings.
 
+The user also requires an actionable path for explicit older-browser support.
+Use [the compatibility workflow](../../skills/web-standard/references/older-browser-support.md)
+to define versions and required journeys, select transforms and targeted polyfills,
+verify loading order and actual old engines, and retire exceptions deliberately.
+A latest-stable default does not waive named legacy requirements.
+
 ## Preserve managed integration files
 
 Keep `.specify/templates/`, `.specify/scripts/`, and generated Codex skills under

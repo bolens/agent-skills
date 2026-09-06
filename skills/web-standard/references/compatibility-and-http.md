@@ -6,6 +6,8 @@ Use the [modern target policy](modern-targets.md): latest stable engines and fea
 
 Keep server/client rendering deterministic. A client-only browser API should not crash server evaluation. Do not hide hydration or parser repairs by suppressing warnings without finding the cause. Scope polyfills to the capabilities and delivery targets actually required.
 
+For an explicit older-browser requirement, use [required older-browser support](older-browser-support.md) to distinguish syntax transforms from runtime polyfills, align build targets, and verify the delivered application in the required versions.
+
 ## Requests and responses
 
 Use HTTP methods and statuses for the operation actually performed. Safe navigation must not trigger application mutations. Preserve deliberate redirect behavior and verify whether the method/body is retained or changed when that matters. Use the actual response status for missing or rejected resources rather than a success-shaped error screen.
