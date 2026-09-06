@@ -1,5 +1,7 @@
 # Security policy
 
+[Documentation](docs/README.md)
+
 Use [GitHub private vulnerability reporting](https://github.com/bolens/agent-skills/security/advisories/new)
 for sensitive findings in this collection. Private reporting is enabled for this
 repository. Do not put credentials, private configuration, or an exploit that
