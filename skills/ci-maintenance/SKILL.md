@@ -43,6 +43,8 @@ For GitHub Actions, read [events, trust, and required checks](references/github-
 
 For build and packaging matrices, prefer broad coverage of current stable/rolling platforms and current supported toolchains. Add legacy runtime lanes only for explicit user or repository compatibility requirements. Preserve existing support promises until deliberately migrated. Use [release-packaging](../release-packaging/SKILL.md) to select targets from language, build tooling, application type, and OS/ABI evidence; keep pipeline events and permissions here. Pin tested tool versions and monitor updates instead of confusing current-version preference with mutable CI inputs.
 
+When commit, PR-title, or release checks are in scope, use [semantic conventions](../git-hygiene/references/semantic-conventions.md). Reuse the repository's parser and release rules. Validate PR titles on creation, title edits, and head updates as supported by the host. Match checks to the merge strategy and verify breaking markers survive squash. Treat titles as untrusted input and pass them as data, never interpolated shell code. A naming check does not require installing release automation or granting publication credentials.
+
 ## Implement a compatible change
 
 For an audit-only request, report findings without editing workflows. Implement changes when authorized.

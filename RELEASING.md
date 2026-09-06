@@ -63,6 +63,10 @@ Require applicable checks on the current PR head. New commits or a base refresh
 need checks for that updated state. A green run on an older head or a queued
 merge is not completion evidence.
 
+Before merge, verify the PR title and final squash message follow
+[semantic conventions](skills/git-hygiene/references/semantic-conventions.md).
+Preserve any breaking marker and migration footer in the resulting commit.
+
 Squash-merge without bypassing protection. Do not push directly to `main`, rewrite
 shared history, or skip failing hooks. Confirm the host reports the PR as merged,
 record the resulting main SHA, and verify CI on that revision. Diagnose failures

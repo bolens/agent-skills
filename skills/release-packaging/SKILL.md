@@ -17,6 +17,8 @@ Read [language and build options](references/language-and-build-options.md) to i
 
 Record each target as **supported**, **conditional**, or **inapplicable**, with the reason, OS/architecture/libc, artifact/recipe format, destination, and validation needed. Separate technical build support from public-repository acceptance and available evidence. Do not silently omit WinGet or other requested targets, force desktop packaging onto a library, or treat missing credentials as proof that a platform is unsupported.
 
+Use [semantic conventions](../git-hygiene/references/semantic-conventions.md) for SemVer release versions, prerelease identity, and immutable publication. Preserve native package revisions and test their ordering independently of upstream SemVer. A main-tracking build needs an ordered native snapshot version, not only changed build metadata.
+
 ## Map variants to native behavior
 
 Read [targets and variants](references/targets-and-variants.md) for the selected ecosystems. Use this logical contract:

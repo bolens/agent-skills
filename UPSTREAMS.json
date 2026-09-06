@@ -52,7 +52,8 @@
       "url": "https://github.com/JuliusBrussee/caveman",
       "branch": "main",
       "path": "skills/caveman-commit",
-      "audited_ref": "3b74643f4d910f496babd4e634b1ba7168816f14"
+      "audited_ref": "3b74643f4d910f496babd4e634b1ba7168816f14",
+      "local_changes": ["Preserve shared semantic commit and PR naming guidance, repository policy exceptions, and breaking-change metadata during message compression."]
     },
     "caveman-compress": {
       "license": {"spdx": "MIT", "path": "LICENSE", "upstream_path": "LICENSE", "sha256": "94fe75d355887f84ee7eefca68e06d8d082a23dad47a8e1f58a94d98900edf5b"},

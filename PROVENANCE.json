@@ -225,6 +225,9 @@
         "branch": "main",
         "path": "skills/caveman-commit",
         "ref": "3b74643f4d910f496babd4e634b1ba7168816f14",
+        "local_changes": [
+          "Preserve shared semantic commit and PR naming guidance, repository policy exceptions, and breaking-change metadata during message compression."
+        ],
         "license": {
           "spdx": "MIT",
           "path": "LICENSE",

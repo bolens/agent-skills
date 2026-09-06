@@ -149,3 +149,14 @@ their integration manifests. Regenerate managed files through Spec Kit instead
 of editing generated copies to satisfy local style preferences. Put local
 planning guidance here or in the constitution and verify that project-owned
 memory survives an integration update.
+
+## Semantic naming and version preference
+
+The user's 2026-09-06 request sets Conventional Commits as the default for
+commit subjects and PR titles, and SemVer for versioned software where applicable.
+Use [semantic conventions](../../skills/git-hygiene/references/semantic-conventions.md)
+across authoring, hooks, CI, fleet audits, changelogs, packaging, and delivery.
+Keep squash messages consistent with the final PR scope and preserve breaking
+metadata. Explicit repository schemes and native package ordering remain valid
+exceptions. This is instruction consistency work, not a request to add versioned
+releases to this collection or publish anything.

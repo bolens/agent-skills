@@ -145,6 +145,10 @@ outputs, and update the audited revision only after that review. Regenerate
 provenance, validate the result, and describe reader-visible behavior changes in
 [CHANGELOG.md](CHANGELOG.md). Routine dependency churn belongs in Git history.
 
+Use Conventional Commit-style commit subjects and PR titles, following
+[semantic conventions](skills/git-hygiene/references/semantic-conventions.md).
+This collection continues to deliver through `main` without versioned releases.
+
 Keep one coherent purpose per commit. A PR should explain the changed behavior,
 the evidence supporting it, and any remaining limitations. Do not describe a
 local fork as an upstream release.

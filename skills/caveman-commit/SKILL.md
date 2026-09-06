@@ -7,10 +7,12 @@ description: >
 
 Write commit messages terse and exact. Conventional Commits format. No fluff. Why over what.
 
+Read [semantic conventions](../git-hygiene/references/semantic-conventions.md) when choosing types or breaking markers. Respect explicit repository commit policy. Preserve required release-parser metadata even when compressing the message.
+
 ## Rules
 
 **Subject line:**
-- `<type>(<scope>): <imperative summary>` — `<scope>` optional
+- `<type>(<scope>)!: <imperative summary>`. Scope and `!` are optional. Use `!` for breaking changes.
 - Types: `feat`, `fix`, `refactor`, `perf`, `docs`, `test`, `chore`, `build`, `ci`, `style`, `revert`
 - Imperative mood: "add", "fix", "remove" — not "added", "adds", "adding"
 - ≤50 chars when possible, hard cap 72
