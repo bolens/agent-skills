@@ -156,3 +156,15 @@ The integrated portable gate passed all 95 tests with no skips, including the
 existing Sentrux fixtures. The refreshed map has 330 local destinations and 62
 unique registered skill contracts. Archify runtime/test bytes are unchanged by
 the integration, so its completed native results remain applicable.
+
+Hosted Docker verification exposed missing jq in the source-free development
+image; host PATH had supplied it in native runs. Add jq and ripgrep, required by
+the real HTML/plugin inspection fixtures, to the existing development tool set.
+Fixture setup now rejects missing prerequisites instead of allowing a negative
+case to pass for the wrong reason. Rebuild and run the same image gate.
+
+- [x] T024 Repair the development image's missing inspection prerequisites and prove the full portable gate inside the rebuilt source-free Docker image.
+
+The rebuilt local image passed all 95 tests, provenance and portability checks.
+Docker build/load/run used the authorized pkexec wrapper. No installed client links
+were repointed. The selected hosted check must still verify the updated PR head.

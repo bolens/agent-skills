@@ -1,6 +1,7 @@
 """Exercise scan failure boundaries with isolated command and repository fixtures."""
 import json
 import os
+import shutil
 from pathlib import Path
 import subprocess
 import tempfile
@@ -10,6 +11,12 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class DiscoveryFailureTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        for binary in ('bash', 'git', 'jq', 'rg', 'find'):
+            if not shutil.which(binary):
+                raise RuntimeError(f'Discovery fixtures require {binary} on PATH')
+
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
