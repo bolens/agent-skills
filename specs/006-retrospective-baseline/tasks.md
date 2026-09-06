@@ -168,3 +168,9 @@ case to pass for the wrong reason. Rebuild and run the same image gate.
 The rebuilt local image passed all 95 tests, provenance and portability checks.
 Docker build/load/run used the authorized pkexec wrapper. No installed client links
 were repointed. The selected hosted check must still verify the updated PR head.
+
+The clean Ubuntu validation job also lacked ripgrep. Its existing apt prerequisite
+step now installs jq/ripgrep with ShellCheck, matching the verified development
+image. The fixture prerequisite guard reported this directly; no test is skipped
+or relaxed to accommodate the runner. Actionlint and offline zizmor validate the
+workflow change before the next hosted run.
