@@ -23,7 +23,7 @@ make check-fast
 make check
 ```
 
-For another selected feature, use `SPECIFY_FEATURE_DIRECTORY=specs/005-retrospective-baseline`
+For another selected feature, use `SPECIFY_FEATURE_DIRECTORY=specs/006-retrospective-baseline`
 with the prerequisite command. Feature selection is local workflow state and
 must not be mistaken for the current Git branch.
 

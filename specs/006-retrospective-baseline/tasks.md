@@ -4,8 +4,8 @@ These tasks track the retrofit, not the original implementation history.
 
 ## Phase 1: Setup
 
-- [x] T001 Inspect baseline source and existing specs; record decisions in specs/005-retrospective-baseline/research.md.
-- [x] T002 Specify the retrofit and its evidence boundary in specs/005-retrospective-baseline/spec.md and plan.md.
+- [x] T001 Inspect baseline source and existing specs; record decisions in specs/006-retrospective-baseline/research.md.
+- [x] T002 Specify the retrofit and its evidence boundary in specs/006-retrospective-baseline/spec.md and plan.md.
 
 ## Phase 2: Foundation
 
@@ -15,23 +15,23 @@ These tasks track the retrofit, not the original implementation history.
 
 Independent test: all registered skills map to a source and requirement.
 
-- [x] T004 [US1] Write the four domain contracts under specs/005-retrospective-baseline/contracts/ (FR-003).
-- [x] T005 [US1] Map every registered skill and original feature in specs/005-retrospective-baseline/coverage.md (FR-001).
+- [x] T004 [US1] Write the four domain contracts under specs/006-retrospective-baseline/contracts/ (FR-003).
+- [x] T005 [US1] Map every registered skill and original feature in specs/006-retrospective-baseline/coverage.md (FR-001).
 - [x] T006 [US1] Add specification discovery in specs/README.md and README.md (FR-001, FR-002).
 
 ## Phase 4: US2 completeness
 
 Independent test: each audit has a source-backed implementation disposition.
 
-- [x] T007 [US2] Trace all nine accepted audit adaptations and original feature tasks in specs/005-retrospective-baseline/assessment.md (FR-004, FR-005).
-- [x] T008 [US2] Resolve any demonstrated local gaps or record exclusions and external limits in specs/005-retrospective-baseline/assessment.md (FR-005, FR-006).
+- [x] T007 [US2] Trace all nine accepted audit adaptations and original feature tasks in specs/006-retrospective-baseline/assessment.md (FR-004, FR-005).
+- [x] T008 [US2] Resolve any demonstrated local gaps or record exclusions and external limits in specs/006-retrospective-baseline/assessment.md (FR-005, FR-006).
 
 ## Phase 5: US3 validation
 
 Independent test: feature discovery succeeds and current evidence is reproducible.
 
-- [x] T009 [US3] Execute specs/005-retrospective-baseline/quickstart.md, including manifest/requirement/link checks, source scenarios, and repository gates (FR-007).
-- [x] T010 [US3] Run convergence against specs/005-retrospective-baseline/spec.md, plan.md, and tasks.md; record evidence in tasks.md (FR-005, FR-007).
+- [x] T009 [US3] Execute specs/006-retrospective-baseline/quickstart.md, including manifest/requirement/link checks, source scenarios, and repository gates (FR-007).
+- [x] T010 [US3] Run convergence against specs/006-retrospective-baseline/spec.md, plan.md, and tasks.md; record evidence in tasks.md (FR-005, FR-007).
 
 ## Phase 6: Delivery
 

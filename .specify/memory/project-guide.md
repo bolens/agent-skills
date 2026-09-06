@@ -82,7 +82,7 @@ Follow [RELEASING.md](../../RELEASING.md) for push, merge, installation verifica
 cleanup, and recovery. Retain completed feature documents as decision history.
 Do not backfill specifications for already finished work unless explicitly
 requested. The user's 2026-09-05 retrofit request authorized the
-[retrospective baseline](../../specs/005-retrospective-baseline/spec.md).
+[retrospective baseline](../../specs/006-retrospective-baseline/spec.md).
 Such records describe the assessed revision, separate implementation from
 verification limits, and preserve original feature history. This exception does
 not require retrospective paperwork for ordinary future prose maintenance.
