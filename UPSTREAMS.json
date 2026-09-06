@@ -80,8 +80,12 @@
       "branch": "main",
       "path": "skills/find-skills",
       "audited_ref": "435076e78988e1e6ec40d00b0b1d76bdbbc5419a",
-      "preserve_paths": ["SKILL.md"],
-      "local_changes": ["Keep Codex-native installation boundaries and source-first quality review instead of popularity-led recommendations."]
+      "preserve_paths": ["SKILL.md", "references/usage-and-context.md"],
+      "local_changes": [
+        "Keep Codex-native installation boundaries and source-first quality review instead of popularity-led recommendations.",
+        "Retain host-specific usage and context evidence, representative routing checks, and explicit user intent for invocation-policy changes.",
+        "Preserve revision-bound candidate reassessment, source independence checks, and scoped correction of earlier evaluation errors."
+      ]
     },
     "frontend-design": {
       "url": "https://github.com/anthropics/skills",
@@ -138,7 +142,7 @@
       "branch": "main",
       "path": "skills/verify-and-stop",
       "audited_ref": "3b74643f4d910f496babd4e634b1ba7168816f14",
-      "local_changes": ["Bind reused proof to the checked inputs and runtime conditions, and complete already-required delivery steps after verification.", "Automatically hand already-requested PR or release follow-through to babysit without expanding validation-only tasks or restarting an active workflow."]
+      "local_changes": ["Bind reused proof to the checked inputs and runtime conditions, and complete already-required delivery steps after verification.", "Automatically hand already-requested PR or release follow-through to babysit without expanding validation-only tasks or restarting an active workflow.", "Require acceptance checks that can reject violating results, probe suspect vacuous passes in disposable state, and return scoped failure evidence without expanding verification authority."]
     },
     "web-quality-audit": {
       "license": {"spdx": "MIT", "path": "LICENSE", "upstream_path": "LICENSE", "sha256": "c122223ac43e86421958e18623979942c21b642951e2e3736dcb63eff13587c3"},

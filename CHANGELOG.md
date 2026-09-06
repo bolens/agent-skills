@@ -48,6 +48,46 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Changed
 
+- Add wide-event and error-handling guidance to systematic debugging, with
+  operation-local context, preserved failure semantics, sensitive-field
+  exclusion before logging, and leak-test expectations. See the
+  [source assessment](docs/audits/2026-09-05-wide-events.md).
+
+- Refine repeat fleet audits and skill evaluations after reviewing the memory
+  engineering article: compare compatible evidence, retain unresolved findings,
+  and record why prior conclusions change. See the
+  [audit](docs/audits/2026-09-05-memory-engineering.md).
+
+- Refine CI and debugging guidance after auditing Paul Solt's app-building
+  articles: preserve process failures through output pipelines, retain useful
+  diagnostics, and bind runtime and API evidence to the tested build. See the
+  [audit](docs/audits/2026-09-05-paul-solt-workflows.md).
+
+- Refine skill discovery and maintenance after auditing Claude Code's built-in
+  Skill Doctor: distinguish installed, listed, and invoked skills; qualify
+  context and usage evidence; and verify routing before pruning. See the
+  [audit](docs/audits/2026-09-05-skill-doctor.md).
+
+- Refine security finding assessment and patch review after auditing Codex
+  Security: preserve each claim, record counterevidence and unresolved coverage,
+  verify original attack paths after fixes, and distinguish artifact integrity
+  from report accuracy. See the [audit](docs/audits/2026-09-05-codex-security.md).
+
+- Refine CLI browser evidence after auditing Obscura: verify backend effects,
+  distinguish incomplete captures from fidelity differences, refresh snapshot
+  references, and check control-session ownership. See the
+  [source audit](docs/audits/2026-09-05-obscura.md).
+
+- Refine coordinated work and verification with explicit dependency reasons,
+  checks that can reject bad results, scoped correction receipts, and evidence
+  reuse tied to dependency changes. Record the source assessment and validation
+  in the [loops and graphs audit](docs/audits/2026-09-05-loops-and-graphs.md).
+
+- Refine architecture design and audit guidance after reviewing Ponytail: compare
+  concrete reuse options against required behavior, record revisit conditions,
+  and require evidence before removing seams or tests. See the
+  [audit and validation record](docs/audits/2026-09-05-ponytail.md).
+
 - Restore missing fork and Spec Kit licenses, correct frontend-design's Anthropic
   provenance, retain bundled dependency notices, and check license-copy integrity.
 

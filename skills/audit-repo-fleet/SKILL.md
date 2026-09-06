@@ -28,6 +28,11 @@ Supplement the inventory only where it changes prioritization:
 
 Never fetch every remote or run every repository's full suite merely to make the report look complete. Ask before network-heavy or long-running fleet operations.
 
+For a repeat audit with prior evidence, read [comparing audit runs](references/comparing-runs.md).
+Compare like-for-like repository identities and check scopes, and separate new
+findings from rechecks, unresolved conflicts, and unavailable observations.
+An omitted repository or failed check cannot close an earlier finding.
+
 ## Prioritize
 
 Rank evidence-backed work into:

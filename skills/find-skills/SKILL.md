@@ -16,6 +16,11 @@ Find the smallest trustworthy addition that solves the user's recurring need. Do
 
 Use current web sources for repository contents, popularity, maintenance status, and compatibility claims. Install counts and stars are weak signals, not proof of quality.
 
+When an addition overlaps installed skills or context cost motivates the request,
+read [usage and context evidence](references/usage-and-context.md). Check whether
+the existing skill is discoverable before treating missing usage as a capability
+gap. Separate installed files, host-visible listings, and observed invocations.
+
 ## Evaluate
 
 Recommend a skill only when it adds non-obvious procedures, maintained domain knowledge, deterministic tooling, or reusable assets. Check:
@@ -28,6 +33,14 @@ Recommend a skill only when it adds non-obvious procedures, maintained domain kn
 - whether a small rewrite is required for the target environment
 
 Reject generic prompt collections, stale migrations, duplicate workflows, and host-specific skills that would misroute Codex.
+
+When revisiting an audited candidate, recover its source revision, verdict, and
+reason from existing records. Recheck the facts that could change that verdict,
+such as compatibility, license, or overlap with newly installed skills. Separate
+fresh evidence from repeated promotion, and trace apparent corroboration to its
+original source. Retain the earlier decision and explain what supersedes it;
+an old assessment is not automatically false or current. Correct a mistaken
+source identity or evaluation criterion where it originated, within task scope.
 
 ## Report
 

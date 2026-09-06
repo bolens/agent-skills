@@ -88,6 +88,13 @@ For changed helpers, exercise the affected behavior and failure paths. Distingui
 source inspection from commands actually executed. Avoid tests that only match
 new prose or mirror the implementation.
 
+When changing skill descriptions or investigating unused skills, follow the
+[usage and context evidence guidance](skills/find-skills/references/usage-and-context.md).
+Check the host-visible listing and representative task coverage before pruning.
+Validate routing separately from task quality, and keep invocation policy intact
+unless the user explicitly requests a change. Static repository checks cannot
+measure live context cost or establish that an unobserved skill is unnecessary.
+
 To install the repository's `check-fast` pre-commit hook:
 
 ```sh
