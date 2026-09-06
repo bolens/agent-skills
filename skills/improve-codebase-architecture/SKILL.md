@@ -22,6 +22,8 @@ For simplification candidates, name what would disappear and what would take ove
 
 Read existing debt notes when they explain a candidate's limits. Identify the condition that would justify revisiting the decision and whether current evidence meets it. Missing triggers are uncertainty to resolve, not permission to implement deferred work.
 
+When dependency cycles, forbidden imports, or structural regression are part of the question, read [structural evidence](references/structural-evidence.md). Use comparable measurements and source-confirmed edges to assess candidates. Keep aggregate quality scores subordinate to repository contracts and observed maintenance cost.
+
 ## Report
 
 Default to a concise Markdown report in the response. Create a file only when the user requests an artifact. For each candidate include:

@@ -32,8 +32,10 @@ Use `RELEASING.md` for push, merge, delivery, and recovery guidance.
 Use Spec Kit for new capabilities, architecture, security-sensitive behavior,
 migrations, and coordinated changes needing a written contract. Keep narrow
 fixes, dependency updates, and prose maintenance in the normal PR workflow.
-Retain completed feature directories under `specs/` as decision history; do not
-backfill specifications for already finished work.
+Retain completed feature directories under `specs/` as decision history. Do not
+backfill completed work unless the user explicitly requests it. Label requested
+retrofits as retrospective, record the assessed revision and evidence limits,
+and preserve original feature history.
 
 ## Context and handoffs
 

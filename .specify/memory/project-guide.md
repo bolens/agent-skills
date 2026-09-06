@@ -80,7 +80,19 @@ revision; do not reuse them as current runtime proof without checking applicabil
 Mark checks completed, skipped, blocked, or manual according to the evidence.
 Follow [RELEASING.md](../../RELEASING.md) for push, merge, installation verification,
 cleanup, and recovery. Retain completed feature documents as decision history.
-Do not backfill specifications for already finished work.
+Do not backfill specifications for already finished work unless explicitly
+requested. The user's 2026-09-05 retrofit request authorized the
+[retrospective baseline](../../specs/006-retrospective-baseline/spec.md).
+Such records describe the assessed revision, separate implementation from
+verification limits, and preserve original feature history. This exception does
+not require retrospective paperwork for ordinary future prose maintenance.
+
+During this retrofit, the user requested original-source verification of missing
+companion workflows. The [pstack audit](../../docs/audits/2026-09-05-pstack-companions.md)
+supersedes the initial conversational overlap judgment: historical cross-source
+rationale and competing-artifact synthesis are not equivalent to ordinary review.
+Compare actual procedures before reusing an overlap verdict. Keep the corrected
+blast-radius provenance and its local fallback when revisiting that source.
 
 ## Preserve managed integration files
 
