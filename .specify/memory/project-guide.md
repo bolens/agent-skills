@@ -94,6 +94,54 @@ rationale and competing-artifact synthesis are not equivalent to ordinary review
 Compare actual procedures before reusing an overlap verdict. Keep the corrected
 blast-radius provenance and its local fallback when revisiting that source.
 
+## Dependency hygiene preference
+
+The user's 2026-09-06 instruction prefers SHA-pinned dependencies paired with
+Dependabot monitoring for updates. Apply this preference in CI maintenance,
+dependency triage, and fleet audits. Use full commit SHAs for Git references,
+image digests for containers, and native lockfile integrity for registry packages.
+The intent is reproducible dependency selection with maintained update coverage.
+Preserve explicit repository updater choices and report unsupported or unverified
+coverage. The owning contract is
+[dependency monitoring guidance](../../skills/triage-dependency-updates/SKILL.md#prefer-immutable-pins-with-update-monitoring).
+
+## Current-platform portability and packaging
+
+The user's 2026-09-06 requests prioritize broad compatibility across current
+stable/rolling distributions and supported platforms over old dependency versions.
+Keep shared builds portable and isolate necessary platform integration. Legacy
+support requires an explicit user or repository contract; migrate existing promises
+deliberately. Current-version preference does not mean floating build inputs.
+
+Use [release-packaging](../../skills/release-packaging/SKILL.md) for the default
+assessment of Arch, Nix, Flatpak/Flathub, Scoop, Homebrew, Chocolatey, DEB, RPM,
+and WinGet, plus archives, AppImage, Snap, Alpine, Gentoo, Guix, FreeBSD, native
+installers, language registries, and OCI. The user explicitly made every target
+conditional on repository language and available build options. Also verify
+application type, native dependencies, platform support, and destination policy.
+Map source/bin/main variants to native semantics and measure installed runtime
+cost without stripping required functionality or licenses. This supersedes any
+assumption that broad portability requires targeting the oldest available system.
+
+## Modern web defaults
+
+The user's 2026-09-06 web-specific correction prefers latest stable platform
+features and maintained stable framework/tool versions. Backward compatibility
+with old browsers or dependencies is required only when explicitly requested or
+part of the repository contract. Current Chromium, Firefox, and Safari coverage
+still matters; experimental or single-engine essential features are not the default.
+Use [modern web targets](../../skills/web-standard/references/modern-targets.md)
+for version selection, scoped upgrades, and removal of unnecessary legacy support.
+Retain accessibility, reduced motion, SSR correctness, and loading/error recovery.
+This replaces any assumption that all new features must wait for long-established
+Baseline status or that every asset needs old-browser fallback encodings.
+
+The user also requires an actionable path for explicit older-browser support.
+Use [the compatibility workflow](../../skills/web-standard/references/older-browser-support.md)
+to define versions and required journeys, select transforms and targeted polyfills,
+verify loading order and actual old engines, and retire exceptions deliberately.
+A latest-stable default does not waive named legacy requirements.
+
 ## Preserve managed integration files
 
 Keep `.specify/templates/`, `.specify/scripts/`, and generated Codex skills under

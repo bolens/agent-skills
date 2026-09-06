@@ -11,6 +11,8 @@ For an existing or partially published version, reconcile the published artifact
 - Determine whether release preparation belongs in this PR, a dedicated release PR, or automation after merge. Check for an existing release PR, tag, or package version to avoid duplicate work.
 - Read the required order of version updates, lockfiles, generated files, changelog entries, tests, builds, signing, merge, tag, publication, and deployment. Record which steps are automatic and what triggers them.
 
+When the release ships installable artifacts or changes distribution targets, use [release-packaging](../../release-packaging/SKILL.md) for language/build-based target selection, native source/bin/main variants, current-platform portability, and measured installation cost. Keep this workflow as delivery coordinator and return the exact artifact evidence here. A changelog-only release task does not require new packaging.
+
 Use `changelog-maintainer` for reader-facing release notes. Use `migration` when upgrade or rollback compatibility requires it. A release note should explain observable effects and any required user action, not list internal commits.
 
 ## Prepare and execute

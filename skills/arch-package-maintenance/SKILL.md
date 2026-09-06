@@ -7,6 +7,8 @@ description: Maintain Arch PKGBUILDs, local package patches, source verification
 
 Identify the package source, local patch contract, and intended installation target before executing a build recipe. This workflow is Arch-specific. Use installed Arch packaging tools and current official documentation.
 
+For release variants, prefer tagged source `package`, tagged upstream binary `package-bin`, and main-tracking `package-git` where appropriate. Use [release-packaging](../release-packaging/SKILL.md) for the shared variant and lean-install contract or work spanning other package systems. Keep PKGBUILD implementation here. Target current Arch, preserve its hardening and native dependency separation, and avoid exporting Arch-only paths or tool assumptions into shared upstream build code. Older dependency support needs an explicit requirement.
+
 ## Inspect before execution
 
 Read repository instructions, PKGBUILD, install scripts, patches, source URLs, checksums/signature policy, `.SRCINFO`, and the reason for any local pin. A PKGBUILD is executable shell code. Review its top-level commands and every build/install hook before sourcing it or invoking tooling that evaluates it. A clean chroot isolates dependencies but does not make untrusted code safe.

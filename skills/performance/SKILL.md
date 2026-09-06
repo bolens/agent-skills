@@ -11,6 +11,8 @@ metadata:
 
 Evidence-led performance optimization using real-user signals for prioritization and browser traces for diagnosis. Focuses on loading speed, runtime responsiveness, and resource delivery.
 
+Use [modern web targets](../web-standard/references/modern-targets.md): prefer latest stable platform features and maintained tool versions, with legacy compatibility only when explicitly required. Measure current cross-engine behavior before adding polyfills, old syntax targets, or duplicate asset encodings.
+
 ## How it works
 
 1. If a page can run, read [the measurement workflow](references/MEASUREMENT.md) and establish a field-plus-lab baseline before editing.
@@ -138,14 +140,19 @@ debounce(fn, 300);
 ## Image optimization
 
 ### Format selection
-| Format | Use case | Browser support |
-|--------|----------|-----------------|
-| AVIF | Photos, best compression | 92%+ |
-| WebP | Photos, good fallback | 97%+ |
-| PNG | Graphics with transparency | Universal |
-| SVG | Icons, logos, illustrations | Universal |
+| Format | Candidate use |
+|--------|---------------|
+| AVIF | Photographic content when measured quality/size is favorable |
+| WebP | Photographic or raster content where its encoding tradeoff fits |
+| PNG | Lossless raster graphics when required |
+| SVG | Code-native icons and vector illustrations |
+
+Verify current target-engine decoding support and compare actual quality/size. Do not choose formats from static browser-share percentages or generate fallback encodings solely for hypothetical legacy users.
 
 ### Responsive images
+
+The multi-format example below is for an explicitly required fallback matrix. When one encoding covers current targets, use that encoding with appropriate `srcset`/`sizes` instead of producing every format.
+
 ```html
 <picture>
   <!-- AVIF for modern browsers -->
@@ -329,7 +336,7 @@ requestAnimationFrame(animate);
 
 The [View Transitions API](https://developer.chrome.com/docs/web-platform/view-transitions) lets the browser cross-fade (or custom-animate) between two DOM states using a single GPU-composited snapshot — no double-render, no layout thrash, and the snapshot doesn't count toward CLS.
 
-**Same-document (SPA-style) — Baseline 2026:**
+**Same-document transitions:** Check current support for the actual features used.
 ```javascript
 // Wrap the DOM mutation that swaps the view
 function navigate(newView) {
@@ -338,7 +345,7 @@ function navigate(newView) {
 }
 ```
 
-**Cross-document (MPA-style) — Chromium-stable, progressive enhancement elsewhere:**
+**Cross-document transitions:** Verify current engine support separately from same-document transitions; retain ordinary navigation when the enhancement is unavailable.
 ```css
 /* On both source and destination pages */
 @view-transition { navigation: auto; }

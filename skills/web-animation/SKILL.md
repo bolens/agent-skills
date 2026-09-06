@@ -11,6 +11,8 @@ Make motion explain a state change, spatial relationship, or deliberate visual i
 
 Inspect the framework, installed packages and versions, existing motion utilities, rendering model, and target browsers. Preserve the user's chosen library and the repository's conventions. Do not migrate `framer-motion`, add a second engine, replace the router, or add smooth scrolling merely to implement an effect.
 
+Prefer current stable motion APIs and maintained runtime versions under [modern web targets](../web-standard/references/modern-targets.md). Add compatibility code only for actual current-engine gaps or explicit backward-compatibility requirements. Preserve reduced motion and interruption behavior independently of browser age.
+
 For each effect define its trigger, moving properties, timing or spring behavior, interruption policy, final state, reduced-motion alternative, and owner responsible for cleanup. Scale this to the task. A button transition needs no storyboard, while a pinned scroll narrative benefits from a short sequence of states.
 
 Use the smallest suitable implementation, accounting for an existing library's lifecycle and test support rather than bundle size alone. Read only the relevant reference:

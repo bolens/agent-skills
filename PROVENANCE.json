@@ -387,7 +387,8 @@
         "path": "skills/core-web-vitals",
         "ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
         "local_changes": [
-          "Route viewport-sensitive metric fixes through responsive-web-capture and interaction proof through cli-web-evidence."
+          "Route viewport-sensitive metric fixes through responsive-web-capture and interaction proof through cli-web-evidence.",
+          "Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior."
         ],
         "license": {
           "spdx": "MIT",
@@ -527,7 +528,8 @@
         ],
         "local_changes": [
           "Retain the product-led rewrite, explicit user preferences, browser verification, and focused workflow handoffs.",
-          "Keep the Apache-2.0 modification notice in SKILL.md."
+          "Keep the Apache-2.0 modification notice in SKILL.md.",
+          "Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior."
         ],
         "license": {
           "spdx": "Apache-2.0",
@@ -711,7 +713,8 @@
         "ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
         "local_changes": [
           "Require responsive and functional regression evidence when performance changes can affect those surfaces.",
-          "Route measured animation and player costs through web-animation and animation-assets, including active motion and route re-entry evidence."
+          "Route measured animation and player costs through web-animation and animation-assets, including active motion and route re-entry evidence.",
+          "Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior."
         ],
         "license": {
           "spdx": "MIT",
@@ -738,6 +741,20 @@
         "${CODEX_HOME:-$HOME/.codex}/skills/quickshell-development",
         "${AGENTS_HOME:-$HOME/.agents}/skills/quickshell-development",
         "${CLAUDE_HOME:-$HOME/.claude}/skills/quickshell-development"
+      ]
+    },
+    {
+      "name": "release-packaging",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/release-packaging",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/release-packaging"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/release-packaging",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/release-packaging",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/release-packaging"
       ]
     },
     {
@@ -1010,7 +1027,8 @@
           "Coordinate comprehensive responsive capture and functional browser receipts while keeping evidence types separate.",
           "Use an env-resolved Bash shebang so the analyzer works outside fixed /bin layouts.",
           "Link only bundled category skills; route SEO, platform behavior, security, and async-state findings without expanding a read-only audit into implementation.",
-          "Treat source maps as publication content to inspect and llms.txt as optional consumer-specific discovery, not automatic security or search verdicts."
+          "Treat source maps as publication content to inspect and llms.txt as optional consumer-specific discovery, not automatic security or search verdicts.",
+          "Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior."
         ],
         "license": {
           "spdx": "MIT",

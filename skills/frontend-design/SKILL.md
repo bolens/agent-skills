@@ -42,6 +42,8 @@ Use `svg-design` for editable icons, sprites, or vector illustration. Reuse an e
 
 ## Implement and inspect
 
+Prefer current stable CSS, browser APIs, and framework versions under [modern web targets](../web-standard/references/modern-targets.md). Avoid legacy layouts, polyfills, or old dependency pins unless backward compatibility is explicitly required. Keep current cross-engine behavior and accessibility intact; an existing stack update must be scoped and tested.
+
 Build from existing components and styling conventions. Keep selector ownership clear and avoid broad element selectors that unexpectedly override component variants. Use container and content constraints when they better express responsive behavior than device labels.
 
 Inspect a working first version early. Compare it with the brief and real content, then fix specific weaknesses in hierarchy, density, alignment, states, or behavior. Do not delay implementation until a design has been declared unique in the abstract.

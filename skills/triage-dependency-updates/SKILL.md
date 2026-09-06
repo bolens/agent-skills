@@ -21,6 +21,18 @@ Treat Docker tag changes, GitHub Action SHA changes, system packages, plugins, a
 
 Check ecosystem-specific coupling when present: workspace catalogs and runtime/toolchain floors; minimum-release-age exceptions; lifecycle-script policy; Docker tag-plus-digest alignment; development versus container runtimes; reusable workflow and Action SHAs; generated clients; and platform package metadata.
 
+## Prefer immutable pins with update monitoring
+
+Prefer full commit SHA pins for Git dependencies, GitHub Actions, and external reusable workflows. For container images, prefer a SHA-256 digest with a readable version tag. Keep registry packages on their native version and lockfile integrity mechanism rather than replacing them with Git dependencies. Verify each hash against the intended upstream source and release, and keep version comments or tags aligned with the pin. An immutable pin identifies content but does not establish that it is trustworthy.
+
+Pair pins with Dependabot version updates where the host, ecosystem, and dependency format support them. Inspect `.github/dependabot.yml` for the relevant ecosystems, manifest directories, target branches, schedules, registry access, exclusions, and PR limits. For GitHub Actions, configure `package-ecosystem: github-actions`, `directory: /`, and a recurring `schedule.interval`. See [GitHub's Actions update guidance](https://docs.github.com/en/code-security/how-tos/secure-your-supply-chain/secure-your-dependencies/auto-update-actions) and [Dependabot options](https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference).
+
+Check recent update logs or bot PRs when available before calling monitoring operational. A configuration file alone proves only configured coverage. Report inaccessible runtime evidence as unverified, and identify pins in scripts or unsupported formats that the updater does not discover. Check current [ecosystem support](https://docs.github.com/en/code-security/reference/supply-chain-security/supported-ecosystems-and-repositories) before promising coverage. Version updates and vulnerability alerts are separate capabilities.
+
+Preserve an explicitly chosen updater such as Renovate instead of adding duplicate PR automation. Where Dependabot cannot cover a pin, document the existing updater or manual review owner and cadence. Prefer dependencies with supported automated updates when otherwise suitable, without replacing a working dependency solely for bot support. Keep audit-only work read-only and retain normal review and CI for bot updates.
+
+Prefer current stable dependency/toolchain releases that work across the declared current platforms. Do not retain old versions solely for hypothetical legacy systems. An explicit compatibility promise still needs an authorized migration before raising its floor. Check cross-platform native libraries, runtime support, and package availability before selecting a candidate; newest on one distribution is not evidence for all targets. Use [release-packaging](../release-packaging/SKILL.md) when the update changes shipped ABI/runtime or packaging support.
+
 ## Assess risk
 
 Raise risk for:
