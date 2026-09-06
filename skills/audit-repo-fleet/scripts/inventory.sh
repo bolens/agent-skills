@@ -16,6 +16,12 @@ if ! [[ $max_depth =~ ^[1-9][0-9]*$ ]]; then
 fi
 fleet_root=$(cd -- "$fleet_root" && pwd -P)
 
+# Keep discovery's status visible instead of losing it in process substitution.
+discovered=$(mktemp)
+trap 'rm -f -- "$discovered"' EXIT
+result=0
+find "$fleet_root" -mindepth 1 -maxdepth "$max_depth" -name .git \( -type d -o -type f \) -print0 -prune >"$discovered" || result=1
+
 printf 'repository\tbranch\tupstream\ttracked_changes\tuntracked\tahead\tbehind\tlast_commit\tagents\tconstitution\tworkflows\tupdates\tmanifests\n'
 
 while IFS= read -r -d '' git_dir; do
@@ -23,10 +29,26 @@ while IFS= read -r -d '' git_dir; do
   name=${repo#"$fleet_root"/}
   [[ $name == "$repo" ]] && name=$(basename "$repo")
 
+  if ! bare=$(git -C "$repo" rev-parse --is-bare-repository 2>/dev/null); then
+    printf 'unavailable repository: %s\n' "$name" >&2
+    result=1
+    continue
+  fi
+  if [[ $bare == true ]]; then
+    printf 'excluded bare repository: %s; inspect its linked worktrees separately\n' "$name" >&2
+    continue
+  fi
+
   branch=$(git -C "$repo" symbolic-ref --quiet --short HEAD 2>/dev/null || git -C "$repo" rev-parse --short HEAD 2>/dev/null || printf unknown)
-  status=$(git -C "$repo" status --porcelain=v1 2>/dev/null || true)
-  tracked=$(printf '%s\n' "$status" | awk 'NF && substr($0,1,2) != "??" { count++ } END { print count+0 }')
-  untracked=$(printf '%s\n' "$status" | awk 'substr($0,1,2) == "??" { count++ } END { print count+0 }')
+  if status=$(git -C "$repo" status --porcelain=v1 2>/dev/null); then
+    tracked=$(printf '%s\n' "$status" | awk 'NF && substr($0,1,2) != "??" { count++ } END { print count+0 }')
+    untracked=$(printf '%s\n' "$status" | awk 'substr($0,1,2) == "??" { count++ } END { print count+0 }')
+  else
+    tracked=unknown
+    untracked=unknown
+    printf 'unavailable worktree status: %s\n' "$name" >&2
+    result=1
+  fi
 
   ahead=-
   behind=-
@@ -68,4 +90,5 @@ while IFS= read -r -d '' git_dir; do
     "$name" "$branch" "$upstream" "$tracked" "$untracked" "$ahead" \
     "$behind" "$last_commit" "$agents" "$constitution" "$workflows" \
     "$updates" "$manifest_text"
-done < <(find "$fleet_root" -mindepth 1 -maxdepth "$max_depth" -name .git \( -type d -o -type f \) -print0 -prune)
+done <"$discovered"
+exit "$result"
