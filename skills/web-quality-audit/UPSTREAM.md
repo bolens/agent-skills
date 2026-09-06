@@ -20,6 +20,7 @@ Local changes to retain:
 - Link only bundled category skills; route SEO, platform behavior, security, and async-state findings without expanding a read-only audit into implementation.
 - Treat source maps as publication content to inspect and llms.txt as optional consumer-specific discovery, not automatic security or search verdicts.
 - Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior.
+- Keep recurring maintenance checklists in an opt-in reference without expanding one-off audit scope.
 
 Updates are audited and merged manually. This fork does not track or represent upstream releases.
 

@@ -185,26 +185,8 @@ When performing an audit, structure findings as:
 - Field validation still pending
 ```
 
-## Quick checklist
-
-### Before every deploy
-- [ ] Core Web Vitals passing
-- [ ] No accessibility errors (axe/Lighthouse)
-- [ ] No console errors
-- [ ] HTTPS working
-- [ ] Meta tags present
-
-### Weekly review
-- [ ] Check Search Console for issues
-- [ ] Review Core Web Vitals trends
-- [ ] Update dependencies
-- [ ] Test with screen reader
-
-### Monthly deep dive
-- [ ] Full Lighthouse audit
-- [ ] Performance profiling
-- [ ] Accessibility audit with real users
-- [ ] SEO keyword review
+For an explicitly requested recurring maintenance plan, use
+[recurring maintenance](references/recurring-maintenance.md).
 
 ## References
 

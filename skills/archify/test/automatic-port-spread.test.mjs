@@ -360,12 +360,12 @@ test('lifecycle: same-band port spread remains orthogonal', () => {
 
 test('skill and READMEs describe automatic port spread as bounded default behavior', () => {
   const skill = fs.readFileSync(path.join(skillRoot, 'SKILL.md'), 'utf8');
-  assert.match(skill, /Automatic Port Spread is a default renderer behavior/);
-  assert.match(skill, /single relationship|single relationships/);
-  assert.match(skill, /explicit `via`.*`channelX`.*`channelY`.*`labelAt`/);
-  assert.match(skill, /facing automatic ports \(`left`\/`right` or `top`\/`bottom`\).*one shared axis/);
-
+  assert.match(skill, /references\/authoring-contract\.md#automatic-port-spread/);
   const authoringContract = fs.readFileSync(path.join(skillRoot, 'references/authoring-contract.md'), 'utf8');
+  assert.match(authoringContract, /Automatic Port Spread is a default renderer behavior/);
+  assert.match(authoringContract, /single relationship|single relationships/);
+  assert.match(authoringContract, /explicit `via`.*`channelX`.*`channelY`.*`labelAt`/);
+  assert.match(authoringContract, /facing automatic ports \(`left`\/`right` or `top`\/`bottom`\).*one shared axis/);
   assert.match(authoringContract, /unobstructed facing ports.*may share one horizontal or vertical axis/);
 
   const repoRoot = path.resolve(skillRoot, '..');

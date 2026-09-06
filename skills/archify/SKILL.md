@@ -1,6 +1,6 @@
 ---
 name: archify
-description: Create polished, validated architecture, workflow, sequence, data-flow, and lifecycle/state diagrams as explorable standalone HTML with inline SVG, dark/light themes, optional trace motion, and PNG/JPEG/WebP/SVG/WebM export. Accept plain-language requirements or pasted Mermaid flowchart, sequenceDiagram, and stateDiagram input; inspect repository evidence when the diagram must reflect real code. Use when the user asks to visualize system architecture, infrastructure, cloud/security/network topology, technical workflows, API call sequences, request lifecycles, data pipelines, ETL/ELT, data lineage, state machines, or to convert/beautify Mermaid.
+description: Create validated, interactive standalone HTML diagrams. Use when mapping architecture, workflow, sequence, data-flow, or lifecycle from requirements, repository evidence, or Mermaid.
 license: MIT
 metadata:
   version: "2.17"
@@ -36,7 +36,9 @@ Use this bounded path for ordinary generation. Do not read the optional Viewer R
    node bin/archify.mjs deliver <type> <candidate.json> <output.html> --quality showcase --json
    ```
 
-   A non-zero exit can never be described as success. A failed delivery preserves any previous output, so do not run `visual-check` on that path: it would inspect the stale last-good artifact, not the failed candidate. If validation fails, change only the diagnosed `subject`, verify `evidence`, choose from `supportedFixes`, and rerun. Continue focused correction while the objective error count reaches a new minimum. If two consecutive rounds do not improve that best count, stop and report the unresolved diagnostics truthfully.
+   A non-zero exit can never be described as success. A failed delivery preserves any previous output, so do not run `visual-check` on that path: it would inspect the stale last-good artifact, not the failed candidate. If validation fails, change only the diagnosed `subject`, verify `evidence`, choose from `supportedFixes`, and rerun. Continue focused correction while the objective error count reaches a new minimum. If two consecutive rounds do not improve that best count, use the diagnostic escalation below before deciding whether further repair is justified.
+
+Do not read `renderers/shared/geometry.mjs` during the fast path. Use the bounded diagnostic escalation below only when its conditions are met.
 
 ## Update awareness
 
@@ -47,7 +49,18 @@ After the first candidate exists, run the packaged checker `scripts/check-update
 
 The notice is information, not permission. Keep the installed version unchanged; this v0.1 workflow never downloads, installs, or executes an update, and silence is never consent.
 
-Do not read `renderers/shared/geometry.mjs`, renderer source, validator source, tests, or benchmarks before the first candidate. Inspect implementation only for an unsupported internal diagnostic or after two focused repairs fail.
+## Diagnostic escalation
+
+For ordinary generation, inspect renderer or validator implementation only for an
+unsupported internal diagnostic or after two repair rounds fail to improve the
+best error count. Perform at most one escalation per candidate: read the relevant
+diagnostic contract and, if needed, the source or test for that diagnostic. If it
+identifies a supported authoring correction, apply it and validate once. Resume
+focused repair only if that validation improves the best count. Otherwise stop
+and report the unresolved diagnostics and missing evidence. Do not alter renderer
+code, weaken validation, delete meaningful relationships, or restart the same
+candidate under a new name to evade the bound. A requested renderer-development
+task follows repository guidance rather than this ordinary-generation loop.
 
 Workflow note: use schema v2 for new workflows; preserve schema v1 when an
 existing source needs fixed legacy geometry. Keep semantic edge labels and act
@@ -92,7 +105,7 @@ Read Mermaid for topology and meaning, then author fresh Archify JSON; do not me
 - Omit `meta.engineering_profile` by default. Region, cluster, and security boundary wording do not by themselves enable it. Enable `deployment-ownership` only when the user explicitly asks for a production deployment topology, ownership handoff, or fail-closed deployment review and the source facts are known. Once enabled, must not remove the engineering profile merely to pass validation; repair the facts or report the diagnostics truthfully.
 - Spacing means clear gap, not center distance. For a relationship label, clear gap must exceed its measured mask width; follow the label-preserving repair order.
 - Automatic routes own their endpoint sides. A side is a direction contract: the first and final segment must leave/enter perpendicular to that side.
-- Automatic Port Spread is a default renderer behavior for architecture, workflow, data-flow, and lifecycle. It skips single relationships and explicit `via`, `channelX`, `channelY`, `labelAt`, or non-`auto` routes. Near parallel ports use an outside bridge so automatic routing cannot create a sub-8px segment or sub-16px interior turn. Architecture separately keeps unobstructed facing automatic ports (`left`/`right` or `top`/`bottom`) on one shared axis when their offset is under 16px and both ports retain corner clearance. If exactly one endpoint was spread, only the unshared endpoint may move onto that axis; if both endpoints were spread, keep the outside bridge so competing ports remain distinct.
+- For automatic port-spread geometry diagnostics, read [the port-spread contract](references/authoring-contract.md#automatic-port-spread).
 - Never accept an edge crossing an unrelated opaque node, an ambiguous shared corridor, or a relationship label masking another route.
 
 Read `references/authoring-contract.md` only when you need field enums, spacing math, geometry repair rules, repository evidence, or mode-specific placement.

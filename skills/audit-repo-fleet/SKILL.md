@@ -1,6 +1,6 @@
 ---
 name: audit-repo-fleet
-description: Audit and maintain a directory containing multiple Git repositories by inventorying worktree state, branches, local upstream divergence, governance files, toolchains, CI, validation entry points, and maintenance risk. Use when the user asks for repository fleet health, cross-repo maintenance, stale or inconsistent repos, spec-kit/AGENTS drift, release readiness, or what to work on next across many repositories.
+description: Audit and maintain multiple repositories for health, drift, and shared fixes. Use for fleet-wide maintenance and prioritization.
 ---
 
 # Audit a Repository Fleet
@@ -15,7 +15,15 @@ requested recurring reports.
 
 ## Inventory
 
-Run `scripts/inventory.sh <workspace-root> [max-depth]` to collect deterministic local facts. The default depth of 3 finds ordinary repositories while avoiding vendored repositories and test fixtures buried inside them. Increase it deliberately for deeper layouts. The script does not fetch, install, test, or modify repositories; divergence is relative to existing local remote-tracking refs and may be stale.
+Run `scripts/inventory.sh <workspace-root> [max-depth]` to collect local facts. The default depth of 3 finds ordinary repositories while avoiding vendored repositories and test fixtures buried inside them. Increase it deliberately for deeper layouts. The script does not fetch, install, test, or modify repositories; divergence is relative to existing local remote-tracking refs and may be stale.
+
+Keep stderr and the exit status with the TSV. Failed discovery, invalid Git
+markers, and failed worktree status return 1 while retaining available rows.
+Failed status counts read `unknown`, never zero. Bare storage discovered through
+a `.git` marker is explicitly excluded; inspect its linked worktrees separately.
+Bare layouts without that marker are outside this scan. Rows represent worktrees,
+not unique maintained repositories. The script does not deduplicate or establish
+ownership, and directory enumeration order is not a comparison key.
 
 Supplement the inventory only where it changes prioritization:
 

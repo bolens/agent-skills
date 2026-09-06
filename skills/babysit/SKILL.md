@@ -1,6 +1,6 @@
 ---
 name: babysit
-description: Follow an open pull request through a separate audit, actionable review nits, CI repairs caused by its changes, post-merge branch cleanup, and the repository's release playbook when a release is needed. Use automatically when the requested task includes addressing PR feedback, fixing PR CI, getting a PR ready to merge, merging it, or preparing or publishing a repository release, even when babysit is not named. Do not use for a one-off read-only review or CI status lookup.
+description: Automatically coordinate requested PR feedback and CI fixes, merge preparation, merges, and releases through review and delivery. Excludes one-off read-only reviews and status checks.
 ---
 
 # PR and release follow-through
