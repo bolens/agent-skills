@@ -1,6 +1,6 @@
 ---
 name: archify
-description: Create validated, interactive HTML architecture and workflow diagrams from requirements, repository evidence, or Mermaid. Use for system, sequence, data-flow, and state diagrams.
+description: Create validated, interactive standalone HTML diagrams. Use when mapping architecture, workflow, sequence, data-flow, or lifecycle from requirements, repository evidence, or Mermaid.
 license: MIT
 metadata:
   version: "2.17"
@@ -37,6 +37,8 @@ Use this bounded path for ordinary generation. Do not read the optional Viewer R
    ```
 
    A non-zero exit can never be described as success. A failed delivery preserves any previous output, so do not run `visual-check` on that path: it would inspect the stale last-good artifact, not the failed candidate. If validation fails, change only the diagnosed `subject`, verify `evidence`, choose from `supportedFixes`, and rerun. Continue focused correction while the objective error count reaches a new minimum. If two consecutive rounds do not improve that best count, use the diagnostic escalation below before deciding whether further repair is justified.
+
+Do not read `renderers/shared/geometry.mjs` during the fast path. Use the bounded diagnostic escalation below only when its conditions are met.
 
 ## Update awareness
 
