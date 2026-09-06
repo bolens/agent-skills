@@ -45,6 +45,11 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Changed
 
+- Refine security finding assessment and patch review after auditing Codex
+  Security: preserve each claim, record counterevidence and unresolved coverage,
+  verify original attack paths after fixes, and distinguish artifact integrity
+  from report accuracy. See the [audit](docs/audits/2026-09-05-codex-security.md).
+
 - Refine CLI browser evidence after auditing Obscura: verify backend effects,
   distinguish incomplete captures from fidelity differences, refresh snapshot
   references, and check control-session ownership. See the

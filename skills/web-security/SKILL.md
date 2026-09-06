@@ -17,6 +17,9 @@ Read only the relevant reference:
 
 - [Identity, authorization, and sessions](references/identity.md) for account/tenant boundaries, cookies, and authenticated mutations.
 - [Untrusted input and browser policy](references/input-and-policy.md) for rendering, URLs, uploads, CSP, and cross-origin behavior.
+- [Finding assessment and fix verification](references/finding-assessment.md)
+  for supplied scanner claims, uncertain exploit paths, candidate disposition,
+  or checking whether a security patch closes the original boundary.
 
 Use `sensitive-info-audit` for publication secrets and redacted evidence. Use `triage-dependency-updates` for an actual dependency vulnerability or upgrade, rather than treating every security task as a package update.
 
@@ -25,6 +28,11 @@ Use `sensitive-info-audit` for publication secrets and redacted evidence. Use `t
 Trace enforcement on the server or trusted boundary. A hidden button, client route guard, CORS policy, or unpredictable object ID is not object-level authorization. Check both reads and mutations, including bulk operations and alternate endpoints.
 
 State the concrete scenario and confidence before changing code. Reproduce the boundary failure using minimal permitted data. Prefer the framework's supported control over a custom sanitizer, cryptographic scheme, session mechanism, or broad regular expression. Preserve valid application flows while fixing the defect.
+
+Keep the reported claim distinct from nearby weaknesses found during inspection.
+Preserve source identifiers and give each supplied finding a disposition, even
+when evidence contradicts it or remains incomplete. A failed build or missing
+service blocks runtime proof; it does not disprove the vulnerability.
 
 Keep context-specific encoding, sanitization, validation, and authorization distinct. Verify the actual output sink and request credentials. Do not solve a CSP violation by broadly allowing inline code or fix a CORS error by reflecting every origin.
 
