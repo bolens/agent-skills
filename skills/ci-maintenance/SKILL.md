@@ -30,6 +30,11 @@ For each relevant check, identify its event, tested revision, runner/runtime, co
 
 Reuse existing Make/task/package commands for local and CI validation. Preserve lockfile-based installation, formatter configuration, and supported runtime floors. Document environmental differences, such as machine-specific installation checks that cannot run in hosted CI. Do not weaken a required gate to hide those differences.
 
+When build or test output passes through formatters, `tee`, wrappers, or summary
+steps, read [command status and diagnostic output](references/command-evidence.md).
+Verify that a failing producer still fails the outer check. Keep build, test,
+and application launch outcomes distinguishable.
+
 Select checks by evidence: workflow syntax/security for workflow changes, build/test/type checks for the actual code, container lint for maintained Dockerfiles, secret scanning for the publication boundary, and generated-output or browser checks where those contracts exist. Use the configured security thresholds and suppressions after reviewing their justification. Avoid adding scanners that duplicate an existing service, such as a second code-scanning setup, without checking the current configuration.
 
 Keep commit-time checks bounded through [setup-pre-commit](../setup-pre-commit/SKILL.md). Expensive integration, platform, and browser checks can remain in CI. Shared scripts and global configuration changes must still reach their affected consumers when changed-file selection is used.

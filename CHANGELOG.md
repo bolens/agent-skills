@@ -45,6 +45,11 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Changed
 
+- Refine CI and debugging guidance after auditing Paul Solt's app-building
+  articles: preserve process failures through output pipelines, retain useful
+  diagnostics, and bind runtime and API evidence to the tested build. See the
+  [audit](docs/audits/2026-09-05-paul-solt-workflows.md).
+
 - Refine skill discovery and maintenance after auditing Claude Code's built-in
   Skill Doctor: distinguish installed, listed, and invoked skills; qualify
   context and usage evidence; and verify routing before pruning. See the

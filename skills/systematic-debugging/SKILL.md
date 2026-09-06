@@ -23,6 +23,19 @@ Read [root-cause-tracing.md](root-cause-tracing.md) when the symptom appears far
 
 Run the smallest safe probe that can distinguish the hypothesis from plausible alternatives. Change one relevant variable at a time. A failed probe is new evidence, not a reason to stack another speculative fix on top.
 
+For contradictory build or test results, inspect the original process status and
+raw output before trusting a formatter or wrapper summary. Trace status through
+the shell and task runner using [command evidence](../ci-maintenance/references/command-evidence.md).
+
+When runtime state is missing, add temporary, scoped instrumentation at the
+suspected boundary. Correlate events with the actual process/build and request
+or object, exercise the failing scenario, then remove or reduce diagnostic noise after the
+hypothesis is resolved. Avoid broad verbose logging of user data or credentials.
+For uncertain API behavior, check the project's dependency or SDK version against
+the relevant primary documentation section. A local documentation cache needs
+source/version identity and freshness checks; a search-index hit is a locator,
+not proof that the API exists on the target runtime.
+
 If repeated hypotheses fail, reassess assumptions, reproduction fidelity, and component boundaries. Consider an architectural cause only when evidence shows shared state, coupling, or a broken contract. The number of failed attempts alone proves nothing.
 
 ## Fix and verify
