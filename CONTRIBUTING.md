@@ -37,6 +37,7 @@ and commit only the files and hunks belonging to the task.
 | Generated registry and per-skill origin pointers | Regenerate `PROVENANCE.json` and `skills/*/UPSTREAM.md` |
 | Project-specific planning guidance | `.specify/memory/project-guide.md` and the constitution |
 | Spec Kit integration files | Their integration manifest and normal update mechanism |
+| External-source assessments | Dated reports under `docs/audits/`; skill behavior belongs in the owning skill |
 
 After adding or removing a skill, changing upstream metadata, or changing
 install-target rules, regenerate the registry and pointers:
@@ -66,6 +67,8 @@ in the [README](README.md#install-from-this-checkout).
 Maintenance requires Python 3.10 or newer, Node.js 18 or newer, and Bash for shell
 syntax validation. Install ShellCheck for the shell lint coverage used in CI.
 Individual skills may need additional tools for behavioral validation.
+Git and Make are also required by repository tooling. The optional full Archify
+suite needs Node 22 and its platform/browser dependencies.
 
 | Command | Evidence |
 | --- | --- |
@@ -75,12 +78,19 @@ Individual skills may need additional tools for behavioral validation.
 | `make links` | Registered installation targets resolve to this checkout |
 | `make check` | All of the above |
 | `make check-fast test portability` | Portable gate used by CI and isolated checkouts |
+| `make test-archify` | Full fork verification in a downloaded upstream test workspace; separate from `make check` |
 
 Run `make check-fast` while editing and `make check` before delivery from the
 canonical installed checkout. In an isolated worktree, run the portable gate
 and report that installation links belong to another checkout. Do not repoint
 them to make validation pass. Report a missing ShellCheck as a coverage gap,
 not a completed shell lint pass.
+
+The separate Source lint workflow also runs shared language linting, actionlint,
+and zizmor. These are not included in the Make targets above. Follow
+[the release guide](RELEASING.md#source-lint) for the pinned tooling and reproduction
+instructions, and [Archify test coverage](RELEASING.md#archify-test-coverage) when
+its code, runner, provenance, or selected CI paths change.
 
 These checks do not run every skill's runtime workflow. For changed instructions,
 walk through a realistic task and a nearby task that should not invoke the skill.
@@ -113,6 +123,19 @@ Use [sync-skill-upstreams](skills/sync-skill-upstreams/SKILL.md) for imports.
 whether they differ from the audited revisions. It does not import changes or
 establish that a candidate is compatible. `--check` also returns failure when
 an update is available. Lookup errors are reported separately.
+
+The comparison is tip equality, not an ancestry or subtree-diff check. A different
+tip may be unrelated to the imported path or reflect rewritten history. Exit 0
+means lookups succeeded, exit 1 means `--check` found differing tips, and exit 2
+means a lookup failed. Use `--json` for structured results. The weekly/manual
+workflow runs `--check`; it does not open an update PR or import a candidate.
+
+For selective adaptations from an article or another project, record the source,
+reviewed scope, adoption decision, and executed checks in a dated audit when
+that record helps future reassessment. Distinguish conceptual adaptation from
+copied content requiring retained notices. Keep prior evidence intact when a
+later audit changes a conclusion; do not rewrite historical test counts as if
+new checks ran at the earlier revision.
 
 Review the complete upstream diff before importing selected changes. Preserve
 every recorded path and local change, inspect affected callers and generated

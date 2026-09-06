@@ -16,8 +16,9 @@ evidence. It is project-owned guidance, not an upstream-managed template.
 | `PROVENANCE.json` and `skills/*/UPSTREAM.md` | Generated provenance and installation contracts |
 | `scripts/link-installed.py` | Checks or applies client-home symlinks |
 | `scripts/validate.py`, `scripts/check-portability.py`, and `tests/` | Automated repository evidence |
-| `Makefile` and `.github/workflows/ci.yml` | Shared local and CI validation entry points |
+| `Makefile`, `.github/workflows/ci.yml`, and `.github/workflows/source-lint.yml` | Local gates, selected Archify suites, and separate shared lint/security checks |
 | `specs/` | Feature contracts, decisions, tasks, and verification history |
+| `docs/audits/` | Dated external-source assessments and evidence limits; not a substitute for a feature contract |
 
 Read the affected skill's `SKILL.md` and `UPSTREAM.md` before planning changes.
 Identify locally authored behavior, imported behavior, generated outputs, and
@@ -70,6 +71,11 @@ check can fail in an isolated worktree because the links belong to another
 checkout. Report that boundary and use the portable gate there. Do not repoint
 installed skills to hide the mismatch. Installing or replacing links is a
 separate authorized action.
+
+`make check` does not run the full Archify suite or the shared Source lint and
+workflow-security checks. Use the release guide to determine additional checks
+selected by the changed paths. Historical audit results describe their recorded
+revision; do not reuse them as current runtime proof without checking applicability.
 
 Mark checks completed, skipped, blocked, or manual according to the evidence.
 Follow [RELEASING.md](../../RELEASING.md) for push, merge, installation verification,
