@@ -11,7 +11,7 @@ import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-IGNORED_PARTS = {".git", ".venv", "__pycache__", "node_modules", "venv"}
+IGNORED_PARTS = {".git", ".venv", "__pycache__", "node_modules", "venv", ".devenv", ".direnv"}
 PLATFORM_SPECIFIC_SKILLS = {"diagnose-crash", "omarchy"}
 HOME_PATH = re.compile(r"(?:/home|/Users)/[A-Za-z0-9._-]+")
 ABSOLUTE_RUNTIME_SHEBANG = re.compile(rb"^#!(?:/usr)?/bin/(?:bash|node|python3?)$")
@@ -21,7 +21,9 @@ def files() -> list[Path]:
     return [
         path
         for path in ROOT.rglob("*")
-        if path.is_file() and not IGNORED_PARTS.intersection(path.relative_to(ROOT).parts)
+        if path.is_file() and path.name != ".devenv.flake.nix"
+        and not IGNORED_PARTS.intersection(path.relative_to(ROOT).parts)
+        and not any(part.startswith(".devenv.") for part in path.relative_to(ROOT).parts)
     ]
 
 

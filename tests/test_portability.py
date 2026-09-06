@@ -15,6 +15,19 @@ portability = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(portability)
 
 
+class GeneratedEnvironmentBoundary(unittest.TestCase):
+    def test_local_environment_state_is_excluded_but_source_is_checked(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for name in (".devenv/generated.sh", ".devenv.test123/generated.sh", ".direnv/generated.sh", ".devenv.flake.nix", "devenv.nix", "script.sh"):
+                path = root / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text("source\n")
+            with mock.patch.object(portability, "ROOT", root):
+                files = {p.relative_to(root).as_posix() for p in portability.files()}
+            self.assertEqual(files, {"devenv.nix", "script.sh"})
+
+
 class ManagedShellBoundary(unittest.TestCase):
     def run_check(self, source, *, managed=True, changed=False):
         with tempfile.TemporaryDirectory() as directory:
