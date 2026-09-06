@@ -2,7 +2,7 @@
 
 ## Progressive enhancement
 
-Define the usable baseline and add the requested enhancement around it. Test capabilities through the relevant JavaScript API or CSS support query, but remember that API presence alone may not prove every required subfeature works. Use a narrow compatibility workaround only when supported by a real target-browser defect. [Progressive enhancement](https://developer.mozilla.org/en-US/docs/Glossary/Progressive_Enhancement), [feature detection over UA sniffing](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Browser_detection_using_the_user_agent).
+Use the [modern target policy](modern-targets.md): latest stable engines and features by default, legacy support only when explicitly required. Define the usable baseline within that target set and add the requested enhancement around it. Test capabilities through the relevant JavaScript API or CSS support query, but remember that API presence alone may not prove every required subfeature works. Use a narrow compatibility workaround only when supported by a real target-browser defect. [Progressive enhancement](https://developer.mozilla.org/en-US/docs/Glossary/Progressive_Enhancement), [feature detection over UA sniffing](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Browser_detection_using_the_user_agent).
 
 Keep server/client rendering deterministic. A client-only browser API should not crash server evaluation. Do not hide hydration or parser repairs by suppressing warnings without finding the cause. Scope polyfills to the capabilities and delivery targets actually required.
 

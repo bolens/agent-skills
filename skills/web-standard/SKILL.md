@@ -9,6 +9,8 @@ Use platform behavior deliberately and verify it in the project's supported brow
 
 ## Establish the platform contract
 
+Default to latest stable browser capabilities and maintained stable framework/tool versions across current engines. Require older-browser or dependency compatibility only when explicitly requested or recorded in the repository contract. Read [modern web targets](references/modern-targets.md) for current cross-engine coverage, version selection, and scoped upgrades.
+
 Inspect target browsers/devices, embedded webviews when relevant, rendering/hosting model, framework/router, existing primitives, compatibility tooling, and the failing behavior. Separate normative semantics, browser support, and actual integration behavior.
 
 Use WHATWG/W3C specifications for disputed semantics, MDN and browser compatibility data for implementation support, and the framework's own documentation for its integration. Check current sources when choosing a newer API. Baseline status is useful context, not proof for every webview, assistive technology, or browser in the product's matrix. [HTML Standard](https://html.spec.whatwg.org/multipage/semantics.html), [Baseline](https://developer.mozilla.org/en-US/docs/Glossary/Baseline/Compatibility).
@@ -25,12 +27,12 @@ Native animation and View Transitions belong to `web-animation`. Data mutation s
 - Use links for navigation, buttons for actions, forms for submission, and appropriate landmarks/content structure. Preserve keyboard behavior, submit semantics, and real destinations.
 - Inspect browser-parsed DOM as well as source markup. Invalid nesting can be repaired by the parser and lead to a different layout or hydration mismatch. Correct the source rather than hiding the warning.
 - Treat ARIA as semantics, not a replacement for missing behavior. Check naming, focus, and interaction with `accessibility` when those are in scope.
-- Feature-detect the actual capability, provide an appropriate fallback, and keep baseline content usable if an enhancement fails. Do not use user-agent sniffing or a blanket polyfill package when a scoped solution works.
+- Feature-detect and provide a focused fallback when the declared current engines differ or an explicit legacy requirement needs it. Keep essential content usable if an enhancement fails. Do not add user-agent sniffing, blanket polyfills, or old-browser fallbacks without a target requirement.
 - Preserve existing routing, lifecycle, and data ownership. Do not build a second router or remove a framework merely because the platform offers an equivalent primitive.
 
 ## Verify and report
 
-Use the repository's validators and browser harness. Verify the specific feature in representative supported engines and the fallback path, using browser tooling that is actually available. Viewport emulation is not testing another browser engine.
+Use the repository's validators and browser harness. Verify the specific feature in representative current target engines and any required fallback path, using browser tooling that is actually available. Viewport emulation is not testing another browser engine.
 
 Test direct load, enhanced interaction, keyboard behavior, relevant history navigation, and repeated initialization/teardown. Exercise partial initialization or unavailable feature paths when they affect essential content. A full no-JavaScript workflow is required only when the product contract calls for it, not as an automatic rewrite of every application.
 

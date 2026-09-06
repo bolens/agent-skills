@@ -123,6 +123,19 @@ Map source/bin/main variants to native semantics and measure installed runtime
 cost without stripping required functionality or licenses. This supersedes any
 assumption that broad portability requires targeting the oldest available system.
 
+## Modern web defaults
+
+The user's 2026-09-06 web-specific correction prefers latest stable platform
+features and maintained stable framework/tool versions. Backward compatibility
+with old browsers or dependencies is required only when explicitly requested or
+part of the repository contract. Current Chromium, Firefox, and Safari coverage
+still matters; experimental or single-engine essential features are not the default.
+Use [modern web targets](../../skills/web-standard/references/modern-targets.md)
+for version selection, scoped upgrades, and removal of unnecessary legacy support.
+Retain accessibility, reduced motion, SSR correctness, and loading/error recovery.
+This replaces any assumption that all new features must wait for long-established
+Baseline status or that every asset needs old-browser fallback encodings.
+
 ## Preserve managed integration files
 
 Keep `.specify/templates/`, `.specify/scripts/`, and generated Codex skills under

@@ -84,7 +84,7 @@
       "branch": "main",
       "path": "skills/core-web-vitals",
       "audited_ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
-      "local_changes": ["Route viewport-sensitive metric fixes through responsive-web-capture and interaction proof through cli-web-evidence."]
+      "local_changes": ["Route viewport-sensitive metric fixes through responsive-web-capture and interaction proof through cli-web-evidence.", "Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior."]
     },
     "diagnose-crash": {
       "license": {"spdx": "MIT", "path": "LICENSE", "upstream_path": "LICENSE", "sha256": "717ba1949502290f8e47688ae2e323acd06c8ca47aec9f7596b15f678c1af4a2"},
@@ -117,7 +117,8 @@
       ],
       "local_changes": [
         "Retain the product-led rewrite, explicit user preferences, browser verification, and focused workflow handoffs.",
-        "Keep the Apache-2.0 modification notice in SKILL.md."
+        "Keep the Apache-2.0 modification notice in SKILL.md.",
+        "Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior."
       ],
       "license": {
         "spdx": "Apache-2.0",
@@ -147,7 +148,7 @@
       "branch": "main",
       "path": "skills/performance",
       "audited_ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
-      "local_changes": ["Require responsive and functional regression evidence when performance changes can affect those surfaces.", "Route measured animation and player costs through web-animation and animation-assets, including active motion and route re-entry evidence."]
+      "local_changes": ["Require responsive and functional regression evidence when performance changes can affect those surfaces.", "Route measured animation and player costs through web-animation and animation-assets, including active motion and route re-entry evidence.", "Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior."]
     },
     "safe-refactor": {
       "license": {"spdx": "MIT", "path": "LICENSE", "upstream_path": "LICENSE", "sha256": "94fe75d355887f84ee7eefca68e06d8d082a23dad47a8e1f58a94d98900edf5b"},
@@ -174,7 +175,8 @@
         "Coordinate comprehensive responsive capture and functional browser receipts while keeping evidence types separate.",
         "Use an env-resolved Bash shebang so the analyzer works outside fixed /bin layouts.",
         "Link only bundled category skills; route SEO, platform behavior, security, and async-state findings without expanding a read-only audit into implementation.",
-        "Treat source maps as publication content to inspect and llms.txt as optional consumer-specific discovery, not automatic security or search verdicts."
+        "Treat source maps as publication content to inspect and llms.txt as optional consumer-specific discovery, not automatic security or search verdicts.",
+        "Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior."
       ]
     }
   }

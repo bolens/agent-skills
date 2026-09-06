@@ -52,6 +52,11 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Changed
 
+- Prefer latest stable web features and maintained tool versions across web
+  standards, frontend design, design systems, animation, performance, and quality
+  audits. Require legacy compatibility only for explicit contracts, retain current
+  cross-engine verification, and remove dated browser-support percentages.
+
 - Prefer immutable dependency pins paired with Dependabot version-update
   monitoring in CI maintenance, dependency triage, and repository fleet audits.
   Distinguish configured coverage from verified operation and record unsupported

@@ -57,6 +57,11 @@ before replacing earlier findings. Its [context guidance](skills/audit-repo-flee
 and bounded source reader support targeted inspection. Each repository retains
 its own validation and delivery requirements.
 
+Web implementation defaults to current stable features and maintained tool versions
+across current browser engines. Legacy compatibility needs an explicit requirement.
+The [modern target policy](skills/web-standard/references/modern-targets.md) keeps
+feature selection, scoped upgrades, and compatibility evidence consistent.
+
 `code-review` traces changes through callers, contracts, and failure paths.
 Substantive PRs use independent reviewers when available and permitted.
 `babysit` carries findings, actionable nits, CI repairs, and post-merge cleanup
