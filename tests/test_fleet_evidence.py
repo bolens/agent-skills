@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import os
 from pathlib import Path
+import signal
 import subprocess
 import sys
 import tempfile
@@ -130,6 +131,64 @@ class FleetEvidence(unittest.TestCase):
         report = self.cli('report', '--label', 'native')
         self.assertEqual(2, report.returncode)
         self.assertIn('Unreadable evidence receipt', report.stderr)
+
+    def test_incompatible_or_invalid_receipt_is_not_accepted(self):
+        result = self.check('pass')
+        path = Path(json.loads(result.stdout)['receipt'])
+        original = self.receipt(result)
+        for patch in ({'version': 2}, {'version': True}, {'started': 'yesterday'},
+                      {'started': float('nan')}, {'command': 'pass'},
+                      {'status': 'passed', 'exit_code': 7}):
+            with self.subTest(patch=patch):
+                path.write_text(json.dumps({**original, **patch}))
+                report = self.cli('report', '--label', 'native')
+                self.assertEqual(2, report.returncode, report.stdout + report.stderr)
+                self.assertIn('Unreadable evidence receipt', report.stderr)
+
+    @unittest.skipUnless(os.name == 'posix', 'POSIX signals and process groups')
+    def test_cancellation_stops_descendants_and_releases_retry_lock(self):
+        for signum in (signal.SIGTERM, signal.SIGINT):
+            with self.subTest(signal=signum):
+                ready = Path(self.temp.name) / f'ready-{signum}'
+                marker = Path(self.temp.name) / f'orphan-{signum}'
+                child = ('import time; from pathlib import Path; '
+                         f'Path({str(ready)!r}).touch(); time.sleep(0.6); '
+                         f'Path({str(marker)!r}).touch()')
+                code = ('import subprocess,sys,time; '
+                        f'subprocess.Popen([sys.executable,"-c",{child!r}]); time.sleep(10)')
+                command = [sys.executable, str(SCRIPT), '--repo', str(self.root),
+                           'run', '--label', 'native', '--', sys.executable, '-c', code]
+                runner = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+                directory = self.root / '.git/fleet-evidence'
+                try:
+                    deadline = time.monotonic() + 5
+                    while not ready.exists() and runner.poll() is None and time.monotonic() < deadline:
+                        time.sleep(0.01)
+                    self.assertTrue(ready.exists(), 'child did not start')
+                    runner.send_signal(signum)
+                    out, err = runner.communicate(timeout=5)
+                    time.sleep(0.8)
+                    self.assertFalse(marker.exists(), 'cancelled runner left a live descendant')
+                    self.assertEqual(128 + signum, runner.returncode, out + err)
+                    record = json.loads(Path(json.loads(out)['receipt']).read_text())
+                    self.assertEqual('interrupted', record['status'])
+                    self.assertEqual(128 + signum, record['exit_code'])
+                    self.assertFalse(list(directory.glob('*.lock')))
+                    retry = self.check(code)
+                    self.assertEqual(2, retry.returncode)
+                    self.assertIn('--retry-reason', retry.stderr)
+                finally:
+                    if runner.poll() is None:
+                        runner.kill()
+                        runner.communicate()
+                    # Also clean up descendants when testing the broken baseline.
+                    for path in directory.glob('*/result.json'):
+                        record = json.loads(path.read_text())
+                        if record.get('command', [])[-1:] == [code] and record.get('pid'):
+                            try:
+                                os.killpg(record['pid'], signal.SIGKILL)
+                            except ProcessLookupError:
+                                pass
 
     def test_branch_change_at_same_commit_invalidates_evidence(self):
         self.check('pass')
