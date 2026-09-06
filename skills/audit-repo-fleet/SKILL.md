@@ -7,6 +7,12 @@ description: Audit and maintain a directory containing multiple Git repositories
 
 Default to a read-only audit. Treat each repository's constitution, `AGENTS.md`, contributor docs, manifests, and native task runner as authoritative for that repository.
 
+For broad source exploration, use [bounded context work](references/context-work.md):
+search before reading, use the local bounded reader for source excerpts, and keep
+durable corrections in existing project memory. The reference also defines
+focused handoffs when delegation is permitted and checkpoint rules for explicitly
+requested recurring reports.
+
 ## Inventory
 
 Run `scripts/inventory.sh <workspace-root> [max-depth]` to collect deterministic local facts. The default depth of 3 finds ordinary repositories while avoiding vendored repositories and test fixtures buried inside them. Increase it deliberately for deeper layouts. The script does not fetch, install, test, or modify repositories; divergence is relative to existing local remote-tracking refs and may be stale.
