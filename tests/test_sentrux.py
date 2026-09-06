@@ -1,6 +1,10 @@
 import importlib.util
 import json
+import io
+from contextlib import redirect_stdout, redirect_stderr
 import shutil
+import subprocess
+from types import SimpleNamespace
 from pathlib import Path
 import tempfile
 import unittest
@@ -101,6 +105,70 @@ class SentruxTests(unittest.TestCase):
             (runtime / 'notices/python-LICENSE').unlink()
             with self.assertRaises(OSError):
                 runner.runtime_identity(runtime, binary, self.scope)
+
+    def test_unsupported_and_mismatched_extension_mappings_fail(self):
+        for extensions in ({'.qml': 'python'}, {'.py': 'javascript'}, {}):
+            with self.subTest(extensions=extensions), self.assertRaises(ValueError):
+                runner.validate_scope(dict(self.scope, extensions=extensions))
+        runner.validate_scope(self.scope)
+
+    def test_context_without_source_is_not_a_scan(self):
+        (self.repo / 'package.json').write_text('{}')
+        with self.assertRaisesRegex(ValueError, 'Empty scope'):
+            runner.selected_files(self.repo, dict(self.scope, context=['package.json']))
+
+    def run_fixture(self, action, analysis, baseline=None):
+        source = self.repo / 'src/main.py'
+        source.write_text('def main():\n    return 1\n')
+        runner.git(self.repo, 'add', '--', 'src/main.py')
+        runner.git(self.repo, '-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid',
+                   '-c', 'commit.gpgsign=false', '-c', 'core.hooksPath=/dev/null',
+                   'commit', '--allow-empty', '-qm', 'fixture')
+        scope = self.repo.parent / 'scope.json'
+        scope.write_text(json.dumps(self.scope))
+        output = self.repo.parent / ('output-' + action)
+        args = SimpleNamespace(action=action, repo=self.repo, runtime=self.repo.parent / 'runtime',
+                               binary='sentrux', scope=scope, output=output, baseline=baseline)
+        with patch.object(runner, 'runtime_identity', return_value={'fixture': 1}), \
+                patch.object(runner, 'sandbox', side_effect=lambda runtime, snapshot, binary, *args: [str(snapshot)]), \
+                patch.object(runner, 'analyze', side_effect=analysis), \
+                redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
+            code = runner.run(args)
+        return code, output, json.loads((output / 'evidence.json').read_text())
+
+    def test_startup_failure_retains_diagnostics_and_is_unavailable(self):
+        code, output, receipt = self.run_fixture('check', lambda command: (1, 'bwrap: namespace setup failed', None))
+        self.assertEqual(2, code)
+        self.assertEqual(1, receipt['raw_exit_code'])
+        self.assertIn('namespace setup failed', (output / 'sentrux.log').read_text())
+
+    def test_timeout_keeps_partial_logs_and_failure_receipt(self):
+        with patch.object(runner.subprocess, 'run', side_effect=subprocess.TimeoutExpired(
+                'fixture', 120, output=b'partial stdout', stderr=b'partial stderr')):
+            analysis = runner.analyze(['fixture'])
+        code, output, receipt = self.run_fixture('check', lambda command: analysis)
+        self.assertEqual(2, code)
+        self.assertIsNone(receipt['raw_exit_code'])
+        self.assertIn('timed out', receipt['error'])
+        self.assertEqual('partial stdoutpartial stderr', (output / 'sentrux.log').read_text())
+
+    def test_completed_rule_finding_is_distinct_from_startup_failure(self):
+        log = 'sentrux check — 1 rules checked\n1 violation(s) found\n'
+        code, _, receipt = self.run_fixture('check', lambda command: (1, log, None))
+        self.assertEqual(1, code)
+        self.assertEqual(1, receipt['raw_exit_code'])
+
+    def test_saved_baseline_is_copied_and_comparable(self):
+        def saved(command):
+            (Path(command[0]) / '.sentrux/baseline.json').write_text('{"total_import_edges": 1}')
+            return 0, 'Baseline saved to fixture', None
+        code, before, receipt = self.run_fixture('baseline', saved)
+        self.assertEqual(0, code)
+        self.assertEqual(receipt['baseline_sha256'], runner.digest((before / 'baseline.json').read_bytes()))
+        log = 'sentrux gate — structural regression check\nNo degradation detected'
+        code, _, receipt = self.run_fixture('compare', lambda command: (0, log, None), before)
+        self.assertEqual(0, code)
+        self.assertEqual({'src/main.py'}, set(receipt['files']))
 
     def test_retained_notices_match_provenance(self):
         record = json.loads((setup.NOTICES / 'provenance.json').read_text())

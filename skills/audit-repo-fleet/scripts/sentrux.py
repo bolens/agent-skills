@@ -17,6 +17,67 @@ BINARY_SHA256 = '3237f80fe20d54aad4deefa8a143f0d60543bb5d2d6ad891eb42432f155725a
 VERSION = 1
 
 
+# Extensions exported by the reviewed 0.5.7 embedded plugin configurations.
+EXTENSIONS = {
+    'bash': ['sh', 'bash'], 'python': ['py'],
+    'javascript': ['js', 'mjs', 'cjs', 'jsx'],
+    'typescript': ['ts', 'mts', 'cts', 'tsx'],
+    'go': ['go'], 'rust': ['rs'], 'powershell': ['ps1', 'psm1', 'psd1'],
+}
+
+
+def validate_scope(scope):
+    if not isinstance(scope, dict):
+        raise ValueError('Scope must be an object')
+    for key in ('include', 'exclude', 'context'):
+        patterns = scope.get(key, [])
+        if not isinstance(patterns, list) or any(not isinstance(p, str) or not p for p in patterns):
+            raise ValueError(f'{key} must contain nonempty string patterns')
+    if not scope.get('include'):
+        raise ValueError('Scope requires include patterns')
+    extensions = scope.get('extensions')
+    if not isinstance(extensions, dict) or not extensions:
+        raise ValueError('Scope requires extension/plugin mappings')
+    for extension, language in extensions.items():
+        if not isinstance(language, str) or extension not in ['.' + e for e in EXTENSIONS.get(language, [])]:
+            raise ValueError(f'Unsupported extension/plugin mapping: {extension}: {language}')
+    if 'rules' in scope and not isinstance(scope['rules'], str):
+        raise ValueError('Rules must be TOML text')
+
+
+def analyze(command):
+    """Keep partial diagnostics even when the launcher fails or times out."""
+    try:
+        result = subprocess.run(command, capture_output=True, text=True, timeout=120)
+        return result.returncode, result.stdout + result.stderr, None
+    except subprocess.TimeoutExpired as error:
+        def decode(value):
+            return value.decode(errors='replace') if isinstance(value, bytes) else value or ''
+        return None, decode(error.stdout) + decode(error.stderr), 'Analyzer timed out after 120 seconds'
+    except OSError as error:
+        return None, '', str(error)
+
+
+def analyzer_status(action, raw_status, log):
+    """Exit 1 requires positive evidence of a completed architectural finding."""
+    if action == 'baseline':
+        return 0 if raw_status == 0 and 'Baseline saved to ' in log else 2
+    if action == 'check':
+        header = re.search(r'sentrux check .+? (\d+) rules checked', log)
+        if not header or int(header[1]) == 0:
+            return 2
+        passed, failed = 'All rules pass', 'violation(s) found'
+    else:
+        if 'sentrux gate' not in log:
+            return 2
+        passed, failed = 'No degradation detected', 'DEGRADED'
+    if raw_status == 0 and passed in log:
+        return 0
+    if raw_status == 1 and failed in log:
+        return 1
+    return 2
+
+
 def digest(data):
     return hashlib.sha256(data).hexdigest()
 
@@ -29,6 +90,7 @@ def selected_files(repo, scope):
     """Include working changes and new files without writing the caller's index."""
     names = git(repo, 'ls-files', '-z', '--cached', '--others', '--exclude-standard')
     selected = {}
+    source_count = 0
     for name in sorted(set(os.fsdecode(n) for n in names.split(b'\0') if n)):
         path = Path(name)
         if path.is_absolute() or '..' in path.parts:
@@ -51,12 +113,14 @@ def selected_files(repo, scope):
         if len(data) > 512 * 1024:
             raise ValueError(f'Exceeds Sentrux parse limit: {name}')
         selected[name] = data
-    if not selected or len(selected) >= 100_000:
+        source_count += path.suffix in scope['extensions']
+    if not source_count or len(selected) >= 100_000:
         raise ValueError('Empty scope or Sentrux file limit reached')
     return selected
 
 
 def runtime_identity(runtime, binary, scope):
+    validate_scope(scope)
     if platform.system() != 'Linux' or platform.machine() != 'x86_64':
         raise ValueError('This isolated runner supports Linux x86_64 only')
     if digest(binary.read_bytes()) != BINARY_SHA256:
@@ -143,19 +207,21 @@ def run(args):
         git(snapshot, 'init', '-q')
         git(snapshot, 'add', '-f', '--all')
         command = {'baseline': ['gate', '--save'], 'compare': ['gate'], 'check': ['check']}[args.action]
-        result = subprocess.run(sandbox(runtime, snapshot, binary, *command),
-                                capture_output=True, text=True, timeout=120)
-        log = result.stdout + result.stderr
+        raw_status, log, error = analyze(sandbox(runtime, snapshot, binary, *command))
         (args.output / 'sentrux.log').write_text(log)
-        evidence['exit_code'] = result.returncode
+        evidence['raw_exit_code'] = raw_status
+        evidence['exit_code'] = analyzer_status(args.action, raw_status, log)
+        if evidence['exit_code'] == 2:
+            evidence['error'] = error or 'Analyzer did not complete the requested operation'
+            print(evidence['error'], file=sys.stderr)
         counts = re.search(r'\[build_graphs\] (\d+) files .*?\| (\d+) import, (\d+) call, (\d+) inherit edges', log)
         if counts:
             evidence['graph_counts'] = dict(zip(('files', 'imports', 'calls', 'inheritance'), map(int, counts.groups())))
         metrics = snapshot / '.sentrux/baseline.json'
-        if result.returncode == 0 and args.action == 'baseline' and not metrics.is_file():
+        if evidence['exit_code'] == 0 and args.action == 'baseline' and not metrics.is_file():
             evidence['exit_code'] = 2
             evidence['coverage'] = 'Inconclusive: analyzer did not save baseline metrics.'
-        if result.returncode == 0 and args.action == 'baseline' and metrics.is_file():
+        if evidence['exit_code'] == 0 and args.action == 'baseline' and metrics.is_file():
             if json.loads(metrics.read_text()).get('total_import_edges', 0) == 0:
                 evidence['exit_code'] = 2
                 evidence['coverage'] = 'Inconclusive: empty import graph; baseline not accepted.'

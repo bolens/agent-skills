@@ -69,3 +69,14 @@ external dependency rather than relabeling the entire skill as an imported fork.
 Use [the runner contract](../../skills/audit-repo-fleet/references/sentrux.md) for
 setup, invocation, update review, and coverage limits. The earlier source audit
 remains historical evidence and is not rewritten as a current runtime result.
+
+## Delivery review corrections
+
+Two independent reviewers reproduced unsupported extension mappings producing
+false passes and sandbox startup failures being mislabeled as rule findings.
+Failure-path review also reproduced lost diagnostics after timeouts. The runner
+now validates supported extension/plugin pairs, rejects context-only snapshots,
+requires analyzer completion markers for result classification, and persists
+partial timeout logs with raw process status. Fourteen focused unit tests pass,
+including orchestration of snapshot baselines and failure receipts. The earlier
+counts above describe the initial local rollout, before these delivery fixes.

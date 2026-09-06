@@ -51,6 +51,9 @@ Create private JSON with explicit include patterns and extension-to-plugin names
 }
 ```
 
+Extension/plugin mappings must match the reviewed embedded parser configuration.
+An unsupported extension, mismatched language, or context-only snapshot is rejected.
+
 Patterns use Python `fnmatchcase`, where `*` also matches directory separators.
 Use `context` patterns for resolver inputs such as `go.mod`, `package.json`, and
 `tsconfig.json`. They are copied separately from the selected source extensions.
@@ -77,6 +80,8 @@ automatically replaced. Comparisons refuse changed repository paths, scopes,
 runners, binaries, grammars, or altered baseline metrics. Rebaseline deliberately
 after a tooling/scope change. Exit 0 means the requested analyzer operation
 succeeded, 1 means a rule or regression finding, and 2 means evidence unavailable.
+Failure receipts retain the raw subprocess status and partial timeout diagnostics.
+A sandbox startup error cannot stand for an architectural finding.
 Saving a baseline accepts existing metrics for comparison. It does not certify
 architecture health. `check` is separate and uses configured rules, defaulting
 to a diagnostic zero-cycle rule. Trace its reported edges before proposing fixes.
