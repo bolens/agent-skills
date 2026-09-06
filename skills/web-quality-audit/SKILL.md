@@ -13,6 +13,8 @@ Comprehensive quality review that combines live browser evidence with source ins
 
 > **Lighthouse 13+.** The Performance category now uses shared **Performance Insights** across Lighthouse and the DevTools Performance panel ([announcement](https://developer.chrome.com/blog/moving-lighthouse-to-insights)). Follow current insight names and evidence. Do not require removed audit IDs or automatically recreate their recommendations; some were retired because they were noisy, inactionable, or easy to over-recommend.
 
+Use [modern web targets](../web-standard/references/modern-targets.md) as the default compatibility scope: latest stable engines/features and maintained tool versions. Report missing legacy support as a defect only when the user or repository explicitly requires it. Current-engine, accessibility, and functional failures remain in scope.
+
 ## How it works
 
 1. Establish the audit target: representative URLs, important states and journeys, public versus authenticated access, and mobile/desktop scope.
@@ -49,7 +51,7 @@ Chrome DevTools MCP's `lighthouse_audit` intentionally excludes performance. Its
 * **CLS (Cumulative Layout Shift) < 0.1.** Content must not jump around. Set explicit dimensions on images, embeds, and ads.
 
 **Resource Optimization:**
-* **Compress images.** Use WebP/AVIF with fallbacks. Serve correctly sized images via `srcset`.
+* **Compress images.** Measure suitable modern encodings such as WebP/AVIF. Add fallback formats only for the actual current target matrix or explicit legacy requirements. Serve correctly sized images via `srcset`.
 * **Minimize JavaScript.** Remove unused code. Use code splitting. Defer non-critical scripts.
 * **Optimize CSS.** Extract critical CSS. Remove unused styles. Avoid `@import`.
 * **Efficient fonts.** Use `font-display: swap`. Preload critical fonts. Subset to needed characters.

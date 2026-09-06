@@ -9,6 +9,8 @@ Make shared visual and interaction decisions explicit without turning one page i
 
 ## Find the source of truth
 
+Use [modern web targets](../web-standard/references/modern-targets.md): current stable platform features and framework/tool versions, with backward compatibility only for explicit requirements.
+
 Identify the framework/version, styling system, component primitives, icon family, and token ownership. Preserve existing APIs and local component changes. A Figma library or screenshot can inform design, but repository behavior and implementation constraints still need inspection. Do not claim a design matches an unavailable reference.
 
 Read [framework integration](references/frameworks.md) when Tailwind, shadcn/ui, headless primitives, or Storybook are involved. Use `frontend-design` for visual direction, `svg-design` for icon consistency, and `web-animation` for motion tokens and lifecycle.
@@ -32,7 +34,7 @@ Build stories or examples in the existing harness so the next change can reprodu
 
 Use `forms-and-data-state` for submission and async data lifecycles behind shared control states. Keep the component's visual API separate from ownership of server data and drafts.
 
-Use `web-standard` when choosing native dialogs, popovers, forms, or other primitives with browser-owned behavior. Preserve the existing component's contract and verify the supported-browser fallback before replacing it.
+Use `web-standard` when choosing native dialogs, popovers, forms, or other primitives with browser-owned behavior. Preserve the existing component's contract and verify behavior in current target engines and any explicitly required compatibility path before replacing it.
 
 ## Verify and deliver
 

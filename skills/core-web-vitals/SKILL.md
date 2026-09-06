@@ -11,6 +11,8 @@ metadata:
 
 Targeted optimization for the three Core Web Vitals using field data to identify user impact and browser traces to diagnose causes.
 
+Use [modern web targets](../web-standard/references/modern-targets.md) for current stable feature/version choices and explicit legacy exceptions. Preserve measured behavior across current target engines; do not add old-browser compatibility work without a requirement.
+
 ## Measure before optimizing
 
 When a runnable URL is available, read [the performance measurement workflow](../performance/references/MEASUREMENT.md). Prefer this sequence:
@@ -118,7 +120,7 @@ Start conservatively and measure prediction hit rate, transferred bytes, server 
 Caveats:
 - **Bandwidth/CPU cost.** Each prerender is roughly a full page load. Scope `where` carefully (`href_matches` patterns, exclude logout/checkout) and avoid `immediate` outside small sites.
 - **Side effects fire early.** Analytics, ads, and any code that runs on load will fire when the prerender starts, not when the user navigates. Gate side effects on the [`prerenderingchange` event](https://developer.chrome.com/docs/web-platform/prerender-pages#detect_when_a_page_is_prerendered_or_used_for_a_full_navigation) or `document.prerendering`.
-- **Chromium-only.** Safari and Firefox ignore the script — it's a progressive enhancement, never a regression.
+- **Engine support.** Verify current support for the exact speculation features used. Keep ordinary navigation functional in unsupported current engines and measure side effects; an optional enhancement can still introduce regressions.
 
 ### LCP optimization checklist
 

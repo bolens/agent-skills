@@ -41,13 +41,17 @@ Keep commit-time checks bounded through [setup-pre-commit](../setup-pre-commit/S
 
 For GitHub Actions, read [events, trust, and required checks](references/github-actions.md) before changing triggers, permissions, reusable calls, caches, artifacts, or merge gates. For other providers, verify equivalent behavior in that provider's documentation rather than translating GitHub syntax mechanically.
 
+For build and packaging matrices, prefer broad coverage of current stable/rolling platforms and current supported toolchains. Add legacy runtime lanes only for explicit user or repository compatibility requirements. Preserve existing support promises until deliberately migrated. Use [release-packaging](../release-packaging/SKILL.md) to select targets from language, build tooling, application type, and OS/ABI evidence; keep pipeline events and permissions here. Pin tested tool versions and monitor updates instead of confusing current-version preference with mutable CI inputs.
+
 ## Implement a compatible change
 
 For an audit-only request, report findings without editing workflows. Implement changes when authorized.
 
 Preserve existing workflow names and required status identities unless their migration is part of the task. Inspect dependencies on those names in settings, badges, automation, and reusable callers. A workflow edit alone cannot update host rulesets.
 
-Pin actions and reusable dependencies according to the fleet's immutable-reference policy. Verify the source repository, selected release/commit, action runtime requirements, and downloaded executable checksums where used. Use [triage-dependency-updates](../triage-dependency-updates/SKILL.md) for actual version candidates and compatibility. A pin update does not justify unrelated runtime upgrades.
+Prefer full commit SHA pins for all external actions and reusable workflows, including first-party actions, with readable release comments. Prefer SHA-256 digests for CI container images and verify downloaded executable checksums where used. Apply the fleet's immutable-reference policy and verify the source repository, selected release/commit, and action runtime requirements. Local `./` action and workflow references remain tied to the checked-out or calling revision.
+
+Pair immutable pins with Dependabot version-update monitoring for supported dependencies. Check `github-actions` coverage at directory `/` with a recurring schedule, plus the relevant ecosystems for images and tools. Inspect nested actions and script downloads for coverage gaps rather than assuming the workflow entry covers every dependency. Use [triage-dependency-updates](../triage-dependency-updates/SKILL.md#prefer-immutable-pins-with-update-monitoring) for monitoring evidence, unsupported formats, existing updater choices, and actual version candidates. Report configured coverage separately from observed successful update runs. A pin update does not justify unrelated runtime upgrades.
 
 For shared workflow changes, inspect callers at their chosen refs. Treat required inputs, outputs, token permissions, secrets, runner labels, and check names as interfaces. Prefer compatible defaults or stage a documented migration. Validate a representative caller and track remaining consumers through [fleet shared fixes](../audit-repo-fleet/references/shared-fixes.md) when fleet implementation is in scope. Do not update every caller solely because its text matches.
 

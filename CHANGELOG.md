@@ -6,6 +6,10 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Added
 
+- Add `release-packaging` for language/build-conditional distribution targets,
+  native source/binary/main variants, lean installations, and current-platform
+  compatibility. Connect release, Arch, CI, dependency, and fleet workflows.
+
 - Add bounded source excerpts, focused worker handoffs, and durable correction
   guidance to fleet maintenance.
 
@@ -47,6 +51,20 @@ All notable changes to this hard-fork collection are documented here.
   `arch-update-recovery` for operational gaps specific to this fleet.
 
 ### Changed
+
+- Add requirement-driven older-browser support guidance covering support matrices,
+  syntax transforms, targeted polyfills, loading order, production delivery,
+  minimum-version testing, and deliberate retirement of compatibility layers.
+
+- Prefer latest stable web features and maintained tool versions across web
+  standards, frontend design, design systems, animation, performance, and quality
+  audits. Require legacy compatibility only for explicit contracts, retain current
+  cross-engine verification, and remove dated browser-support percentages.
+
+- Prefer immutable dependency pins paired with Dependabot version-update
+  monitoring in CI maintenance, dependency triage, and repository fleet audits.
+  Distinguish configured coverage from verified operation and record unsupported
+  pins or existing updater choices.
 
 - Add an explicitly requested retrospective Spec Kit baseline mapping all 61
   registered skills to contracts, source-audit dispositions, and evidence limits.
