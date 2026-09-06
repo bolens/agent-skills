@@ -4,6 +4,13 @@ All notable changes to this hard-fork collection are documented here.
 
 ## Unreleased
 
+### Fixed
+
+- Stop fleet check descendants on SIGTERM and retain interruption evidence so
+  cancelled checks release their retry locks.
+- Reject incompatible or inconsistent fleet receipts instead of reporting a
+  successful check from invalid saved evidence.
+
 ### Added
 
 - Add `release-packaging` for language/build-conditional distribution targets,
