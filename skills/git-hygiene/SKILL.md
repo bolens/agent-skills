@@ -58,6 +58,8 @@ Use [branch and checkout freshness](references/freshness.md) when starting imple
 
 ## Make focused commits
 
+Use [semantic conventions](references/semantic-conventions.md) for Conventional Commit messages and PR titles. Preserve explicit repository exceptions and verify the final squash message before merge.
+
 Recheck HEAD, status, and ownership immediately before staging. Review the working diff and stage only task-owned paths or hunks. Selected paths do not exclude unrelated changes already in the index. Inspect the entire staged diff and candidate file list before committing. [Git add documentation](https://git-scm.com/docs/git-add).
 
 Use explicit paths with `--`, or inspect interactive hunks when a file mixes work. Avoid blanket `git add .`, `git add -A`, and `git commit -a` in a mixed checkout. Never clear someone else's index entries to make your commit easier. If unrelated staged changes remain, coordinate with their owner or move the task to isolation before committing.

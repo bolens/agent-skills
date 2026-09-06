@@ -59,6 +59,10 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Changed
 
+- Align commit messages and PR titles with Conventional Commits, and release
+  version selection with SemVer across authoring, validation, and delivery skills.
+  Preserve repository policies and native package version rules.
+
 - Make skill selection boundaries clearer and load accessibility and performance
   guidance by observed issue. Keep broad audit coverage and make recurring
   maintenance opt-in.

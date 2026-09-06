@@ -43,6 +43,8 @@ Compare like-for-like repository identities and check scopes, and separate new
 findings from rechecks, unresolved conflicts, and unavailable observations.
 An omitted repository or failed check cannot close an earlier finding.
 
+For commit and release consistency, use [semantic conventions](../git-hygiene/references/semantic-conventions.md) to compare documented policy with recent commit messages, PR titles, merge strategy, and version automation. Distinguish intentional native or repository exceptions from drift. Keep audits read-only and avoid rewriting historical commits or inventing releases for unversioned repositories.
+
 ## Prioritize
 
 Rank evidence-backed work into:

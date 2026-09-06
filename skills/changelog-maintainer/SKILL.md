@@ -14,6 +14,8 @@ Preserve release facts while rewriting the changelog for people deciding whether
 - Omit raw commit scopes, PR numbers, release commits, formatting churn, test-only changes, and routine dependency bumps. Git and GitHub release notes retain that detail.
 - Never invent dates, versions, impact, or migration guidance. Resolve them from tags, manifests, release workflows, and the actual diff.
 
+Use [semantic conventions](../git-hygiene/references/semantic-conventions.md) when release numbering is in scope. Check that the proposed version reflects compatibility changes and matches the release unit. Translate semantic commit metadata into reader-facing outcomes without copying type prefixes into bullets. Keep unreleased work under Unreleased until the release process assigns its version and date.
+
 ## Write entries
 
 Follow the repository convention when it is coherent. Otherwise use Keep a Changelog categories: Added, Changed, Deprecated, Removed, Fixed, and Security.

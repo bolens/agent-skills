@@ -15,6 +15,8 @@ When the release ships installable artifacts or changes distribution targets, us
 
 Use `changelog-maintainer` for reader-facing release notes. Use `migration` when upgrade or rollback compatibility requires it. A release note should explain observable effects and any required user action, not list internal commits.
 
+Use [semantic conventions](../../git-hygiene/references/semantic-conventions.md) to select the SemVer increment from the complete release diff and public compatibility contract. Check repository release rules, pre-1.0 policy, and native version exceptions before changing version sources.
+
 ## Prepare and execute
 
 Prepare the repository-prescribed release edits, run its release gates, and include the changes in the audit. Inspect the actual package or artifact when the playbook requires packaging checks. Audit publication content with `sensitive-info-audit` before exposure.

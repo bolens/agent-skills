@@ -17,6 +17,8 @@ Apply `unslop` as the final prose pass.
 
 Use the relevant references only. A PR description or commit message usually needs sentence style and repository verification, not a full document-mode analysis.
 
+For commit messages and PR titles, use [semantic conventions](../git-hygiene/references/semantic-conventions.md). Default to Conventional Commit syntax, preserve breaking-change information, and base the title on the final diff. Keep the PR body in ordinary prose and respect explicit repository naming policy.
+
 ## Core rules
 
 - Cut every word that does no work.

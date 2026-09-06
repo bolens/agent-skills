@@ -67,6 +67,11 @@ Substantive PRs use independent reviewers when available and permitted.
 `babysit` carries findings, actionable nits, CI repairs, and post-merge cleanup
 through the requested delivery endpoint.
 
+Commit messages and PR titles default to Conventional Commits. Versioned software
+defaults to SemVer, with explicit repository and native packaging exceptions.
+The [semantic conventions](skills/git-hygiene/references/semantic-conventions.md)
+connect message wording, squash merges, version selection, hooks, and CI.
+
 For diagnostics, `systematic-debugging` covers process-status propagation and
 [wide events with sensitive-data controls](skills/systematic-debugging/references/wide-events.md).
 `web-security` separates reported claims, supporting evidence, and fix verification.

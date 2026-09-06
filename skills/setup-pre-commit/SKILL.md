@@ -26,6 +26,8 @@ Build on the repository's existing tooling. Prefer a small, fast hook developers
 - Never rewrite unrelated staged files. Warn before a formatter may modify files.
 - Pin or lock new dependencies using the repository's normal conventions.
 
+For commit-message validation, apply [semantic conventions](../git-hygiene/references/semantic-conventions.md) through a `commit-msg` hook using the repository's validator and allowed types. A staged-file `pre-commit` hook does not validate the final message. Match CI and release-parser rules, preserve required trailers, and test valid, invalid, scoped, and breaking messages in a disposable repository. PR titles require host-side validation when CI enforcement is in scope.
+
 ## Implement
 
 Treat a request to set up hooks as authorization to edit repository configuration. Dependency downloads, changes outside the repository, and replacement of existing hooks still require the normal approvals.

@@ -37,6 +37,8 @@ Prepare all permitted work before asking for any missing authority. Ask once for
 
 Before preparing or updating the PR, use [Git hygiene freshness](../git-hygiene/references/freshness.md) to verify the current base and remote feature head, reconcile authorized updates locally, and validate the actual candidate. Keep this workflow as coordinator.
 
+Use [semantic conventions](../git-hygiene/references/semantic-conventions.md) for Conventional Commit-style PR titles and commits. Check the title against the final diff, update it within existing PR-edit authority, and verify the actual squash subject and breaking-change body before merge. Preparation without remote-edit authority still includes a concrete corrected title.
+
 ## Inspect the current PR
 
 Collect the full proposed diff against its actual base, commit list, review summaries, inline threads, and CI results using the available host connector or CLI. Include all pages of feedback. Check unresolved threads and late bot feedback as well as the overall review status.
