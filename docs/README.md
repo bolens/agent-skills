@@ -44,3 +44,5 @@ runtime proof. A topic without an implementation stays explicitly unimplemented.
 - [Contributing](../CONTRIBUTING.md)
 - [Security policy](../SECURITY.md)
 - [Development environments](development-environments.md)
+
+- [Editor setup](../.vscode/README.md)
