@@ -157,7 +157,7 @@ represent its forks as upstream releases.
 | [PROVENANCE.json](PROVENANCE.json) | Skill origins, source paths, fork status, and install targets |
 | [UPSTREAMS.json](UPSTREAMS.json) | Audited upstream revisions and local changes to preserve |
 | [scripts/](scripts/) and [tests/](tests/) | Maintenance tools and repository contract tests |
-| [specs/](specs/) | Written contracts and decision history for planned capabilities |
+| [Specification index](specs/README.md) | Original feature history and the explicitly requested retrospective coverage baseline |
 | [docs/audits/](docs/audits/) | Dated source assessments, adoption decisions, and validation limits |
 | [Project guide](.specify/memory/project-guide.md) | Source ownership, acceptance evidence, and Spec Kit integration boundaries |
 | [Project constitution](.specify/memory/constitution.md) | Maintenance principles |
