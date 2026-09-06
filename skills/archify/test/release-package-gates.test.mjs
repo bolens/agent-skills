@@ -296,12 +296,12 @@ test('package smoke rejects missing, modified, or incomplete third-party notices
     assert.match(`${result.stdout}\n${result.stderr}`, /missing THIRD_PARTY_NOTICES\.md/);
 
     const repositoryNotices = fs.readFileSync(path.join(repoRoot, 'THIRD_PARTY_NOTICES.md'), 'utf8');
-    fs.writeFileSync(noticesPath, repositoryNotices.replace('Simple Icons 16.28.0', 'Simple Icons'));
+    fs.writeFileSync(noticesPath, repositoryNotices + '\nModified notice.\n');
     result = spawnSync(process.execPath, [packageSmoke, staged], { encoding: 'utf8' });
     assert.notEqual(result.status, 0, 'modified notices must fail package smoke');
     assert.match(`${result.stdout}\n${result.stderr}`, /must byte-match the repository notice/);
 
-    fs.writeFileSync(noticesPath, 'Simple Icons 16.28.0\n');
+    fs.writeFileSync(noticesPath, 'Incomplete notices\n');
     result = spawnSync(process.execPath, [packageSmoke, staged], { encoding: 'utf8' });
     assert.notEqual(result.status, 0, 'incomplete notices must fail package smoke');
     assert.match(`${result.stdout}\n${result.stderr}`, /packaged THIRD_PARTY_NOTICES\.md is incomplete/);

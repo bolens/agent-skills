@@ -55,7 +55,7 @@ test('clean staging rejects a packaged notice that diverges from the repository 
     git(root, ['add', '.']);
     fs.writeFileSync(
       path.join(root, 'archify', 'THIRD_PARTY_NOTICES.md'),
-      canonicalNotices.replace('Simple Icons 16.28.0', 'Simple Icons 16.28.0 modified'),
+      canonicalNotices + '\nModified notice.\n',
     );
 
     assert.throws(
