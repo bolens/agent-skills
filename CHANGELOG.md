@@ -45,6 +45,11 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Changed
 
+- Refine architecture design and audit guidance after reviewing Ponytail: compare
+  concrete reuse options against required behavior, record revisit conditions,
+  and require evidence before removing seams or tests. See the
+  [audit and validation record](docs/audits/2026-09-05-ponytail.md).
+
 - Restore missing fork and Spec Kit licenses, correct frontend-design's Anthropic
   provenance, retain bundled dependency notices, and check license-copy integrity.
 

@@ -18,6 +18,10 @@ Use this skill to discover and prioritize problems across a broad scope. Once th
 
 Sub-agents are optional and may be used only when available, authorized, and useful for a large scope.
 
+For simplification candidates, name what would disappear and what would take over its responsibilities: existing code, a specific library API, a platform feature, or nothing for confirmed dead behavior. Check callers, configuration, dynamic registration, and external contracts before claiming something is unused. A single implementation or caller is a lead to investigate, not proof that an abstraction should be removed.
+
+Read existing debt notes when they explain a candidate's limits. Identify the condition that would justify revisiting the decision and whether current evidence meets it. Missing triggers are uncertainty to resolve, not permission to implement deferred work.
+
 ## Report
 
 Default to a concise Markdown report in the response. Create a file only when the user requests an artifact. For each candidate include:
@@ -30,6 +34,8 @@ Default to a concise Markdown report in the response. Create a file only when th
 - confidence: strong, worth exploring, or speculative
 
 Rank candidates by expected benefit, risk, and relevance to likely future changes. Explicitly identify proposals that conflict with an ADR.
+
+Show how each replacement preserves the required behavior and identify any semantic gap that prevents it. Keep correctness and verification obligations in the assessment. Line or dependency reductions are secondary estimates, and dependency removal requires checking remaining consumers. Do not invent savings against an implementation that was never built, or treat the absence of complexity findings as approval to ship.
 
 If the user requests a visual HTML report, read [HTML-REPORT.md](HTML-REPORT.md), write it under a temporary directory, and provide its path. Do not load CDN assets or open a browser without appropriate network/GUI authorization.
 
