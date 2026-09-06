@@ -88,7 +88,8 @@
           "Retain bundled dependency licenses, third-party attribution additions, and artifact/brand licensing guidance.",
           "Keep notice mutation tests independent of the pinned Simple Icons version.",
           "Retain parse5 8.0.1 or a later audited release for HTML test parsing; its entities 8 dependency requires Node 20.19 or newer, within the documented Node 22 test harness.",
-          "Keep brand concurrency test responses static and gallery path checks free of identity replacements."
+          "Keep brand concurrency test responses static and gallery path checks free of identity replacements.",
+          "Keep the concise task description with architecture, workflow, sequence, data-flow, state, repository-evidence, and Mermaid routing."
         ],
         "license": {
           "spdx": "MIT",
@@ -687,7 +688,8 @@
         "path": "default/agents/skills/omarchy",
         "ref": "d3d23fdddef846ebb98b52122a6ece66211c0daf",
         "local_changes": [
-          "Keep desktop-session.md and its workstation health and config-drift routing."
+          "Keep desktop-session.md and its workstation health and config-drift routing.",
+          "Keep the concise required end-user configuration trigger and source-development exclusion; retain detailed applicability in the skill body."
         ],
         "license": {
           "spdx": "MIT",

@@ -1,6 +1,6 @@
 ---
 name: audit-omarchy-plugin
-description: Audit an Omarchy plugin repository before marketplace submission, verification, update approval, or release. Check marketplace structure and scan policy, exact-commit readiness, declared capabilities, install/remove behavior, long-lived Quickshell safety, bounded subprocess and queue behavior, tests, documentation, and release evidence. Use for pre-submission checks and approval triage; do not use for ordinary end-user plugin installation or configuration.
+description: Audit Omarchy plugins for marketplace submission, approval, updates, or release. Excludes end-user installation and desktop configuration.
 ---
 
 # Audit an Omarchy plugin

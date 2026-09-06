@@ -16,6 +16,7 @@ License source: [LICENSE](https://github.com/basecamp/omarchy/blob/d3d23fdddef84
 
 Local changes to retain:
 - Keep desktop-session.md and its workstation health and config-drift routing.
+- Keep the concise required end-user configuration trigger and source-development exclusion; retain detailed applicability in the skill body.
 
 Updates are audited and merged manually. This fork does not track or represent upstream releases.
 

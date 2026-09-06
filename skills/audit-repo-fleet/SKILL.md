@@ -1,6 +1,6 @@
 ---
 name: audit-repo-fleet
-description: Audit and maintain a directory containing multiple Git repositories by inventorying worktree state, branches, local upstream divergence, governance files, toolchains, CI, validation entry points, and maintenance risk. Use when the user asks for repository fleet health, cross-repo maintenance, stale or inconsistent repos, spec-kit/AGENTS drift, release readiness, or what to work on next across many repositories.
+description: Audit and maintain multiple repositories for health, drift, and shared fixes. Use for fleet-wide maintenance and prioritization.
 ---
 
 # Audit a Repository Fleet

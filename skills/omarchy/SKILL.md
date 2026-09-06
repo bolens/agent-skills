@@ -1,14 +1,6 @@
 ---
 name: omarchy
-description: >
-  REQUIRED for end-user customization of Linux desktop, window manager, or system config.
-  Use when editing ~/.config/hypr/, ~/.config/omarchy/,
-  ~/.config/alacritty/, ~/.config/foot/, ~/.config/kitty/, or ~/.config/ghostty/.
-  Triggers: Hyprland, window rules, animations, keybindings, monitors, gaps, borders,
-  blur, opacity, omarchy-shell, bar, terminal config, themes, background,
-  night light, idle, lock screen, screenshots, reminders, layer rules, workspace
-  settings, display config, and user-facing omarchy commands. Excludes Omarchy
-  source development through `omarchy dev link` workflows.
+description: Required for end-user Linux desktop, window-manager, and system configuration, including Hyprland, terminals, and Omarchy commands. Excludes Omarchy source development.
 ---
 
 # Omarchy Skill
