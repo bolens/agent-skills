@@ -69,3 +69,12 @@ terms as well as trademarks. Its MIT license does not clear every icon for every
 use. Keep the applicable notices with generated artifacts and check the intended
 use before selecting a mark. Source notice retention does not prove that an
 arbitrary exported image or commercial use satisfies those separate terms.
+
+## Optional Sentrux runtime
+
+The locally authored fleet runner invokes an existing Sentrux installation.
+Its [runtime provenance and retained notices](skills/audit-repo-fleet/references/sentrux-notices/provenance.json)
+distinguish the public MIT source from the official binary's private Pro build
+and the separately sourced grammars. No runtime assets are distributed in this
+repository. The [integration contract](skills/audit-repo-fleet/references/sentrux.md)
+records the unresolved exact-build provenance and redistribution boundaries.

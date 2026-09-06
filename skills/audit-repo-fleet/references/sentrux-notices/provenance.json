@@ -1,0 +1,82 @@
+{
+  "version": "0.5.7",
+  "platform": "linux-x86_64",
+  "source": "https://github.com/sentrux/sentrux/tree/f36da08a53e7f06c5b6aec33eb05816b371000ea",
+  "binary_sha256": "3237f80fe20d54aad4deefa8a143f0d60543bb5d2d6ad891eb42432f155725a6",
+  "grammar_archive_sha256": "8849f1eb07df3f6d4ea1ed422d8dee4b9b79a250682fa5646675dae466554454",
+  "source_license_sha256": "303b22c6995bfe37c1551905a177c4d49083667d796078d405891cf8702c09c0",
+  "grammars": [
+    {
+      "language": "bash",
+      "source": "https://github.com/tree-sitter/tree-sitter-bash",
+      "declared_build_ref": "master",
+      "license_url": "https://github.com/tree-sitter/tree-sitter-bash/blob/master/LICENSE",
+      "license_blob_sha": "aa9f858db5722d9576104726471b11cc0e31f131",
+      "spdx": "MIT",
+      "notice_sha256": "49bf33cf78ef5897e4e161ce1517df7de1ae5042a65b6bcfd44401e0fc606559",
+      "limit": "Current source notice; release does not identify exact grammar source commit."
+    },
+    {
+      "language": "python",
+      "source": "https://github.com/tree-sitter/tree-sitter-python",
+      "declared_build_ref": "master",
+      "license_url": "https://github.com/tree-sitter/tree-sitter-python/blob/master/LICENSE",
+      "license_blob_sha": "ff8ed93cb0dd57d68feeefe4829dbc9083584b5e",
+      "spdx": "MIT",
+      "notice_sha256": "d724405ce238a22c0d35769c5a36b386ad5958192efe8bbb304fb2896254575f",
+      "limit": "Current source notice; release does not identify exact grammar source commit."
+    },
+    {
+      "language": "javascript",
+      "source": "https://github.com/tree-sitter/tree-sitter-javascript",
+      "declared_build_ref": "master",
+      "license_url": "https://github.com/tree-sitter/tree-sitter-javascript/blob/master/LICENSE",
+      "license_blob_sha": "4b52d191cead337b11e274b79459a86f1b5a7779",
+      "spdx": "MIT",
+      "notice_sha256": "2e0110e07abef7c2548b26ec9d6969775617ca539a0dc8dbeeb14d6452c711d1",
+      "limit": "Current source notice; release does not identify exact grammar source commit."
+    },
+    {
+      "language": "typescript",
+      "source": "https://github.com/tree-sitter/tree-sitter-typescript",
+      "declared_build_ref": "master",
+      "license_url": "https://github.com/tree-sitter/tree-sitter-typescript/blob/master/LICENSE",
+      "license_blob_sha": "aa9f858db5722d9576104726471b11cc0e31f131",
+      "spdx": "MIT",
+      "notice_sha256": "49bf33cf78ef5897e4e161ce1517df7de1ae5042a65b6bcfd44401e0fc606559",
+      "limit": "Current source notice; release does not identify exact grammar source commit."
+    },
+    {
+      "language": "go",
+      "source": "https://github.com/tree-sitter/tree-sitter-go",
+      "declared_build_ref": "master",
+      "license_url": "https://github.com/tree-sitter/tree-sitter-go/blob/master/LICENSE",
+      "license_blob_sha": "4b52d191cead337b11e274b79459a86f1b5a7779",
+      "spdx": "MIT",
+      "notice_sha256": "2e0110e07abef7c2548b26ec9d6969775617ca539a0dc8dbeeb14d6452c711d1",
+      "limit": "Current source notice; release does not identify exact grammar source commit."
+    },
+    {
+      "language": "rust",
+      "source": "https://github.com/tree-sitter/tree-sitter-rust",
+      "declared_build_ref": "master",
+      "license_url": "https://github.com/tree-sitter/tree-sitter-rust/blob/master/LICENSE",
+      "license_blob_sha": "ceaf3c9adca54f7d3242593dd4db8065b1611699",
+      "spdx": "MIT",
+      "notice_sha256": "31d5b6f4243d5c7c6e1c4ebbbb9f6407bd1457a08bcc4f706521710341acba36",
+      "limit": "Current source notice; release does not identify exact grammar source commit."
+    },
+    {
+      "language": "powershell",
+      "source": "https://github.com/airbus-cert/tree-sitter-powershell",
+      "declared_build_ref": "main",
+      "license_url": "https://github.com/airbus-cert/tree-sitter-powershell/blob/main/LICENSE",
+      "license_blob_sha": "0e31aad2db44f171cd7c0163f8fea1cc0c934b7b",
+      "spdx": "MIT",
+      "notice_sha256": "1fca8454c0d77a73f9922a52d39e1f7c339f5da5d03f2766eff66b859fa19477",
+      "limit": "Current source notice; release does not identify exact grammar source commit."
+    }
+  ],
+  "distribution": "External local runtime only. Pro crate terms and exact bundled grammar source revisions are not established. Do not bundle or redistribute runtime assets from this integration.",
+  "source_revision": "f36da08a53e7f06c5b6aec33eb05816b371000ea"
+}
