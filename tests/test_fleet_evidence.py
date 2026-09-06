@@ -1,13 +1,18 @@
 from __future__ import annotations
 
 import json
+import importlib.util
+import io
+from contextlib import redirect_stdout
 import os
 from pathlib import Path
+import signal
 import subprocess
 import sys
 import tempfile
 import time
 import unittest
+from unittest.mock import patch as mock_patch
 
 SCRIPT = Path(__file__).resolve().parents[1] / 'skills/audit-repo-fleet/scripts/evidence.py'
 
@@ -130,6 +135,130 @@ class FleetEvidence(unittest.TestCase):
         report = self.cli('report', '--label', 'native')
         self.assertEqual(2, report.returncode)
         self.assertIn('Unreadable evidence receipt', report.stderr)
+
+    def test_incompatible_or_invalid_receipt_is_not_accepted(self):
+        result = self.check('pass')
+        path = Path(json.loads(result.stdout)['receipt'])
+        original = self.receipt(result)
+        for patch in ({'version': 2}, {'version': True}, {'started': 'yesterday'},
+                      {'started': float('nan')}, {'command': 'pass'},
+                      {'status': 'passed', 'exit_code': 7}):
+            with self.subTest(patch=patch):
+                path.write_text(json.dumps({**original, **patch}))
+                report = self.cli('report', '--label', 'native')
+                self.assertEqual(2, report.returncode, report.stdout + report.stderr)
+                self.assertIn('Unreadable evidence receipt', report.stderr)
+
+    def test_empty_labels_remain_compatible_with_existing_receipts(self):
+        result = self.cli('run', '--label', '', '--', sys.executable, '-c', 'pass')
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertEqual(0, self.cli('report', '--label', '').returncode)
+        self.assertEqual(0, self.check('pass').returncode)
+
+    @unittest.skipUnless(os.name == 'posix', 'POSIX signals and process groups')
+    def test_cancellation_during_finalization_stops_exited_leaders_descendants(self):
+        for boundary in ('fingerprint', 'save'):
+            with self.subTest(boundary=boundary):
+                spec = importlib.util.spec_from_file_location('fleet_evidence', SCRIPT)
+                module = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(module)
+                ready = Path(self.temp.name) / f'late-ready-{boundary}'
+                release = Path(self.temp.name) / f'late-release-{boundary}'
+                marker = Path(self.temp.name) / f'late-orphan-{boundary}'
+                child = (f'from pathlib import Path; import time; Path({str(ready)!r}).touch()\n'
+                         f'while not Path({str(release)!r}).exists(): time.sleep(0.01)\n'
+                         f'Path({str(marker)!r}).touch()')
+                code = ('import subprocess,sys,time; from pathlib import Path; '
+                        f'subprocess.Popen([sys.executable,"-c",{child!r}])\n'
+                        f'while not Path({str(ready)!r}).exists(): time.sleep(0.01)')
+                original = getattr(module, boundary)
+                original_save = module.save
+                persisted = []
+                calls = 0
+
+                def observe_save(path, record):
+                    persisted.append(record['status'])
+                    return original_save(path, record)
+
+                def interrupt_finalization(*args):
+                    nonlocal calls
+                    calls += 1
+                    result = original(*args)
+                    if calls == (2 if boundary == 'fingerprint' else 3):
+                        os.kill(os.getpid(), signal.SIGTERM)
+                    return result
+
+                output = io.StringIO()
+                try:
+                    with mock_patch.object(module, 'save', observe_save), redirect_stdout(output):
+                        if boundary == 'save':
+                            original = observe_save
+                        with mock_patch.object(module, boundary, interrupt_finalization):
+                            status = module.main(['--repo', str(self.root), 'run', '--label', boundary, '--timeout', '5',
+                                              '--', sys.executable, '-c', code])
+                    release.touch()
+                    time.sleep(0.3)
+                    self.assertEqual(143, status)
+                    if boundary == 'fingerprint':
+                        self.assertNotIn('passed', persisted)
+                    record = json.loads(Path(json.loads(output.getvalue())['receipt']).read_text())
+                    self.assertEqual('interrupted', record['status'])
+                    self.assertEqual(143, record['exit_code'])
+                    self.assertFalse(marker.exists(), 'late cancellation left a live descendant')
+                    self.assertFalse(list((self.root / '.git/fleet-evidence').glob('*.lock')))
+                finally:
+                    for path in (self.root / '.git/fleet-evidence').glob('*/result.json'):
+                        record = json.loads(path.read_text())
+                        if record.get('label') == boundary and record.get('pid'):
+                            try:
+                                os.killpg(record['pid'], signal.SIGKILL)
+                            except ProcessLookupError:
+                                pass
+
+    @unittest.skipUnless(os.name == 'posix', 'POSIX signals and process groups')
+    def test_cancellation_stops_descendants_and_releases_retry_lock(self):
+        for signum in (signal.SIGTERM, signal.SIGINT):
+            with self.subTest(signal=signum):
+                ready = Path(self.temp.name) / f'ready-{signum}'
+                marker = Path(self.temp.name) / f'orphan-{signum}'
+                child = ('import time; from pathlib import Path; '
+                         f'Path({str(ready)!r}).touch(); time.sleep(0.6); '
+                         f'Path({str(marker)!r}).touch()')
+                code = ('import subprocess,sys,time; '
+                        f'subprocess.Popen([sys.executable,"-c",{child!r}]); time.sleep(10)')
+                command = [sys.executable, str(SCRIPT), '--repo', str(self.root),
+                           'run', '--label', 'native', '--', sys.executable, '-c', code]
+                runner = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+                directory = self.root / '.git/fleet-evidence'
+                try:
+                    deadline = time.monotonic() + 5
+                    while not ready.exists() and runner.poll() is None and time.monotonic() < deadline:
+                        time.sleep(0.01)
+                    self.assertTrue(ready.exists(), 'child did not start')
+                    runner.send_signal(signum)
+                    out, err = runner.communicate(timeout=5)
+                    time.sleep(0.8)
+                    self.assertFalse(marker.exists(), 'cancelled runner left a live descendant')
+                    self.assertEqual(128 + signum, runner.returncode, out + err)
+                    record = json.loads(Path(json.loads(out)['receipt']).read_text())
+                    self.assertEqual('interrupted', record['status'])
+                    self.assertEqual(128 + signum, record['exit_code'])
+                    self.assertFalse(list(directory.glob('*.lock')))
+                    retry = self.check(code)
+                    self.assertEqual(2, retry.returncode)
+                    self.assertIn('--retry-reason', retry.stderr)
+                finally:
+                    if runner.poll() is None:
+                        runner.kill()
+                        runner.communicate()
+                    # Also clean up descendants when testing the broken baseline.
+                    for path in directory.glob('*/result.json'):
+                        record = json.loads(path.read_text())
+                        if record.get('command', [])[-1:] == [code] and record.get('pid'):
+                            try:
+                                os.killpg(record['pid'], signal.SIGKILL)
+                            except ProcessLookupError:
+                                pass
 
     def test_branch_change_at_same_commit_invalidates_evidence(self):
         self.check('pass')

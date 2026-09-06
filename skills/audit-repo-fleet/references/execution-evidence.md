@@ -60,6 +60,12 @@ but changes source requires another stable validation run. A receipt does not
 certify future toolchain, environment, service, dependency, or host-CI state.
 Refresh those checks when their inputs change.
 
+Receipts use format version 1. Unknown versions, malformed ordering fields, and
+inconsistent successful results fail closed instead of revealing an older pass.
+Keep incompatible receipts for diagnosis and use the matching producer version
+or run a fresh check in an isolated worktree. Do not relabel their version or
+rewrite their outcome to make a report pass.
+
 ## Diagnose before retrying
 
 There are no automatic retries. An identical failed candidate and command require
@@ -72,16 +78,27 @@ observed transient failure and why another attempt is useful. Do not raise caps
 or rotate labels to hide a persistent failure. Continue independent work while
 an external prerequisite is unavailable.
 
-Concurrent identical commands are rejected while their run lock exists. An
-interrupted process normally releases its lock and saves an interrupted receipt.
-A forced kill can leave a running receipt and lock. Inspect the recorded PID and
-ownership before removing that exact stale lock. Never infer completion from a
-missing process or delete another invocation's lock.
+Concurrent identical commands are rejected while their run lock exists. SIGINT
+and SIGTERM during command execution stop the child process tree, save an
+interrupted receipt, and release the run lock. Their exit codes are 130 and 143.
+Cancellation remains accepted through final candidate verification and the first
+terminal receipt write. The runner then seals the outcome, applies any cancellation
+already received, and finishes receipt and lock cleanup without accepting another
+cancellation. A completed write cannot be rolled back by a later signal.
+An uncatchable kill or host failure can leave a running receipt and lock. Inspect
+the recorded PID and ownership before removing that exact stale lock. Never infer
+completion from a missing process or delete another invocation's lock.
 
-Timeout cleanup kills the command process group on POSIX systems. Windows uses
-`taskkill /T /F`; validate that path on Windows before claiming native coverage.
+Timeout and cancellation cleanup kill the command process group on POSIX systems.
+Windows uses `taskkill /T /F`; validate that path on Windows before claiming native coverage.
 Processes that deliberately escape their process group require an external
 sandbox or supervisor. This command runner is not a security boundary.
+
+After interruption, reconcile the recorded command's actual outputs before
+retrying. Cancellation cannot roll back a completed write. A receipt is check
+evidence, not a queue of actions to replay or permission to repeat publication.
+Keep existing authorization when its scope still applies. Changed destinations
+or operations need their own authority under the owning repository's rules.
 
 ## Review and deliver
 
