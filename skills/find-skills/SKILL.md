@@ -16,6 +16,11 @@ Find the smallest trustworthy addition that solves the user's recurring need. Do
 
 Use current web sources for repository contents, popularity, maintenance status, and compatibility claims. Install counts and stars are weak signals, not proof of quality.
 
+When an addition overlaps installed skills or context cost motivates the request,
+read [usage and context evidence](references/usage-and-context.md). Check whether
+the existing skill is discoverable before treating missing usage as a capability
+gap. Separate installed files, host-visible listings, and observed invocations.
+
 ## Evaluate
 
 Recommend a skill only when it adds non-obvious procedures, maintained domain knowledge, deterministic tooling, or reusable assets. Check:
