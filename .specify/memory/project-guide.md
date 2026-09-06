@@ -94,6 +94,17 @@ rationale and competing-artifact synthesis are not equivalent to ordinary review
 Compare actual procedures before reusing an overlap verdict. Keep the corrected
 blast-radius provenance and its local fallback when revisiting that source.
 
+## Dependency hygiene preference
+
+The user's 2026-09-06 instruction prefers SHA-pinned dependencies paired with
+Dependabot monitoring for updates. Apply this preference in CI maintenance,
+dependency triage, and fleet audits. Use full commit SHAs for Git references,
+image digests for containers, and native lockfile integrity for registry packages.
+The intent is reproducible dependency selection with maintained update coverage.
+Preserve explicit repository updater choices and report unsupported or unverified
+coverage. The owning contract is
+[dependency monitoring guidance](../../skills/triage-dependency-updates/SKILL.md#prefer-immutable-pins-with-update-monitoring).
+
 ## Preserve managed integration files
 
 Keep `.specify/templates/`, `.specify/scripts/`, and generated Codex skills under

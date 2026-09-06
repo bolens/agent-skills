@@ -48,6 +48,11 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Changed
 
+- Prefer immutable dependency pins paired with Dependabot version-update
+  monitoring in CI maintenance, dependency triage, and repository fleet audits.
+  Distinguish configured coverage from verified operation and record unsupported
+  pins or existing updater choices.
+
 - Add an explicitly requested retrospective Spec Kit baseline mapping all 61
   registered skills to contracts, source-audit dispositions, and evidence limits.
   Repair `blast-radius` steps that depended on unavailable companion workflows
