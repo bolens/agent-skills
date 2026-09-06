@@ -34,6 +34,8 @@ Record assignments in the existing task channel or repository convention:
 
 Assign shared manifests, lockfiles, schemas, migrations, generated clients, root configuration, and changelogs explicitly. Separate directories can still share a contract. Give each shared file one writer at a time. Agree on interface changes before consumers depend on them. Workers request a scope change before editing outside their assignment.
 
+For work with several dependent units or a failed handoff, use [work-unit dependencies and correction](references/work-units.md). Define acceptance evidence before assignment, preserve unaffected accepted work, and return failures to their responsible owner. This applies to serial coordination too and does not grant permission to delegate.
+
 ## Choose workspace isolation
 
 Prefer a distinct branch and worktree for each independent writer. Select a verified base SHA and unused branch and directory names. For example, after replacing the values with this task's assignment:
