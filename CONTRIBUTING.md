@@ -154,3 +154,8 @@ This collection continues to deliver through `main` without versioned releases.
 Keep one coherent purpose per commit. A PR should explain the changed behavior,
 the evidence supporting it, and any remaining limitations. Do not describe a
 local fork as an upstream release.
+
+## Devcontainer
+
+See [the devcontainer guide](.devcontainer/README.md) for the repository toolchain,
+setup, checks and platform limits.
