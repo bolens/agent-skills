@@ -6,6 +6,9 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Fixed
 
+- Retry macOS zombie-group signals after reaping the owned child, preserve real
+  permission failures, and include process inspection tools in the Linux dev image.
+
 - Bound polluter progress and error reporting when output consumers stop reading.
 
 - Bound test-polluter discovery and execution, skip dependency/cache trees,

@@ -23,33 +23,44 @@ def interrupt(signum, _frame):
     raise Interrupted(signum)
 
 
+def signal_group(process, signum):
+    """Reap an owned zombie before retrying Darwin's zombie-only EPERM."""
+    try:
+        os.killpg(process.pid, signum)
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        # XNU killpg1 excludes SZOMB members, yielding EPERM for a zombie-only
+        # group. Reap our leader and retry; never hide a persistent denial.
+        process.poll()
+        try:
+            os.killpg(process.pid, signum)
+        except ProcessLookupError:
+            return False
+    return True
+
+
 def stop_group(process):
     """Clean descendants even when their original parent has already exited."""
     pending_signals = []
     previous = {sig: signal.signal(sig, lambda signum, _frame: pending_signals.append(signum))
                 for sig in (signal.SIGINT, signal.SIGTERM)}
     try:
-        try:
-            os.killpg(process.pid, signal.SIGTERM)
-        except ProcessLookupError:
-            pass
-        else:
+        if signal_group(process, signal.SIGTERM):
             # Allow cooperative shutdown, then kill remaining group members.
             time.sleep(0.1)
-            try:
-                os.killpg(process.pid, signal.SIGKILL)
-            except ProcessLookupError:
-                pass
+            signal_group(process, signal.SIGKILL)
+    finally:
         try:
             process.wait(timeout=0.5)
         except subprocess.TimeoutExpired:
-            # SIGKILL is pending for an uninterruptible kernel task. Do not hang.
+            # SIGKILL can remain pending for an uninterruptible kernel task.
             pass
-    finally:
-        for sig, handler in previous.items():
-            signal.signal(sig, handler)
-        if pending_signals:
-            raise Interrupted(pending_signals[0])
+        finally:
+            for sig, handler in previous.items():
+                signal.signal(sig, handler)
+            if pending_signals:
+                raise Interrupted(pending_signals[0])
 
 
 def run_probe(command, output, deadline, byte_limit):

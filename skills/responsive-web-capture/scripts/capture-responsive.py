@@ -101,6 +101,23 @@ def arguments() -> argparse.Namespace:
 LOG_LIMIT = 1024 * 1024
 
 
+def signal_group(process, signum):
+    """Reap an owned zombie before retrying Darwin's zombie-only EPERM."""
+    try:
+        os.killpg(process.pid, signum)
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        # XNU killpg1 excludes SZOMB members, yielding EPERM for a zombie-only
+        # group. Reap our leader and retry; never hide a persistent denial.
+        process.poll()
+        try:
+            os.killpg(process.pid, signum)
+        except ProcessLookupError:
+            return False
+    return True
+
+
 @contextlib.contextmanager
 def defer_interrupts():
     """Record ownership or finish cleanup before delivering cancellation."""
@@ -149,10 +166,9 @@ def run(command: list[str], timeout: int, log: Path) -> None:
                 try:
                     with defer_interrupts():
                         try:
-                            os.killpg(process.pid, signal.SIGKILL)
-                        except ProcessLookupError:
-                            pass
-                        process.wait(timeout=1)
+                            signal_group(process, signal.SIGKILL)
+                        finally:
+                            process.wait(timeout=1)
                 finally:
                     process.stdout.close()
 

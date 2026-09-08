@@ -73,6 +73,23 @@ def discover(pattern, deadline, max_tests, max_entries):
     return sorted(matches)
 
 
+def signal_group(process, signum):
+    """Reap an owned zombie before retrying Darwin's zombie-only EPERM."""
+    try:
+        os.killpg(process.pid, signum)
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        # XNU killpg1 excludes SZOMB members, yielding EPERM for a zombie-only
+        # group. Reap our leader and retry; never hide a persistent denial.
+        process.poll()
+        try:
+            os.killpg(process.pid, signum)
+        except ProcessLookupError:
+            return False
+    return True
+
+
 def run_test(command, deadline):
     process = None
     try:
@@ -87,16 +104,11 @@ def run_test(command, deadline):
         if process is not None:
             with defer_interrupts():
                 try:
-                    os.killpg(process.pid, signal.SIGTERM)
-                except ProcessLookupError:
-                    pass
-                else:
-                    time.sleep(0.1)
-                    try:
-                        os.killpg(process.pid, signal.SIGKILL)
-                    except ProcessLookupError:
-                        pass
-                process.wait(timeout=1)
+                    if signal_group(process, signal.SIGTERM):
+                        time.sleep(0.1)
+                        signal_group(process, signal.SIGKILL)
+                finally:
+                    process.wait(timeout=1)
 
 
 def bounded_integer(low, high):
