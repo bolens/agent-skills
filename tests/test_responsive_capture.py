@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -20,6 +21,9 @@ mode = os.environ.get("CAPTURE_FIXTURE", "success")
 if mode == "hang":
     Path(os.environ["CAPTURE_MARKER"]).write_text("running")
     time.sleep(60)
+if mode == "flood":
+    os.write(1, b"x" * (2 * 1024 * 1024))
+    sys.exit(0)
 if mode == "missing":
     sys.exit(0)
 size = next(x.split("=", 1)[1] for x in sys.argv if x.startswith("--window-size="))
@@ -32,6 +36,11 @@ def chunk(kind, data):
 png = b"\\x89PNG\\r\\n\\x1a\\n" + chunk(b"IHDR", struct.pack(">IIBBBBB", w,h,8,2,0,0,0))
 png += chunk(b"IDAT", zlib.compress((b"\\0" + b"\\x80" * (w * 3)) * h)) + chunk(b"IEND", b"")
 path.write_bytes(png)
+if mode == "oversized":
+    with path.open("r+b") as stream:
+        stream.truncate(129 * 1024 * 1024)
+        stream.seek(-12, 2)
+        stream.write(png[-12:])
 '''
 
 
@@ -59,6 +68,18 @@ class ResponsiveCapture(unittest.TestCase):
     def receipts(self):
         return list((self.root / "evidence").rglob("receipt.json"))
 
+    def test_oversized_viewports_and_matrices_fail_before_capture(self):
+        cases = [("--viewport", "99999x99999"), ("--viewport", "8192x8192")]
+        many = []
+        for width in range(400, 433):
+            many.extend(["--viewport", f"{width}x600"])
+        cases.append(tuple(many))
+        for options in cases:
+            with self.subTest(options=options):
+                result = self.capture(*options)
+                self.assertEqual(2, result.returncode)
+                self.assertFalse((self.root / "evidence").exists())
+
     def test_successful_reruns_preserve_evidence_and_deduplicate_viewports(self):
         first = self.capture("--viewport", "320x568", "--motion", "browser-default")
         self.assertEqual(0, first.returncode, first.stderr)
@@ -68,6 +89,12 @@ class ResponsiveCapture(unittest.TestCase):
         self.assertEqual(0, second.returncode, second.stderr)
         self.assertEqual(2, len(self.receipts()))
         self.assertEqual(saved, original.read_bytes())
+        newer = next(path for path in self.receipts() if path != original)
+        first_capture = json.loads(saved)['captures'][0]
+        second_capture = json.loads(newer.read_text())['captures'][0]
+        self.assertEqual(first_capture['sha256'], second_capture['sha256'])
+        self.assertEqual(first_capture['bytes'], second_capture['bytes'])
+        self.assertEqual(first_capture['sha256'], hashlib.sha256((original.parent / first_capture['path']).read_bytes()).hexdigest())
         receipt = json.loads(saved)
         self.assertEqual("complete", receipt["status"])
         self.assertEqual(1, len(receipt["captures"]))
@@ -76,7 +103,7 @@ class ResponsiveCapture(unittest.TestCase):
         self.assertEqual("Fixture Browser 1", receipt["browser_version"])
 
     def test_missing_or_wrong_size_image_never_reports_complete(self):
-        for mode in ("missing", "wrong-size"):
+        for mode in ("missing", "wrong-size", "oversized"):
             with self.subTest(mode=mode):
                 result = self.capture(mode=mode)
                 self.assertNotEqual(0, result.returncode)
@@ -85,6 +112,21 @@ class ResponsiveCapture(unittest.TestCase):
             self.assertEqual("incomplete", receipt["status"])
             self.assertEqual([], receipt["captures"])
             self.assertEqual("320x568", receipt["active_viewport"])
+
+    def test_browser_log_flood_is_capped_and_reported(self):
+        result = self.capture(mode="flood")
+        self.assertEqual(1, result.returncode)
+        receipt_path = self.receipts()[0]
+        receipt = json.loads(receipt_path.read_text())
+        self.assertEqual("incomplete", receipt['status'])
+        self.assertIn("log exceeds", receipt['error'])
+        self.assertEqual(1024 * 1024, (receipt_path.parent / '320x568.browser.log').stat().st_size)
+
+    def test_large_png_reaches_size_guard(self):
+        result = self.capture(mode="oversized")
+        self.assertEqual(1, result.returncode)
+        receipt = json.loads(self.receipts()[0].read_text())
+        self.assertIn("PNG exceeds 128 MiB", receipt['error'])
 
     def test_hung_browser_is_bounded_and_leaves_failure_receipt(self):
         result = self.capture("--timeout", "1", mode="hang")

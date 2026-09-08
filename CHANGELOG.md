@@ -6,6 +6,37 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Fixed
 
+- Retry macOS zombie-group signals after reaping the owned child, preserve real
+  permission failures, and include process inspection tools in the Linux dev image.
+
+- Bound polluter progress and error reporting when output consumers stop reading.
+
+- Bound test-polluter discovery and execution, skip dependency/cache trees,
+  run tests in stable order, and stop owned descendants on timeout or cancellation.
+
+- Cap capture command and server logs, preserve cancellation during process
+  startup, and bound waits for cleanup. Exercise PNG size limits with a fixture
+  that passes the PNG structure check.
+
+- Preserve cancellation during health-probe cleanup, accept output exactly at
+  its byte limit, and mark writable reports incomplete after total timeout.
+
+- Remove GNU path-tool dependencies from health collection, verify cleanup on
+  POSIX hosts without `/proc`, and stabilize audit finding order across scans.
+
+- Reject oversized capture matrices and viewports before browser launch, and
+  hash screenshots in bounded chunks with a PNG size limit.
+
+- Avoid quadratic email scanning on long tokens and enforce file-read limits
+  when audit candidates grow or change type during inspection.
+
+- Bound workstation health probes, output, and collection time; clean up probe
+  descendants and preserve existing report files. Use cached package checks
+  without refreshing databases during health collection.
+
+- Require Make and the correct writable Git root before devcontainer setup reports
+  readiness, and explain Git, access, and Node-version failures.
+
 - Correct competing environment-contract ownership, pending-input validation,
   runtime secret-file guidance, browser fallback selection, and performance examples.
 - Prevent Archify acknowledgement-ordering fixtures from racing their short
@@ -36,6 +67,9 @@ All notable changes to this hard-fork collection are documented here.
   successful check from invalid saved evidence.
 
 ### Added
+
+- Define acceptance contracts for the recent Spec Kit checker and editor-container
+  setup scripts, with malformed-input, setup-failure, and preservation tests.
 
 - Add reference-led CSS normalization/reset selection, cascade-layer integration,
   and browser/accessibility verification guidance.
