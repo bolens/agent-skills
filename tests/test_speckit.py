@@ -1,6 +1,10 @@
 import hashlib
 import importlib.util
 import json
+import os
+import shutil
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -46,6 +50,9 @@ class ManagedIntegrationIntegrity(unittest.TestCase):
         memory = self.root / ".specify/memory/project-guide.md"
         memory.parent.mkdir()
         memory.write_text("Local guidance can change independently.\n")
+        override = self.root / ".specify/templates/overrides/spec-template.md"
+        override.parent.mkdir()
+        override.write_text("Project-owned template override.\n")
         before = {p: p.read_bytes() for p in self.root.rglob("*") if p.is_file()}
         self.assertEqual([], speckit.check(self.root))
         self.assertEqual(
@@ -105,6 +112,67 @@ class ManagedIntegrationIntegrity(unittest.TestCase):
                     "codex", {"integration": "codex", "files": {relative: digest}}
                 )
                 self.assertTrue(speckit.check(self.root))
+
+    def test_removed_manifest_entries_leave_no_existing_surface_unchecked(self):
+        for integration, paths in self.paths.items():
+            manifest = self.manifest_path(integration)
+            original = manifest.read_bytes()
+            for relative in paths:
+                with self.subTest(path=relative):
+                    content = json.loads(original)
+                    del content["files"][relative]
+                    # Keep a valid nonempty manifest even for the one-entry fixture.
+                    content["files"]["retained.txt"] = hashlib.sha256(
+                        b"retained"
+                    ).hexdigest()
+                    (self.root / "retained.txt").write_bytes(b"retained")
+                    self.write_manifest(integration, content)
+                    self.assertIn(
+                        f"{relative}: missing from", "\n".join(speckit.check(self.root))
+                    )
+                    manifest.write_bytes(original)
+
+    def run_cli(self):
+        script = self.root / "scripts/check-speckit.py"
+        script.parent.mkdir(exist_ok=True)
+        shutil.copyfile(SCRIPT, script)
+        return subprocess.run(
+            [sys.executable, str(script)],
+            capture_output=True,
+            text=True,
+            timeout=5,
+            check=False,
+        )
+
+    def test_cli_reports_success_and_drift_with_exit_status(self):
+        self.assertEqual(0, self.run_cli().returncode)
+        (self.root / self.paths["codex"][0]).write_text("changed")
+        result = self.run_cli()
+        self.assertEqual(1, result.returncode)
+        self.assertIn("hash mismatch", result.stdout)
+        self.assertNotIn("Traceback", result.stderr)
+
+    @unittest.skipUnless(hasattr(os, "mkfifo"), "named pipes require POSIX")
+    def test_named_pipe_manifests_and_managed_files_fail_without_blocking(self):
+        for target in (self.manifest_path("codex"), self.root / self.paths["codex"][0]):
+            with self.subTest(path=target):
+                original = target.read_bytes()
+                target.unlink()
+                os.mkfifo(target)
+                try:
+                    result = self.run_cli()
+                    self.assertEqual(1, result.returncode)
+                    self.assertIn("regular file", result.stdout)
+                finally:
+                    target.unlink()
+                    target.write_bytes(original)
+
+    def test_symlink_manifest_is_rejected(self):
+        manifest = self.manifest_path("codex")
+        destination = self.root / "saved-manifest.json"
+        manifest.rename(destination)
+        manifest.symlink_to(destination)
+        self.assertIn("symlink", "\n".join(speckit.check(self.root)))
 
     def test_symlink_file_and_parent_fail_even_with_matching_bytes(self):
         target = self.root / self.paths["codex"][0]

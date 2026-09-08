@@ -163,8 +163,13 @@ memory survives an integration update.
 
 `make check-fast` verifies every file recorded in the Spec Kit and Codex
 integration manifests, including templates and generated skill entrypoints.
-Missing manifests, missing files, changed bytes, and symlink replacements fail
-the gate. This is an integrity check against recorded hashes, not upstream
+Missing manifests, missing files, changed bytes, symlinks, and non-regular files
+fail the gate. Existing core Markdown templates, Bash helpers, and generated
+Spec Kit skill entrypoints must also appear in their owning manifest. Nested
+template overrides and project-owned memory stay outside that inventory.
+Removing both a file and its manifest entry requires review; the check cannot
+infer which files an upstream release should contain.
+This is an integrity check against recorded hashes, not upstream
 authenticity or proof of workflow behavior.
 
 When it fails, inspect the reported file and its diff before restoring an
