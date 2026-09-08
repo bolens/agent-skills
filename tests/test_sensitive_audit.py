@@ -8,8 +8,8 @@ import unittest
 from pathlib import Path
 
 SCANNER = Path(__file__).resolve().parents[1] / "skills/sensitive-info-audit/scripts/audit-sensitive.py"
-# Synthetic detector fixture, assembled to avoid looking like a stored credential.
-SECRET = "ghp_" + "a" * 36
+# Fabricated detector input only: fixed repeated characters, never a credential.
+DETECTOR_FIXTURE = "ghp_" + "a" * 36
 
 
 class SensitiveAudit(unittest.TestCase):
@@ -31,11 +31,11 @@ class SensitiveAudit(unittest.TestCase):
 
     def test_single_file_is_scanned_and_secrets_are_redacted(self) -> None:
         candidate = self.root / "candidate.txt"
-        candidate.write_text(SECRET)
+        candidate.write_text(DETECTOR_FIXTURE)
         result = self.scan(candidate)
         self.assertEqual(1, result.returncode)
         self.assertIn("github-token", result.stdout)
-        self.assertNotIn(SECRET, result.stdout + result.stderr)
+        self.assertNotIn(DETECTOR_FIXTURE, result.stdout + result.stderr)
 
     def test_empty_directory_reports_zero_scanned(self) -> None:
         result = self.scan(self.root)
@@ -50,7 +50,7 @@ class SensitiveAudit(unittest.TestCase):
         self.assertIn("skipped=1", result.stdout)
 
     def test_secret_status_wins_over_incomplete_scan(self) -> None:
-        (self.root / "secret.txt").write_text(SECRET)
+        (self.root / "secret.txt").write_text(DETECTOR_FIXTURE)
         (self.root / "large.txt").write_text("x" * 200)
         result = self.scan(self.root, "--max-bytes", "100")
         self.assertEqual(1, result.returncode)
@@ -61,7 +61,7 @@ class SensitiveAudit(unittest.TestCase):
         candidate = self.root / "candidate"
         candidate.mkdir()
         external = self.root / "external.txt"
-        external.write_text(SECRET)
+        external.write_text(DETECTOR_FIXTURE)
         (candidate / "link").symlink_to(external)
         result = self.scan(candidate)
         self.assertEqual(0, result.returncode)
@@ -90,7 +90,7 @@ class SensitiveAudit(unittest.TestCase):
                 candidate = self.root / mode
                 candidate.write_text("small")
                 external = self.root / "external"
-                external.write_text(SECRET)
+                external.write_text(DETECTOR_FIXTURE)
                 code = '''import os,runpy,sys
 from pathlib import Path
 from unittest.mock import patch
@@ -113,7 +113,7 @@ with patch('os.open', side_effect=changed):
                 self.assertEqual(2, result.returncode, result.stderr)
                 self.assertIn("skipped=1 scanned=0", result.stdout)
                 self.assertNotIn("github-token", result.stdout)
-                self.assertEqual(SECRET, external.read_text())
+                self.assertEqual(DETECTOR_FIXTURE, external.read_text())
 
     def test_report_order_is_independent_of_file_creation_order(self) -> None:
         reports = []
@@ -135,7 +135,7 @@ with patch('os.open', side_effect=changed):
         tracked = self.root / "tracked.txt"
         tracked.write_text("ordinary text")
         subprocess.run(["git", "-C", str(self.root), "add", "tracked.txt"], check=True)
-        (self.root / "untracked.txt").write_text(SECRET)
+        (self.root / "untracked.txt").write_text(DETECTOR_FIXTURE)
         self.assertEqual(0, self.scan(self.root).returncode)
         self.assertEqual(1, self.scan(self.root, "--include-untracked").returncode)
         tracked.unlink()
