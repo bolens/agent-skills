@@ -21,6 +21,10 @@ Largest Contentful Paint (LCP) measures when the largest content element in the 
 
 ## Detailed optimizations
 
+Select only remedies supported by the measured LCP subpart. A missing CDN or
+edge runtime is not itself a defect; preserve cache privacy and the application
+rendering contract when considering the examples below.
+
 ### 1. Server response time (TTFB)
 
 Target: < 800ms
@@ -46,20 +50,19 @@ res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
 
 **For images:**
 ```html
-<!-- Preload only when a trace shows the LCP image is discovered late -->
-<link rel="preload" as="image" href="/hero.webp"
-      imagesrcset="/hero-400.webp 400w, /hero-800.webp 800w"
-      imagesizes="100vw"
-      fetchpriority="high">
-
-<!-- Modern format with fallback -->
-<picture>
-  <source srcset="/hero.avif" type="image/avif">
-  <source srcset="/hero.webp" type="image/webp">
-  <img src="/hero.jpg" width="1200" height="600"
-       fetchpriority="high" alt="Hero">
-</picture>
+<!-- Discoverable responsive LCP image; choose sizes for the actual layout -->
+<img src="/hero-800.webp"
+     srcset="/hero-400.webp 400w, /hero-800.webp 800w"
+     sizes="100vw" width="1200" height="600"
+     fetchpriority="high" alt="Hero">
 ```
+
+Only add a preload when the trace still shows late discovery. Match the image's
+actual `srcset`, `sizes`, format, URL, and fetch mode so the request is reused.
+A WebP preload paired with an AVIF-selected `<picture>` can download both formats;
+preloading unrelated responsive candidates also wastes bandwidth. Inspect
+`currentSrc` and the network trace at the relevant viewports. See
+[responsive image preloads](https://web.dev/articles/preload-responsive-images).
 
 **For text (web fonts):**
 ```css
@@ -72,21 +75,13 @@ res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
 
 ### 3. Render blocking resources
 
-**Critical CSS pattern:**
-```html
-<head>
-  <!-- Inline critical CSS -->
-  <style>
-    /* Only above-fold styles, < 14KB */
-    .hero { /* ... */ }
-    .nav { /* ... */ }
-  </style>
-
-  <!-- Defer non-critical CSS -->
-  <link rel="preload" href="/styles.css" as="style"
-        onload="this.onload=null;this.rel='stylesheet'">
-</head>
-```
+Prefer the framework's supported CSS splitting/delivery mechanism when a trace
+identifies blocking styles. Inline only measured critical rules under the existing
+CSP, accounting for cache reuse and HTML growth; 14KB is not a universal budget.
+Do not copy an inline `onload` stylesheet switch into a strict-CSP application.
+If deferring CSS, verify it still loads with script failure/disabled scripting and
+that late styles do not break first paint or cause shifts. Preserve a working
+stylesheet path rather than weakening CSP. See [CSP guidance](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP).
 
 **Defer JavaScript:**
 ```html
@@ -138,45 +133,24 @@ function Page() {
 }
 ```
 
-## Framework-specific tips
+## Framework-specific choices
 
-### Next.js
-```jsx
-import Image from 'next/image';
+Use the installed framework and router's documented image/rendering APIs. Inspect
+the emitted HTML and requests; prop names alone do not prove early discovery.
 
-// LCP image with priority
-<Image
-  src="/hero.jpg"
-  priority
-  fill
-  sizes="100vw"
-  alt="Hero"
-/>
-```
+- Next.js: `priority` is deprecated starting in version 16. Choose `loading`,
+  `fetchPriority`, or `preload` for the measured cause; do not combine them blindly.
+  A `fill` image also needs a sized containing block to reserve layout space.
+  See the [Image API](https://nextjs.org/docs/app/api-reference/components/image).
+- Nuxt: use its image sizing and loading controls for the actual LCP candidate;
+  add `preload` only if discovery is late and verify the selected resource is reused.
+- Astro: retain intrinsic dimensions from its image pipeline and prioritize the
+  measured LCP resource. Do not force synchronous decoding as a general fix.
 
-### Nuxt
-```vue
-<NuxtImg
-  src="/hero.jpg"
-  preload
-  loading="eager"
-  sizes="100vw"
-/>
-```
-
-### Astro
-```astro
----
-import { Image } from 'astro:assets';
-import hero from '../assets/hero.jpg';
----
-<Image
-  src={hero}
-  loading="eager"
-  decoding="sync"
-  alt="Hero"
-/>
-```
+The SSR examples above use the Next.js Pages Router API. Match the existing
+router; a Suspense boundary alone does not establish that content streams from
+the server. Verify the response HTML and loading timeline before claiming SSR
+removed the delay.
 
 ## Debugging LCP
 

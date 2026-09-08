@@ -41,7 +41,10 @@ The helper requests reduced motion by default and records that choice. Use `--mo
 
 ## Capture limits and controls
 
-Use the repository's existing harness first when available. This fallback starts a fresh browser profile for every viewport. It does not reuse authentication, drive interactions, wait for hydration/fonts/images, scroll lazy content, assert page identity, or collect page-console/network diagnostics. For those checks and full-page coverage, use [cli-web-evidence](../cli-web-evidence/SKILL.md).
+Use the repository's existing harness first when it can reach and capture the
+required state. If it cannot, extend it or select a capable scripted tool through
+[cli-web-evidence](../cli-web-evidence/SKILL.md); do not fall back to an initial
+render when the task requires authenticated or hydrated state. The bundled fallback starts a fresh browser profile for every viewport. It does not reuse authentication, drive interactions, wait for hydration/fonts/images, scroll lazy content, assert page identity, or collect page-console/network diagnostics. For those checks and full-page coverage, use [cli-web-evidence](../cli-web-evidence/SKILL.md).
 
 PNG dimensions are output pixels. They do not establish `innerWidth`/`innerHeight`, device emulation, or coverage of another browser engine. The receipt records requested scale and motion settings, not measured application behavior. Keep baseline and comparison settings consistent.
 

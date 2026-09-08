@@ -78,8 +78,10 @@ introducing this isolation. Otherwise report concurrency support as unverified.
 Keep `.env.spec`, schema-backed fixtures, and generated documentation under the
 [environment contract](development-environments.md#environment-contracts-and-specification-based-examples).
 Pin the generator and inputs. Regenerate into a disposable checkout or use its
-native non-mutating check mode; compare the complete owned output set, including
-new, changed, and deleted files. A tracked-only diff can miss newly generated files.
+native non-mutating check mode. Include the actual candidate inputs, including
+owned uncommitted/new source files; a checkout of HEAD alone cannot verify pending
+schema edits. Preserve unrelated work when constructing that candidate. Compare
+the complete owned output set, including new, changed, and deleted files. A tracked-only diff can miss newly generated files.
 Avoid tests that silently repair expected output before comparing it.
 
 Run the same drift check locally and in CI. When output changes, inspect its owning
@@ -101,9 +103,11 @@ check the overlap rather than maintaining conflicting required/default rules.
 Secret declarations and ordinary non-secret configuration may have distinct owners.
 
 Prefer runtime injection into only the process needing the secret. Keep values
-out of Nix store-bound expressions, generated files, whole-session exports, logs,
-and artifacts. Retain existing provider access and avoid provisioning accounts or
-changing CI secrets as an incidental setup step. Verify missing-provider and
+out of Nix store-bound expressions, generated build outputs, whole-session exports,
+logs, and shared artifacts. If the application requires a runtime secret file,
+use the existing provider or private runtime mount with restricted permissions
+and owned lifecycle; never bake it into an image or commit it. Retain existing
+provider access and avoid provisioning accounts or changing CI secrets as an incidental setup step. Verify missing-provider and
 missing-required-secret failures with a fake provider or synthetic fixtures;
 assert that diagnostics stay value-free. An offline fixture is not proof that a
 real provider's access, rotation, or production integration works.

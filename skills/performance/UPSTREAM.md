@@ -18,7 +18,7 @@ Local changes to retain:
 - Require responsive and functional regression evidence when performance changes can affect those surfaces.
 - Route measured animation and player costs through web-animation and animation-assets, including active motion and route re-entry evidence.
 - Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior.
-- Keep measurement and task routing in SKILL.md; load budgets, loading, images, fonts, caching, runtime, and third-party examples only for the measured issue. Link navigation speculation directly to its conditional Core Web Vitals reference.
+- Keep measurement and task routing in SKILL.md; load budgets, loading, images, fonts, caching, runtime, and third-party examples only for the measured issue. Link navigation speculation directly to its conditional Core Web Vitals reference. Keep font/preconnect choices measured and CSS delivery compatible with existing CSP.
 
 Updates are audited and merged manually. This fork does not track or represent upstream releases.
 

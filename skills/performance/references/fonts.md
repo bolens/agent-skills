@@ -1,5 +1,10 @@
 ## Font optimization
 
+Choose font behavior from measured text-render delay and layout shifts. `swap`
+can expose fallback-metric shifts; compare fallback metrics and the supported
+font-display choices. Preserve all supported scripts when subsetting; the Latin
+range below is illustrative, not a default for multilingual applications.
+
 ### Loading strategy
 ```css
 /* System font stack as fallback */
@@ -20,6 +25,10 @@ body {
 ```
 
 ### Preloading critical fonts
+
+Preload only a face needed by the initial viewport when discovery delay is
+measured. Match URL, format, and fetch mode; verify reuse rather than a second
+download, and check that fonts do not delay the LCP image.
 ```html
 <link rel="preload" href="/fonts/heading.woff2" as="font" type="font/woff2" crossorigin>
 ```

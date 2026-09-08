@@ -124,10 +124,11 @@ copy that contract into a runtime environment. See the concrete
 [Runme environment specification example](https://runme.dev/blog/substitute-yaml-with-nouns-verbs)
 for one tool-specific implementation, not a universal format.
 
-Make `.env.spec` authoritative for the contract, with the existing application
-schema enforcing it or a supported validator checking it. Avoid independently
-maintained lists of keys. Wire setup, documentation, CI and container checks to
-that owner. When migrating an existing example, update all consumers and explicit
+Choose one authoritative contract. For a new environment contract, prefer
+`.env.spec` with a supported validator. If the application already owns a typed
+schema, derive or check `.env.spec` against it instead of introducing a competing
+source of truth. Avoid independently maintained lists of keys. Wire setup,
+documentation, CI and container checks to that owner. When migrating an existing example, update all consumers and explicit
 env-file paths together. Keep a generated compatibility example only if a consumer
 requires it; verify it stays synchronized. Do not rename files by extension alone,
 overwrite live `.env` files, or assume mise, Compose, devenv, or a devcontainer will
