@@ -146,6 +146,11 @@ extensions for every file. Keep useful runnable examples, generate them where
 practical, and test representative success and rejection cases against their
 owning contract. A schema check does not establish runtime service behavior.
 
+For environment precedence, repeatable setup/diagnostics, concurrent services,
+generated-output drift, or optional SecretSpec integration, read
+[setup and runtime contracts](setup-contracts.md). Keep these checks scoped to
+the environment path being introduced or repaired.
+
 ## Verify the developer path
 
 Start from a clean environment or disposable checkout that cannot borrow the

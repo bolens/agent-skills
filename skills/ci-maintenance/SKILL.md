@@ -14,7 +14,9 @@ improves reproducibility or onboarding. Share repository commands and version ow
 across environments; preserve working alternatives and verify the actual setup
 path selected by CI. When changing environment examples, prefer `.env.spec` with
 explicit consumer/validator support and native schema-backed fixtures as described
-in that reference.
+in that reference. Read [setup and runtime contracts](references/setup-contracts.md)
+when changing precedence, bootstrap diagnostics, concurrent services, generated
+examples, or secret-provider integration.
 
 ## Establish the applicable baseline
 

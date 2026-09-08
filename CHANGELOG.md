@@ -21,6 +21,9 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Added
 
+- Add conditional environment precedence, bootstrap diagnostics, concurrent-service
+  isolation/readiness, generated-contract checks, and optional SecretSpec guidance.
+
 - Prefer `.env.spec` environment contracts and native schema-backed examples, with explicit validation and coordinated consumer migration.
 
 - Prefer shared, pinned development tooling through mise, devenv, devcontainers,
