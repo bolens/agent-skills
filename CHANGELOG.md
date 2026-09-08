@@ -6,6 +6,9 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Fixed
 
+- Require Make and the correct writable Git root before devcontainer setup reports
+  readiness, and explain Git, access, and Node-version failures.
+
 - Correct competing environment-contract ownership, pending-input validation,
   runtime secret-file guidance, browser fallback selection, and performance examples.
 - Prevent Archify acknowledgement-ordering fixtures from racing their short
@@ -36,6 +39,9 @@ All notable changes to this hard-fork collection are documented here.
   successful check from invalid saved evidence.
 
 ### Added
+
+- Define acceptance contracts for the recent Spec Kit checker and editor-container
+  setup scripts, with malformed-input, setup-failure, and preservation tests.
 
 - Add reference-led CSS normalization/reset selection, cascade-layer integration,
   and browser/accessibility verification guidance.
