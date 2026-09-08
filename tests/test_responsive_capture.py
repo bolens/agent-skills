@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -83,6 +84,12 @@ class ResponsiveCapture(unittest.TestCase):
         self.assertEqual(0, second.returncode, second.stderr)
         self.assertEqual(2, len(self.receipts()))
         self.assertEqual(saved, original.read_bytes())
+        newer = next(path for path in self.receipts() if path != original)
+        first_capture = json.loads(saved)['captures'][0]
+        second_capture = json.loads(newer.read_text())['captures'][0]
+        self.assertEqual(first_capture['sha256'], second_capture['sha256'])
+        self.assertEqual(first_capture['bytes'], second_capture['bytes'])
+        self.assertEqual(first_capture['sha256'], hashlib.sha256((original.parent / first_capture['path']).read_bytes()).hexdigest())
         receipt = json.loads(saved)
         self.assertEqual("complete", receipt["status"])
         self.assertEqual(1, len(receipt["captures"]))

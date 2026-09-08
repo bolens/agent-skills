@@ -194,6 +194,8 @@ def main():
     parser.add_argument('--total-timeout', type=bounded_integer(1, 300), default=60, metavar='SECONDS')
     parser.add_argument('--max-bytes', type=bounded_integer(1024, 1048576), default=65536, help='output bytes per probe (default: 65536)')
     args = parser.parse_args()
+    if os.name != "posix":
+        parser.error("health probe supervision requires POSIX process groups")
     output = None
     fd = None
     owned = False

@@ -3,6 +3,7 @@ import argparse
 import importlib.util
 import io
 import os
+import shutil
 import signal
 import subprocess
 import sys
@@ -20,6 +21,7 @@ health = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(health)
 
 
+@unittest.skipUnless(os.name == "posix", "health supervision requires POSIX process groups")
 class HealthCollectorTests(unittest.TestCase):
     def probe(self, code, limit=4096, seconds=1):
         output = io.BytesIO()
@@ -45,10 +47,17 @@ class HealthCollectorTests(unittest.TestCase):
     def assert_stopped(self, pid):
         deadline = time.monotonic() + 2
         while time.monotonic() < deadline:
-            try:
-                state = Path(f'/proc/{pid}/stat').read_text().rsplit(')', 1)[1].split()[0]
-            except FileNotFoundError:
-                return
+            if sys.platform.startswith('linux'):
+                try:
+                    state = Path(f'/proc/{pid}/stat').read_text().rsplit(')', 1)[1].split()[0]
+                except FileNotFoundError:
+                    return
+            else:
+                result = subprocess.run(['ps', '-o', 'stat=', '-p', str(pid)], capture_output=True, text=True, timeout=2, check=False)
+                if result.returncode == 1 and not result.stdout.strip():
+                    return
+                self.assertEqual(result.returncode, 0, result.stderr)
+                state = result.stdout.strip()[:1]
             if state == 'Z':
                 return  # Already dead; only the host's reaper owns this zombie.
             time.sleep(0.01)
@@ -60,7 +69,7 @@ class HealthCollectorTests(unittest.TestCase):
         self.assert_stopped(int(output))
 
     def test_inherited_pipe_is_bounded_and_stubborn_child_is_killed(self):
-        status, output = self.probe("import subprocess,sys\np=subprocess.Popen([sys.executable,'-c','import signal,time; signal.signal(signal.SIGTERM,signal.SIG_IGN); time.sleep(60)'])\nprint(p.pid,flush=True)", seconds=0.5)
+        status, output = self.probe("import subprocess,sys\np=subprocess.Popen([sys.executable,'-c','import signal,time; signal.signal(signal.SIGTERM,signal.SIG_IGN); time.sleep(60)'])\nprint(p.pid,flush=True)", seconds=2)
         self.assertEqual(status, 'TIMEOUT')
         self.assert_stopped(int(output))
 
@@ -68,7 +77,7 @@ class HealthCollectorTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             marker = Path(tmp) / 'cleanup'
             code = f"import signal,time,sys\ndef finish(*args):\n open({str(marker)!r},'w').write('cleaned')\n sys.exit(0)\nsignal.signal(signal.SIGTERM,finish)\nprint('ready',flush=True)\ntime.sleep(60)"
-            status, output = self.probe(code, seconds=0.5)
+            status, output = self.probe(code, seconds=2)
             self.assertEqual(status, 'TIMEOUT')
             self.assertEqual(output, b'ready\n')
             self.assertEqual(marker.read_text(), 'cleaned')
@@ -133,6 +142,16 @@ class HealthCollectorTests(unittest.TestCase):
             self.assertEqual(result.returncode, 2)
             self.assertFalse((Path(tmp) / 'new').exists())
             self.assertEqual(target.read_text(), 'keep')
+
+    def test_symlink_entrypoint_needs_no_coreutils(self):
+        with tempfile.TemporaryDirectory(prefix='health wrapper ') as tmp:
+            root = Path(tmp)
+            (root / 'python3').symlink_to(sys.executable)
+            wrapper = root / 'renamed entry.sh'
+            wrapper.symlink_to(WRAPPER)
+            result = subprocess.run([shutil.which('bash'), str(wrapper), '--help'], env={**os.environ, 'PATH': str(root)}, capture_output=True, text=True, timeout=5, check=False)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn('--total-timeout', result.stdout)
 
     def test_private_report_and_entrypoint(self):
         with tempfile.TemporaryDirectory() as tmp:

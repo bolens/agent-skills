@@ -13,7 +13,9 @@ Establish current facts before proposing repairs. Keep collection read-only and 
 - **Full:** Run `scripts/collect-health.sh full` when the quick pass is inconclusive. This adds bounded journal, kernel, sensor, network, graphics, and package checks.
 - **Incident:** Start with the quick snapshot, then narrow evidence around the reported time and subsystem. Use `diagnose-crash` for a specific coredump.
 
-The shell entry point requires Python 3 and supervises probes sequentially. Defaults
+The shell entry point requires Bash and Python 3.9+ and supervises probes sequentially.
+It resolves symlinks with Python and does not require GNU path utilities. Probe
+commands target Linux. Process supervision requires POSIX process groups. Defaults
 are 8 seconds per probe, a 60-second collection budget, and 64 KiB of output per
 probe. Use `--probe-timeout`, `--total-timeout`, and `--max-bytes` for a bounded
 increase after identifying missing evidence. Timeouts and truncated output are

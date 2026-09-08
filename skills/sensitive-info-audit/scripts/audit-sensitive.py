@@ -41,7 +41,8 @@ def read_candidate(path: Path, metadata: os.stat_result, limit: int) -> bytes:
         data = os.fsencode(os.readlink(path))
     else:
         # Do not follow a replaced link or block while opening a substituted FIFO.
-        flags = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_NONBLOCK", 0)
+        flags = (os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0)
+                 | getattr(os, "O_NONBLOCK", 0) | getattr(os, "O_BINARY", 0))
         fd = os.open(path, flags)
         with os.fdopen(fd, "rb") as stream:
             opened = os.fstat(stream.fileno())
@@ -86,8 +87,8 @@ else:
     parser.error("input must be a regular file, symlink, or directory")
 
 secrets = warnings = skipped = scanned = 0
-for path in files:
-    relative = path.relative_to(root)
+for path in sorted(set(files), key=lambda item: item.relative_to(root).as_posix()):
+    relative = path.relative_to(root).as_posix()
     try:
         metadata = path.lstat()
         if not (stat.S_ISREG(metadata.st_mode) or stat.S_ISLNK(metadata.st_mode)):

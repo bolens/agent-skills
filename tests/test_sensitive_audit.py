@@ -115,6 +115,21 @@ with patch('os.open', side_effect=changed):
                 self.assertNotIn("github-token", result.stdout)
                 self.assertEqual(SECRET, external.read_text())
 
+    def test_report_order_is_independent_of_file_creation_order(self) -> None:
+        reports = []
+        for name, order in [('first', ['z/file.txt', 'a/file.txt']), ('second', ['a/file.txt', 'z/file.txt'])]:
+            root = self.root / name
+            root.mkdir()
+            for relative in order:
+                candidate = root / relative
+                candidate.parent.mkdir()
+                candidate.write_text('person@example.org\n')
+            result = self.scan(root)
+            self.assertEqual(0, result.returncode, result.stderr)
+            reports.append(result.stdout)
+        self.assertEqual(reports[0], reports[1])
+        self.assertLess(reports[0].index('a/file.txt'), reports[0].index('z/file.txt'))
+
     def test_git_scope_preserves_untracked_opt_in_and_reports_missing_files(self) -> None:
         subprocess.run(["git", "init", "-q", str(self.root)], check=True)
         tracked = self.root / "tracked.txt"
