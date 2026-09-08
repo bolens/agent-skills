@@ -76,7 +76,7 @@ suite needs Node 22 and its platform/browser dependencies.
 
 | Command | Evidence |
 | --- | --- |
-| `make check-fast` | Metadata, generated provenance, and Python, shell, and JavaScript syntax |
+| `make check-fast` | Metadata, generated provenance, Spec Kit managed-file integrity, and Python, shell, and JavaScript syntax |
 | `make test` | Repository contracts and helper behavior covered by the test suite |
 | `make portability` | Paths, shebangs, line endings, managed shell hashes, and shell lint |
 | `make links` | Registered installation targets resolve to this checkout |

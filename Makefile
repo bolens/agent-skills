@@ -2,6 +2,7 @@
 
 check-fast:
 	python3 scripts/update-provenance.py --check
+	python3 scripts/check-speckit.py
 	python3 scripts/validate.py
 
 test:

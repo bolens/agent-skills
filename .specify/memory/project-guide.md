@@ -161,6 +161,18 @@ of editing generated copies to satisfy local style preferences. Put local
 planning guidance here or in the constitution and verify that project-owned
 memory survives an integration update.
 
+`make check-fast` verifies every file recorded in the Spec Kit and Codex
+integration manifests, including templates and generated skill entrypoints.
+Missing manifests, missing files, changed bytes, and symlink replacements fail
+the gate. This is an integrity check against recorded hashes, not upstream
+authenticity or proof of workflow behavior.
+
+When it fails, inspect the reported file and its diff before restoring an
+accidental edit or regenerating through Spec Kit's normal update mechanism.
+Do not rewrite manifest hashes to accept local edits. Keep repository-specific
+instructions in project-owned memory; preserve and review that memory across
+updates. The checker is read-only and does not install or update integrations.
+
 ## Semantic naming and version preference
 
 The user's 2026-09-06 request sets Conventional Commits as the default for
