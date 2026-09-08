@@ -68,6 +68,53 @@ class SensitiveAudit(unittest.TestCase):
         self.assertNotIn("github-token", result.stdout)
         self.assertIn("scanned=1", result.stdout)
 
+    def test_long_nonmatching_tokens_finish_without_backtracking_stall(self) -> None:
+        candidate = self.root / "long.txt"
+        candidate.write_bytes(b"a" * 1000000 + b"\n" + b"a" * 1000000 + b"@invalid\n")
+        result = self.scan(candidate)
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertIn("scanned=1", result.stdout)
+
+    def test_email_detection_retains_punctuation_and_plus_addresses(self) -> None:
+        candidate = self.root / "addresses.txt"
+        candidate.write_text("<person+tag@example.org>\nfirst.last@example.net\n")
+        result = self.scan(candidate)
+        self.assertEqual(0, result.returncode)
+        self.assertIn("privacy_review=2", result.stdout)
+        self.assertNotIn("person+tag", result.stdout)
+
+    @unittest.skipUnless(os.name == "posix", "race fixtures require POSIX file types")
+    def test_changed_candidates_are_incomplete_and_never_followed(self) -> None:
+        for mode in ("grow", "symlink", "fifo"):
+            with self.subTest(mode=mode):
+                candidate = self.root / mode
+                candidate.write_text("small")
+                external = self.root / "external"
+                external.write_text(SECRET)
+                code = '''import os,runpy,sys
+from pathlib import Path
+from unittest.mock import patch
+script, candidate, external, mode = sys.argv[1:]
+original = os.open
+def changed(path, flags, *args, **kwargs):
+    if Path(path) == Path(candidate):
+        if mode == 'grow':
+            Path(path).write_text('x' * 100)
+        else:
+            Path(path).unlink()
+            if mode == 'symlink': Path(path).symlink_to(external)
+            else: os.mkfifo(path)
+    return original(path, flags, *args, **kwargs)
+sys.argv = [script, candidate, '--max-bytes', '50']
+with patch('os.open', side_effect=changed):
+    runpy.run_path(script, run_name='__main__')
+'''
+                result = subprocess.run([sys.executable, "-c", code, str(SCANNER), str(candidate), str(external), mode], capture_output=True, text=True, timeout=3, check=False)
+                self.assertEqual(2, result.returncode, result.stderr)
+                self.assertIn("skipped=1 scanned=0", result.stdout)
+                self.assertNotIn("github-token", result.stdout)
+                self.assertEqual(SECRET, external.read_text())
+
     def test_git_scope_preserves_untracked_opt_in_and_reports_missing_files(self) -> None:
         subprocess.run(["git", "init", "-q", str(self.root)], check=True)
         tracked = self.root / "tracked.txt"

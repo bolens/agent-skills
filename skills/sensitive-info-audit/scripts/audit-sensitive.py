@@ -21,7 +21,7 @@ SECRET_PATTERNS = {
 PRIVACY_PATTERNS = {
     "home-path": re.compile(rb"(?:/home|/Users)/[A-Za-z0-9._-]+"),
     "private-ip": re.compile(rb"(?<![0-9])(?:10\.(?:[0-9]{1,3}\.){2}[0-9]{1,3}|192\.168\.(?:[0-9]{1,3}\.)[0-9]{1,3}|172\.(?:1[6-9]|2[0-9]|3[01])\.(?:[0-9]{1,3}\.)[0-9]{1,3})(?![0-9])"),
-    "email": re.compile(rb"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}"),
+    "email": re.compile(rb"(?<![A-Za-z0-9._%+-])[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}"),
 }
 
 
@@ -34,6 +34,24 @@ def git_files(root: Path, include_untracked: bool) -> Optional[list[Path]]:
         command += ["--cached", "--others", "--exclude-standard"]
     result = subprocess.run(command, check=True, capture_output=True).stdout
     return [root / os.fsdecode(item) for item in result.split(b"\0") if item]
+
+
+def read_candidate(path: Path, metadata: os.stat_result, limit: int) -> bytes:
+    if stat.S_ISLNK(metadata.st_mode):
+        data = os.fsencode(os.readlink(path))
+    else:
+        # Do not follow a replaced link or block while opening a substituted FIFO.
+        flags = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_NONBLOCK", 0)
+        fd = os.open(path, flags)
+        with os.fdopen(fd, "rb") as stream:
+            opened = os.fstat(stream.fileno())
+            if (not stat.S_ISREG(opened.st_mode)
+                    or (opened.st_dev, opened.st_ino) != (metadata.st_dev, metadata.st_ino)):
+                raise OSError("candidate changed before reading")
+            data = stream.read(limit + 1)
+    if len(data) > limit:
+        raise ValueError("exceeds --max-bytes while reading")
+    return data
 
 
 parser = argparse.ArgumentParser()
@@ -80,7 +98,11 @@ for path in files:
             print(f"SKIP\t{relative}\texceeds --max-bytes")
             skipped += 1
             continue
-        data = os.fsencode(os.readlink(path)) if stat.S_ISLNK(metadata.st_mode) else path.read_bytes()
+        data = read_candidate(path, metadata, args.max_bytes)
+    except ValueError:
+        print(f"SKIP\t{relative}\texceeds --max-bytes while reading")
+        skipped += 1
+        continue
     except OSError:
         print(f"SKIP\t{relative}\tmissing or unreadable")
         skipped += 1

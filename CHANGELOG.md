@@ -6,6 +6,9 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Fixed
 
+- Avoid quadratic email scanning on long tokens and enforce file-read limits
+  when audit candidates grow or change type during inspection.
+
 - Bound workstation health probes, output, and collection time; clean up probe
   descendants and preserve existing report files. Use cached package checks
   without refreshing databases during health collection.
