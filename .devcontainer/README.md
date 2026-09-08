@@ -3,9 +3,10 @@
 Open this repository in VS Code and run **Dev Containers: Reopen in
 Container**. A local Docker-compatible engine and the Dev Containers extension
 are required. The first build downloads the pinned tool images and distribution
-packages. Setup installs dependencies from this checkout's lockfiles and runs
-`smoke.sh`. Rebuild the container after Dockerfile changes. Rerun
-`bash .devcontainer/post-create.sh` after changing dependency lockfiles.
+packages. Post-create setup runs `smoke.sh` to verify the mounted checkout and
+tools already installed in the image. It does not install checkout dependencies.
+Rebuild after Dockerfile changes. Rerun `bash .devcontainer/post-create.sh` to
+check readiness after changing the workspace or tool environment.
 
 The portable gate works in a checkout. The installed-skill link check in
 `make check` belongs to the canonical host checkout. Do not repoint host skill
@@ -22,7 +23,8 @@ source is bind-mounted at `/workspace` and is never copied into image layers.
 Use a regular clone when the container cannot see a linked worktree's external
 Git directory. Keep credentials in your local development environment.
 
-`bash .devcontainer/smoke.sh` checks installed tools and checkout access. It
+`bash .devcontainer/smoke.sh` checks the writable Git root, required tool presence
+including Make, and Node 26. Failures identify the missing prerequisite. It
 does not run the application test suite. No application starts automatically.
 Image references include immutable digests. Dependabot monitors the Dockerfiles
 where supported. Distribution packages resolve from the configured Debian

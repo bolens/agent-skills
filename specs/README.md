@@ -16,6 +16,7 @@ identifies existing behavior, source coverage, and verification limits.
 | [009 Local Sentrux analysis](009-sentrux-local-analysis/spec.md) | Optional verified snapshots, comparison identity, and runtime notice retention |
 | [010 Linux platform skills](010-linux-platform-skills/spec.md) | Arch, CachyOS, NixOS, and installation-aware Omarchy routing |
 | [011 Portable development guidance](011-portable-development-guidance/spec.md) | Shared mise, devenv, devcontainer, and CI toolchain ownership |
+| [013 Recent code contracts](013-recent-code-contracts/spec.md) | Dated inventory, Spec Kit integrity, and editor-container setup acceptance with executable evidence |
 
 The retrospective baseline contains contracts for
 [maintenance](006-retrospective-baseline/contracts/maintenance.md),
