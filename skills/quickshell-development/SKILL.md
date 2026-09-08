@@ -23,6 +23,6 @@ Use existing component tokens, keyboard/focus conventions, accessible names, and
 
 Run the repository's QML lint/type checks with its import paths and versions, then behavior tests for changed state/lifecycle logic. Exercise relevant show/hide, enable/disable, reload, monitor add/remove, failed helper, and stale response cases. Use the repository's isolated graphical harness or an authorized test session. Real Wayland focus, layering, scale, and input behavior needs graphical evidence; offscreen tests or source-pattern checks cannot prove it.
 
-Use [omarchy](../omarchy/SKILL.md) when the requested change edits live desktop configuration. Use [audit-omarchy-plugin](../audit-omarchy-plugin/SKILL.md) for a separate publication/readiness audit and [babysit](../babysit/SKILL.md) for PR or release follow-through. Do not install or reload a live plugin merely to complete a source-only change.
+Use [omarchy](../omarchy/SKILL.md) when an identified Omarchy installation owns the live desktop configuration being changed. Otherwise follow the actual shell/configuration owner. Use [audit-omarchy-plugin](../audit-omarchy-plugin/SKILL.md) for a separate publication/readiness audit and [babysit](../babysit/SKILL.md) for PR or release follow-through. Do not install or reload a live plugin merely to complete a source-only change.
 
 Report implementation, ownership/lifecycle decisions, regression checks, graphical observations, and environmental skips. Keep runtime proof distinct from marketplace policy validation.
