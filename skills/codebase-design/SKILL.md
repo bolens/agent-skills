@@ -30,6 +30,8 @@ Treat these as reasoning aids, not rules. A thin adapter can be valuable for iso
 
 ## Design
 
+When changing a consumer-facing boundary, read [experience and interfaces](references/experience-and-interfaces.md). Identify the relevant user, developer, or agent journey and its observable friction before choosing an API, command, or UI. Include operator and maintainer needs when the boundary affects them.
+
 Before adding structure, check whether existing code, the standard library, a platform capability, or an installed dependency already meets the requirement. Name the concrete candidate and compare its contract with the callers' needs. A matching API name is insufficient: check errors, ordering, lifetime, concurrency, and supported runtimes where they matter.
 
 Include retaining the current design as an option when no demonstrated problem requires a change. Remove speculative extensions from proposals, but preserve requested behavior. Prefer the option with the lowest maintenance cost that satisfies the contract, even when it needs more lines or an additional dependency.

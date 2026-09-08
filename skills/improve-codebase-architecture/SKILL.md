@@ -24,6 +24,8 @@ Read existing debt notes when they explain a candidate's limits. Identify the co
 
 When dependency cycles, forbidden imports, or structural regression are part of the question, read [structural evidence](references/structural-evidence.md). Use comparable measurements and source-confirmed edges to assess candidates. Keep aggregate quality scores subordinate to repository contracts and observed maintenance cost.
 
+Consider discovery, setup, invocation, feedback, and recovery costs for actual users, developers, agents, and operators when they explain architectural friction. Use [experience and interfaces](../codebase-design/references/experience-and-interfaces.md) for affected boundaries. Name the consumer and a representative failing or costly journey before recommending another interface or abstraction.
+
 ## Report
 
 Default to a concise Markdown report in the response. Create a file only when the user requests an artifact. For each candidate include:
