@@ -11,6 +11,10 @@ All notable changes to this hard-fork collection are documented here.
 - Prevent Archify acknowledgement-ordering fixtures from racing their short
   generic network deadline under suite load; retain production timeout behavior.
 
+- Reject unrecorded Spec Kit core files and non-regular integration files, so
+  removed manifest entries cannot hide existing files and named pipes cannot hang
+  the integrity check.
+
 - Check all Spec Kit integration files in the fast gate, detecting missing helpers,
   edited templates, and generated skill drift against their recorded manifests.
 
