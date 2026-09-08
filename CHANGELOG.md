@@ -6,6 +6,10 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Fixed
 
+- Bound workstation health probes, output, and collection time; clean up probe
+  descendants and preserve existing report files. Use cached package checks
+  without refreshing databases during health collection.
+
 - Correct competing environment-contract ownership, pending-input validation,
   runtime secret-file guidance, browser fallback selection, and performance examples.
 - Prevent Archify acknowledgement-ordering fixtures from racing their short
