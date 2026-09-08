@@ -16,6 +16,7 @@ License source: [LICENSE](https://github.com/basecamp/omarchy/blob/d3d23fdddef84
 
 Local changes to retain:
 - Route cross-subsystem failures through workstation-health-triage.
+- Verify systemd-coredump and distribution identity; require matching build symbols and offer Omarchy notification muting only where its watcher is installed and relevant.
 
 Updates are audited and merged manually. This fork does not track or represent upstream releases.
 

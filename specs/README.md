@@ -14,6 +14,8 @@ identifies existing behavior, source coverage, and verification limits.
 | [006 Retrospective baseline](006-retrospective-baseline/spec.md) | Collection coverage and completion assessment at `8e51a4f` |
 | [008 Release packaging](008-release-packaging/spec.md) | Conditional ecosystem targets, native variants, and lean current-platform builds |
 | [009 Local Sentrux analysis](009-sentrux-local-analysis/spec.md) | Optional verified snapshots, comparison identity, and runtime notice retention |
+| [010 Linux platform skills](010-linux-platform-skills/spec.md) | Arch, CachyOS, NixOS, and installation-aware Omarchy routing |
+| [011 Portable development guidance](011-portable-development-guidance/spec.md) | Shared mise, devenv, devcontainer, and CI toolchain ownership |
 
 The retrospective baseline contains contracts for
 [maintenance](006-retrospective-baseline/contracts/maintenance.md),

@@ -34,6 +34,12 @@ Supplement the inventory only where it changes prioritization:
 - distinguish archived/vendor mirrors from actively maintained repositories
 - inspect nested repositories or unusual worktree layouts separately when they fall outside the bounded inventory scan
 
+For developer setup drift, compare mise, devenv/Nix, devcontainer, and CI inputs
+using [portable development environments](../ci-maintenance/references/development-environments.md).
+Prefer reusable pinned setup and common native tasks where they reduce maintenance.
+Report concrete missing tools, mismatched versions, or untested setup paths, not
+the absence of a preferred manager as a defect. Migrate only within implementation scope.
+
 Never fetch every remote or run every repository's full suite merely to make the report look complete. Ask before network-heavy or long-running fleet operations.
 
 For dependency hygiene, prefer full commit SHA pins for Git dependencies, external actions, and reusable workflows, image digests for containers, and native lockfile integrity for registry packages. Pair pins with Dependabot version updates where supported. Compare actual pinned dependency locations against configured ecosystems, directories, schedules, exclusions, and PR limits. Separate mutable references, pins without update coverage, and configured monitoring whose recent operation is unverified. Use [dependency monitoring guidance](../triage-dependency-updates/SKILL.md#prefer-immutable-pins-with-update-monitoring) for evidence and existing-updater exceptions. Report gaps during audits and repair them only within authorized maintenance.

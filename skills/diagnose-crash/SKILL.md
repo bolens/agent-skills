@@ -18,6 +18,11 @@ plausible-sounding story.
 
 ## Establish the facts
 
+Confirm the target uses systemd-coredump and identify its distribution before
+choosing symbol services or desktop helpers. If no core exists, follow the
+application logs and [systematic-debugging](../systematic-debugging/SKILL.md)
+instead of treating a missing core as a completed diagnosis.
+
 `coredumpctl info <pid>` is the starting point. Beyond the backtrace, note the
 **command line** the process was started with — it usually reveals what the
 program was working on when it died, which is often the whole answer.
@@ -55,7 +60,7 @@ that it is actually implicated.
 
 ## Symbolize when you can
 
-This is Arch, which runs a public debuginfod server:
+On Arch, use its public debuginfod server for matching Arch packages:
 
 ```bash
 core=$(mktemp -t crash-XXXXXX.core)
@@ -74,6 +79,11 @@ Many packages publish no debug symbols. When frames stay unresolved, say so —
 never invent function names to fill the gap. An unsymbolized stack still has
 shape: which library each frame belongs to, and whether the crash came from a
 signal handler, a main loop, or a worker thread.
+
+For CachyOS or locally built packages, confirm build-ID-matched symbols instead
+of assuming Arch's server has them. On NixOS, resolve the executable and debug
+outputs for the exact store build using [nixos](../nixos/SKILL.md). Never install
+an unrelated current binary to symbolize a core from an older build.
 
 ## Report
 
@@ -94,9 +104,9 @@ diagnosis may make is the mute below, and only when the user asks for it.
 
 ## Offer to stop the notifications for this program
 
-A crash you have explained often keeps happening anyway. Finish by offering to
-silence notifications for **that one program**, and never run it unprompted. Say
-how to lift it in the same breath, so it is not a one-way door.
+When Omarchy's crash watcher is installed and repeated notifications are part of
+the user's problem, offer to silence **that one program**. Never run it unprompted.
+Say how to lift the mute too. Skip this section on other desktops.
 
 ```bash
 omarchy-crash-mute '<program>'        # silence it

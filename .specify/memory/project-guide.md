@@ -98,6 +98,15 @@ blast-radius provenance and its local fallback when revisiting that source.
 
 ## Dependency hygiene preference
 
+The user's 2026-09-07 instruction prefers mise and portable development
+environments where they improve developer experience, reproducibility, and
+maintenance. This includes devenv, devcontainers, and NixOS development VMs or
+system tests when OS behavior matters. Share tool/input ownership and
+native validation commands between local development, editor containers, and CI.
+Preserve working alternatives unless a scoped migration has a concrete benefit.
+The owning contract is [portable development environments](../../skills/ci-maintenance/references/development-environments.md).
+This preference does not require installing all managers or migrating every repo.
+
 The user's 2026-09-06 instruction prefers SHA-pinned dependencies paired with
 Dependabot monitoring for updates. Apply this preference in CI maintenance,
 dependency triage, and fleet audits. Use full commit SHAs for Git references,
@@ -162,3 +171,7 @@ Keep squash messages consistent with the final PR scope and preserve breaking
 metadata. Explicit repository schemes and native package ordering remain valid
 exceptions. This is instruction consistency work, not a request to add versioned
 releases to this collection or publish anything.
+
+### Environment contracts (2026-09-07)
+
+The user prefers `.env.spec` over `.env.example`/`.env.sample` where applicable, and specification-based examples that reduce drift. Use an explicit supported format and validator, update consumers together, preserve private runtime values, and reuse native schemas rather than renaming files indiscriminately. The shared [development guidance](../../skills/ci-maintenance/references/development-environments.md#environment-contracts-and-specification-based-examples) owns the procedure.

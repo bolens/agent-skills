@@ -95,7 +95,8 @@
       "branch": "quattro",
       "path": "default/agents/skills/diagnose-crash",
       "audited_ref": "d3d23fdddef846ebb98b52122a6ece66211c0daf",
-      "local_changes": ["Route cross-subsystem failures through workstation-health-triage."]
+      "local_changes": ["Route cross-subsystem failures through workstation-health-triage.",
+        "Verify systemd-coredump and distribution identity; require matching build symbols and offer Omarchy notification muting only where its watcher is installed and relevant."]
     },
     "find-skills": {
       "license": {"spdx": "MIT", "path": "LICENSE", "upstream_path": "LICENSE", "sha256": "661142e53c313d2bb5e1b055f5c0a39001450ff1b5e27b89dc4bc7de9a6352ca"},
@@ -143,7 +144,7 @@
       "branch": "quattro",
       "path": "default/agents/skills/omarchy",
       "audited_ref": "d3d23fdddef846ebb98b52122a6ece66211c0daf",
-      "local_changes": ["Keep desktop-session.md and its workstation health and config-drift routing.", "Keep the concise required end-user configuration trigger and source-development exclusion; retain detailed applicability in the skill body."]
+      "local_changes": ["Keep desktop-session.md and its workstation health and config-drift routing.", "Scope desktop triggers to identified Omarchy-owned configuration, preserve other distributions and source-development exclusion, and carry existing reset authorization forward."]
     },
     "performance": {
       "license": {"spdx": "MIT", "path": "LICENSE", "upstream_path": "LICENSE", "sha256": "c122223ac43e86421958e18623979942c21b642951e2e3736dcb63eff13587c3"},

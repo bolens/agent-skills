@@ -44,6 +44,20 @@
       ]
     },
     {
+      "name": "arch-linux",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/arch-linux",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/arch-linux"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/arch-linux",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/arch-linux",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/arch-linux"
+      ]
+    },
+    {
       "name": "arch-package-maintenance",
       "hard_fork": true,
       "origin": {
@@ -190,6 +204,20 @@
         "${CODEX_HOME:-$HOME/.codex}/skills/blast-radius",
         "${AGENTS_HOME:-$HOME/.agents}/skills/blast-radius",
         "${CLAUDE_HOME:-$HOME/.claude}/skills/blast-radius"
+      ]
+    },
+    {
+      "name": "cachyos",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/cachyos",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/cachyos"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/cachyos",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/cachyos",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/cachyos"
       ]
     },
     {
@@ -453,7 +481,8 @@
         "path": "default/agents/skills/diagnose-crash",
         "ref": "d3d23fdddef846ebb98b52122a6ece66211c0daf",
         "local_changes": [
-          "Route cross-subsystem failures through workstation-health-triage."
+          "Route cross-subsystem failures through workstation-health-triage.",
+          "Verify systemd-coredump and distribution identity; require matching build symbols and offer Omarchy notification muting only where its watcher is installed and relevant."
         ],
         "license": {
           "spdx": "MIT",
@@ -690,6 +719,20 @@
       ]
     },
     {
+      "name": "nixos",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/nixos",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/nixos"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/nixos",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/nixos",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/nixos"
+      ]
+    },
+    {
       "name": "omarchy",
       "hard_fork": true,
       "origin": {
@@ -700,7 +743,7 @@
         "ref": "d3d23fdddef846ebb98b52122a6ece66211c0daf",
         "local_changes": [
           "Keep desktop-session.md and its workstation health and config-drift routing.",
-          "Keep the concise required end-user configuration trigger and source-development exclusion; retain detailed applicability in the skill body."
+          "Scope desktop triggers to identified Omarchy-owned configuration, preserve other distributions and source-development exclusion, and carry existing reset authorization forward."
         ],
         "license": {
           "spdx": "MIT",

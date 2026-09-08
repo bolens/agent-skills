@@ -1,6 +1,6 @@
 ---
 name: arch-update-recovery
-description: Prepare, diagnose, verify, and recover Arch-family Linux upgrades involving pacman or AUR packages, pacnew files, kernels, initramfs, Btrfs snapshots, and bootloaders. Use for system-update readiness or failed-upgrade recovery; use omarchy for desktop customization.
+description: Prepare, diagnose, verify, and recover Arch-family Linux upgrades involving pacman or AUR packages, pacnew files, kernels, initramfs, Btrfs snapshots, and bootloaders. Use for system-update readiness or failed-upgrade recovery, not routine desktop customization or PKGBUILD authoring.
 ---
 
 # Arch update and recovery
@@ -8,6 +8,10 @@ description: Prepare, diagnose, verify, and recover Arch-family Linux upgrades i
 This skill is intentionally Arch-family specific. Establish installed state, boot chain, snapshot tooling, package helpers, repositories, kernels, graphics drivers, and managed configuration before recommending a transaction. Default to reporting. Do not upgrade, downgrade, remove packages, regenerate boot artifacts, roll back snapshots, or edit live system configuration without explicit authorization.
 
 ## Before an upgrade
+
+Identify the actual distribution. Use [cachyos](../cachyos/SKILL.md) when its
+repository priority, hardware profiles, kernel variants, or settings affect the
+transaction. Keep the upgrade workflow here instead of restarting it on handoff.
 
 Read the distribution's current official notices and the local repository's update functions, package list, pacman configuration, snapshot hooks, bootloader configuration, and repository guidance. Confirm:
 
@@ -38,7 +42,7 @@ Capture the exact command, transaction log, pacman log window, current booted ke
 
 Do not delete a lock while its owner is running, force package overwrites broadly, initialize a new keyring over an unexplained trust failure, or erase package caches needed for rollback. Prefer official package metadata and installed logs over forum recipes.
 
-Use `workstation-health-triage` for broad post-upgrade instability and `diagnose-crash` for a specific coredump. Use `omarchy` when the remaining problem is Hyprland, UWSM, portal, lock/idle, bar, terminal, or other desktop behavior rather than the package transaction itself.
+Use `workstation-health-triage` for broad post-upgrade instability and `diagnose-crash` for a specific coredump. Use `omarchy` only when Omarchy owns the remaining desktop problem. Otherwise use the installed desktop's guidance and [arch-linux](../arch-linux/SKILL.md) for system configuration.
 
 ## Recovery and verification
 

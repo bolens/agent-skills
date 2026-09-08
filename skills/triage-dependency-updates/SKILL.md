@@ -19,6 +19,11 @@ Require an update candidateâ€”a bot PR/diff, advisory, or user-supplied targetâ€
 
 Treat Docker tag changes, GitHub Action SHA changes, system packages, plugins, and downloaded binaries as dependency updates even when no package manager is involved.
 
+Include development tool pins and locks in mise, devenv/Nix, and devcontainers.
+Use [portable development environments](../ci-maintenance/references/development-environments.md)
+when updating those inputs or repairing local/CI version drift. Prefer shared,
+portable version ownership and verify updater coverage for each actual file.
+
 Check ecosystem-specific coupling when present: workspace catalogs and runtime/toolchain floors; minimum-release-age exceptions; lifecycle-script policy; Docker tag-plus-digest alignment; development versus container runtimes; reusable workflow and Action SHAs; generated clients; and platform package metadata.
 
 ## Prefer immutable pins with update monitoring

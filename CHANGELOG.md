@@ -6,6 +6,9 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Fixed
 
+- Scope Omarchy desktop and crash-helper routing to the actual installation,
+  and honor existing authorization for a requested configuration reset.
+
 - Preserve neighboring files during compression and report incomplete directory,
   discovery, pollution-search, and health-report operations as failures.
 - Align Caveman help with packaged behavior and keep unavailable reviewer or
@@ -17,6 +20,14 @@ All notable changes to this hard-fork collection are documented here.
   successful check from invalid saved evidence.
 
 ### Added
+
+- Prefer `.env.spec` environment contracts and native schema-backed examples, with explicit validation and coordinated consumer migration.
+
+- Prefer shared, pinned development tooling through mise, devenv, devcontainers,
+  and applicable NixOS VMs in CI and related maintenance workflows.
+
+- Add Arch system configuration, CachyOS repository/driver/tuning, and NixOS
+  declarative configuration skills with explicit activation and recovery evidence.
 
 - Add optional local Sentrux snapshots and structural comparisons on Linux x86_64,
   with verified runtime artifacts, retained license notices, and explicit source scopes.

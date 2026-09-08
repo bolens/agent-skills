@@ -41,6 +41,7 @@ specialized workflows.
 | Verify backups and network exposure | [backup-restore-verification](skills/backup-restore-verification/SKILL.md), [network-exposure-verification](skills/network-exposure-verification/SKILL.md) |
 | Prepare portable release packages and lean installations | [release-packaging](skills/release-packaging/SKILL.md) |
 | Maintain Arch packages, desktop components, and media utilities | [arch-package-maintenance](skills/arch-package-maintenance/SKILL.md), [quickshell-development](skills/quickshell-development/SKILL.md), [media-preservation](skills/media-preservation/SKILL.md) |
+| Configure Arch, CachyOS, NixOS, or an installed Omarchy desktop | [arch-linux](skills/arch-linux/SKILL.md), [cachyos](skills/cachyos/SKILL.md), [nixos](skills/nixos/SKILL.md), [omarchy](skills/omarchy/SKILL.md) |
 
 ## How the skills work together
 
@@ -185,6 +186,10 @@ See [SECURITY.md](SECURITY.md) for sensitive reports.
 ## Reproducible development
 
 Use the [development environment guide](docs/development-environments.md) for the pinned devenv shell and local Docker, Podman, and Apple container adapters. The portable Make targets remain the validation contract.
+
+The skills prefer [portable development setup](skills/ci-maintenance/references/development-environments.md)
+with mise, devenv, devcontainers, and NixOS development VMs when useful, sharing pinned inputs and native
+commands between local development and CI without forcing unnecessary migrations.
 
 ## License scope and attribution
 
