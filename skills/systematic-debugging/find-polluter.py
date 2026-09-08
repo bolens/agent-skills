@@ -7,6 +7,7 @@ import contextlib
 import fnmatch
 import os
 import shutil
+import select
 import signal
 import subprocess
 import sys
@@ -115,6 +116,35 @@ def target_exists(path):
     return True
 
 
+def emit(text, deadline, stream=None):
+    """Bound progress and error reporting even when a pipe consumer stalls."""
+    fd = (sys.stdout if stream is None else stream).fileno()
+    blocking = os.get_blocking(fd)
+    os.set_blocking(fd, False)
+    try:
+        pending = memoryview((text + '\n').encode('utf-8', errors='backslashreplace'))
+        while pending:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                raise TimeoutError('output deadline reached')
+            try:
+                written = os.write(fd, pending)
+                if written == 0:
+                    raise OSError('output made no progress')
+                pending = pending[written:]
+            except BlockingIOError:
+                select.select([], [fd], [], min(remaining, 0.1))
+    finally:
+        os.set_blocking(fd, blocking)
+
+
+def report_incomplete(message):
+    try:
+        emit(message, time.monotonic() + 0.1, sys.stderr)
+    except OSError:
+        pass
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('target', type=Path)
@@ -139,28 +169,28 @@ def main():
         npm = shutil.which('npm')
         if npm is None:
             raise ValueError('npm is not installed')
-        print(f'Found {len(tests)} test files', flush=True)
+        emit(f'Found {len(tests)} test files', deadline)
         failed = False
         for index, path in enumerate(tests, 1):
             if target_exists(args.target):
                 raise ValueError('target appeared between tests; attribution is inconclusive')
             if time.monotonic() >= deadline:
                 raise TimeoutError('total deadline reached; remaining tests skipped')
-            print(f'[{index}/{len(tests)}] Testing: {path!r}', flush=True)
+            emit(f'[{index}/{len(tests)}] Testing: {path!r}', deadline)
             code = run_test([npm, 'test', '--', path], min(deadline, time.monotonic() + args.timeout))
             if target_exists(args.target):
-                print(f'FOUND POLLUTER: {path!r}\nCreated: {str(args.target)!r}')
+                emit(f'FOUND POLLUTER: {path!r}\nCreated: {str(args.target)!r}', deadline)
                 return 1
             failed |= code != 0
         if failed:
             raise ValueError('a test failed; no creator of the target was observed')
-        print('No creator of the requested target was observed in the selected tests.')
+        emit('No creator of the requested target was observed in the selected tests.', deadline)
         return 0
     except Interrupted as exc:
-        print('Inconclusive: interrupted; observed artifacts preserved.', file=sys.stderr)
+        report_incomplete('Inconclusive: interrupted; observed artifacts preserved.')
         return 128 + exc.signum
     except (OSError, ValueError, subprocess.TimeoutExpired) as exc:
-        print(f'Inconclusive: {exc}', file=sys.stderr)
+        report_incomplete(f'Inconclusive: {exc}')
         return 2
     finally:
         for sig, handler in previous.items():

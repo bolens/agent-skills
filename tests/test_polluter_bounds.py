@@ -101,6 +101,29 @@ class PolluterBounds(unittest.TestCase):
                 (self.root / 'calls').unlink()
                 (self.root / 'child.pid').unlink()
 
+    def test_stalled_progress_and_error_consumers_do_not_defeat_deadline(self):
+        (self.root / 'a.test.ts').touch()
+        read_fd, write_fd = os.pipe()
+        process = None
+        try:
+            os.set_blocking(write_fd, False)
+            while True:
+                try:
+                    os.write(write_fd, b'x' * 4096)
+                except BlockingIOError:
+                    break
+            os.set_blocking(write_fd, True)
+            process = subprocess.Popen(['bash', str(SCRIPT), 'pollution', '*.test.ts', '--total-timeout', '1'], cwd=self.root, env=self.env, stdout=write_fd, stderr=write_fd)
+            self.assertEqual(2, process.wait(timeout=4))
+            self.assertFalse((self.root / 'calls').exists())
+        finally:
+            if process is not None:
+                if process.poll() is None:
+                    process.kill()
+                process.wait()
+            os.close(write_fd)
+            os.close(read_fd)
+
     def test_cancellation_cleans_test_group_and_preserves_artifacts(self):
         (self.root / 'a.test.ts').touch()
         self.env['POLLUTER_FIXTURE'] = 'hang'

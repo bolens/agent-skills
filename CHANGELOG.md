@@ -6,6 +6,8 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Fixed
 
+- Bound polluter progress and error reporting when output consumers stop reading.
+
 - Bound test-polluter discovery and execution, skip dependency/cache trees,
   run tests in stable order, and stop owned descendants on timeout or cancellation.
 

@@ -18,7 +18,8 @@ all test execution, rather than testing an incomplete selection.
 Defaults are 60 seconds per test, 600 seconds for discovery and tests together,
 1,000 matching tests, and 100,000 inspected entries. Use `--timeout`,
 `--total-timeout`, `--max-tests`, and `--max-entries` for a bounded adjustment after
-narrowing the pattern. A stalled filesystem operation in the kernel cannot be
+narrowing the pattern. Progress output shares the total deadline, including pipe
+backpressure. Error reporting gets a separate best-effort 0.1-second window. A stalled filesystem operation in the kernel cannot be
 interrupted by the discovery deadline check.
 
 Each test starts in an owned process group with stdin closed and output discarded.
