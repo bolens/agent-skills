@@ -32,6 +32,9 @@ def chunk(kind, data):
 png = b"\\x89PNG\\r\\n\\x1a\\n" + chunk(b"IHDR", struct.pack(">IIBBBBB", w,h,8,2,0,0,0))
 png += chunk(b"IDAT", zlib.compress((b"\\0" + b"\\x80" * (w * 3)) * h)) + chunk(b"IEND", b"")
 path.write_bytes(png)
+if mode == "oversized":
+    with path.open("r+b") as stream:
+        stream.truncate(129 * 1024 * 1024)
 '''
 
 
@@ -59,6 +62,18 @@ class ResponsiveCapture(unittest.TestCase):
     def receipts(self):
         return list((self.root / "evidence").rglob("receipt.json"))
 
+    def test_oversized_viewports_and_matrices_fail_before_capture(self):
+        cases = [("--viewport", "99999x99999"), ("--viewport", "8192x8192")]
+        many = []
+        for width in range(400, 433):
+            many.extend(["--viewport", f"{width}x600"])
+        cases.append(tuple(many))
+        for options in cases:
+            with self.subTest(options=options):
+                result = self.capture(*options)
+                self.assertEqual(2, result.returncode)
+                self.assertFalse((self.root / "evidence").exists())
+
     def test_successful_reruns_preserve_evidence_and_deduplicate_viewports(self):
         first = self.capture("--viewport", "320x568", "--motion", "browser-default")
         self.assertEqual(0, first.returncode, first.stderr)
@@ -76,7 +91,7 @@ class ResponsiveCapture(unittest.TestCase):
         self.assertEqual("Fixture Browser 1", receipt["browser_version"])
 
     def test_missing_or_wrong_size_image_never_reports_complete(self):
-        for mode in ("missing", "wrong-size"):
+        for mode in ("missing", "wrong-size", "oversized"):
             with self.subTest(mode=mode):
                 result = self.capture(mode=mode)
                 self.assertNotEqual(0, result.returncode)

@@ -6,6 +6,9 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Fixed
 
+- Reject oversized capture matrices and viewports before browser launch, and
+  hash screenshots in bounded chunks with a PNG size limit.
+
 - Avoid quadratic email scanning on long tokens and enforce file-read limits
   when audit candidates grow or change type during inspection.
 

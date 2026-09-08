@@ -77,9 +77,14 @@ def arguments() -> argparse.Namespace:
         if parsed.username is not None or parsed.password is not None:
             parser.error("credentials in --url are unsupported; use a repository-native authenticated harness")
     args.viewports = list(dict.fromkeys(args.viewport or MATRICES[args.matrix].split()))
+    if len(args.viewports) > 32:
+        parser.error("at most 32 distinct viewports per run; split larger matrices")
     for viewport in args.viewports:
         if not re.fullmatch(r"[1-9][0-9]{2,4}x[1-9][0-9]{2,4}", viewport):
             parser.error(f"invalid viewport: {viewport}")
+        width, height = map(int, viewport.split("x"))
+        if max(width, height) > 8192 or width * height > 16777216:
+            parser.error(f"viewport exceeds 8192 pixels per side or 16 megapixels: {viewport}")
     candidates = [args.browser] if args.browser else [
         "chromium", "chromium-browser", "google-chrome-stable", "google-chrome", "chrome",
         "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
@@ -171,9 +176,16 @@ def capture(args: argparse.Namespace, evidence: Path, receipt: dict) -> None:
                 actual = png_size(screenshot)
                 if actual != (width, height):
                     raise RuntimeError(f"{viewport} produced {actual[0]}x{actual[1]} pixels")
-                data = screenshot.read_bytes()
+                digest = hashlib.sha256()
+                size = 0
+                with screenshot.open("rb") as image:
+                    for chunk in iter(lambda: image.read(1024 * 1024), b""):
+                        size += len(chunk)
+                        if size > 128 * 1024 * 1024:
+                            raise RuntimeError(f"{viewport} PNG exceeds 128 MiB")
+                        digest.update(chunk)
                 record = {"viewport": viewport, "width": width, "height": height,
-                          "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest(), "path": screenshot.name}
+                          "bytes": size, "sha256": digest.hexdigest(), "path": screenshot.name}
                 receipt["captures"].append(record)
                 writer.writerow([viewport, width, height, record["bytes"], record["sha256"], args.url])
                 stream.flush()

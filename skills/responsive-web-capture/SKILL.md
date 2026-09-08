@@ -20,6 +20,8 @@ do not run a second capture helper merely to obtain its receipt format.
 - Use `--matrix comprehensive` when a broad viewport audit is requested. It covers small and modern phones, tablets, laptops, 1080p, 1440p, ultrawide, and 4K, with portrait counterparts.
 - Use repeated `--viewport WIDTHxHEIGHT` arguments for a focused regression rerun.
 
+The fallback accepts at most 32 distinct viewports per run, with sides up to 8192 pixels and at most 16,777,216 pixels per image. It hashes PNGs in chunks and rejects files over 128 MiB. Split larger matrices into scoped runs.
+
 The comprehensive matrix is intentionally expensive. Capture representative routes rather than multiplying every route by every viewport without evidence that the cost is useful.
 
 ## Workflow
