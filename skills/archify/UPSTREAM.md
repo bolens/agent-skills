@@ -25,6 +25,7 @@ Local changes to retain:
 - Keep brand concurrency test responses static and gallery path checks free of identity replacements.
 - Keep the concise task description with architecture, workflow, sequence, data-flow, lifecycle, repository-evidence, and Mermaid routing.
 - Keep one bounded diagnostic escalation after stalled authoring repairs, and load port-spread detail from the authoring reference. Preserve the port-spread assertions against that linked reference and retain delivery checks.
+- Run update discovery only for relevant maintenance or explicit requests; keep notice protocol in a conditional reference and route imports through hard-fork review. Retain all notification assertions against the linked reference and check that it ships.
 
 Updates are audited and merged manually. This fork does not track or represent upstream releases.
 

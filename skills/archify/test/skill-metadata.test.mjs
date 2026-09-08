@@ -42,6 +42,7 @@ test('main skill stays a bounded authoring router with progressive references', 
     'references/authoring-contract.md',
     'references/viewer-runtime.md',
     'references/delivery-contract.md',
+    'references/update-awareness.md',
   ]) {
     assert.match(skill, new RegExp(reference.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
     assert.equal(existsSync(path.join(skillRoot, reference)), true, `${reference} must ship with the skill`);
@@ -49,14 +50,15 @@ test('main skill stays a bounded authoring router with progressive references', 
 });
 
 test('update awareness is notification-only and never replaces the requested workflow', () => {
-  assert.match(skill, /`scripts\/check-update\.mjs`/);
-  assert.match(skill, /`silent`[\s\S]*without mentioning/i);
-  assert.match(skill, /`update_available`[\s\S]*compact notice/i);
-  assert.match(skill, /information, not permission/i);
-  assert.match(skill, /`severity` is `security`[\s\S]*security update[\s\S]*emphasis only, never user autonomy/i);
-  assert.match(skill, /continue the user's original task/i);
-  assert.match(skill, /installed version unchanged/i);
-  assert.doesNotMatch(skill, /npx skills update|gh skill update/i);
+  const updateContract = readFileSync(path.join(skillRoot, 'references', 'update-awareness.md'), 'utf8');
+  assert.match(updateContract, /`scripts\/check-update\.mjs`/);
+  assert.match(updateContract, /`silent`[\s\S]*without mentioning/i);
+  assert.match(updateContract, /`update_available`[\s\S]*compact notice/i);
+  assert.match(updateContract, /information, not permission/i);
+  assert.match(updateContract, /`severity` is `security`[\s\S]*security update[\s\S]*emphasis only, never user autonomy/i);
+  assert.match(updateContract, /continue the user's original task/i);
+  assert.match(updateContract, /installed version unchanged/i);
+  assert.doesNotMatch(`${skill}\n${updateContract}`, /npx skills update|gh skill update/i);
 });
 
 test('language behavior stays within the bounded locale contract', () => {

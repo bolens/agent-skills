@@ -105,7 +105,8 @@
           "Retain parse5 8.0.1 or a later audited release for HTML test parsing; its entities 8 dependency requires Node 20.19 or newer, within the documented Node 22 test harness.",
           "Keep brand concurrency test responses static and gallery path checks free of identity replacements.",
           "Keep the concise task description with architecture, workflow, sequence, data-flow, lifecycle, repository-evidence, and Mermaid routing.",
-          "Keep one bounded diagnostic escalation after stalled authoring repairs, and load port-spread detail from the authoring reference. Preserve the port-spread assertions against that linked reference and retain delivery checks."
+          "Keep one bounded diagnostic escalation after stalled authoring repairs, and load port-spread detail from the authoring reference. Preserve the port-spread assertions against that linked reference and retain delivery checks.",
+          "Run update discovery only for relevant maintenance or explicit requests; keep notice protocol in a conditional reference and route imports through hard-fork review. Retain all notification assertions against the linked reference and check that it ships."
         ],
         "license": {
           "spdx": "MIT",
@@ -254,7 +255,8 @@
         "path": "skills/caveman-commit",
         "ref": "3b74643f4d910f496babd4e634b1ba7168816f14",
         "local_changes": [
-          "Preserve shared semantic commit and PR naming guidance, repository policy exceptions, and breaking-change metadata during message compression."
+          "Preserve shared semantic commit and PR naming guidance, repository policy exceptions, and breaking-change metadata during message compression.",
+          "Scope discovery to commit-message wording and return to an authorized parent commit workflow without changing invocation policy."
         ],
         "license": {
           "spdx": "MIT",
@@ -428,7 +430,8 @@
         "ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
         "local_changes": [
           "Route viewport-sensitive metric fixes through responsive-web-capture and interaction proof through cli-web-evidence.",
-          "Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior."
+          "Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior.",
+          "Keep metric entrypoints evidence-led, route remedies to metric references, and make navigation speculation conditional rather than a mandatory LCP checklist item."
         ],
         "license": {
           "spdx": "MIT",
@@ -771,7 +774,7 @@
           "Require responsive and functional regression evidence when performance changes can affect those surfaces.",
           "Route measured animation and player costs through web-animation and animation-assets, including active motion and route re-entry evidence.",
           "Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior.",
-          "Keep measurement and task routing in SKILL.md; load budgets, loading, images, fonts, caching, runtime, and third-party examples only for the measured issue."
+          "Keep measurement and task routing in SKILL.md; load budgets, loading, images, fonts, caching, runtime, and third-party examples only for the measured issue. Link navigation speculation directly to its conditional Core Web Vitals reference."
         ],
         "license": {
           "spdx": "MIT",
@@ -1087,7 +1090,8 @@
           "Link only bundled category skills; route SEO, platform behavior, security, and async-state findings without expanding a read-only audit into implementation.",
           "Treat source maps as publication content to inspect and llms.txt as optional consumer-specific discovery, not automatic security or search verdicts.",
           "Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior.",
-          "Keep recurring maintenance checklists in an opt-in reference without expanding one-off audit scope."
+          "Keep recurring maintenance checklists in an opt-in reference without expanding one-off audit scope.",
+          "Tie performance and resource recommendations to measured bottlenecks; do not require preconnect, preload, or other recipes on healthy pages."
         ],
         "license": {
           "spdx": "MIT",

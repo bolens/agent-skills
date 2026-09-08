@@ -133,3 +133,18 @@ writable checkout. All applicable current-head and post-merge GitHub checks pass
 The feature branch was removed by the host and the completed local branch was
 deleted after matching the merged head. Local `main` was advanced to `c3a2658`.
 New skill work remains a separate local feature, not an implied publication.
+
+## Follow-through after user authorization
+
+The user subsequently requested implementation of the recommendations. All five
+findings above are addressed in source: commit-message discovery and parent
+continuation, browser harness ownership, conditional performance remedies,
+maintenance-only Archify update awareness, and existing reconciliation authority.
+Their original descriptions remain as the audit record, not current open findings.
+
+The additional six developer-flow suggestions are implemented in
+[setup and runtime contracts](../../skills/ci-maintenance/references/setup-contracts.md):
+environment precedence, checkout isolation, bootstrap diagnostics, service
+readiness, generated-contract drift, and optional secret-provider declarations.
+The [follow-through verification](../../specs/012-workflow-guidance/verification.md)
+records source scenarios, executed regression checks, and remaining runtime limits.

@@ -6,6 +6,10 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Fixed
 
+- Preserve parent commit and authorized reconciliation workflows; keep authenticated
+  browser captures in their existing harness, performance remedies evidence-led,
+  and Archify update notices scoped to maintenance or explicit discovery.
+
 - Scope Omarchy desktop and crash-helper routing to the actual installation,
   and honor existing authorization for a requested configuration reset.
 

@@ -45,22 +45,23 @@ Chrome DevTools MCP's `lighthouse_audit` intentionally excludes performance. Its
 
 ### Performance
 
-**Core Web Vitals** — Must pass for good page experience:
-* **LCP (Largest Contentful Paint) < 2.5s.** The largest visible element must render quickly. Optimize images, fonts, and server response time.
-* **INP (Interaction to Next Paint) < 200ms.** User interactions must feel instant. Reduce JavaScript execution time and break up long tasks.
-* **CLS (Cumulative Layout Shift) < 0.1.** Content must not jump around. Set explicit dimensions on images, embeds, and ads.
+Use [core-web-vitals](../core-web-vitals/SKILL.md) for field LCP, INP, or CLS
+failures and [performance](../performance/SKILL.md) for broader load/runtime
+bottlenecks. Record metric, route/state, sample conditions, and user impact before
+selecting a remedy. A lab trace diagnoses a session; it does not establish field p75.
 
-**Resource Optimization:**
-* **Compress images.** Measure suitable modern encodings such as WebP/AVIF. Add fallback formats only for the actual current target matrix or explicit legacy requirements. Serve correctly sized images via `srcset`.
-* **Minimize JavaScript.** Remove unused code. Use code splitting. Defer non-critical scripts.
-* **Optimize CSS.** Extract critical CSS. Remove unused styles. Avoid `@import`.
-* **Efficient fonts.** Use `font-display: swap`. Preload critical fonts. Subset to needed characters.
+For resource findings, identify the critical request or task and its measured
+contribution. Recommend image sizing/encoding for excessive transfer, code splitting
+for implicated unused or blocking work, and CSS/font changes for observed rendering
+delay or shifts. Preserve working behavior and verify the change under equivalent
+conditions. Keep detailed recipes with the owning performance references.
 
-**Loading Strategy:**
-* **Preconnect to origins.** Add `<link rel="preconnect">` for third-party domains.
-* **Preload critical assets.** LCP images, fonts, and above-fold CSS.
-* **Lazy load below-fold content.** Images, iframes, and heavy components.
-* **Cache effectively.** Long cache TTLs for static assets. Immutable caching for hashed files.
+Add a preconnect only when an important origin's connection setup contributes to
+the delay; preload only a late-discovered critical resource. Verify request reuse
+and competing bandwidth. Lazy loading, caching, critical CSS, and font-display
+choices also need workload and correctness evidence. Do not score the absence of
+these techniques as defects or introduce them on an already healthy page solely
+to complete this audit.
 
 ### Accessibility
 

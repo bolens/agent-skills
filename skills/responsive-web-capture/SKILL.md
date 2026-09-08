@@ -5,9 +5,15 @@ description: Capture and visually verify local or preview web frontends across r
 
 # Responsive Web Capture
 
-Use the bundled `scripts/capture-responsive.sh` to create initial-viewport PNGs, a TSV inventory, and a JSON run receipt. The wrapper requires Bash, Python 3.9+, and installed Chrome/Chromium on Linux or macOS. ImageMagick is optional for labeled contact sheets. Prefer a repository-native preview server when routing, generated assets, authentication, or a production base path matters. Use `--directory` only for root-mounted static files.
+Choose the repository's existing browser harness first when it supports the requested captures. Keep that harness for authenticated state, hydration, interactions, and application-specific readiness; use its screenshot API and the appropriate viewport matrix without switching browser sessions. Use the bundled `scripts/capture-responsive.sh` only as a fallback for simple unauthenticated initial renders, producing initial-viewport PNGs, a TSV inventory, and a JSON run receipt.
+
+The wrapper requires Bash, Python 3.9+, and installed Chrome/Chromium on Linux or macOS. ImageMagick is optional for labeled contact sheets. Prefer a repository-native preview server when routing, generated assets, authentication, or a production base path matters. Use `--directory` only for root-mounted static files.
 
 ## Choose the matrix
+
+The flags below apply to the bundled helper. With another harness, use equivalent
+requested viewport sizes and record its actual viewport, state, and artifacts;
+do not run a second capture helper merely to obtain its receipt format.
 
 - Use `--matrix quick` while iterating on a known defect.
 - Use `--matrix standard` for ordinary responsive verification.
@@ -22,8 +28,8 @@ The comprehensive matrix is intentionally expensive. Capture representative rout
 2. Capture the baseline before editing when visual comparison matters.
 3. Inspect every contact sheet and open suspicious original PNGs. A successful browser exit is not visual proof.
 4. After editing, recapture affected viewports during iteration, then run the appropriate final matrix.
-5. Run repository-native functional, console/network, and link checks separately. Use `web-quality-audit` for measured performance and accessibility, with `accessibility` or `core-web-vitals` for focused diagnosis. This script proves rendering and dimensions; it does not replace interaction, accessibility, or performance testing.
-6. Inspect `receipt.json`: `complete` means all requested PNGs passed dimension checks. A failed capture exits nonzero and retains an `incomplete` receipt plus partial artifacts. Contact-sheet failure is recorded separately and does not discard successful captures. Report the URL, matrix, screenshots, receipt, and skipped coverage.
+5. Run repository-native functional, console/network, and link checks separately. Use `web-quality-audit` for measured performance and accessibility, with `accessibility` or `core-web-vitals` for focused diagnosis. The bundled script captures an initial render and checks PNG dimensions; it does not replace interaction, accessibility, or performance testing.
+6. For the bundled helper, inspect `receipt.json`: `complete` means all requested PNGs passed dimension checks. A failed capture exits nonzero and retains an `incomplete` receipt plus partial artifacts. Contact-sheet failure is recorded separately and does not discard successful captures. Report the URL, matrix, screenshots, receipt, and skipped coverage.
 
 For sites deployed below a path such as `/project/`, start the repository-native server and pass its exact URL with `--url`. A root-mounted fallback can make absolute assets appear broken even when production is correct.
 

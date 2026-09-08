@@ -36,3 +36,5 @@ workflow. A spec, a checked task, and a passing static test are different eviden
 The 2026-09-06 legacy extension adds [all 62 skill capabilities](006-retrospective-baseline/legacy-capabilities.md),
 [executable helpers](006-retrospective-baseline/legacy-helpers.md), and
 [Archify commands and viewer behavior](006-retrospective-baseline/legacy-archify.md).
+
+- [012: Workflow guidance follow-through](012-workflow-guidance/spec.md)

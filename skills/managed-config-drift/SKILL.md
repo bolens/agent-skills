@@ -17,7 +17,7 @@ Use `scripts/compare-trees.py LIVE=MANAGED [...]` for bounded tree comparisons. 
 - **Generated drift:** output differs because its declared generator has not run.
 - **Packaged-default drift:** an upstream update changed a default that the local overlay depends on.
 
-Read repository guidance and generator commands before judging a difference. Never copy, replace, delete, relink, refresh Omarchy configuration, or run a generator merely to make the audit clean. Propose an owner and direction for each reconciliation, then seek authorization.
+Read repository guidance and generator commands before judging a difference. Never copy, replace, delete, relink, refresh Omarchy configuration, or run a generator merely to make the audit clean. Establish an owner and direction for each reconciliation. Keep audit-only requests read-only. When the user already authorized reconciliation of the named paths, continue the scoped repair, preserve recoverable prior state, and verify the resulting ownership and behavior. Ask only for missing authority or an unresolved consequential direction; do not request the same authorization again.
 
 Use `omarchy` for configuration owned by an identified Omarchy installation, not arbitrary Hyprland files. Use [nixos](../nixos/SKILL.md) when modules generate the live paths; reconcile the declarative source instead of replacing store symlinks. Use `sensitive-info-audit` before adding previously untracked live configuration to Git.
 

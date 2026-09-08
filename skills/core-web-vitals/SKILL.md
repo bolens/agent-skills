@@ -40,114 +40,20 @@ Google measures at the **75th percentile** — 75% of page visits must meet "Goo
 
 ## LCP: Largest Contentful Paint
 
-LCP measures when the largest visible content element renders. Usually this is:
-- Hero image or video
-- Large text block
-- Background image
-- `<svg>` element
+Identify the actual LCP element and divide the trace into server response,
+resource discovery delay, resource transfer, and render delay. Use
+[the LCP reference](references/LCP.md) only for the implicated phase. A slow
+image load, delayed text render, and client-only content need different remedies.
 
-### Common LCP issues
+Treat recipes as candidates, not acceptance requirements. Add preload only for
+observed late discovery; prioritize the actual critical resource and check for
+competing downloads. Change CSS delivery, fonts, caching, or rendering architecture
+only when the trace supports that change. Preserve correct first paint, layout,
+and application behavior, then compare equivalent measurements.
 
-**1. Slow server response (TTFB > 800ms)**
-```
-Fix: CDN, caching, optimized backend, edge rendering
-```
-
-**2. Render-blocking resources**
-```html
-<!-- ❌ Blocks rendering -->
-<link rel="stylesheet" href="/all-styles.css">
-
-<!-- ✅ Critical CSS inlined, rest deferred -->
-<style>/* Critical above-fold CSS */</style>
-<link rel="preload" href="/styles.css" as="style"
-      onload="this.onload=null;this.rel='stylesheet'">
-```
-
-**3. Slow resource load times**
-```html
-<!-- ❌ LCP image is discovered only after a stylesheet loads -->
-<div class="hero"></div>
-
-<!-- ✅ Discoverable in initial HTML and prioritized -->
-<link rel="preload" href="/hero.webp" as="image" fetchpriority="high">
-<img src="/hero.webp" alt="Hero" fetchpriority="high">
-```
-
-Prefer a discoverable `<img>` with `fetchpriority="high"`. Add the preload only when the trace shows that the resource would otherwise be discovered late; duplicate or speculative preloads can compete for bandwidth.
-
-**4. Client-side rendering delays**
-```javascript
-// ❌ Content loads after JavaScript
-useEffect(() => {
-  fetch('/api/hero-text').then(r => r.json()).then(setHeroText);
-}, []);
-
-// ✅ Server-side or static rendering
-// Use SSR, SSG, or streaming to send HTML with content
-export async function getServerSideProps() {
-  const heroText = await fetchHeroText();
-  return { props: { heroText } };
-}
-```
-
-**5. Make navigations instant with the Speculation Rules API**
-
-For sites with predictable same-origin journeys, prerendering a likely next page can make a successful subsequent navigation much faster. Treat this as a measured navigation optimization, not a substitute for fixing the current page's LCP.
-
-```html
-<script type="speculationrules">
-{
-  "prerender": [{
-    "where": { "href_matches": "/*" },
-    "eagerness": "moderate"
-  }]
-}
-</script>
-```
-
-Current Chrome behavior is specific enough to guide the choice:
-
-| `eagerness` | Trigger |
-|-------------|---------|
-| `conservative` | Pointer or touch down |
-| `moderate` | Desktop: 200ms hover, or earlier pointer down; mobile: viewport heuristics |
-| `eager` | Chrome 143+: desktop 10ms hover; mobile 50ms after the anchor enters the viewport |
-| `immediate` | As soon as the rules are observed |
-
-Start conservatively and measure prediction hit rate, transferred bytes, server load, and navigation improvement before expanding the rules. Recheck [Chrome's maintained eagerness documentation](https://developer.chrome.com/docs/web-platform/prerender-pages#eagerness) before hardcoding timing-sensitive behavior.
-
-Caveats:
-- **Bandwidth/CPU cost.** Each prerender is roughly a full page load. Scope `where` carefully (`href_matches` patterns, exclude logout/checkout) and avoid `immediate` outside small sites.
-- **Side effects fire early.** Analytics, ads, and any code that runs on load will fire when the prerender starts, not when the user navigates. Gate side effects on the [`prerenderingchange` event](https://developer.chrome.com/docs/web-platform/prerender-pages#detect_when_a_page_is_prerendered_or_used_for_a_full_navigation) or `document.prerendering`.
-- **Engine support.** Verify current support for the exact speculation features used. Keep ordinary navigation functional in unsupported current engines and measure side effects; an optional enhancement can still introduce regressions.
-
-### LCP optimization checklist
-
-```markdown
-- [ ] TTFB < 800ms (use CDN, edge caching)
-- [ ] LCP resource is discoverable in initial HTML and prioritized; preload only if the trace shows late discovery
-- [ ] LCP image optimized (WebP/AVIF, correct size)
-- [ ] Critical CSS inlined (< 14KB)
-- [ ] No render-blocking JavaScript in <head>
-- [ ] Fonts don't block text rendering (font-display: swap)
-- [ ] LCP element in initial HTML (not JS-rendered)
-- [ ] Speculation Rules added for likely-next navigations (moderate eagerness)
-```
-
-### LCP element identification
-
-This snippet diagnoses the current page session. It is not field data.
-
-```javascript
-// Find your LCP element
-new PerformanceObserver((list) => {
-  const entries = list.getEntries();
-  const lastEntry = entries[entries.length - 1];
-  console.log('LCP element:', lastEntry.element);
-  console.log('LCP time:', lastEntry.startTime);
-}).observe({ type: 'largest-contentful-paint', buffered: true });
-```
+Likely-next navigation optimization is a separate, optional task. Read
+[navigation speculation](references/navigation-speculation.md) when that measured
+journey warrants it; a healthy page does not need new resource hints or prerendering.
 
 ---
 
@@ -183,43 +89,13 @@ When adding or reviewing production collection, read [the first-party RUM refere
 
 ---
 
-## Framework quick fixes
+## Apply remedies through the framework's owner
 
-### Next.js
-```jsx
-// LCP: Use next/image with priority
-import Image from 'next/image';
-<Image src="/hero.jpg" priority fill alt="Hero" />
-
-// INP: Use dynamic imports
-const HeavyComponent = dynamic(() => import('./Heavy'), { ssr: false });
-
-// CLS: Image component handles dimensions automatically
-```
-
-### React
-```jsx
-// LCP: Preload in head
-<link rel="preload" href="/hero.jpg" as="image" fetchpriority="high" />
-
-// INP: Memoize and useTransition
-const [isPending, startTransition] = useTransition();
-startTransition(() => setExpensiveState(newValue));
-
-// CLS: Always specify dimensions in img tags
-```
-
-### Vue/Nuxt
-```vue
-<!-- LCP: Use nuxt/image with preload -->
-<NuxtImg src="/hero.jpg" preload loading="eager" />
-
-<!-- INP: Use async components -->
-<component :is="() => import('./Heavy.vue')" />
-
-<!-- CLS: Use aspect-ratio CSS -->
-<img :style="{ aspectRatio: '16/9' }" />
-```
+Use the installed framework's documented image, loading, and scheduling APIs for
+the measured cause. Read only the relevant metric reference. Verify generated
+HTML, request priority, reserved layout space, and the affected interaction; an
+image component, dynamic import, or transition API alone does not prove a fix.
+Do not disable SSR or add memoization merely to satisfy a generic checklist.
 
 ## References
 

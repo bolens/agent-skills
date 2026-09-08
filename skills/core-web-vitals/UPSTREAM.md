@@ -17,6 +17,7 @@ License source: [LICENSE](https://github.com/addyosmani/web-quality-skills/blob/
 Local changes to retain:
 - Route viewport-sensitive metric fixes through responsive-web-capture and interaction proof through cli-web-evidence.
 - Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior.
+- Keep metric entrypoints evidence-led, route remedies to metric references, and make navigation speculation conditional rather than a mandatory LCP checklist item.
 
 Updates are audited and merged manually. This fork does not track or represent upstream releases.
 
