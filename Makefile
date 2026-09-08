@@ -26,3 +26,8 @@ hooks-install:
 ARCHIFY_TEST_ARGS ?=
 test-archify:
 	python3 scripts/test_archify.py $(ARCHIFY_TEST_ARGS)
+
+# Opt-in network check of pinned native loaders; no model calls or global installs.
+.PHONY: test-client-loaders
+test-client-loaders:
+	python3 scripts/test_client_loaders.py
