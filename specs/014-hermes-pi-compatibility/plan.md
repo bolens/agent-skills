@@ -1,0 +1,17 @@
+# Plan
+
+Use the existing provenance generator and symlink installer. Add optional target
+metadata rather than making new client homes mandatory for make check. Keep the
+current schema's required install_targets contract and add optional_install_targets.
+Use native profile variables. Pi can also consume the existing shared home.
+
+Mirror the seven existing explicit-only policies into SKILL.md frontmatter, retain
+fork changes in UPSTREAMS.json, and regenerate provenance. Hermes optional targets
+exclude those entries. Do not modify client configuration or install agent runtimes.
+
+Constitution: canonical sources and licenses stay intact. Standard-library Python
+and existing Make checks own validation. No upstream revision is advanced.
+
+Source ownership: scripts/link-installed.py, scripts/update-provenance.py,
+explicit-only skill metadata, tests/test_client_installation.py, README.md,
+docs/client-compatibility.md, generated provenance and pointers.

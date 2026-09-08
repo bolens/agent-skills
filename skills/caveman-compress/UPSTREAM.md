@@ -18,6 +18,7 @@ Preserve during imports: `agents`
 
 Local changes to retain:
 - Use an owned temporary directory for candidate validation; preserve neighboring staging files and clean scratch candidates on every exit.
+- Preserve explicit-only invocation in agents metadata and disable-model-invocation frontmatter for Pi and compatible clients.
 
 Updates are audited and merged manually. This fork does not track or represent upstream releases.
 

@@ -42,7 +42,12 @@ def records() -> list[dict[str, object]]:
                 "ref": f"local://codex/skills/{name}",
                 "imported_from": f"${{CODEX_HOME:-$HOME/.codex}}/skills/{name}",
             }
-        result.append({"name": name, "hard_fork": True, "origin": origin, "install_targets": targets})
+        optional_targets = {"pi": f"${{PI_CODING_AGENT_DIR:-$HOME/.pi/agent}}/skills/{name}"}
+        frontmatter = (directory / "SKILL.md").read_text().split("\n---\n", 1)[0]
+        if "\ndisable-model-invocation: true\n" not in frontmatter + "\n":
+            optional_targets["hermes"] = f"${{HERMES_HOME:-$HOME/.hermes}}/skills/{name}"
+        result.append({"name": name, "hard_fork": True, "origin": origin, "install_targets": targets,
+                       "optional_install_targets": optional_targets})
     return result
 
 

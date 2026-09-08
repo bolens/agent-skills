@@ -6,6 +6,9 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Fixed
 
+- Support optional Hermes and Pi skill homes while preserving existing installs
+  and explicit-only invocation policies. Document client tool and discovery limits.
+
 - Ground interface and workflow design in user, developer, and agent task completion,
   with guidance for discoverability, structured contracts, recovery, and measured benefit.
 

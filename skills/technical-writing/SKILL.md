@@ -1,4 +1,5 @@
 ---
+disable-model-invocation: true
 name: technical-writing
 description: Write or review developer documentation, RFCs, READMEs, PR descriptions, and commit messages using plain language, deliberate document structure, and repository-verified facts. Use when the user explicitly invokes technical-writing or requests its named writing standard.
 ---

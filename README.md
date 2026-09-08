@@ -126,6 +126,9 @@ home directory. Edit the source under `skills/`, never an installed copy.
 Because installation uses symlinks, source edits are immediately visible to the
 clients using them. Skill discovery and invocation depend on the client.
 
+For Hermes Agent and Pi, see [client compatibility](docs/client-compatibility.md)
+for optional native installation, invocation-policy differences, and verification.
+
 ## Maintain and validate
 
 Use Python 3.10 or newer, Node.js 18 or newer for JavaScript syntax checks, Bash,

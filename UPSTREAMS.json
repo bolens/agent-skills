@@ -34,12 +34,15 @@
       "path": "pstack/skills/blast-radius",
       "audited_ref": "93b00b89ef425a9c1bac0d0b317dfc49c930ac99",
       "local_changes": [
-        "Keep current invocation policy and agents metadata; do not restore the Cursor-specific disable-model-invocation field.",
         "Replace unavailable how, why, and arena dependencies with direct history inspection, code-review routing, and a permitted local fallback.",
-        "Preserve read-only assessment boundaries, isolated proof, explicit evidence gaps, and impact/likelihood/confidence separation."
+        "Preserve read-only assessment boundaries, isolated proof, explicit evidence gaps, and impact/likelihood/confidence separation.",
+        "Preserve explicit-only invocation in agents metadata and disable-model-invocation frontmatter for Pi and compatible clients."
       ]
     },
     "caveman": {
+      "local_changes": [
+        "Preserve explicit-only invocation in agents metadata and disable-model-invocation frontmatter for Pi and compatible clients."
+      ],
       "license": {"spdx": "MIT", "path": "LICENSE", "upstream_path": "LICENSE", "sha256": "94fe75d355887f84ee7eefca68e06d8d082a23dad47a8e1f58a94d98900edf5b"},
       "url": "https://github.com/JuliusBrussee/caveman",
       "branch": "main",
@@ -62,7 +65,10 @@
       "path": "skills/caveman-compress",
       "audited_ref": "3b74643f4d910f496babd4e634b1ba7168816f14",
       "preserve_paths": ["agents"],
-      "local_changes": ["Use an owned temporary directory for candidate validation; preserve neighboring staging files and clean scratch candidates on every exit."]
+      "local_changes": [
+        "Use an owned temporary directory for candidate validation; preserve neighboring staging files and clean scratch candidates on every exit.",
+        "Preserve explicit-only invocation in agents metadata and disable-model-invocation frontmatter for Pi and compatible clients."
+      ]
     },
     "caveman-help": {
       "license": {"spdx": "MIT", "path": "LICENSE", "upstream_path": "LICENSE", "sha256": "94fe75d355887f84ee7eefca68e06d8d082a23dad47a8e1f58a94d98900edf5b"},
@@ -71,7 +77,10 @@
       "path": "skills/caveman-help",
       "audited_ref": "3b74643f4d910f496babd4e634b1ba7168816f14",
       "preserve_paths": ["agents"],
-      "local_changes": ["Describe packaged skill modes and current sibling formats without claiming absent automatic configuration hooks or guaranteed compression savings."]
+      "local_changes": [
+        "Describe packaged skill modes and current sibling formats without claiming absent automatic configuration hooks or guaranteed compression savings.",
+        "Preserve explicit-only invocation in agents metadata and disable-model-invocation frontmatter for Pi and compatible clients."
+      ]
     },
     "caveman-review": {
       "license": {"spdx": "MIT", "path": "LICENSE", "upstream_path": "LICENSE", "sha256": "94fe75d355887f84ee7eefca68e06d8d082a23dad47a8e1f58a94d98900edf5b"},

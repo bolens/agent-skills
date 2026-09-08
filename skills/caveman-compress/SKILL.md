@@ -1,4 +1,5 @@
 ---
+disable-model-invocation: true
 name: caveman-compress
 description: >
   Compress a memory file such as CLAUDE.md or a todo list into caveman format
