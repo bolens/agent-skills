@@ -6,6 +6,10 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Fixed
 
+- Detect stale skill links, catalog conflicts, and excluded Hermes entries before
+  installation. Add pinned native loader checks and clarify cross-client discovery,
+  resource permissions, and helper backend requirements.
+
 - Support optional Hermes and Pi skill homes while preserving existing installs
   and explicit-only invocation policies. Document client tool and discovery limits.
 

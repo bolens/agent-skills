@@ -340,7 +340,7 @@
           "agents"
         ],
         "local_changes": [
-          "Use an owned temporary directory for candidate validation; preserve neighboring staging files and clean scratch candidates on every exit.",
+          "Use an owned temporary directory for candidate validation; preserve neighboring staging files and clean scratch candidates on every exit. Document the independent Claude backend and data-transfer requirement across agent hosts.",
           "Preserve explicit-only invocation in agents metadata and disable-model-invocation frontmatter for Pi and compatible clients."
         ],
         "license": {
@@ -636,7 +636,7 @@
           "references/usage-and-context.md"
         ],
         "local_changes": [
-          "Keep Codex-native installation boundaries and source-first quality review instead of popularity-led recommendations.",
+          "Keep target-client installation and reload boundaries, including Codex-native routing, and source-first quality review instead of popularity-led recommendations.",
           "Retain host-specific usage and context evidence, representative routing checks, and explicit user intent for invocation-policy changes.",
           "Preserve revision-bound candidate reassessment, source independence checks, and scoped correction of earlier evaluation errors."
         ],

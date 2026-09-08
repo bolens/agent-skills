@@ -1,4 +1,4 @@
-# Hermes and Pi
+# Agent client compatibility
 
 This collection uses Agent Skills directories with SKILL.md entrypoints and
 relative resources. Client discovery support does not supply missing tools,
@@ -25,7 +25,12 @@ original homes. Default `make check` verifies only the original homes, so run th
 explicit check above for optional installations. Generated `optional_install_targets`
 in PROVENANCE.json owns these paths. Existing independent directories are refused
 unless `--replace` is explicitly supplied. Inspect collisions before replacing
-anything. Apply may install other entries before reporting a conflict.
+anything. Preflight conflicts prevent all planned writes. Later I/O failures can still leave
+a partial installation. `--plan` reports intended changes without writing. Checks
+also report obsolete links into this checkout, duplicate names, excluded Hermes
+skills, and cycles. Catalog traversal stops at 10,000 entries per home. It never
+removes those entries automatically and does not scan external directories named
+in client configuration. Review those through the client's own catalog.
 
 Pi also supports the shared ~/.agents/skills home. Its inspected loader follows
 symlinks and deduplicates identical real files. Native links help when using a
@@ -84,8 +89,67 @@ Reviewed 2026-09-08:
 
 Installer tests exercise temporary profiles, policy parity, repeated application,
 conflict preservation, check-only behavior, and relative resources. These are
-repository integration tests plus upstream source inspection. Neither client was
-installed on the verification host, so model-driven sessions and live catalog
-rendering remain unverified. After installing a client, inspect its skill list,
+repository integration tests plus upstream source inspection. Native Pi loader and Hermes traversal checks now run through the harness below.
+Model-driven sessions and live catalog rendering remain unverified. After installing a client, inspect its skill list,
 load one ordinary skill and a supporting reference, and check explicit-only
 behavior before relying on it for unattended work.
+
+
+## Shared-home clients
+
+The following primary docs describe support for ~/.agents/skills. Existing shared
+links provide the files, so this repository does not create another set of copies.
+Discovery alone does not establish invocation-policy or tool compatibility.
+
+| Client | Verification and policy boundary |
+| --- | --- |
+| [OpenCode](https://opencode.ai/docs/skills/) | Inspect the native skill catalog and same-name sources. The documented frontmatter fields exclude disable-model-invocation. Use per-skill permission rules to hide or gate entries, rather than assuming Pi policy applies. An `ask` rule is approval gating, not explicit-only invocation. |
+| [Gemini CLI](https://geminicli.com/docs/cli/skills/) | Run `gemini skills list --all` or `/skills list`, then `/skills reload` after changes. Workspace skills override user skills; the shared alias wins within its tier. Activation grants access to the skill directory, not necessarily sibling directories. Disable unwanted automatic skills through native settings and explicitly load files when needed. |
+| [Copilot CLI](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference) | Use `/skills list`, `/skills info NAME`, and `/skills reload`. Current docs support disable-model-invocation and first-found name precedence; verify the installed version. CLI shared-home support does not install this collection in Copilot cloud agent or editor sessions. |
+
+Use the existing seven explicit-only entries as the policy test set. Do not enable
+them automatically because a client ignores an unknown metadata field. Keep
+client-specific permission or exclusion changes reviewable and preserve unrelated
+settings. No configuration changes for these clients were made by this task.
+
+## Resource access and optional capabilities
+
+For a sibling reference, activate that owning skill through the client's normal
+mechanism first. If the resource is still outside the permitted roots, request
+only the specific access the task needs or report that path as unavailable. Do
+not work around denied reads through symlink aliases or shell tools. Permission
+failures are separate from missing files. A package installation that copies one
+skill may omit sibling skills entirely; install the required owner or preserve
+the collection layout rather than duplicating shared manuals.
+
+The find-skills workflow now uses the target client's install and refresh behavior.
+The caveman-compress helper independently requires an Anthropic SDK/API-key setup
+or authenticated Claude CLI. Loading it in another host does not replace that
+backend or authorize sending file contents to a different provider.
+
+## Repeatable native loader checks
+
+```sh
+mise exec -- make test-client-loaders
+```
+
+This opt-in POSIX harness needs Python 3.10+, Node.js 22+ and npm, and uses the
+network to fetch integrity-verified inputs. It creates temporary profiles, runs
+native loader functions, and removes its dependencies and profiles on completion
+or handled interruption. Default `make check` remains offline with respect to
+agent packages. Tests were executed with Python 3.14 and Node.js 26.8.1.
+
+The harness loads Pi 0.73.1's unchanged published loader modules and Hermes's
+pinned directory-traversal module. `tests/client-loaders/sources.json` records exact
+revisions, archive integrity, file hashes, and the Pi module allowlist. The only
+npm dependencies are the loader's locked `ignore` and `yaml` parsers. Full agent
+installation, extension installers, credential stores, and session exporters are
+not part of this fixture. Updates to the source manifest require source review
+and rerunning this target; Dependabot monitors the parser dependency directory.
+
+Checks cover catalog identity, Pi's explicit-only prompt filtering and symlink
+deduplication, Hermes's filtered catalog, and ordinary filesystem reads of local
+and sibling resources. They do not exercise Hermes skill_view, Gemini permission
+checks, or a live model's decisions. Validate those with a client session when
+that runtime and model access are available. Never describe the filesystem probe
+as proof that a client's permission layer granted access.
