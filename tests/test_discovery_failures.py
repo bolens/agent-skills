@@ -4,6 +4,7 @@ import os
 import shutil
 from pathlib import Path
 import subprocess
+import sys
 import tempfile
 import unittest
 
@@ -78,8 +79,9 @@ class DiscoveryFailureTests(unittest.TestCase):
         self.assertIn('discovery', result.stdout.lower())
 
     def test_polluter_discovery_failure_is_inconclusive(self):
-        self.command('find', 'exit 42')
-        result = self.run_helper('systematic-debugging', 'find-polluter.sh', 'pollution', '*.test.ts')
+        script = ROOT / 'skills/systematic-debugging/find-polluter.py'
+        code = "import runpy,sys; from unittest.mock import patch; sys.argv=[sys.argv[1],'pollution','*.test.ts']; ctx=patch('os.scandir',side_effect=PermissionError('fixture discovery denied')); ctx.start(); runpy.run_path(sys.argv[0],run_name='__main__')"
+        result = subprocess.run([sys.executable, '-c', code, str(script)], cwd=self.repo, env=self.env, text=True, capture_output=True, timeout=5, check=False)
         self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
         self.assertNotIn('all tests clean', result.stdout)
 

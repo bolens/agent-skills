@@ -6,6 +6,9 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Fixed
 
+- Bound test-polluter discovery and execution, skip dependency/cache trees,
+  run tests in stable order, and stop owned descendants on timeout or cancellation.
+
 - Cap capture command and server logs, preserve cancellation during process
   startup, and bound waits for cleanup. Exercise PNG size limits with a fixture
   that passes the PNG structure check.
