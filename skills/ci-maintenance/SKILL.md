@@ -37,6 +37,8 @@ Prefer an existing shared workflow for genuinely common checks. Keep project-spe
 
 ## Design the check contract
 
+Treat local commands and CI results as developer and automation interfaces. Verify a contributor can reach the first useful check from the documented setup, and that an unattended caller can invoke it without hidden prompts or diagnostics mixed into structured output. Read [experience and interfaces](../codebase-design/references/experience-and-interfaces.md) when changing command discovery, structured results, or recovery behavior. Measure setup and diagnostic friction when claiming a DX or agent-experience improvement.
+
 For each relevant check, identify its event, tested revision, runner/runtime, command, required status name, permissions, prerequisites, and output. Compare that with the repository's required-check and release expectations.
 
 Reuse existing Make/task/package commands for local and CI validation. Preserve lockfile-based installation, formatter configuration, and supported runtime floors. Document environmental differences, such as machine-specific installation checks that cannot run in hosted CI. Do not weaken a required gate to hide those differences.

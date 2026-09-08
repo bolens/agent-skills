@@ -6,6 +6,9 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Fixed
 
+- Ground interface and workflow design in user, developer, and agent task completion,
+  with guidance for discoverability, structured contracts, recovery, and measured benefit.
+
 - Retry macOS zombie-group signals after reaping the owned child, preserve real
   permission failures, and include process inspection tools in the Linux dev image.
 
