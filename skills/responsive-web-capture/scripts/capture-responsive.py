@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import contextlib
 import functools
 import hashlib
 import http.server
@@ -12,6 +13,7 @@ import json
 import os
 from pathlib import Path
 import re
+import selectors
 import shutil
 import signal
 import struct
@@ -96,20 +98,91 @@ def arguments() -> argparse.Namespace:
     return args
 
 
+LOG_LIMIT = 1024 * 1024
+
+
+@contextlib.contextmanager
+def defer_interrupts():
+    """Record ownership or finish cleanup before delivering cancellation."""
+    pending = []
+    previous = {sig: signal.signal(sig, lambda signum, _frame: pending.append(signum))
+                for sig in (signal.SIGINT, signal.SIGTERM)}
+    try:
+        yield
+    finally:
+        for sig, handler in previous.items():
+            signal.signal(sig, handler)
+        if pending:
+            raise KeyboardInterrupt
+
+
 def run(command: list[str], timeout: int, log: Path) -> None:
-    """Terminate only this invocation's process group, including browser children."""
+    """Bound command time/log bytes and clean only this invocation's group."""
+    deadline = time.monotonic() + timeout
+    process = None
     with log.open("wb") as stream:
-        process = subprocess.Popen(command, stdout=stream, stderr=subprocess.STDOUT, start_new_session=True)
         try:
-            code = process.wait(timeout=timeout)
-            if code:
-                raise RuntimeError(f"command exited {code}; see {log.name}")
+            with defer_interrupts():
+                process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                                           stdin=subprocess.DEVNULL, start_new_session=True)
+            with selectors.DefaultSelector() as selector:
+                selector.register(process.stdout, selectors.EVENT_READ)
+                remaining = LOG_LIMIT
+                while True:
+                    wait = deadline - time.monotonic()
+                    if wait <= 0:
+                        raise subprocess.TimeoutExpired(command, timeout)
+                    if not selector.select(wait):
+                        raise subprocess.TimeoutExpired(command, timeout)
+                    chunk = os.read(process.stdout.fileno(), min(8192, remaining + 1))
+                    if not chunk:
+                        code = process.wait(timeout=max(0.001, deadline - time.monotonic()))
+                        if code:
+                            raise RuntimeError(f"command exited {code}; see {log.name}")
+                        break
+                    stream.write(chunk[:remaining])
+                    if len(chunk) > remaining:
+                        raise RuntimeError(f"command log exceeds {LOG_LIMIT} bytes; see {log.name}")
+                    remaining -= len(chunk)
         finally:
-            try:
-                os.killpg(process.pid, signal.SIGKILL)
-            except ProcessLookupError:
-                pass
-            process.wait()
+            if process is not None:
+                try:
+                    with defer_interrupts():
+                        try:
+                            os.killpg(process.pid, signal.SIGKILL)
+                        except ProcessLookupError:
+                            pass
+                        process.wait(timeout=1)
+                finally:
+                    process.stdout.close()
+
+
+class BoundedServerLog:
+    """Serialize request-thread writes and keep a fixed diagnostic byte budget."""
+
+    def __init__(self, path):
+        self.stream = path.open("wb")
+        self.lock = threading.Lock()
+        self.remaining = LOG_LIMIT
+        self.truncated = False
+
+    def write(self, text):
+        data = text.encode("utf-8", errors="replace")
+        with self.lock:
+            if not self.stream.closed:
+                self.stream.write(data[:self.remaining])
+                self.truncated |= len(data) > self.remaining
+                self.remaining -= min(len(data), self.remaining)
+        return len(text)
+
+    def flush(self):
+        with self.lock:
+            if not self.stream.closed:
+                self.stream.flush()
+
+    def close(self):
+        with self.lock:
+            self.stream.close()
 
 
 def wait_http(url: str, seconds: int) -> dict:
@@ -138,7 +211,7 @@ def capture(args: argparse.Namespace, evidence: Path, receipt: dict) -> None:
     server_log = None
     try:
         if args.directory:
-            server_log = (evidence / "server.log").open("w")
+            server_log = BoundedServerLog(evidence / "server.log")
 
             class Handler(http.server.SimpleHTTPRequestHandler):
                 def log_message(self, fmt, *values):
@@ -212,6 +285,7 @@ def capture(args: argparse.Namespace, evidence: Path, receipt: dict) -> None:
             server.server_close()
         if server_log:
             server_log.close()
+            receipt["server_log"] = {"path": "server.log", "truncated": server_log.truncated}
 
 
 def main() -> int:

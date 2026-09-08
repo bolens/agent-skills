@@ -6,6 +6,10 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Fixed
 
+- Cap capture command and server logs, preserve cancellation during process
+  startup, and bound waits for cleanup. Exercise PNG size limits with a fixture
+  that passes the PNG structure check.
+
 - Preserve cancellation during health-probe cleanup, accept output exactly at
   its byte limit, and mark writable reports incomplete after total timeout.
 

@@ -52,7 +52,7 @@ PNG dimensions are output pixels. They do not establish `innerWidth`/`innerHeigh
 
 Each run gets a unique directory under `--output/PHASE/NAME/`; the default root is the system temporary directory's `visual-evidence`. Reruns preserve earlier evidence. `--directory` binds a loopback-only server to an automatically assigned port. An explicit occupied `--port` fails rather than reusing another server. This static server has no framework routing or authentication middleware.
 
-`--timeout SECONDS` bounds each browser/contact-sheet command, default 30. `--ready-timeout SECONDS` controls the HTTP probe, default 10. The probe establishes reachability only. Browser processes and the owned server are cleaned up on failure or interruption. `--no-contact-sheet` skips optional montage work. Read browser logs when capture fails. Do not weaken browser sandboxing to make a failed run appear successful.
+`--timeout SECONDS` bounds each browser/contact-sheet command, default 30. `--ready-timeout SECONDS` controls the HTTP probe, default 10. The probe establishes reachability only. Browser processes and the owned server are cleaned up on failure or interruption. Each command log is capped at 1 MiB. Exceeding that limit stops the command and records failure. The server log has its own 1 MiB cap, with truncation recorded in `receipt.json`. Cleanup waits up to one second for the killed command to exit. `--no-contact-sheet` skips optional montage work. Read browser logs when capture fails. Do not weaken browser sandboxing to make a failed run appear successful.
 
 ## Script examples
 

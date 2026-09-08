@@ -21,6 +21,9 @@ mode = os.environ.get("CAPTURE_FIXTURE", "success")
 if mode == "hang":
     Path(os.environ["CAPTURE_MARKER"]).write_text("running")
     time.sleep(60)
+if mode == "flood":
+    os.write(1, b"x" * (2 * 1024 * 1024))
+    sys.exit(0)
 if mode == "missing":
     sys.exit(0)
 size = next(x.split("=", 1)[1] for x in sys.argv if x.startswith("--window-size="))
@@ -36,6 +39,8 @@ path.write_bytes(png)
 if mode == "oversized":
     with path.open("r+b") as stream:
         stream.truncate(129 * 1024 * 1024)
+        stream.seek(-12, 2)
+        stream.write(png[-12:])
 '''
 
 
@@ -107,6 +112,21 @@ class ResponsiveCapture(unittest.TestCase):
             self.assertEqual("incomplete", receipt["status"])
             self.assertEqual([], receipt["captures"])
             self.assertEqual("320x568", receipt["active_viewport"])
+
+    def test_browser_log_flood_is_capped_and_reported(self):
+        result = self.capture(mode="flood")
+        self.assertEqual(1, result.returncode)
+        receipt_path = self.receipts()[0]
+        receipt = json.loads(receipt_path.read_text())
+        self.assertEqual("incomplete", receipt['status'])
+        self.assertIn("log exceeds", receipt['error'])
+        self.assertEqual(1024 * 1024, (receipt_path.parent / '320x568.browser.log').stat().st_size)
+
+    def test_large_png_reaches_size_guard(self):
+        result = self.capture(mode="oversized")
+        self.assertEqual(1, result.returncode)
+        receipt = json.loads(self.receipts()[0].read_text())
+        self.assertIn("PNG exceeds 128 MiB", receipt['error'])
 
     def test_hung_browser_is_bounded_and_leaves_failure_receipt(self):
         result = self.capture("--timeout", "1", mode="hang")
