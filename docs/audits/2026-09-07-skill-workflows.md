@@ -148,3 +148,60 @@ environment precedence, checkout isolation, bootstrap diagnostics, service
 readiness, generated-contract drift, and optional secret-provider declarations.
 The [follow-through verification](../../specs/012-workflow-guidance/verification.md)
 records source scenarios, executed regression checks, and remaining runtime limits.
+
+## Second source review and CSS baseline follow-up
+
+Reviewed from `f728c16` in an isolated worktree, preserving the separate Spec Kit
+integrity branch. The user requested the useful fixes and current CSS-reset
+references. This pass followed entrypoints into their supporting examples.
+
+Implemented corrections:
+
+- An existing typed application schema remains the owner; `.env.spec` can be a
+  derived/checked contract instead of becoming a competing authority.
+- Disposable generated-output checks must include the pending source candidate,
+  including new files, rather than validating only committed HEAD.
+- Secret guidance distinguishes build artifacts from supported private runtime
+  secret files with provider-owned permissions and lifecycle.
+- A present but incapable browser harness now routes to a capable implementation;
+  authenticated/hydrated tasks cannot silently degrade to initial render capture.
+- LCP examples no longer preload WebP candidates that disagree with a picture's
+  selected image. CSS guidance preserves CSP and avoids a universal 14KB rule;
+  framework image controls follow the installed API. Font/preconnect choices
+  require evidence and retain multilingual text and fallback behavior.
+
+Added [CSS normalization and resets](../../skills/web-standard/references/css-baselines.md)
+as the single owner for baseline selection, maintained source links, cascade
+integration, and usability checks, linked from `web-standard` and `design-system`.
+No reset stylesheet was vendored or applied to applications. Project memory records
+the user's preference for references where that reduces duplication.
+
+Manual scenarios covered an existing typed schema, an uncommitted schema edit,
+a file-based secret consumer, an incapable authenticated browser harness, AVIF/WebP
+selection, strict CSP, a multilingual font, a Tailwind project with Preflight,
+a plain current-browser site, and a component library sharing a host baseline.
+These are source walkthroughs, not measured live application or skill-invocation
+improvements. CSS reset choices still require the target project's engine and
+assistive-technology checks.
+
+Sources checked: [Next Image](https://nextjs.org/docs/app/api-reference/components/image),
+[responsive image preloads](https://web.dev/articles/preload-responsive-images),
+[CSP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP), and
+[font loading](https://web.dev/articles/optimize-webfont-loading), plus the primary
+sources linked by the CSS baseline reference. An initial MDN layer URL failed;
+the maintained `@layer` reference resolved and was checked instead.
+
+Validation: the portable gate passed 100 tests, metadata/provenance, Spec Kit
+integrity, and ShellCheck; the serialized browser gate passed seven tests and
+WebM smoke checks. All 60 reviewed relative links/anchors resolved and edited
+entrypoints passed skill validation. Source lint passed with the pinned shared
+driver and Ruff 0.15.20. Installed skill links and other checkouts were not changed.
+
+The full Archify run passed 1,021 tests, skipped four documented cases, and failed
+one unchanged acknowledgement-ordering fixture. Its generic 50ms fetch timeout
+raced a deliberate 25ms delay under suite load. The isolated case and all 87
+notifier tests passed before the correction. Both affected ordering fixtures now
+use the existing 2-second child timeout budget, retaining their assertions and
+production timeout behavior. All 87 notifier tests passed after that change.
+The entire Archify harness was not rerun after this targeted test-only correction;
+its failed first run is not represented as a fully green final run.

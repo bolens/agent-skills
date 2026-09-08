@@ -6,6 +6,11 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Fixed
 
+- Correct competing environment-contract ownership, pending-input validation,
+  runtime secret-file guidance, browser fallback selection, and performance examples.
+- Prevent Archify acknowledgement-ordering fixtures from racing their short
+  generic network deadline under suite load; retain production timeout behavior.
+
 - Check all Spec Kit integration files in the fast gate, detecting missing helpers,
   edited templates, and generated skill drift against their recorded manifests.
 
@@ -27,6 +32,9 @@ All notable changes to this hard-fork collection are documented here.
   successful check from invalid saved evidence.
 
 ### Added
+
+- Add reference-led CSS normalization/reset selection, cascade-layer integration,
+  and browser/accessibility verification guidance.
 
 - Add conditional environment precedence, bootstrap diagnostics, concurrent-service
   isolation/readiness, generated-contract checks, and optional SecretSpec guidance.

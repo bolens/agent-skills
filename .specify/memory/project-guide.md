@@ -187,3 +187,12 @@ releases to this collection or publish anything.
 ### Environment contracts (2026-09-07)
 
 The user prefers `.env.spec` over `.env.example`/`.env.sample` where applicable, and specification-based examples that reduce drift. Use an explicit supported format and validator, update consumers together, preserve private runtime values, and reuse native schemas rather than renaming files indiscriminately. The shared [development guidance](../../skills/ci-maintenance/references/development-environments.md#environment-contracts-and-specification-based-examples) owns the procedure.
+
+## Reference ownership preference
+
+The user's 2026-09-07 follow-up prefers maintained primary references and linked
+conditional guidance when that avoids copied rules and maintenance drift. Keep
+essential decisions and task routing in the entrypoint. Include local examples
+only when they clarify a repository-specific contract; do not replace useful
+instructions with an unexplained list of links. CSS baseline selection belongs
+to [web-standard's reference](../../skills/web-standard/references/css-baselines.md).
