@@ -6,6 +6,9 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Fixed
 
+- Preserve cancellation during health-probe cleanup, accept output exactly at
+  its byte limit, and mark writable reports incomplete after total timeout.
+
 - Remove GNU path-tool dependencies from health collection, verify cleanup on
   POSIX hosts without `/proc`, and stabilize audit finding order across scans.
 

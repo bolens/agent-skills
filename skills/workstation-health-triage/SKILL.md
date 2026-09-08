@@ -24,7 +24,9 @@ checks remain labeled in a completed report.
 
 `--output PATH` creates a new private file and refuses existing paths, including
 symlinks. Keep evidence under `/tmp` unless the user requests a durable artifact.
-Partial reports remain available after interruption or failure. Review reports
+Partial reports remain available after interruption or failure. On total timeout,
+the collector allows up to 0.1 seconds to append an incomplete marker when the
+output destination remains writable. Review reports
 with `sensitive-info-audit` before sharing or committing them.
 
 Cancellation, timeout, output limits, and normal probe exit all clean up the

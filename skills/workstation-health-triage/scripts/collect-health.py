@@ -25,7 +25,9 @@ def interrupt(signum, _frame):
 
 def stop_group(process):
     """Clean descendants even when their original parent has already exited."""
-    previous = {sig: signal.signal(sig, signal.SIG_IGN) for sig in (signal.SIGINT, signal.SIGTERM)}
+    pending_signals = []
+    previous = {sig: signal.signal(sig, lambda signum, _frame: pending_signals.append(signum))
+                for sig in (signal.SIGINT, signal.SIGTERM)}
     try:
         try:
             os.killpg(process.pid, signal.SIGTERM)
@@ -46,6 +48,8 @@ def stop_group(process):
     finally:
         for sig, handler in previous.items():
             signal.signal(sig, handler)
+        if pending_signals:
+            raise Interrupted(pending_signals[0])
 
 
 def run_probe(command, output, deadline, byte_limit):
@@ -91,14 +95,16 @@ def run_probe(command, output, deadline, byte_limit):
                         return 'TIMEOUT'
                     return 'OK' if code == 0 else f'CHECK_FAILED: exit={code}'
                 output.write(chunk[:remaining])
-                remaining -= min(len(chunk), remaining)
-                if remaining == 0:
+                if len(chunk) > remaining:
                     return 'OUTPUT_LIMIT'
+                remaining -= len(chunk)
     finally:
         if process is not None:
-            stop_group(process)
-            if process.stdout is not None:
-                process.stdout.close()
+            try:
+                stop_group(process)
+            finally:
+                if process.stdout is not None:
+                    process.stdout.close()
 
 
 QUICK = [
@@ -209,6 +215,17 @@ def main():
         output = DeadlineWriter(fd, time.monotonic() + args.total_timeout)
         result = collect(args, output)
         return result
+    except TimeoutError as exc:
+        # Reserve only a short, best-effort write window for an incomplete marker.
+        # A blocked consumer must not turn timeout reporting into another hang.
+        if output is not None:
+            output.deadline = time.monotonic() + 0.1
+            try:
+                output.write(b'\nCOLLECTION_TIMEOUT: report incomplete\n')
+            except OSError:
+                pass
+        print(f'Collection failed: {exc}', file=sys.stderr)
+        return 1
     except Interrupted as exc:
         print('Collection interrupted; partial report retained.', file=sys.stderr)
         return 128 + exc.signum

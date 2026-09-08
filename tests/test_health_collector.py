@@ -35,6 +35,45 @@ class HealthCollectorTests(unittest.TestCase):
         self.assertEqual(self.probe('raise SystemExit(7)')[0], 'CHECK_FAILED: exit=7')
         self.assertTrue(health.run_probe(['/nonexistent/health-probe'], io.BytesIO(), time.monotonic() + 1, 100).startswith('UNAVAILABLE:'))
 
+    def test_exact_limit_is_complete_and_one_extra_byte_is_truncated(self):
+        self.assertEqual(self.probe("import os; os.write(1,b'x'*1024)", limit=1024), ('OK', b'x' * 1024))
+        self.assertEqual(self.probe("import os; os.write(1,b'x'*1025)", limit=1024), ('OUTPUT_LIMIT', b'x' * 1024))
+
+    def test_cancellation_during_cleanup_is_delivered_after_reaping(self):
+        original_killpg = os.killpg
+        original_popen = subprocess.Popen
+        children = []
+
+        def launch(*args, **kwargs):
+            child = original_popen(*args, **kwargs)
+            children.append(child)
+            return child
+
+        def cancel_during_cleanup(pgid, signum):
+            original_killpg(pgid, signum)
+            if signum == signal.SIGTERM:
+                os.kill(os.getpid(), signal.SIGTERM)
+
+        previous = signal.signal(signal.SIGTERM, health.interrupt)
+        try:
+            with patch.object(health.os, 'killpg', side_effect=cancel_during_cleanup), patch.object(health.subprocess, 'Popen', side_effect=launch):
+                with self.assertRaises(health.Interrupted) as caught:
+                    self.probe('import time; time.sleep(60)', seconds=0.2)
+                self.assertEqual(caught.exception.signum, signal.SIGTERM)
+            self.assertIsNotNone(children[0].poll())
+            self.assertTrue(children[0].stdout.closed)
+        finally:
+            signal.signal(signal.SIGTERM, previous)
+
+    def test_total_timeout_is_marked_in_saved_report(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            report = Path(tmp) / 'report'
+            probes = [('slow', [sys.executable, '-c', 'import time; time.sleep(60)'])]
+            args = [str(SCRIPT), '--output', str(report), '--total-timeout', '1']
+            with patch.object(health, 'QUICK', probes), patch.object(sys, 'argv', args):
+                self.assertEqual(health.main(), 1)
+            self.assertIn('COLLECTION_TIMEOUT', report.read_text())
+
     def test_flood_is_capped_and_stopped(self):
         status, output = self.probe("import os\nwhile True: os.write(1,b'x'*8192)")
         self.assertEqual(status, 'OUTPUT_LIMIT')
