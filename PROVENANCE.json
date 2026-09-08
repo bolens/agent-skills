@@ -44,6 +44,20 @@
       ]
     },
     {
+      "name": "arch-linux",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/arch-linux",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/arch-linux"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/arch-linux",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/arch-linux",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/arch-linux"
+      ]
+    },
+    {
       "name": "arch-package-maintenance",
       "hard_fork": true,
       "origin": {
@@ -91,7 +105,8 @@
           "Retain parse5 8.0.1 or a later audited release for HTML test parsing; its entities 8 dependency requires Node 20.19 or newer, within the documented Node 22 test harness.",
           "Keep brand concurrency test responses static and gallery path checks free of identity replacements.",
           "Keep the concise task description with architecture, workflow, sequence, data-flow, lifecycle, repository-evidence, and Mermaid routing.",
-          "Keep one bounded diagnostic escalation after stalled authoring repairs, and load port-spread detail from the authoring reference. Preserve the port-spread assertions against that linked reference and retain delivery checks."
+          "Keep one bounded diagnostic escalation after stalled authoring repairs, and load port-spread detail from the authoring reference. Preserve the port-spread assertions against that linked reference and retain delivery checks.",
+          "Run update discovery only for relevant maintenance or explicit requests; keep notice protocol in a conditional reference and route imports through hard-fork review. Retain all notification assertions against the linked reference and check that it ships. Give the two acknowledgement-ordering fixtures their existing child timeout budget so a 25ms scheduling delay does not race the generic 50ms network timeout."
         ],
         "license": {
           "spdx": "MIT",
@@ -193,6 +208,20 @@
       ]
     },
     {
+      "name": "cachyos",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/cachyos",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/cachyos"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/cachyos",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/cachyos",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/cachyos"
+      ]
+    },
+    {
       "name": "caveman",
       "hard_fork": true,
       "origin": {
@@ -226,7 +255,8 @@
         "path": "skills/caveman-commit",
         "ref": "3b74643f4d910f496babd4e634b1ba7168816f14",
         "local_changes": [
-          "Preserve shared semantic commit and PR naming guidance, repository policy exceptions, and breaking-change metadata during message compression."
+          "Preserve shared semantic commit and PR naming guidance, repository policy exceptions, and breaking-change metadata during message compression.",
+          "Scope discovery to commit-message wording and return to an authorized parent commit workflow without changing invocation policy."
         ],
         "license": {
           "spdx": "MIT",
@@ -400,7 +430,8 @@
         "ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
         "local_changes": [
           "Route viewport-sensitive metric fixes through responsive-web-capture and interaction proof through cli-web-evidence.",
-          "Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior."
+          "Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior.",
+          "Keep metric entrypoints evidence-led, route remedies to metric references, and make navigation speculation conditional rather than a mandatory LCP checklist item. Preserve matching responsive-image requests, CSP-compatible CSS guidance, and installed-framework API selection in LCP references."
         ],
         "license": {
           "spdx": "MIT",
@@ -453,7 +484,8 @@
         "path": "default/agents/skills/diagnose-crash",
         "ref": "d3d23fdddef846ebb98b52122a6ece66211c0daf",
         "local_changes": [
-          "Route cross-subsystem failures through workstation-health-triage."
+          "Route cross-subsystem failures through workstation-health-triage.",
+          "Verify systemd-coredump and distribution identity; require matching build symbols and offer Omarchy notification muting only where its watcher is installed and relevant."
         ],
         "license": {
           "spdx": "MIT",
@@ -690,6 +722,20 @@
       ]
     },
     {
+      "name": "nixos",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/nixos",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/nixos"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/nixos",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/nixos",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/nixos"
+      ]
+    },
+    {
       "name": "omarchy",
       "hard_fork": true,
       "origin": {
@@ -700,7 +746,7 @@
         "ref": "d3d23fdddef846ebb98b52122a6ece66211c0daf",
         "local_changes": [
           "Keep desktop-session.md and its workstation health and config-drift routing.",
-          "Keep the concise required end-user configuration trigger and source-development exclusion; retain detailed applicability in the skill body."
+          "Scope desktop triggers to identified Omarchy-owned configuration, preserve other distributions and source-development exclusion, and carry existing reset authorization forward."
         ],
         "license": {
           "spdx": "MIT",
@@ -728,7 +774,7 @@
           "Require responsive and functional regression evidence when performance changes can affect those surfaces.",
           "Route measured animation and player costs through web-animation and animation-assets, including active motion and route re-entry evidence.",
           "Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior.",
-          "Keep measurement and task routing in SKILL.md; load budgets, loading, images, fonts, caching, runtime, and third-party examples only for the measured issue."
+          "Keep measurement and task routing in SKILL.md; load budgets, loading, images, fonts, caching, runtime, and third-party examples only for the measured issue. Link navigation speculation directly to its conditional Core Web Vitals reference. Keep font/preconnect choices measured and CSS delivery compatible with existing CSP."
         ],
         "license": {
           "spdx": "MIT",
@@ -1044,7 +1090,8 @@
           "Link only bundled category skills; route SEO, platform behavior, security, and async-state findings without expanding a read-only audit into implementation.",
           "Treat source maps as publication content to inspect and llms.txt as optional consumer-specific discovery, not automatic security or search verdicts.",
           "Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior.",
-          "Keep recurring maintenance checklists in an opt-in reference without expanding one-off audit scope."
+          "Keep recurring maintenance checklists in an opt-in reference without expanding one-off audit scope.",
+          "Tie performance and resource recommendations to measured bottlenecks; do not require preconnect, preload, or other recipes on healthy pages."
         ],
         "license": {
           "spdx": "MIT",

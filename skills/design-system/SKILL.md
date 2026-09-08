@@ -15,6 +15,10 @@ Identify the framework/version, styling system, component primitives, icon famil
 
 Read [framework integration](references/frameworks.md) when Tailwind, shadcn/ui, headless primitives, or Storybook are involved. Use `frontend-design` for visual direction, `svg-design` for icon consistency, and `web-animation` for motion tokens and lifecycle.
 
+When changing global base styles or integrating a component library, read
+[CSS normalization and resets](../web-standard/references/css-baselines.md). Keep
+one baseline owner and verify its effect on the shared component states.
+
 ## Tokens and component boundaries
 
 - Distinguish raw palette/scale values from semantic roles such as surface, text, border, accent, danger, and focus. Add a token when multiple consumers share a decision, not merely to rename every literal.

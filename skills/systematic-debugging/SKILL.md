@@ -9,6 +9,12 @@ Explain the failure with evidence before changing code. Scale the investigation 
 
 Read repository instructions and use its normal diagnostics. Keep probes minimally invasive. Never print secrets; report presence or redacted metadata.
 
+For environment-dependent failures, reproduce through the existing pinned mise,
+devenv, or devcontainer path and compare actual tool/input versions with CI. Read
+[portable development environments](../ci-maintenance/references/development-environments.md)
+when setup or drift is the cause. A local bug diagnosis does not justify migrating
+the project's environment manager.
+
 ## Investigate
 
 1. Capture the exact error, relevant logs, command, inputs, environment, and observed result.

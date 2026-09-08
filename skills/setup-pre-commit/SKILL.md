@@ -7,6 +7,11 @@ description: Set up or improve repository pre-commit checks using the project's 
 
 Build on the repository's existing tooling. Prefer a small, fast hook developers will keep enabled.
 
+Use the project's pinned environment through [portable development environments](../ci-maintenance/references/development-environments.md).
+Prefer mise or the established devenv/devcontainer toolchain over untracked global
+installs. Verify hook execution from a noninteractive editor process as well as a
+shell; do not make every commit download tools, rebuild a container, or start services.
+
 ## Inspect
 
 1. Read `AGENTS.md`, contributor docs, manifests, lockfiles, existing hooks, CI, and Make/task targets.

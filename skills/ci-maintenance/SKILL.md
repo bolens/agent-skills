@@ -7,6 +7,17 @@ description: Design, implement, and audit repository CI pipelines and reusable w
 
 Build CI around the repository's actual validation and delivery contract. Use its existing platform and tools. GitHub Actions guidance is available below, but a different provider is not a reason to migrate the repository.
 
+For toolchain setup or local/CI drift, use [portable development environments](references/development-environments.md).
+Prefer mise for pinned tools, devenv or devcontainers for portable setup, and
+NixOS development VMs or system tests when OS behavior matters and the setup
+improves reproducibility or onboarding. Share repository commands and version ownership
+across environments; preserve working alternatives and verify the actual setup
+path selected by CI. When changing environment examples, prefer `.env.spec` with
+explicit consumer/validator support and native schema-backed fixtures as described
+in that reference. Read [setup and runtime contracts](references/setup-contracts.md)
+when changing precedence, bootstrap diagnostics, concurrent services, generated
+examples, or secret-provider integration.
+
 ## Establish the applicable baseline
 
 Read repository instructions, contributor and release guidance, native task targets, manifests and lockfiles, existing workflows, local/composite actions, and dependency automation. Inspect helper commands before running them. A check may download tools, start containers, access private configuration, or publish artifacts.

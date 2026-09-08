@@ -9,7 +9,10 @@
 
 ### Resource loading
 
-**Preconnect to required origins:**
+**Preconnect where a critical connection delay is measured:**
+
+Use only origins needed early by the tested route. Verify the request uses that
+connection and that speculative connections do not crowd out critical work.
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://cdn.example.com" crossorigin>
@@ -38,17 +41,15 @@ Preload only resources whose late discovery is visible in the trace. Each preloa
 }
 </script>
 ```
-`moderate` waits for a stronger intent signal than eager modes. Measure prediction hit rate, transferred bytes, and server cost; a wrong prerender is roughly an unused navigation. See [core-web-vitals → LCP](../../core-web-vitals/SKILL.md#lcp-largest-contentful-paint) for the tradeoffs and the `prerenderingchange` gating needed for analytics.
+`moderate` waits for a stronger intent signal than eager modes. Measure prediction hit rate, transferred bytes, and server cost; a wrong prerender is roughly an unused navigation. See [measured navigation speculation](../../core-web-vitals/references/navigation-speculation.md) for the tradeoffs and the `prerenderingchange` gating needed for analytics.
 
-**Defer non-critical CSS:**
-```html
-<!-- Critical CSS inlined -->
-<style>/* Above-fold styles */</style>
+**Defer CSS only for an observed blocking cost:**
 
-<!-- Non-critical CSS -->
-<link rel="preload" href="/styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="/styles.css"></noscript>
-```
+Use the framework's supported delivery path and preserve its CSP. See
+[render-blocking resource guidance](../../core-web-vitals/references/LCP.md#3-render-blocking-resources)
+for first-paint, cache, script-failure, and layout checks. An inline `onload`
+stylesheet-switch recipe can be blocked by strict CSP; do not relax policy to
+make a performance example work.
 
 ### JavaScript optimization
 

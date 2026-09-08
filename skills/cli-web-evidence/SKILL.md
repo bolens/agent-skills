@@ -17,7 +17,7 @@ connectivity does not prove rendering, emulation, or diagnostic support. Verify
 the required effects and retain the product's supported browsers as acceptance
 targets.
 
-For viewport PNGs, use [responsive-web-capture](../responsive-web-capture/SKILL.md). Its helper captures the initial viewport, with reduced motion by default. It does not establish full-page coverage, actual CSS viewport dimensions, application readiness, or mobile-device behavior. Use a scripted harness for those requirements.
+For viewport PNGs, keep the existing browser harness when it supports the requested capture, especially for authentication, interaction, or application-specific readiness. Use [responsive-web-capture](../responsive-web-capture/SKILL.md) for matrix planning and as a fallback for simple unauthenticated initial renders. Its bundled helper captures the initial viewport, with reduced motion by default. It does not establish full-page coverage, actual CSS viewport dimensions, application readiness, or mobile-device behavior. Use a scripted harness for those requirements.
 
 Use the in-app browser when explicitly requested, when its authenticated session is essential, or when CLI tools cannot reach the required state. Explain the reason for switching. Do not silently copy the user's browser profile into a test session.
 

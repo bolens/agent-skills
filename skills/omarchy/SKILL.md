@@ -1,6 +1,6 @@
 ---
 name: omarchy
-description: Required for end-user Linux desktop, window-manager, and system configuration, including Hyprland, terminals, and Omarchy commands. Excludes Omarchy source development.
+description: Customize and troubleshoot installed Omarchy desktops, including its Hyprland configuration, shell, themes, terminals, and commands. Use for Omarchy-owned configuration, not generic Linux or Hyprland setup, CachyOS defaults, or Omarchy source development.
 ---
 
 # Omarchy Skill
@@ -10,9 +10,15 @@ Manage [Omarchy](https://omarchy.org/) Linux systems - a beautiful, fun, agentic
 This skill is for end-user customization on installed systems.
 It is not for contributing to Omarchy source code.
 
-## When This Skill MUST Be Used
+## Establish applicability
 
-**ALWAYS invoke this skill for end-user requests involving ANY of these:**
+Confirm Omarchy owns the target through the user's explicit target, installed
+package/tooling, or configuration source. Hyprland, a terminal, or a path under
+`~/.config/` alone does not establish that. For other installations, use the
+application's own configuration and [arch-linux](../arch-linux/SKILL.md),
+[cachyos](../cachyos/SKILL.md), or [nixos](../nixos/SKILL.md) as applicable.
+
+Use this skill for the following surfaces on an identified Omarchy installation:
 
 - Editing ANY file in `~/.config/hypr/` (window rules, animations, keybindings, monitors, etc.)
 - Editing `~/.config/omarchy/shell.json` (status bar layout, widgets)
@@ -24,7 +30,7 @@ It is not for contributing to Omarchy source code.
 - User-facing `omarchy` commands (`omarchy theme ...`, `omarchy refresh ...`, `omarchy restart ...`, etc.)
 - Screenshots, screen recording, reminders, night light, idle behavior, lock screen
 
-**If you're about to edit a config file in ~/.config/ on this system, STOP and use this skill first.**
+Read the matching topic guide when editing Omarchy-owned configuration.
 
 **Do NOT use this skill for Omarchy development tasks** (editing the Omarchy source tree, creating migrations, or running `omarchy dev ...` workflows).
 
@@ -192,7 +198,12 @@ cp ~/.config/hypr/bindings.lua ~/.config/hypr/bindings.lua.bak.$(date +%s)
 # - Terminals: apply with `omarchy restart terminal` (reloads running terminals; foot picks changes up in new windows)
 ```
 
-### Reset to Defaults -- ALWAYS SEEK USER CONFIRMATION BEFORE RUNNING
+### Reset to defaults
+
+Reset only within existing authorization for the named component. Before an
+authorized reset, identify the affected customization and backup/recovery path.
+Ask for confirmation only when reset authority is missing; an explicit request
+to reset that component already supplies it.
 
 When customizations go wrong:
 

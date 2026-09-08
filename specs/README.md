@@ -14,6 +14,8 @@ identifies existing behavior, source coverage, and verification limits.
 | [006 Retrospective baseline](006-retrospective-baseline/spec.md) | Collection coverage and completion assessment at `8e51a4f` |
 | [008 Release packaging](008-release-packaging/spec.md) | Conditional ecosystem targets, native variants, and lean current-platform builds |
 | [009 Local Sentrux analysis](009-sentrux-local-analysis/spec.md) | Optional verified snapshots, comparison identity, and runtime notice retention |
+| [010 Linux platform skills](010-linux-platform-skills/spec.md) | Arch, CachyOS, NixOS, and installation-aware Omarchy routing |
+| [011 Portable development guidance](011-portable-development-guidance/spec.md) | Shared mise, devenv, devcontainer, and CI toolchain ownership |
 
 The retrospective baseline contains contracts for
 [maintenance](006-retrospective-baseline/contracts/maintenance.md),
@@ -34,3 +36,5 @@ workflow. A spec, a checked task, and a passing static test are different eviden
 The 2026-09-06 legacy extension adds [all 62 skill capabilities](006-retrospective-baseline/legacy-capabilities.md),
 [executable helpers](006-retrospective-baseline/legacy-helpers.md), and
 [Archify commands and viewer behavior](006-retrospective-baseline/legacy-archify.md).
+
+- [012: Workflow guidance follow-through](012-workflow-guidance/spec.md)

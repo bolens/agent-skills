@@ -25,7 +25,8 @@ Do not restart services, mount filesystems, repair packages, delete caches, upda
 
 ## Handoffs
 
-- Use `omarchy` and its desktop-session guide for Hyprland, UWSM, portals, PipeWire, Quickshell, display, or lock/idle problems.
+- Use `omarchy` and its desktop-session guide when Omarchy owns the affected desktop. Hyprland or PipeWire alone does not establish that installation.
+- Use [arch-linux](../arch-linux/SKILL.md) for Arch system configuration, [cachyos](../cachyos/SKILL.md) for CachyOS-specific repositories, drivers, kernels, or tuning, and [nixos](../nixos/SKILL.md) for declarative NixOS configuration and generations. Keep generic health collection here.
 - Use `managed-config-drift` when symptoms may come from live configuration diverging from a managed repository or packaged default.
 - Use `arch-update-recovery` for Arch-family upgrade readiness, failed package transactions, boot-chain recovery, or post-upgrade verification.
 - Use `homelab-stack-triage` when the failing surface is a Compose service or its proxy, network, mount, or dependency path.

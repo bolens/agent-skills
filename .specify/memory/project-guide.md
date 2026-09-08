@@ -98,6 +98,15 @@ blast-radius provenance and its local fallback when revisiting that source.
 
 ## Dependency hygiene preference
 
+The user's 2026-09-07 instruction prefers mise and portable development
+environments where they improve developer experience, reproducibility, and
+maintenance. This includes devenv, devcontainers, and NixOS development VMs or
+system tests when OS behavior matters. Share tool/input ownership and
+native validation commands between local development, editor containers, and CI.
+Preserve working alternatives unless a scoped migration has a concrete benefit.
+The owning contract is [portable development environments](../../skills/ci-maintenance/references/development-environments.md).
+This preference does not require installing all managers or migrating every repo.
+
 The user's 2026-09-06 instruction prefers SHA-pinned dependencies paired with
 Dependabot monitoring for updates. Apply this preference in CI maintenance,
 dependency triage, and fleet audits. Use full commit SHAs for Git references,
@@ -152,6 +161,23 @@ of editing generated copies to satisfy local style preferences. Put local
 planning guidance here or in the constitution and verify that project-owned
 memory survives an integration update.
 
+`make check-fast` verifies every file recorded in the Spec Kit and Codex
+integration manifests, including templates and generated skill entrypoints.
+Missing manifests, missing files, changed bytes, symlinks, and non-regular files
+fail the gate. Existing core Markdown templates, Bash helpers, and generated
+Spec Kit skill entrypoints must also appear in their owning manifest. Nested
+template overrides and project-owned memory stay outside that inventory.
+Removing both a file and its manifest entry requires review; the check cannot
+infer which files an upstream release should contain.
+This is an integrity check against recorded hashes, not upstream
+authenticity or proof of workflow behavior.
+
+When it fails, inspect the reported file and its diff before restoring an
+accidental edit or regenerating through Spec Kit's normal update mechanism.
+Do not rewrite manifest hashes to accept local edits. Keep repository-specific
+instructions in project-owned memory; preserve and review that memory across
+updates. The checker is read-only and does not install or update integrations.
+
 ## Semantic naming and version preference
 
 The user's 2026-09-06 request sets Conventional Commits as the default for
@@ -162,3 +188,16 @@ Keep squash messages consistent with the final PR scope and preserve breaking
 metadata. Explicit repository schemes and native package ordering remain valid
 exceptions. This is instruction consistency work, not a request to add versioned
 releases to this collection or publish anything.
+
+### Environment contracts (2026-09-07)
+
+The user prefers `.env.spec` over `.env.example`/`.env.sample` where applicable, and specification-based examples that reduce drift. Use an explicit supported format and validator, update consumers together, preserve private runtime values, and reuse native schemas rather than renaming files indiscriminately. The shared [development guidance](../../skills/ci-maintenance/references/development-environments.md#environment-contracts-and-specification-based-examples) owns the procedure.
+
+## Reference ownership preference
+
+The user's 2026-09-07 follow-up prefers maintained primary references and linked
+conditional guidance when that avoids copied rules and maintenance drift. Keep
+essential decisions and task routing in the entrypoint. Include local examples
+only when they clarify a repository-specific contract; do not replace useful
+instructions with an unexplained list of links. CSS baseline selection belongs
+to [web-standard's reference](../../skills/web-standard/references/css-baselines.md).

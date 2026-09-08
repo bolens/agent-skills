@@ -16,6 +16,7 @@ License source: [LICENSE](https://github.com/JuliusBrussee/caveman/blob/3b74643f
 
 Local changes to retain:
 - Preserve shared semantic commit and PR naming guidance, repository policy exceptions, and breaking-change metadata during message compression.
+- Scope discovery to commit-message wording and return to an authorized parent commit workflow without changing invocation policy.
 
 Updates are audited and merged manually. This fork does not track or represent upstream releases.
 

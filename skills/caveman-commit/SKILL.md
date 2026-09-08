@@ -2,7 +2,8 @@
 name: caveman-commit
 description: >
   Write a Conventional Commits message compressed to intent only. Use for
-  "write a commit", "commit message", /commit or /caveman-commit.
+  commit-message drafting or shortening and explicit /caveman-commit requests.
+  Use as a wording helper within an authorized commit workflow.
 ---
 
 Write commit messages terse and exact. Conventional Commits format. No fluff. Why over what.
@@ -62,4 +63,4 @@ Always include body for: breaking changes, security fixes, data migrations, anyt
 
 ## Boundaries
 
-Only generates the commit message. Does not run `git commit`, does not stage files, does not amend. Output the message as a code block ready to paste. "stop caveman-commit" or "normal mode": revert to verbose commit style.
+Only generates the commit message. Does not run `git commit`, does not stage files, does not amend. For a message-only request, output the message as a code block ready to paste. Inside an authorized commit task, return the wording to the coordinating workflow so it continues staging, validation, and committing under its existing authority; do not terminate that task at message generation. "stop caveman-commit" or "normal mode": revert to verbose commit style.

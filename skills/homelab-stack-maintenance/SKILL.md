@@ -18,11 +18,13 @@ Map the change across the sources that exist in this repository:
 | Source | Contract to preserve |
 |---|---|
 | Compose and includes | Services, image pins, ports, dependencies, health checks, mounts, networks, profiles, and runtime requirements |
-| Environment examples | Required key names, defaults, interpolation inputs, container environment, and secret placeholders |
+| Environment contract and examples | Required key names, defaults, interpolation inputs, container environment, and secret placeholders |
 | Preparation | Copy ownership, generated environment mirrors, external prerequisites, repeat-run behavior, and optional actions |
 | Stack metadata | Lifecycle, exposure, data and backup needs, runtime-security exceptions, resources, and placement |
 | Ingress examples | Protocol, service/network identity, upstream container port, authentication, and intended client reachability |
 | README and generated output | Setup and upgrade instructions, source inventories, catalog, topology, diagrams, and published guides |
+
+Prefer a tracked `.env.spec` as the environment contract when creating or improving examples; follow [environment contracts](../ci-maintenance/references/development-environments.md#environment-contracts-and-specification-based-examples) for supported syntax, consumer migration, and fixture validation. Preserve runtime files and validate Compose against explicit synthetic inputs. Use native schemas for other configuration examples where they prevent drift.
 
 Update only affected surfaces. A port change may affect health checks and proxy upstreams even when no host port should be published. A new external volume needs ownership and backup guidance as well as a declaration. Do not mark a privileged or floating-image exception acceptable solely because metadata matches Compose.
 

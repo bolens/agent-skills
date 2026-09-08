@@ -37,6 +37,12 @@ Prefer SHA-pinned build dependencies and Dependabot monitoring where supported, 
 
 ## Build for current platforms with lean runtime payloads
 
+Use [portable development environments](../ci-maintenance/references/development-environments.md)
+for reproducible build tools shared with CI. Prefer mise, devenv, or devcontainers
+where suitable, while verifying the release target's ABI and native packaging
+rules separately. A convenient development image is not automatically a suitable
+release builder or a runtime payload.
+
 Read [lean builds and portability evidence](references/lean-portability.md) before choosing flags, bundling dependencies, or trimming outputs. Select a documented compatibility floor within the current target set. Do not automatically choose an obsolete build image or freeze old dependency versions to maximize historical reach. Recheck current official platform and tool documentation when implementing a concrete target.
 
 Use native package dependencies and layouts where available. Keep build/check tools out of runtime dependencies and shipped files. Bundle only what the target's runtime model requires. Preserve application behavior, hardening, required plugins/assets, licenses, and repair/upgrade support. A smaller archive is not sufficient evidence of a lean installation.

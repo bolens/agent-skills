@@ -2313,6 +2313,8 @@ test('acknowledgement waits briefly for an in-flight refresh instead of losing t
     return new Promise((resolve) => { releaseRefresh = resolve; });
   }, {
     now: () => baseTime + (73 * 60 * 60 * 1_000),
+    // This tests acknowledgement ordering, not the 50ms network timeout.
+    timeoutMs: childCheckTimeoutMs,
   }));
   await refreshStarted;
 
@@ -2352,6 +2354,8 @@ test('a last-good notice remains acknowledgeable after the refresh commits a new
     return new Promise((resolve) => { releaseRefresh = resolve; });
   }, {
     now: () => baseTime + (73 * 60 * 60 * 1_000),
+    // This tests acknowledgement ordering, not the 50ms network timeout.
+    timeoutMs: childCheckTimeoutMs,
   }));
   await refreshStarted;
 

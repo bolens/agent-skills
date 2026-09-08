@@ -6,6 +6,25 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Fixed
 
+- Correct competing environment-contract ownership, pending-input validation,
+  runtime secret-file guidance, browser fallback selection, and performance examples.
+- Prevent Archify acknowledgement-ordering fixtures from racing their short
+  generic network deadline under suite load; retain production timeout behavior.
+
+- Reject unrecorded Spec Kit core files and non-regular integration files, so
+  removed manifest entries cannot hide existing files and named pipes cannot hang
+  the integrity check.
+
+- Check all Spec Kit integration files in the fast gate, detecting missing helpers,
+  edited templates, and generated skill drift against their recorded manifests.
+
+- Preserve parent commit and authorized reconciliation workflows; keep authenticated
+  browser captures in their existing harness, performance remedies evidence-led,
+  and Archify update notices scoped to maintenance or explicit discovery.
+
+- Scope Omarchy desktop and crash-helper routing to the actual installation,
+  and honor existing authorization for a requested configuration reset.
+
 - Preserve neighboring files during compression and report incomplete directory,
   discovery, pollution-search, and health-report operations as failures.
 - Align Caveman help with packaged behavior and keep unavailable reviewer or
@@ -17,6 +36,20 @@ All notable changes to this hard-fork collection are documented here.
   successful check from invalid saved evidence.
 
 ### Added
+
+- Add reference-led CSS normalization/reset selection, cascade-layer integration,
+  and browser/accessibility verification guidance.
+
+- Add conditional environment precedence, bootstrap diagnostics, concurrent-service
+  isolation/readiness, generated-contract checks, and optional SecretSpec guidance.
+
+- Prefer `.env.spec` environment contracts and native schema-backed examples, with explicit validation and coordinated consumer migration.
+
+- Prefer shared, pinned development tooling through mise, devenv, devcontainers,
+  and applicable NixOS VMs in CI and related maintenance workflows.
+
+- Add Arch system configuration, CachyOS repository/driver/tuning, and NixOS
+  declarative configuration skills with explicit activation and recovery evidence.
 
 - Add optional local Sentrux snapshots and structural comparisons on Linux x86_64,
   with verified runtime artifacts, retained license notices, and explicit source scopes.

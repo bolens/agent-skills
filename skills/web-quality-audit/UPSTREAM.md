@@ -22,6 +22,7 @@ Local changes to retain:
 - Treat source maps as publication content to inspect and llms.txt as optional consumer-specific discovery, not automatic security or search verdicts.
 - Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior.
 - Keep recurring maintenance checklists in an opt-in reference without expanding one-off audit scope.
+- Tie performance and resource recommendations to measured bottlenecks; do not require preconnect, preload, or other recipes on healthy pages.
 
 Updates are audited and merged manually. This fork does not track or represent upstream releases.
 
