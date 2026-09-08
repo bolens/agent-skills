@@ -15,3 +15,8 @@ and existing Make checks own validation. No upstream revision is advanced.
 Source ownership: scripts/link-installed.py, scripts/update-provenance.py,
 explicit-only skill metadata, tests/test_client_installation.py, README.md,
 docs/client-compatibility.md, generated provenance and pointers.
+
+Follow-through uses a separate opt-in loader harness with pinned dependencies.
+No model credentials, persistent client runtime installation, or new native client
+homes are needed. Installer auditing remains read-only with bounded catalog walks.
+Extend the existing spec before implementation and preserve prior evidence.

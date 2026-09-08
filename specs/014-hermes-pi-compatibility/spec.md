@@ -17,3 +17,15 @@ are outside scope. The source checkout remains canonical.
   independent files by default, and reports mismatches or collisions.
 - Tests use temporary homes and verify references through installed links.
   Real client sessions are reported separately from installer and source evidence.
+
+## Follow-through amendment: 2026-09-08
+
+- Run pinned native loader functions in temporary profiles without model sessions.
+  Verify catalog identity, explicit-only policy where supported, symlink aliases,
+  and same-skill/sibling resource reads. Record permission-boundary limitations.
+- Report obsolete links owned by this checkout and excluded Hermes skills found
+  in its native catalog. Bound traversal and never delete independent entries.
+- Installation planning must expose conflicts before writes and be usable from
+  automation. Default checks remain offline and require no agent packages.
+- Remove Codex-only assumptions from discovery guidance. Document optional helper
+  backends and shared-home support in OpenCode, Gemini CLI, and Copilot CLI.

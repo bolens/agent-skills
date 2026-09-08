@@ -113,12 +113,14 @@ python3 scripts/link-installed.py --apply
 python3 scripts/link-installed.py --check
 ```
 
-`--apply` creates missing links and repoints existing symlinks to this checkout.
+`--plan` previews changes without writing. `--apply` checks the selected catalogs
+for conflicts before creating missing links or repointing existing symlinks.
 It refuses existing files or directories unless `--replace` is supplied.
 `--replace` deletes those copies, so preserve any independent edits first.
 Installation applies to the registered collection, not an individual skill.
-It is not transactional: other links can be updated even if one target is
-refused. It does not remove unregistered or obsolete entries from client homes.
+Preflight conflicts prevent writes. An I/O failure or concurrent change during
+application can still leave a partial install. It reports obsolete repository-owned
+links and conflicting catalog names without removing independent entries.
 Inspect reported problems and rerun `--check` after resolving them.
 
 Set `CODEX_HOME`, `AGENTS_HOME`, or `CLAUDE_HOME` to override the corresponding

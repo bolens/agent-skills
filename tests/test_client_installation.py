@@ -82,3 +82,48 @@ class ClientInstallation(unittest.TestCase):
     def test_unknown_client_is_rejected_without_writes(self):
         self.assertEqual(2, self.run_installer('--apply', '--client', 'unknown').returncode)
         self.assertEqual([], list(self.home.iterdir()))
+
+    def test_plan_reports_conflicts_before_any_apply_writes(self):
+        home = self.home / '.pi/agent/skills'
+        occupied = home / 'codebase-design'
+        occupied.mkdir(parents=True)
+        for mode in ('--plan', '--apply'):
+            result = self.run_installer(mode, '--client', 'pi')
+            self.assertEqual(1, result.returncode)
+            self.assertIn('refusing existing target', result.stdout)
+            self.assertEqual([occupied], list(home.iterdir()))
+
+    def test_stale_owned_links_and_excluded_aliases_are_reported_not_removed(self):
+        self.assertEqual(0, self.run_installer('--apply', '--client', 'hermes').returncode)
+        home = self.home / '.hermes/skills'
+        stale = home / 'old-skill'
+        stale.symlink_to(ROOT / 'skills/no-longer-present')
+        group = home / 'custom'
+        group.mkdir()
+        alias = group / 'renamed'
+        alias.mkdir()
+        (alias / 'SKILL.md').write_text('---\nname: caveman\ndescription: local copy\n---\n')
+        unrelated = home / 'independent'
+        unrelated.mkdir()
+        (unrelated / 'SKILL.md').write_text('---\nname: independent\ndescription: own skill\n---\n')
+        result = self.run_installer('--check', '--client', 'hermes')
+        self.assertEqual(1, result.returncode)
+        self.assertIn('unexpected repository-owned link', result.stdout)
+        self.assertIn('excluded skill exposed', result.stdout)
+        self.assertNotIn('independent', result.stdout)
+        self.assertTrue(stale.is_symlink())
+        self.assertTrue((alias / 'SKILL.md').is_file())
+
+    def test_duplicate_names_and_cycles_fail_bounded_check(self):
+        self.assertEqual(0, self.run_installer('--apply', '--client', 'pi').returncode)
+        home = self.home / '.pi/agent/skills'
+        group = home / 'group'
+        group.mkdir()
+        duplicate = group / 'different-directory'
+        duplicate.mkdir()
+        (duplicate / 'SKILL.md').write_text('---\nname: code-review\ndescription: duplicate\n---\n')
+        (group / 'cycle').symlink_to(home)
+        result = self.run_installer('--check', '--client', 'pi')
+        self.assertEqual(1, result.returncode)
+        self.assertIn('conflicting skill name', result.stdout)
+        self.assertIn('alias or cycle', result.stdout)
