@@ -55,6 +55,12 @@ jobs:
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: '22'
+      - name: Use Ubuntu package sources
+        # Keep nested browser setup apt calls independent of unrelated vendor feeds.
+        run: |
+          test -s /etc/apt/sources.list.d/ubuntu.sources
+          printf '%s\n' 'Dir::Etc::sourcelist "/etc/apt/sources.list.d/ubuntu.sources";' 'Dir::Etc::sourceparts "-";' |
+            sudo tee /etc/apt/apt.conf.d/99-ci-ubuntu-sources >/dev/null
       - uses: browser-actions/setup-chrome@48ad923757ca74d66703209fe939badbdf80f2f4 # v2
         id: chrome
         with:
@@ -78,6 +84,12 @@ jobs:
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: '22'
+      - name: Use Ubuntu package sources
+        # Keep nested browser setup apt calls independent of unrelated vendor feeds.
+        run: |
+          test -s /etc/apt/sources.list.d/ubuntu.sources
+          printf '%s\n' 'Dir::Etc::sourcelist "/etc/apt/sources.list.d/ubuntu.sources";' 'Dir::Etc::sourceparts "-";' |
+            sudo tee /etc/apt/apt.conf.d/99-ci-ubuntu-sources >/dev/null
       - uses: browser-actions/setup-chrome@48ad923757ca74d66703209fe939badbdf80f2f4 # v2
         id: chrome
         with:
@@ -119,6 +131,12 @@ jobs:
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: "22"
+      - name: Use Ubuntu package sources
+        # Keep nested browser setup apt calls independent of unrelated vendor feeds.
+        run: |
+          test -s /etc/apt/sources.list.d/ubuntu.sources
+          printf '%s\n' 'Dir::Etc::sourcelist "/etc/apt/sources.list.d/ubuntu.sources";' 'Dir::Etc::sourceparts "-";' |
+            sudo tee /etc/apt/apt.conf.d/99-ci-ubuntu-sources >/dev/null
       - name: Install lint and inspection tools
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y shellcheck jq ripgrep
       - name: Install metadata parser
