@@ -22,6 +22,33 @@ changed paths, comparing declared exports, or matching exact identifiers.
 Semantic conflict resolution, ranking by impact, and deciding whether findings
 share a cause still require judgment. Successful parsing is not acceptance.
 
+## Continue through the requested endpoint
+
+Keep one coordinator responsible for the user's endpoint. When a task needs a
+specialist skill, use its relevant procedure within the current assignment and
+return its evidence to that coordinator. Continue already-authorized work without
+asking the user to choose the next skill or repeat permission. Carry the original
+requirements, current attempt and candidate, write ownership, evidence, and remaining
+endpoint across each transition. Skill selection does not itself spawn an agent.
+
+| Observed state | Next action within the existing task |
+| --- | --- |
+| Implementation is ready for proof | Run the owning repository checks. Use [verify-and-stop](../../verify-and-stop/SKILL.md) when acceptance or evidence reuse needs a focused pass. |
+| A check fails | Use [systematic-debugging](../../systematic-debugging/SKILL.md) to identify the cause. Apply an in-scope correction if fixes are authorized, then rerun affected proof. |
+| The CI contract is defective | Use [ci-maintenance](../../ci-maintenance/SKILL.md) for the pipeline change, then return its evidence to the current coordinator. |
+| Browser evidence is needed | Use [cli-web-evidence](../../cli-web-evidence/SKILL.md) and acquire the existing host capacity before starting a runner. |
+| Another owner holds a required resource | Record the dependency and owning run, continue independent work, and resume after verified release. A busy result does not trigger a second runner or a product-code fix. |
+| Proof is accepted | Complete the requested commit, artifact, or already-authorized delivery. Use [babysit](../../babysit/SKILL.md) only when PR/release follow-through is part of that endpoint. |
+
+If a named skill is unavailable or denied by the client, use available repository
+commands and permitted task instructions. Report a material capability gap rather
+than inventing a tool, bypassing access controls, or installing another agent.
+A specialist's completion closes its assigned unit, not outstanding integration,
+cleanup, or delivery work. Stop when the endpoint is met. Do not start another
+audit, optimization pass, fleet sweep, or monitoring service merely because a
+skill has a link to one. Skills provide routing instructions, not a background
+scheduler that continues after the session ends.
+
 ## Make acceptance actionable
 
 Choose evidence that could reject the unit before its implementation starts.

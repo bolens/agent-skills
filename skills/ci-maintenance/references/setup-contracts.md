@@ -114,22 +114,48 @@ real provider's access, rotation, or production integration works.
 
 ## Browser workload ownership
 
-Budget browser concurrency across the host as well as inside each runner. Several
-single-worker suites can still saturate a workstation when agents launch them
-from separate worktrees. Use a shared nonblocking lock or bounded capacity pool
-for cooperating local runners, acquired before browser startup and held through
-cleanup. A busy result must identify contention and remain a non-passing check.
-Do not bypass it with another checkout or a different temporary directory.
+Use one shared resource identity across every relevant entrypoint, checkout, and
+agent client. Ephemeral ports and isolated profiles prevent address or data
+collisions but do not limit CPU and memory use. Acquire capacity before launching
+browsers or expensive setup. Prefer the repository's supported lock or supervisor
+to a second skill-specific limiter. An isolated output directory is not permission
+to bypass the host limit. Existing runs started before enforcement need separate
+owner-coordinated completion or cancellation.
 
-Keep focused suite/engine selection available for iteration. Run the accepted
-final matrix under one owner after dependent changes stabilize. Use isolated
-builds and per-run evidence paths when writers remain active. Do not reuse another
-attempt's screenshots or passing status without matching its candidate and scope.
+For advisory file locks, retain the lock inode across release and reacquisition.
+Unlinking a held lockfile can let another process lock a different inode at the
+same path. Distinguish a retained lockfile from an active OS lock. Never steal
+ownership based only on a file's age or a missing progress message. State platform
+limits explicitly and test the actual ownership primitive where it runs.
 
-Test cancellation from the actual launcher through the supervisor and browser.
-Some browser libraries launch browsers in separate process groups, so killing
-only the test runner's group does not prove browser cleanup. Preserve the library's
-graceful shutdown handlers, allow a bounded cleanup window, and verify surviving
-owned processes after timeout. Never terminate a personal browser session or
-remove an active lock as a cleanup shortcut. Lower local test priority when useful,
-and report process-group escape or unsupported-platform limits explicitly.
+Surface contention as a distinct non-passing outcome in the outer task runner,
+with the resource and available owner/run identity. Use a bounded wait or fail
+promptly. The coordinator can resume after release while doing independent work.
+Avoid tight retries and automatic relaunch loops. Preserve failure, timeout,
+cancellation, and partial-result status through wrappers and package scripts.
+
+Use focused suite and engine selection while iterating, then have the integration
+owner run the final matrix against stable inputs. Combine pending requests only
+when candidate inputs, runtime, build identity,
+and requested coverage match. One run can return evidence to several task owners.
+A running focused suite cannot satisfy broader coverage it did not execute.
+Queue the missing scope or rerun affected checks after inputs change. Keep each
+run's evidence separate even when execution is serialized, so the next owner
+does not overwrite screenshots still needed for review.
+
+Separate the execution deadline from graceful shutdown and forced cleanup budgets.
+Allow existing cleanup hooks to finish before escalating: a native accessibility
+runner's shutdown may need longer than an ordinary headless browser's. Hold capacity
+until owned cleanup finishes. Test the full launch chain with contention, nonzero
+exit, timeout, cancellation, and a child that ignores graceful termination. Verify
+lock reacquisition and surviving owned browser processes, not just worker exit.
+Browser libraries may launch separate process groups, so preserve their graceful
+shutdown handlers and verify escaped-child limits. Never terminate personal
+browser sessions or another task's processes as incidental cleanup.
+Use lightweight fixtures for most supervisor regressions and a short native probe
+for library-specific shutdown. Do not start another full matrix to test the limiter.
+
+Return accepted proof, busy dependencies, or failed conditions through the existing
+[task coordinator](../../git-hygiene/references/work-units.md#continue-through-the-requested-endpoint).
+Lower process priority can reduce desktop interference but does not replace
+capacity control or prove that checks became faster.

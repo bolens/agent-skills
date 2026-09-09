@@ -22,6 +22,8 @@ do not run a second capture helper merely to obtain its receipt format.
 
 The fallback accepts at most 32 distinct viewports per run, with sides up to 8192 pixels and at most 16,777,216 pixels per image. It hashes PNGs in chunks and rejects files over 128 MiB. Split larger matrices into scoped runs.
 
+Before starting a capture alongside other agents, follow the [shared browser capacity contract](../ci-maintenance/references/setup-contracts.md#browser-workload-ownership). The fallback helper isolates output and ports but does not enforce a host-wide concurrency limit. Use the existing coordinator or supervisor to serialize it when capacity is shared.
+
 The comprehensive matrix is intentionally expensive. Capture representative routes rather than multiplying every route by every viewport without evidence that the cost is useful.
 
 ## Workflow
