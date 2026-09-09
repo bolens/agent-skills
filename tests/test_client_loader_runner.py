@@ -9,6 +9,7 @@ import sys
 import tarfile
 import tempfile
 import unittest
+import urllib.error
 from pathlib import Path
 from unittest.mock import patch
 
@@ -28,6 +29,34 @@ class ClientLoaderRunner(unittest.TestCase):
         with patch.object(runner, 'MAX_DOWNLOAD', 4), patch.object(runner.urllib.request, 'urlopen', return_value=io.BytesIO(b'12345')):
             with self.assertRaisesRegex(ValueError, 'exceeds'):
                 runner.download('https://example.invalid/module', 'sha256', '00' * 32)
+
+    def test_transient_download_retries_then_checks_integrity(self):
+        error = urllib.error.HTTPError('https://example.invalid', 429, 'limited', {'Retry-After': '2'}, io.BytesIO())
+        with patch.object(runner.urllib.request, 'urlopen', side_effect=[error, io.BytesIO(b'valid')]) as fetch, patch.object(runner.time, 'sleep') as sleep:
+            self.assertEqual(b'valid', runner.download('https://example.invalid', 'sha256', hashlib.sha256(b'valid').hexdigest()))
+        sleep.assert_called_once_with(2)
+        self.assertEqual(2, fetch.call_count)
+        self.assertTrue(error.closed)
+
+    def test_download_retry_budget_and_nonretryable_errors(self):
+        for status, retry_after, attempts in [(429, None, 3), (503, None, 3), (404, None, 1), (429, '61', 1)]:
+            with self.subTest(status=status, retry_after=retry_after):
+                errors = [urllib.error.HTTPError('https://example.invalid', status, 'failure',
+                          {} if retry_after is None else {'Retry-After': retry_after}, io.BytesIO()) for _ in range(attempts)]
+                with patch.object(runner.urllib.request, 'urlopen', side_effect=errors) as fetch, patch.object(runner.time, 'sleep') as sleep:
+                    with self.assertRaises(urllib.error.HTTPError):
+                        runner.download('https://example.invalid', 'sha256', '00' * 32)
+                self.assertEqual(attempts, fetch.call_count)
+                self.assertEqual(attempts - 1, sleep.call_count)
+                self.assertTrue(all(error.closed for error in errors))
+                if attempts == 3:
+                    self.assertEqual([30, 60], [call.args[0] for call in sleep.call_args_list])
+
+    def test_retry_after_dates_and_malformed_values(self):
+        with patch.object(runner.time, 'time', return_value=0):
+            self.assertEqual(30, runner.retry_delay('Thu, 01 Jan 1970 00:00:30 GMT', 60))
+            self.assertEqual(60, runner.retry_delay('invalid', 60))
+            self.assertEqual(0, runner.retry_delay('-1', 60))
 
     def test_archive_only_copies_allowlisted_regular_modules(self):
         archive = io.BytesIO()
