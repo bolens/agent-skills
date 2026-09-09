@@ -5,7 +5,7 @@ description: Audit and repair web application authentication, authorization, ses
 
 # Web security
 
-Tie each finding to an attacker-controlled input, a trust boundary, an affected asset, and a reproducible failure. A security-header score or a scanner pass is not proof that the application's authorization works.
+Tie security findings to an attacker-controlled input, a trust boundary, an affected asset, and a reproducible failure. Tie privacy findings to the observed data flow, collection purpose, access or retention policy, and user impact; unnecessary authorized collection can be a privacy defect without an attacker. A security-header score or a scanner pass is not proof that the application's authorization or privacy behavior is correct.
 
 ## Establish scope and evidence
 
