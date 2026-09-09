@@ -27,3 +27,28 @@ and dependencies. No model sessions or client permission-gated reads were tested
 The full Pi package was inspected but excluded from the retained dependency graph;
 the fixture fetches only integrity-verified loader modules plus two locked parsers.
 No global client runtime was installed.
+
+## Coordination amendment evidence
+
+- [x] Normalize empty/relative profile inputs and reject aliased or nested catalogs.
+- [x] Add JSON receipts, partial failure recovery, and cross-process catalog locks.
+- [x] Share bounded YAML parsing across generator, validator, and catalog audit.
+- [x] Declare actual runtime requirements and run pinned loaders in CI.
+- [x] Clarify attempt identity, cancellation ownership, uncertain retries, and host browser capacity.
+
+The 170-test repository gate, all installed client catalogs, pinned native loader
+checks, Ruff and actionlint passed before the final partial-I/O regression was
+added. Final verification is recorded below. Native model sessions, Windows apply,
+and hosted CI execution remain outside the executed evidence.
+
+Final gate: all 171 tests passed in 55.375 seconds, including partial-install
+receipts and successful retry after a simulated disk failure. Metadata/provenance,
+portability, installed links, and shared source lint passed. Pinned Pi/Hermes
+loaders and the all-client JSON check passed. Actionlint accepted the CI change.
+
+The related privacy-path fix installs a shared POSIX browser guard across eight
+entrypoints. Three supervisor tests, TypeScript, guard Oxlint, and Python lint
+passed. Its real main entrypoint refused a held lock before browser launch, and
+one short Chromium cancellation probe confirmed worker and detached-browser exit.
+That checkout's concurrent uncommitted application work was preserved. No full
+browser matrix, hosted CI run, or production/browser-user session was started.

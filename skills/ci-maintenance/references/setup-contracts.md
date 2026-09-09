@@ -111,3 +111,25 @@ provider access and avoid provisioning accounts or changing CI secrets as an inc
 missing-required-secret failures with a fake provider or synthetic fixtures;
 assert that diagnostics stay value-free. An offline fixture is not proof that a
 real provider's access, rotation, or production integration works.
+
+## Browser workload ownership
+
+Budget browser concurrency across the host as well as inside each runner. Several
+single-worker suites can still saturate a workstation when agents launch them
+from separate worktrees. Use a shared nonblocking lock or bounded capacity pool
+for cooperating local runners, acquired before browser startup and held through
+cleanup. A busy result must identify contention and remain a non-passing check.
+Do not bypass it with another checkout or a different temporary directory.
+
+Keep focused suite/engine selection available for iteration. Run the accepted
+final matrix under one owner after dependent changes stabilize. Use isolated
+builds and per-run evidence paths when writers remain active. Do not reuse another
+attempt's screenshots or passing status without matching its candidate and scope.
+
+Test cancellation from the actual launcher through the supervisor and browser.
+Some browser libraries launch browsers in separate process groups, so killing
+only the test runner's group does not prove browser cleanup. Preserve the library's
+graceful shutdown handlers, allow a bounded cleanup window, and verify surviving
+owned processes after timeout. Never terminate a personal browser session or
+remove an active lock as a cleanup shortcut. Lower local test priority when useful,
+and report process-group escape or unsupported-platform limits explicitly.

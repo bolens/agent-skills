@@ -23,6 +23,8 @@ Use the in-app browser when explicitly requested, when its authenticated session
 
 Select representative routes and states before multiplying viewports. During iteration, rerun the affected state and sizes near the relevant breakpoint. Use the requested final matrix once the focused checks pass. Different window sizes in Chromium do not prove Safari, Firefox, touch, high-DPI, zoom, or mobile browser behavior. Exercise those separately when relevant.
 
+When several agents share a host, use the [browser resource contract](../ci-maintenance/references/setup-contracts.md#browser-workload-ownership) before launching overlapping suites.
+
 ## Establish reproducible state
 
 Start the repository-native server in a managed session and retain its logs. Check the intended application identity and exact route/base path. HTTP readiness alone can point at a login page, error shell, stale build, or unrelated server. Stop only processes started for the task.
