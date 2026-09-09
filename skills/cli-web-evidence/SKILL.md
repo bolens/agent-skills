@@ -33,6 +33,8 @@ Install console, page-error, failed-request, and relevant HTTP-response observer
 
 Navigate and exercise the user-visible path. Wait with a deadline for the state that matters: hydrated control, loaded data, dismissed loader, decoded image, or completed transition. Check fonts and in-scope image readiness when layout depends on them. `load`, a sleep, or global `networkidle` alone does not prove application readiness. Assert the resulting URL and meaningful DOM state. [Playwright readiness API](https://playwright.dev/docs/api/class-page#page-wait-for-load-state).
 
+For locale-dependent journeys, use [internationalization verification](../internationalization/references/layout-and-testing.md). Set browser locale and time zone explicitly and verify the app selected that state; emulation alone does not prove negotiation, translation, or formatting. Keep the matrix within the existing browser capacity contract.
+
 For comparisons, hold browser/version, viewport, device scale, theme, locale, test data, scroll position, and motion policy constant. Record relevant differences instead of masking them. Use fresh contexts for independent states, or deliberately reuse a context when testing navigation/session continuity. Keep authenticated test state private and out of tracked artifacts.
 
 With snapshot-based interaction tools, refresh the snapshot after navigation,

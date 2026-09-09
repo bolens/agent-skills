@@ -34,6 +34,8 @@ Select relevant states from enabled, hover, focus-visible, pressed, selected, di
 
 Verify narrow/wide containers, text zoom/reflow, themes, reduced motion, and right-to-left layout when supported. Distinguish component container width from the browser viewport. Use logical CSS properties when direction changes are in scope.
 
+Use [internationalization](../internationalization/SKILL.md) when shared components need translated messages, bidirectional content, international input, or script-specific layout verification.
+
 Build stories or examples in the existing harness so the next change can reproduce these states. Use semantic queries and user interactions for behavioral tests. A screenshot assertion cannot prove focus trapping or a callback contract.
 
 Use `forms-and-data-state` for submission and async data lifecycles behind shared control states. Keep the component's visual API separate from ownership of server data and drafts.

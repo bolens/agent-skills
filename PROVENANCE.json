@@ -14,7 +14,8 @@
         "local_changes": [
           "Route responsive visual evidence through responsive-web-capture and functional browser evidence through cli-web-evidence.",
           "Route runtime and shared-component remediation to motion, asset, and design-system skills; verify explicit reduced-motion states rather than relying on a global duration reset.",
-          "Keep the evidence workflow in SKILL.md and load principles, criterion examples, and testing detail through issue-specific references."
+          "Keep the evidence workflow in SKILL.md and load principles, criterion examples, and testing detail through issue-specific references.",
+          "Preserve content-clarity guidance and route locale-dependent implementation through internationalization without treating supplemental guidance as WCAG requirements."
         ],
         "license": {
           "spdx": "MIT",
@@ -799,6 +800,24 @@
       }
     },
     {
+      "name": "internationalization",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/internationalization",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/internationalization"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/internationalization",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/internationalization",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/internationalization"
+      ],
+      "optional_install_targets": {
+        "pi": "${PI_CODING_AGENT_DIR:-$HOME/.pi/agent}/skills/internationalization",
+        "hermes": "${HERMES_HOME:-$HOME/.hermes}/skills/internationalization"
+      }
+    },
+    {
       "name": "managed-config-drift",
       "hard_fork": true,
       "origin": {
@@ -1333,7 +1352,8 @@
           "Treat source maps as publication content to inspect and llms.txt as optional consumer-specific discovery, not automatic security or search verdicts.",
           "Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior.",
           "Keep recurring maintenance checklists in an opt-in reference without expanding one-off audit scope.",
-          "Tie performance and resource recommendations to measured bottlenecks; do not require preconnect, preload, or other recipes on healthy pages."
+          "Tie performance and resource recommendations to measured bottlenecks; do not require preconnect, preload, or other recipes on healthy pages.",
+          "Route relevant internationalization, content clarity, privacy, and interruption-recovery evidence to their owning skills without expanding audit scope."
         ],
         "license": {
           "spdx": "MIT",
