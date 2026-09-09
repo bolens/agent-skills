@@ -10,9 +10,11 @@ import re
 import subprocess
 from pathlib import Path
 
+from skill_metadata import read_metadata
+
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS = ROOT / "skills"
-NAME = re.compile(r"^[a-z0-9-]{1,63}$")
+NAME = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 
 
 def fail(message: str) -> None:
@@ -33,13 +35,12 @@ for name, directory in sorted(directories.items()):
     if not skill.is_file():
         fail(f"missing {skill.relative_to(ROOT)}")
     text = skill.read_text()
-    if not text.startswith("---\n") or "\n---\n" not in text[4:]:
-        fail(f"invalid frontmatter: {skill.relative_to(ROOT)}")
-    frontmatter = text.split("\n---\n", 1)[0]
-    if not re.search(rf"(?m)^name:\s*{re.escape(name)}\s*$", frontmatter):
+    try:
+        metadata = read_metadata(skill)
+    except ValueError as error:
+        fail(str(error))
+    if metadata['name'] != name:
         fail(f"frontmatter name mismatch: {skill.relative_to(ROOT)}")
-    if not re.search(r"(?m)^description:\s*\S", frontmatter):
-        fail(f"missing description: {skill.relative_to(ROOT)}")
     if "[TODO" in text:
         fail(f"unfinished placeholder: {skill.relative_to(ROOT)}")
     if records[name].get("hard_fork") is not True:

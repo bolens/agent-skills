@@ -153,3 +153,34 @@ and sibling resources. They do not exercise Hermes skill_view, Gemini permission
 checks, or a live model's decisions. Validate those with a client session when
 that runtime and model access are available. Never describe the filesystem probe
 as proof that a client's permission layer granted access.
+
+
+## Automation and concurrent installation
+
+`--json` emits one object with `schema_version: 1`, `mode`, canonical `source`,
+`status`, `changes`, and `issues`. Status is `ok`, `failed`, or `partial`.
+Each change includes `target`, `source`, `action`, and `applied`. Issue codes
+include `missing_link`, `conflict`, `excluded_skill`, `stale_link`,
+`scan_incomplete`, `busy`, and `operation_failed`. A partial result requires
+inspection and a fresh check before retrying. Exit status is zero only on success.
+Argument syntax errors still use argparse's stderr and exit status 2.
+
+Empty profile variables use their default homes. Overrides must be absolute
+paths after tilde expansion. Parent symlinks are normalized. Shared or nested
+catalog destinations are rejected because client policies can differ.
+
+Apply requires POSIX directory locking. Cooperating installers use nonblocking
+locks in sorted path order and repeat preflight while holding all locks. Locks
+are released by the OS on exit, including process termination. Check and plan
+never create directories and take shared locks on existing catalogs when the
+initial preflight passes. Apply may leave empty catalog directories if lock
+acquisition fails. External tools that ignore locks remain outside this guarantee.
+Do not repoint a live catalog from competing worktrees. Choose one installation
+owner and a stable source checkout. Source edits must also pause during validation.
+
+All repository metadata tools use the same bounded PyYAML reader. Install the
+parser through `requirements-dev.txt` or the supplied development environment.
+Its supported metadata follows the [Agent Skills specification](https://agentskills.io/specification),
+with aliases and duplicate keys rejected to avoid client-dependent precedence.
+Pinned loader checks now run in the normal CI validation job, including weekly
+scheduled runs. Local `make check` remains offline.

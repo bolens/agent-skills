@@ -127,3 +127,65 @@ class ClientInstallation(unittest.TestCase):
         self.assertEqual(1, result.returncode)
         self.assertIn('conflicting skill name', result.stdout)
         self.assertIn('alias or cycle', result.stdout)
+
+    def test_empty_relative_and_overlapping_profiles(self):
+        self.env['CODEX_HOME'] = ''
+        self.assertEqual(0, self.run_installer('--apply').returncode)
+        self.assertTrue((self.home / '.codex/skills/code-review').is_symlink())
+        self.env['HERMES_HOME'] = 'relative'
+        result = self.run_installer('--plan', '--client', 'hermes', '--json')
+        self.assertEqual('operation_failed', json.loads(result.stdout)['issues'][0]['code'])
+        self.env['HERMES_HOME'] = str(self.home / '.pi/agent')
+        result = self.run_installer('--apply', '--client', 'hermes', '--client', 'pi', '--json')
+        self.assertEqual(1, result.returncode)
+        self.assertFalse((self.home / '.pi').exists())
+
+    def test_json_receipts_and_busy_catalog(self):
+        import fcntl
+        args = ('--client', 'pi', '--json')
+        report = json.loads(self.run_installer('--check', *args).stdout)
+        self.assertEqual(1, report['schema_version'])
+        self.assertEqual('missing_link', report['issues'][0]['code'])
+        report = json.loads(self.run_installer('--apply', *args).stdout)
+        self.assertTrue(all(row['applied'] for row in report['changes']))
+        home = self.home / '.pi/agent/skills'
+        descriptor = os.open(home, os.O_RDONLY)
+        try:
+            fcntl.flock(descriptor, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            for mode in ('--apply', '--check', '--plan'):
+                report = json.loads(self.run_installer(mode, *args).stdout)
+                self.assertEqual('busy', report['issues'][0]['code'])
+                self.assertEqual('failed', report['status'])
+        finally:
+            os.close(descriptor)
+        self.assertEqual(0, self.run_installer('--apply', *args).returncode)
+        self.assertEqual(len(self.entries), len(list(home.iterdir())))
+
+    def test_json_reports_partial_apply_for_recoverable_io_failure(self):
+        code = '''
+import importlib.util, sys
+from pathlib import Path
+from unittest.mock import patch
+sys.path.insert(0, str(Path(sys.argv[1]).parent))
+spec = importlib.util.spec_from_file_location('installer', sys.argv[1])
+module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(module)
+original = Path.symlink_to
+calls = 0
+def fail_second(self, *args, **kwargs):
+    global calls
+    calls += 1
+    if calls == 2:
+        raise OSError('synthetic disk failure')
+    return original(self, *args, **kwargs)
+sys.argv = ['installer', '--apply', '--client', 'pi', '--json']
+with patch.object(Path, 'symlink_to', fail_second):
+    sys.exit(module.main())
+'''
+        result = subprocess.run([sys.executable, '-c', code, str(INSTALLER)], env=self.env,
+                                capture_output=True, text=True, timeout=15)
+        report = json.loads(result.stdout)
+        self.assertEqual(1, result.returncode)
+        self.assertEqual('partial', report['status'])
+        self.assertEqual(1, sum(row['applied'] for row in report['changes']))
+        self.assertEqual(0, self.run_installer('--apply', '--client', 'pi').returncode)

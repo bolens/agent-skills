@@ -108,6 +108,9 @@ Spec Kit integration under `.agents/skills/speckit-*`.
 
 From the repository root:
 
+The installer requires Python 3.10+ and PyYAML, available in the supplied
+devenv/devcontainer or through `requirements-dev.txt` in a Python environment.
+
 ```sh
 python3 scripts/link-installed.py --apply
 python3 scripts/link-installed.py --check

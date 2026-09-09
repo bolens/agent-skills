@@ -107,6 +107,10 @@ jobs:
           node-version: "22"
       - name: Install lint and inspection tools
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y shellcheck jq ripgrep
+      - name: Install metadata parser
+        run: python3 -m pip install -r requirements-dev.txt
+      - name: Check pinned native client loaders
+        run: make test-client-loaders
       - name: Validate hard forks
         run: make check-fast test portability
       - name: Require selected Archify checks

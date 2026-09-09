@@ -1,4 +1,5 @@
 ---
+compatibility: Linux probes require Bash, Python 3.9+, and POSIX process groups. Individual system tools are optional and unavailable checks are reported.
 name: workstation-health-triage
 description: Collect and correlate a read-only Linux workstation health snapshot across services, logs, coredumps, resources, storage, mounts, packages, networking, graphics, and the desktop session. Use for broad desktop health checks, recurring instability, post-update verification, or when the failing subsystem is unclear. Do not use for a single known application crash when diagnose-crash is sufficient.
 ---

@@ -340,7 +340,7 @@
           "agents"
         ],
         "local_changes": [
-          "Use an owned temporary directory for candidate validation; preserve neighboring staging files and clean scratch candidates on every exit. Document the independent Claude backend and data-transfer requirement across agent hosts.",
+          "Use an owned temporary directory for candidate validation; preserve neighboring staging files and clean scratch candidates on every exit. Document the independent Claude backend and data-transfer requirement across agent hosts, including standard compatibility metadata.",
           "Preserve explicit-only invocation in agents metadata and disable-model-invocation frontmatter for Pi and compatible clients."
         ],
         "license": {

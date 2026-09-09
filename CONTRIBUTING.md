@@ -159,3 +159,8 @@ local fork as an upstream release.
 
 See [the devcontainer guide](.devcontainer/README.md) for the repository toolchain,
 setup, checks and platform limits.
+
+Repository Python tools require PyYAML. Use the provided devenv or devcontainer,
+or install `requirements-dev.txt` in your development Python environment. The
+shared parser rejects duplicate keys, aliases, malformed metadata, and non-boolean
+invocation flags. Keep flags as unquoted `true` or `false` for client consistency.

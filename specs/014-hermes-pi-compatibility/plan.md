@@ -20,3 +20,9 @@ Follow-through uses a separate opt-in loader harness with pinned dependencies.
 No model credentials, persistent client runtime installation, or new native client
 homes are needed. Installer auditing remains read-only with bounded catalog walks.
 Extend the existing spec before implementation and preserve prior evidence.
+
+The coordination amendment adds a shared PyYAML metadata reader and declares
+that dependency in development environments and CI. POSIX directory locks avoid
+persistent lockfiles and serialize catalog writers even across separate worktrees.
+Check/plan remain read-only. One local owner edits scripts, metadata, CI, and
+coordination references and validates their combined state before committing.

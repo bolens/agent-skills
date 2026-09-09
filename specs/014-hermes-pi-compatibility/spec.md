@@ -29,3 +29,14 @@ are outside scope. The source checkout remains canonical.
   automation. Default checks remain offline and require no agent packages.
 - Remove Codex-only assumptions from discovery guidance. Document optional helper
   backends and shared-home support in OpenCode, Gemini CLI, and Copilot CLI.
+
+## Coordination amendment: 2026-09-09
+
+Normalize empty profile overrides, reject relative or overlapping catalogs, and
+provide versioned JSON installation receipts with partial-failure reporting.
+Serialize cooperating installers across worktrees with nonblocking OS locks,
+release ownership on process exit, and recheck preflight under the locks.
+Use one bounded YAML metadata reader for validation, generation, and auditing.
+Run pinned loader checks in CI and declare actual skill runtime requirements.
+Coordination guidance must reject stale handoffs, wait for cancellation cleanup,
+and inspect uncertain mutation outcomes before retrying.

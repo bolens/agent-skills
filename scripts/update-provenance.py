@@ -7,6 +7,8 @@ import argparse
 import json
 from pathlib import Path
 
+from skill_metadata import read_metadata
+
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS = ROOT / "skills"
 UPSTREAMS = json.loads((ROOT / "UPSTREAMS.json").read_text())["skills"]
@@ -43,8 +45,8 @@ def records() -> list[dict[str, object]]:
                 "imported_from": f"${{CODEX_HOME:-$HOME/.codex}}/skills/{name}",
             }
         optional_targets = {"pi": f"${{PI_CODING_AGENT_DIR:-$HOME/.pi/agent}}/skills/{name}"}
-        frontmatter = (directory / "SKILL.md").read_text().split("\n---\n", 1)[0]
-        if "\ndisable-model-invocation: true\n" not in frontmatter + "\n":
+        metadata = read_metadata(directory / "SKILL.md")
+        if not metadata.get("disable-model-invocation", False):
             optional_targets["hermes"] = f"${{HERMES_HOME:-$HOME/.hermes}}/skills/{name}"
         result.append({"name": name, "hard_fork": True, "origin": origin, "install_targets": targets,
                        "optional_install_targets": optional_targets})

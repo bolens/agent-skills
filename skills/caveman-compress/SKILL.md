@@ -1,4 +1,5 @@
 ---
+compatibility: Requires Python 3 and either the Anthropic SDK with ANTHROPIC_API_KEY or an authenticated Claude CLI. Sends input to the selected Claude backend.
 disable-model-invocation: true
 name: caveman-compress
 description: >

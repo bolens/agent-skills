@@ -6,8 +6,10 @@ from __future__ import annotations
 import argparse
 import json
 import os
-import re
 import shutil
+from contextlib import ExitStack
+
+from skill_metadata import read_metadata
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -57,10 +59,7 @@ def audit_catalog(home: Path, expected: dict[Path, str], excluded: set[str]) -> 
                     continue
                 skill = path / "SKILL.md"
                 if skill.is_file():
-                    with skill.open() as stream:
-                        header = stream.read(16384).split("\n---\n", 1)[0]
-                    match = re.search(r'''(?m)^name:\s*["']?([a-z0-9-]+)["']?\s*$''', header)
-                    name = match.group(1) if match else path.name
+                    name = read_metadata(skill)['name']
                     if name in excluded:
                         problems.append(f"excluded skill exposed in catalog: {path} ({name})")
                     elif name in names and path not in expected:
@@ -70,92 +69,155 @@ def audit_catalog(home: Path, expected: dict[Path, str], excluded: set[str]) -> 
         except FileNotFoundError:
             if directory != home:
                 problems.append(f"catalog entry disappeared: {directory}")
-        except (OSError, RuntimeError, UnicodeError) as error:
+        except (OSError, RuntimeError, UnicodeError, ValueError) as error:
             problems.append(f"cannot inspect catalog {directory}: {error}")
     return problems
 
 
 def expand(value: str) -> Path:
-    codex = os.environ.get("CODEX_HOME", str(Path.home() / ".codex"))
-    agents = os.environ.get("AGENTS_HOME", str(Path.home() / ".agents"))
-    claude = os.environ.get("CLAUDE_HOME", str(Path.home() / ".claude"))
-    hermes = os.environ.get("HERMES_HOME") or str(Path.home() / ".hermes")
-    pi = os.environ.get("PI_CODING_AGENT_DIR") or str(Path.home() / ".pi" / "agent")
-    return Path(
-        value.replace("${CODEX_HOME:-$HOME/.codex}", codex)
-        .replace("${AGENTS_HOME:-$HOME/.agents}", agents)
-        .replace("${CLAUDE_HOME:-$HOME/.claude}", claude)
-        .replace("${HERMES_HOME:-$HOME/.hermes}", hermes)
-        .replace("${PI_CODING_AGENT_DIR:-$HOME/.pi/agent}", pi)
-    )
+    defaults = {'CODEX_HOME': '.codex', 'AGENTS_HOME': '.agents',
+                'CLAUDE_HOME': '.claude', 'HERMES_HOME': '.hermes',
+                'PI_CODING_AGENT_DIR': '.pi/agent'}
+    for variable, default in defaults.items():
+        token = '${' + variable + ':-$HOME/' + default + '}'
+        if value.startswith(token + '/'):
+            base = Path(os.environ.get(variable) or str(Path.home() / default)).expanduser()
+            if not base.is_absolute():
+                raise ValueError(f'{variable} must be absolute: {base}')
+            target = base / value[len(token) + 1:]
+            # Resolve parent aliases, never dereference the skill link itself.
+            return target.parent.resolve() / target.name
+    raise ValueError(f'unsupported install target: {value}')
+
+
+def issue(code, message):
+    return {'code': code, 'message': message}
+
+
+def prepare(args, manifest):
+    clients = set(args.client or ['registered'])
+    expected, homes, changes, problems = {}, {}, [], []
+    for entry in manifest['skills']:
+        source = (ROOT / 'skills' / entry['name']).resolve()
+        targets = list(entry['install_targets']) if 'registered' in clients else []
+        for client in ('hermes', 'pi'):
+            target = entry.get('optional_install_targets', {}).get(client)
+            if client in clients and target:
+                targets.append(target)
+        for raw_target in targets:
+            target = expand(raw_target)
+            profile = raw_target.split('}', 1)[0]
+            if target.parent in homes and homes[target.parent] != profile:
+                raise ValueError(f'client catalogs share a destination: {target.parent}')
+            homes[target.parent] = profile
+            expected[target] = entry['name']
+            if target.is_symlink() and target.resolve() == source:
+                continue
+            if args.check:
+                code = 'conflict' if snapshot(target) is not None else 'missing_link'
+                problems.append(issue(code, f'{target} -> expected {source}'))
+            elif target.exists() and not target.is_symlink() and not args.replace:
+                problems.append(issue('conflict', f'refusing existing target without --replace: {target}'))
+            else:
+                changes.append((target, source, snapshot(target)))
+    ordered = sorted(homes)
+    for index, home in enumerate(ordered):
+        if any(other.is_relative_to(home) for other in ordered[index + 1:]):
+            raise ValueError(f'client catalogs overlap: {home}')
+    excluded = {entry['name'] for entry in manifest['skills']
+                if 'hermes' not in entry.get('optional_install_targets', {})}
+    for home, profile in sorted(homes.items()):
+        for message in audit_catalog(home, {p: n for p, n in expected.items() if p.parent == home},
+                                     excluded if profile.startswith('${HERMES_HOME') else set()):
+            code = 'scan_incomplete'
+            if message.startswith('excluded skill'):
+                code = 'excluded_skill'
+            elif message.startswith('unexpected repository-owned'):
+                code = 'stale_link'
+            elif message.startswith('conflicting skill'):
+                code = 'conflict'
+            problems.append(issue(code, message))
+    return homes, changes, problems
+
+
+def lock_catalogs(stack, homes, apply):
+    # Directory descriptors coordinate aliases and independent source worktrees.
+    # No lockfile can be orphaned or unlinked while another writer owns it.
+    try:
+        import fcntl
+    except ImportError:
+        if apply:
+            raise ValueError('catalog apply requires POSIX directory locking') from None
+        return
+    for home in sorted(homes):
+        if apply:
+            home.mkdir(parents=True, exist_ok=True)
+        elif not home.exists():
+            continue
+        descriptor = os.open(home, os.O_RDONLY)
+        stack.callback(os.close, descriptor)
+        try:
+            fcntl.flock(descriptor, (fcntl.LOCK_EX if apply else fcntl.LOCK_SH) | fcntl.LOCK_NB)
+        except BlockingIOError:
+            raise BlockingIOError(f'catalog busy: {home}') from None
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
     mode = parser.add_mutually_exclusive_group(required=True)
-    mode.add_argument("--check", action="store_true")
-    mode.add_argument("--apply", action="store_true")
-    mode.add_argument("--plan", action="store_true", help="preview changes and conflicts without writing")
-    parser.add_argument("--replace", action="store_true", help="replace existing non-symlink targets")
-    parser.add_argument("--client", action="append", choices=("registered", "hermes", "pi"),
-                        help="select client targets; repeat to combine (default: registered homes)")
+    mode.add_argument('--check', action='store_true')
+    mode.add_argument('--apply', action='store_true')
+    mode.add_argument('--plan', action='store_true', help='preview changes without writing')
+    parser.add_argument('--replace', action='store_true', help='replace existing non-symlink targets')
+    parser.add_argument('--json', action='store_true', help='emit a versioned result object')
+    parser.add_argument('--client', action='append', choices=('registered', 'hermes', 'pi'))
     args = parser.parse_args()
-    clients = set(args.client or ["registered"])
-    manifest = json.loads((ROOT / "PROVENANCE.json").read_text())
-    problems = []
-    expected = {}
-    homes = {}
-    changes = []
-    for entry in manifest["skills"]:
-        source = (ROOT / "skills" / entry["name"]).resolve()
-        targets = list(entry["install_targets"]) if "registered" in clients else []
-        for client in ("hermes", "pi"):
-            target = entry.get("optional_install_targets", {}).get(client)
-            if client in clients and target:
-                targets.append(target)
-        for raw_target in targets:
-            target = expand(raw_target)
-            expected[target] = entry["name"]
-            homes[target.parent] = "hermes" if raw_target.startswith("${HERMES_HOME") else "other"
-            correct = target.is_symlink() and target.resolve() == source
-            if correct:
-                continue
-            if args.check:
-                problems.append(f"{target} -> expected {source}")
-                continue
-            if target.exists() and not target.is_symlink() and not args.replace:
-                problems.append(f"refusing existing target without --replace: {target}")
-                continue
-            changes.append((target, source, snapshot(target)))
-    excluded = {entry["name"] for entry in manifest["skills"]
-                if "hermes" not in entry.get("optional_install_targets", {})}
-    for home, client in sorted(homes.items()):
-        problems.extend(audit_catalog(home, {p: n for p, n in expected.items() if p.parent == home},
-                                      excluded if client == "hermes" else set()))
-    if args.plan:
-        for target, source, _ in changes:
-            action = "replace" if target.exists() or target.is_symlink() else "link"
-            print(f"{action} {target} -> {source}")
-    if problems:
-        print("\n".join(problems))
-        return 1
-    if args.apply:
-        for target, source, previous in changes:
-            if snapshot(target) != previous:
-                print(f"target changed after preflight; stopping: {target}")
-                return 1
-            target.parent.mkdir(parents=True, exist_ok=True)
-            if target.is_symlink():
-                target.unlink()
-            elif target.exists():
-                if target.is_dir():
-                    shutil.rmtree(target)
-                else:
-                    target.unlink()
-            target.symlink_to(source, target_is_directory=True)
-            print(f"linked {target} -> {source}")
-    return 0
+    report = {'schema_version': 1, 'mode': 'apply' if args.apply else 'check' if args.check else 'plan',
+              'source': str(ROOT), 'status': 'ok', 'changes': [], 'issues': []}
+    try:
+        manifest = json.loads((ROOT / 'PROVENANCE.json').read_text())
+        homes, changes, problems = prepare(args, manifest)
+        with ExitStack() as stack:
+            if not problems:
+                lock_catalogs(stack, homes, args.apply)
+                locked_homes, changes, problems = prepare(args, manifest)
+                if locked_homes != homes:
+                    raise ValueError('catalog paths changed during preflight')
+            report['issues'] = problems
+            for target, source, previous in changes:
+                row = {'target': str(target), 'source': str(source),
+                       'action': 'replace' if previous is not None else 'link', 'applied': False}
+                report['changes'].append(row)
+            if args.apply and not problems:
+                for (target, source, previous), row in zip(changes, report['changes']):
+                    if snapshot(target) != previous:
+                        raise ValueError(f'target changed after preflight; stopping: {target}')
+                    if target.is_symlink():
+                        target.unlink()
+                    elif target.exists():
+                        if target.is_dir():
+                            shutil.rmtree(target)
+                        else:
+                            target.unlink()
+                    target.symlink_to(source, target_is_directory=True)
+                    row['applied'] = True
+    except BlockingIOError as error:
+        report['issues'].append(issue('busy', str(error)))
+    except (OSError, ValueError, RuntimeError) as error:
+        report['issues'].append(issue('operation_failed', str(error)))
+    if report['issues']:
+        report['status'] = 'partial' if any(row['applied'] for row in report['changes']) else 'failed'
+    if args.json:
+        print(json.dumps(report, sort_keys=True))
+    else:
+        for row in report['changes']:
+            if args.plan or row['applied']:
+                verb = 'linked' if row['applied'] else row['action']
+                print(f"{verb} {row['target']} -> {row['source']}")
+        for problem in report['issues']:
+            print(problem['message'])
+    return 0 if report['status'] == 'ok' else 1
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     raise SystemExit(main())
