@@ -28,6 +28,8 @@ Use `svg-animation` when an accessibility defect depends on animated SVG geometr
 
 Use `web-animation` for GSAP, Motion, or other runtime-specific reduced-motion and focus/exit fixes. Use `animation-assets` for Lottie/Rive playback and semantic fallback. Use `design-system` when the defect belongs to shared component states or tokens rather than one page.
 
+Use [internationalization](../internationalization/SKILL.md) for catalogs, locale formatting, RTL, and Unicode input. Keep WCAG evaluation and accessible interaction here.
+
 ## Read the reference for the observed issue
 
 Read only the relevant references for a narrow fix. For a full audit, cover
@@ -38,6 +40,7 @@ each requested category and report any unverified checks.
 | Conformance scope and principles | [WCAG Principles: POUR](references/principles.md) |
 | Names, text alternatives, contrast, and media | [Perceivable](references/perceivable.md) |
 | Keyboard access, focus, targets, timing, and motion | [Operable](references/operable.md) |
+| Content clarity, instructions, and recovery wording | [Content clarity](references/content-clarity.md) |
 | Language, navigation, forms, and authentication | [Understandable](references/understandable.md) |
 | ARIA roles, states, and live announcements | [Robust](references/robust.md) |
 | Audit tools, manual checks, and issue prioritization | [Testing checklist](references/testing.md) |

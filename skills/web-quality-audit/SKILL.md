@@ -27,6 +27,8 @@ For broad responsive work, use `responsive-web-capture` to preserve the requeste
 
 Use `technical-seo` for crawl/indexing implementation, `web-standard` for native platform semantics and compatibility, `web-security` for a concrete trust-boundary finding, and `forms-and-data-state` for submission or async-state failures. Load only the category needed by the evidence. A broad quality audit does not authorize external penetration testing or a new framework.
 
+For supported multilingual journeys, use [internationalization](../internationalization/SKILL.md). Include [content clarity](../accessibility/references/content-clarity.md), [privacy](../web-security/references/privacy.md), and [interruption recovery](../forms-and-data-state/references/concurrency.md) when relevant to the requested flow. These need direct evidence beyond Lighthouse categories; do not turn a narrow audit into an unsolicited compliance program.
+
 ## Tool routing
 
 Use the best capability already available; do not block the audit on optional setup.

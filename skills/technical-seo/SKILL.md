@@ -17,7 +17,9 @@ Use the repository's metadata, routing, sitemap, and structured-data facilities.
 
 Read [crawl and rendering evidence](references/crawl-and-render.md) when headers, JavaScript rendering, robots, sitemap discovery, localized alternates, redirects, or environment differences matter. Record the final URL, status, redirect chain, response headers, initial HTML, and relevant rendered DOM. Request the page without an accidental signed-in session when evaluating public visibility.
 
-The same reference covers optional `llms.txt` discovery when requested or relevant to an existing documentation pipeline. Keep that evidence separate from search-engine indexing.
+Use [internationalization](../internationalization/SKILL.md) for locale selection, translated UI, and regional formatting. Keep localized URL annotations and crawl evidence here.
+
+The crawl and rendering reference also covers optional `llms.txt` discovery when requested or relevant to an existing documentation pipeline. Keep that evidence separate from search-engine indexing.
 
 Verify descriptive page-specific titles, meaningful content, discoverable links with actual destinations, and coherent heading structure. Do not fail valid content merely because it contains multiple `h1` elements. Keep social sharing metadata separate from search indexing claims.
 

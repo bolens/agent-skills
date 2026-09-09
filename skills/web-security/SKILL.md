@@ -1,6 +1,6 @@
 ---
 name: web-security
-description: Audit and repair web application authentication, authorization, sessions, CSRF, XSS, uploads, and browser/server trust boundaries using repository evidence and scoped tests. Use for defensive application-security work or a concrete trust-boundary defect, not secret scanning alone or unsolicited external penetration testing.
+description: Audit and repair web application authentication, authorization, sessions, CSRF, XSS, uploads, privacy-sensitive data flows, and browser/server trust boundaries using repository evidence and scoped tests. Use for defensive application-security work or a concrete trust-boundary defect, not secret scanning alone or unsolicited external penetration testing.
 ---
 
 # Web security
@@ -15,6 +15,8 @@ A review request is read-only. A fix request authorizes scoped implementation an
 
 Read only the relevant reference:
 
+- [Privacy in application flows](references/privacy.md) for telemetry, browser storage, third-party requests, and data retention.
+- [Standards sources](../web-standard/references/standards-sources.md) when choosing a verification standard or resolving protocol/version claims.
 - [Identity, authorization, and sessions](references/identity.md) for account/tenant boundaries, cookies, and authenticated mutations.
 - [Untrusted input and browser policy](references/input-and-policy.md) for rendering, URLs, uploads, CSP, and cross-origin behavior.
 - [Finding assessment and fix verification](references/finding-assessment.md)

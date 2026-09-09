@@ -23,6 +23,7 @@ Local changes to retain:
 - Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior.
 - Keep recurring maintenance checklists in an opt-in reference without expanding one-off audit scope.
 - Tie performance and resource recommendations to measured bottlenecks; do not require preconnect, preload, or other recipes on healthy pages.
+- Route relevant internationalization, content clarity, privacy, and interruption-recovery evidence to their owning skills without expanding audit scope.
 
 Updates are audited and merged manually. This fork does not track or represent upstream releases.
 

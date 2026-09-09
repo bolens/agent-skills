@@ -4,6 +4,12 @@ All notable changes to this hard-fork collection are documented here.
 
 ## Unreleased
 
+### Added
+
+- Add internationalization guidance for messages, locale data, RTL, Unicode input,
+  and deterministic verification. Connect content clarity, privacy, recovery, and
+  authoritative standards references to their existing workflows.
+
 ### Fixed
 
 - Coordinate concurrent skill installs with JSON receipts, preserve existing links

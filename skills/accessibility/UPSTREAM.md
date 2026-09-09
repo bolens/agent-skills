@@ -18,6 +18,7 @@ Local changes to retain:
 - Route responsive visual evidence through responsive-web-capture and functional browser evidence through cli-web-evidence.
 - Route runtime and shared-component remediation to motion, asset, and design-system skills; verify explicit reduced-motion states rather than relying on a global duration reset.
 - Keep the evidence workflow in SKILL.md and load principles, criterion examples, and testing detail through issue-specific references.
+- Preserve content-clarity guidance and route locale-dependent implementation through internationalization without treating supplemental guidance as WCAG requirements.
 
 Updates are audited and merged manually. This fork does not track or represent upstream releases.
 

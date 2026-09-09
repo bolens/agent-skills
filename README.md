@@ -35,6 +35,7 @@ specialized workflows.
 | Check publication content for secrets and private information | [sensitive-info-audit](skills/sensitive-info-audit/SKILL.md) |
 | Design web pages, shared components, and data interactions | [frontend-design](skills/frontend-design/SKILL.md), [design-system](skills/design-system/SKILL.md), [forms-and-data-state](skills/forms-and-data-state/SKILL.md) |
 | Improve accessibility, performance, security, and discoverability | [web-quality-audit](skills/web-quality-audit/SKILL.md), [web-security](skills/web-security/SKILL.md), [technical-seo](skills/technical-seo/SKILL.md) |
+| Implement locale-aware messages, formatting, and RTL interfaces | [internationalization](skills/internationalization/SKILL.md) |
 | Create SVG artwork or integrate interface animation | [svg-design](skills/svg-design/SKILL.md), [svg-animation](skills/svg-animation/SKILL.md), [web-animation](skills/web-animation/SKILL.md), [animation-assets](skills/animation-assets/SKILL.md) |
 | Verify browser behavior across screen sizes | [cli-web-evidence](skills/cli-web-evidence/SKILL.md), [responsive-web-capture](skills/responsive-web-capture/SKILL.md) |
 | Maintain Compose stacks or diagnose a live homelab service | [homelab-stack-maintenance](skills/homelab-stack-maintenance/SKILL.md), [homelab-stack-triage](skills/homelab-stack-triage/SKILL.md) |
