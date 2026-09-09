@@ -189,3 +189,87 @@ with patch.object(Path, 'symlink_to', fail_second):
         self.assertEqual('partial', report['status'])
         self.assertEqual(1, sum(row['applied'] for row in report['changes']))
         self.assertEqual(0, self.run_installer('--apply', '--client', 'pi').returncode)
+
+    def test_symlinked_home_tilde_and_unicode_source_paths(self):
+        import shutil
+        root = self.home / 'source space café'
+        (root / 'scripts').mkdir(parents=True)
+        for name in ('link-installed.py', 'skill_metadata.py'):
+            shutil.copyfile(ROOT / 'scripts' / name, root / 'scripts' / name)
+        entry = next(entry for entry in self.entries if entry['name'] == 'code-review')
+        (root / 'PROVENANCE.json').write_text(json.dumps({'skills': [entry]}))
+        skill = root / 'skills/code-review'
+        skill.mkdir(parents=True)
+        (skill / 'SKILL.md').write_text('---\nname: code-review\ndescription: fixture\n---\n')
+        (skill / 'resource.txt').write_text('resource through installed link')
+        real_home = self.home / 'real profile'
+        real_home.mkdir()
+        (self.home / 'profile alias').symlink_to(real_home, target_is_directory=True)
+        self.env['PI_CODING_AGENT_DIR'] = '~/profile alias'
+        for mode in ('--apply', '--check', '--apply'):
+            result = subprocess.run([sys.executable, str(root / 'scripts/link-installed.py'), mode,
+                                     '--client', 'pi', '--json'], env=self.env,
+                                    capture_output=True, text=True, timeout=15)
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertEqual('resource through installed link',
+                         (real_home / 'skills/code-review/resource.txt').read_text())
+
+    def test_case_alias_catalogs_are_rejected_on_case_insensitive_filesystems(self):
+        home = self.home / 'MixedCase'
+        (home / 'skills').mkdir(parents=True)
+        alias = self.home / 'mixedcase'
+        if not alias.exists():
+            self.skipTest('filesystem is case sensitive; exercised by native macOS CI where applicable')
+        self.env['HERMES_HOME'] = str(home)
+        self.env['PI_CODING_AGENT_DIR'] = str(alias)
+        result = self.run_installer('--apply', '--client', 'hermes', '--client', 'pi', '--json')
+        self.assertEqual(1, result.returncode)
+        self.assertIn('share a', result.stdout)
+        self.assertEqual([], list((home / 'skills').iterdir()))
+
+    def test_failed_link_replacement_preserves_old_link(self):
+        home = self.home / '.pi/agent/skills'
+        home.mkdir(parents=True)
+        target = home / 'accessibility'
+        old = self.home / 'previous-source'
+        old.mkdir()
+        target.symlink_to(old, target_is_directory=True)
+        code = '''
+import importlib.util, sys
+from pathlib import Path
+from unittest.mock import patch
+sys.path.insert(0, str(Path(sys.argv[1]).parent))
+spec = importlib.util.spec_from_file_location('installer', sys.argv[1])
+module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(module)
+sys.argv = ['installer', '--apply', '--client', 'pi', '--json']
+with patch.object(Path, 'symlink_to', side_effect=PermissionError('synthetic filesystem denial')):
+    sys.exit(module.main())
+'''
+        result = subprocess.run([sys.executable, '-c', code, str(INSTALLER)], env=self.env,
+                                capture_output=True, text=True, timeout=15)
+        self.assertEqual(1, result.returncode)
+        self.assertEqual(old, target.resolve())
+        self.assertEqual([target], list(home.iterdir()))
+        result = self.run_installer('--apply', '--client', 'pi')
+        self.assertEqual(0, result.returncode, result.stdout)
+        self.assertEqual(ROOT / 'skills/accessibility', target.resolve())
+
+    def test_unsupported_filesystem_locking_fails_before_link_writes(self):
+        code = '''
+import errno, importlib.util, sys
+from pathlib import Path
+from unittest.mock import patch
+sys.path.insert(0, str(Path(sys.argv[1]).parent))
+spec = importlib.util.spec_from_file_location('installer', sys.argv[1])
+module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(module)
+sys.argv = ['installer', '--apply', '--client', 'pi', '--json']
+with patch('fcntl.flock', side_effect=OSError(errno.ENOTSUP, 'synthetic unsupported filesystem')):
+    sys.exit(module.main())
+'''
+        result = subprocess.run([sys.executable, '-c', code, str(INSTALLER)], env=self.env,
+                                capture_output=True, text=True, timeout=15)
+        self.assertEqual(1, result.returncode)
+        self.assertIn('does not support directory locking', result.stdout)
+        self.assertEqual([], list((self.home / '.pi/agent/skills').iterdir()))

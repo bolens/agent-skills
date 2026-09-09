@@ -4,13 +4,15 @@
 from __future__ import annotations
 
 import argparse
+import errno
 import json
 import os
 import shutil
+import tempfile
 from contextlib import ExitStack
+from pathlib import Path
 
 from skill_metadata import read_metadata
-from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MAX_CATALOG_ENTRIES = 10000
@@ -94,11 +96,26 @@ def issue(code, message):
     return {'code': code, 'message': message}
 
 
+def check_catalog_identities(homes):
+    identities = {}
+    for home in homes:
+        try:
+            state = home.stat()
+        except FileNotFoundError:
+            continue
+        identity = state.st_dev, state.st_ino
+        if identity in identities and identities[identity] != home:
+            raise ValueError(f'client catalogs share a filesystem directory: {identities[identity]} and {home}')
+        identities[identity] = home
+
+
 def prepare(args, manifest):
     clients = set(args.client or ['registered'])
     expected, homes, changes, problems = {}, {}, [], []
     for entry in manifest['skills']:
         source = (ROOT / 'skills' / entry['name']).resolve()
+        if not (source / 'SKILL.md').is_file():
+            raise ValueError(f'missing source skill: {source}')
         targets = list(entry['install_targets']) if 'registered' in clients else []
         for client in ('hermes', 'pi'):
             target = entry.get('optional_install_targets', {}).get(client)
@@ -124,6 +141,7 @@ def prepare(args, manifest):
     for index, home in enumerate(ordered):
         if any(other.is_relative_to(home) for other in ordered[index + 1:]):
             raise ValueError(f'client catalogs overlap: {home}')
+    check_catalog_identities(homes)
     excluded = {entry['name'] for entry in manifest['skills']
                 if 'hermes' not in entry.get('optional_install_targets', {})}
     for home, profile in sorted(homes.items()):
@@ -149,10 +167,12 @@ def lock_catalogs(stack, homes, apply):
         if apply:
             raise ValueError('catalog apply requires POSIX directory locking') from None
         return
-    for home in sorted(homes):
-        if apply:
+    if apply:
+        for home in sorted(homes):
             home.mkdir(parents=True, exist_ok=True)
-        elif not home.exists():
+        check_catalog_identities(homes)
+    for home in sorted(homes):
+        if not home.exists():
             continue
         descriptor = os.open(home, os.O_RDONLY)
         stack.callback(os.close, descriptor)
@@ -160,6 +180,11 @@ def lock_catalogs(stack, homes, apply):
             fcntl.flock(descriptor, (fcntl.LOCK_EX if apply else fcntl.LOCK_SH) | fcntl.LOCK_NB)
         except BlockingIOError:
             raise BlockingIOError(f'catalog busy: {home}') from None
+        except OSError as error:
+            if error.errno in {errno.ENOSYS, errno.ENOTSUP, errno.EOPNOTSUPP, errno.EINVAL, errno.EBADF}:
+                raise ValueError(f'catalog filesystem does not support directory locking: {home}; '
+                                 'use a local POSIX filesystem (the Linux filesystem inside WSL)') from error
+            raise
 
 
 def main() -> int:
@@ -193,7 +218,16 @@ def main() -> int:
                     if snapshot(target) != previous:
                         raise ValueError(f'target changed after preflight; stopping: {target}')
                     if target.is_symlink():
-                        target.unlink()
+                        # Build the replacement before touching the old link. The
+                        # temporary directory is on the destination filesystem.
+                        with tempfile.TemporaryDirectory(prefix='.agent-skills-link-', dir=target.parent) as directory:
+                            candidate = Path(directory) / 'link'
+                            candidate.symlink_to(source, target_is_directory=True)
+                            if snapshot(target) != previous:
+                                raise ValueError(f'target changed during replacement: {target}')
+                            os.replace(candidate, target)
+                        row['applied'] = True
+                        continue
                     elif target.exists():
                         if target.is_dir():
                             shutil.rmtree(target)

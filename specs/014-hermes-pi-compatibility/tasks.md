@@ -52,3 +52,20 @@ passed. Its real main entrypoint refused a held lock before browser launch, and
 one short Chromium cancellation probe confirmed worker and detached-browser exit.
 That checkout's concurrent uncommitted application work was preserved. No full
 browser matrix, hosted CI run, or production/browser-user session was started.
+
+## POSIX installation verification
+
+- [x] Reject catalog filesystem aliases and missing source skills before writes.
+- [x] Preserve old symlinks on replacement-creation failure and clean temporary links.
+- [x] Exercise relocated Unicode/space paths, tilde overrides, and symlinked homes.
+- [x] Report unsupported directory locking before creating skill links.
+- [x] Add `make test-installation` and a required native macOS CI job.
+- [x] Document Linux-side WSL2 use, filesystem constraints, and native test commands.
+
+Linux: `make check` ran 175 tests in 57.281 seconds with one case-insensitive
+filesystem case skipped. The other 174 passed. Focused installation/metadata
+tests, Ruff, actionlint, portability, and all-client installed-catalog checks passed.
+The macOS job is configured but has not run on the host service in this local-only
+change. Native macOS, WSL2, and other POSIX machines were not available here.
+The conditional case-alias test and documented WSL2 command require native evidence
+before claiming those platform/filesystem combinations were exercised.

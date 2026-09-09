@@ -184,3 +184,52 @@ Its supported metadata follows the [Agent Skills specification](https://agentski
 with aliases and duplicate keys rejected to avoid client-dependent precedence.
 Pinned loader checks now run in the normal CI validation job, including weekly
 scheduled runs. Local `make check` remains offline.
+
+## macOS, POSIX, and WSL2 installation
+
+Run the installer with Python 3.10+ and PyYAML in the same OS environment as the
+agent consuming the links. It uses Python filesystem APIs and `fcntl.flock`,
+without GNU `readlink`, `realpath`, or a shell `flock` executable. Linux and macOS
+are the native CI targets. Other POSIX systems need a filesystem supporting
+symlinks and directory advisory locks. Unsupported locking fails with a filesystem
+diagnostic before link writes, rather than dropping concurrency protection.
+See [Python's locking interface](https://docs.python.org/3/library/fcntl.html)
+and [Apple's flock contract](https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man2/flock.2.html).
+
+On macOS, use your development Python environment rather than assuming the
+system Python includes PyYAML. Symlinked home paths, spaces, and Unicode checkout
+names are supported. Existing catalog aliases are checked by device/inode identity
+as well as pathname, including different case spellings on case-insensitive
+volumes. Keep separate client profiles in separate directories.
+
+For WSL2, clone and run Python and the agent inside the Linux distribution, with
+the checkout and client homes preferably under its Linux home directory. Use
+Linux absolute paths or quoted tilde overrides, not `C:\...` or Windows UNC paths.
+Windows-hosted agents are separate consumers and are not configured by this
+Linux-side installation. Do not point both environments at one mutable catalog.
+Microsoft recommends keeping Linux-command-line projects on the
+[WSL filesystem](https://learn.microsoft.com/en-us/windows/wsl/filesystems).
+Mounted Windows drives and network filesystems have separate permission and
+locking behavior; do not infer support from their path alone or change mount
+options automatically. An unsupported-filesystem error should lead to a supported
+local destination and a fresh plan. Native Windows Python apply remains unsupported.
+
+From a development environment with `requirements-dev.txt` installed:
+
+```sh
+make test-installation
+python3 scripts/link-installed.py --plan --client registered --client hermes --client pi --json
+```
+
+The test target uses disposable homes and leaves installed catalogs alone. It
+checks repeatability, read-only checks, locks, profile overrides, alias handling,
+relative resources, and failure recovery. Run it inside the actual WSL2 distro or
+other POSIX host to establish native evidence. Linux tests or a mocked platform
+name do not prove WSL2 mount behavior. The macOS CI job runs this same target on
+PRs, default-branch pushes, manual runs, and the weekly schedule. Its result is
+required by the existing validation job.
+
+Existing symlinks are replaced using a temporary link on the destination
+filesystem and an atomic rename. If creating that replacement fails, the original
+link stays intact and temporary files are removed. `--replace` of independent
+files/directories still explicitly permits their removal and is not transactional.

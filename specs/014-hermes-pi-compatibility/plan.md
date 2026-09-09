@@ -26,3 +26,8 @@ that dependency in development environments and CI. POSIX directory locks avoid
 persistent lockfiles and serialize catalog writers even across separate worktrees.
 Check/plan remain read-only. One local owner edits scripts, metadata, CI, and
 coordination references and validates their combined state before committing.
+
+POSIX follow-through uses filesystem identities and atomic same-filesystem link
+replacement. Keep the existing directory-lock protocol across versions. Add a
+macOS CI job using existing pinned setup actions and the focused Make target;
+document WSL2 Linux-side setup and filesystem constraints without changing mounts.

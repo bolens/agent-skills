@@ -40,3 +40,12 @@ Use one bounded YAML metadata reader for validation, generation, and auditing.
 Run pinned loader checks in CI and declare actual skill runtime requirements.
 Coordination guidance must reject stale handoffs, wait for cancellation cleanup,
 and inspect uncertain mutation outcomes before retrying.
+
+## POSIX installation amendment
+
+Support native macOS and Linux/WSL2 Python environments without GNU shell tools.
+Reject catalog aliases by filesystem identity, including case-insensitive names.
+Preserve an existing symlink if its replacement cannot be created. Diagnose
+unsupported filesystem locking rather than silently disabling coordination.
+Add native macOS CI and a shared focused installation target. Distinguish native
+execution evidence from WSL2 and other POSIX platforms not available locally.
