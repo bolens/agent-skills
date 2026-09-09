@@ -126,7 +126,7 @@ JavaScript files selected by [`.github/source-lint.json`](.github/source-lint.js
 on pull requests, pushes to `main`, and manual dispatch. Its second reusable job
 runs actionlint and enables the zizmor security audit. Existing native checks
 remain part of the merge gate; `make check` does not run these shared tools.
-Use the [shared local reproduction instructions](https://github.com/bolens/.github/blob/7603518f305fb76f7bb1b9979f2692521f633b82/docs/source-lint.md)
+Use the [shared local reproduction instructions](https://github.com/bolens/.github/blob/96705dc8d8147b92eee283dec1f43e91bd30c4e9/docs/source-lint.md)
 with the same tooling revision pinned in
 [the workflow](.github/workflows/source-lint.yml). Review exclusions when adding
 source files; generated and imported files retain their native validation.

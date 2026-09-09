@@ -50,6 +50,8 @@ and application launch outcomes distinguishable.
 
 Select checks by evidence: workflow syntax/security for workflow changes, build/test/type checks for the actual code, container lint for maintained Dockerfiles, secret scanning for the publication boundary, and generated-output or browser checks where those contracts exist. Use the configured security thresholds and suppressions after reviewing their justification. Avoid adding scanners that duplicate an existing service, such as a second code-scanning setup, without checking the current configuration.
 
+For shared browser runners, apply [host capacity and cleanup](references/setup-contracts.md#browser-workload-ownership), including direct entrypoints and the outer task runner. Return status to the existing coordinator instead of launching a separate repair or delivery loop.
+
 Keep commit-time checks bounded through [setup-pre-commit](../setup-pre-commit/SKILL.md). Expensive integration, platform, and browser checks can remain in CI. Shared scripts and global configuration changes must still reach their affected consumers when changed-file selection is used.
 
 For GitHub Actions, read [events, trust, and required checks](references/github-actions.md) before changing triggers, permissions, reusable calls, caches, artifacts, or merge gates. For other providers, verify equivalent behavior in that provider's documentation rather than translating GitHub syntax mechanically.

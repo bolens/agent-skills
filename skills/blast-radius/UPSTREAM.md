@@ -17,9 +17,9 @@ License source: [pstack/LICENSE](https://github.com/cursor/plugins/blob/93b00b89
 Preserve during imports: `agents`
 
 Local changes to retain:
-- Keep current invocation policy and agents metadata; do not restore the Cursor-specific disable-model-invocation field.
 - Replace unavailable how, why, and arena dependencies with direct history inspection, code-review routing, and a permitted local fallback.
 - Preserve read-only assessment boundaries, isolated proof, explicit evidence gaps, and impact/likelihood/confidence separation.
+- Preserve explicit-only invocation in agents metadata and disable-model-invocation frontmatter for Pi and compatible clients.
 
 Updates are audited and merged manually. This fork does not track or represent upstream releases.
 

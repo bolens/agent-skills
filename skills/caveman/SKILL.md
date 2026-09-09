@@ -1,4 +1,5 @@
 ---
+disable-model-invocation: true
 name: caveman
 description: >
   Ultra-compressed communication mode that cuts output tokens while keeping

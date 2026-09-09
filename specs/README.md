@@ -39,3 +39,5 @@ The 2026-09-06 legacy extension adds [all 62 skill capabilities](006-retrospecti
 [Archify commands and viewer behavior](006-retrospective-baseline/legacy-archify.md).
 
 - [012: Workflow guidance follow-through](012-workflow-guidance/spec.md)
+
+- [014: Hermes and Pi compatibility](014-hermes-pi-compatibility/spec.md)

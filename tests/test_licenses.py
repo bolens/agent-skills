@@ -43,6 +43,7 @@ class LicenseRetention(unittest.TestCase):
                 script = root / "scripts" / "validate.py"
                 script.parent.mkdir()
                 shutil.copyfile(ROOT / "scripts" / "validate.py", script)
+                shutil.copyfile(ROOT / "scripts" / "skill_metadata.py", script.parent / "skill_metadata.py")
                 skill = root / "skills" / "example"
                 skill.mkdir(parents=True)
                 (skill / "SKILL.md").write_text(

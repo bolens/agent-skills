@@ -1,4 +1,5 @@
 ---
+disable-model-invocation: true
 name: create-verification-skill
 description: "Create or update a reusable project-local skill for exercising an app and capturing behavior evidence. Use when the user requests a verification skill or control skill for a repository, not for a one-off test or ordinary bug fix."
 ---

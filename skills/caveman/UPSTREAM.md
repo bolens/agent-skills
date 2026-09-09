@@ -16,6 +16,9 @@ License source: [LICENSE](https://github.com/JuliusBrussee/caveman/blob/3b74643f
 
 Preserve during imports: `agents`
 
+Local changes to retain:
+- Preserve explicit-only invocation in agents metadata and disable-model-invocation frontmatter for Pi and compatible clients.
+
 Updates are audited and merged manually. This fork does not track or represent upstream releases.
 
 See [`../../PROVENANCE.json`](../../PROVENANCE.json) for the machine-readable record.
