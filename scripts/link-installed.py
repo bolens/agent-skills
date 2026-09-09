@@ -27,7 +27,7 @@ def snapshot(path: Path):
         return None
 
 
-def audit_catalog(home: Path, expected: dict[Path, str], excluded: set[str]) -> list[str]:
+def audit_catalog(home: Path, expected: dict[Path, str], excluded: set[str], replacing=frozenset()) -> list[str]:
     """Inspect a bounded catalog without deleting stale links or independent skills."""
     problems = []
     pending = [home]
@@ -52,7 +52,7 @@ def audit_catalog(home: Path, expected: dict[Path, str], excluded: set[str]) -> 
                     children.append(entry)
             for entry in sorted(children, key=lambda item: item.name):
                 path = Path(entry.path)
-                if entry.name in IGNORED_DIRS:
+                if path in replacing or entry.name in IGNORED_DIRS:
                     continue
                 if entry.is_symlink() and path not in expected:
                     if path.resolve().is_relative_to(ROOT / "skills"):
@@ -107,6 +107,14 @@ def check_catalog_identities(homes):
         if identity in identities and identities[identity] != home:
             raise ValueError(f'client catalogs share a filesystem directory: {identities[identity]} and {home}')
         identities[identity] = home
+    for home in homes:
+        for parent in home.parents:
+            try:
+                state = parent.stat()
+            except FileNotFoundError:
+                continue
+            if (state.st_dev, state.st_ino) in identities:
+                raise ValueError(f'client catalogs overlap by filesystem identity: {home}')
 
 
 def prepare(args, manifest):
@@ -144,9 +152,13 @@ def prepare(args, manifest):
     check_catalog_identities(homes)
     excluded = {entry['name'] for entry in manifest['skills']
                 if 'hermes' not in entry.get('optional_install_targets', {})}
+    replacing = {target for target, _, _ in changes}
+    for target, source, _ in changes:
+        if read_metadata(source / 'SKILL.md')['name'] != expected[target]:
+            raise ValueError(f'source skill name mismatch: {source}')
     for home, profile in sorted(homes.items()):
         for message in audit_catalog(home, {p: n for p, n in expected.items() if p.parent == home},
-                                     excluded if profile.startswith('${HERMES_HOME') else set()):
+                                     excluded if profile.startswith('${HERMES_HOME') else set(), replacing):
             code = 'scan_incomplete'
             if message.startswith('excluded skill'):
                 code = 'excluded_skill'
@@ -226,7 +238,7 @@ def main() -> int:
                             if snapshot(target) != previous:
                                 raise ValueError(f'target changed during replacement: {target}')
                             os.replace(candidate, target)
-                        row['applied'] = True
+                            row['applied'] = True
                         continue
                     elif target.exists():
                         if target.is_dir():

@@ -6,6 +6,10 @@ All notable changes to this hard-fork collection are documented here.
 
 ### Fixed
 
+- Coordinate concurrent skill installs with JSON receipts, preserve existing links
+  on replacement failure, and handle POSIX catalog aliases. Keep task handoffs
+  and shared browser workloads under one coordinator.
+
 - Detect stale skill links, catalog conflicts, and excluded Hermes entries before
   installation. Add pinned native loader checks and clarify cross-client discovery,
   resource permissions, and helper backend requirements.

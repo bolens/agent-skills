@@ -66,3 +66,41 @@ class ClientLoaderRunner(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             with self.assertRaises(subprocess.CalledProcessError):
                 runner.run([sys.executable, '-c', 'raise SystemExit(3)'], Path(directory), dict(os.environ))
+
+    @unittest.skipUnless(os.name == 'posix', 'POSIX process supervision')
+    def test_sigterm_cleans_worker_and_descendant(self):
+        import time
+        with tempfile.TemporaryDirectory() as directory:
+            home = Path(directory)
+            descendant = "import time,pathlib; time.sleep(2); pathlib.Path('survived').touch()"
+            worker = (
+                f"import os,subprocess,sys,time,pathlib; subprocess.Popen([sys.executable,'-c',{descendant!r}]); "
+                "pathlib.Path('ready').write_text(str(os.getpid())); time.sleep(30)"
+            )
+            supervisor = '''
+import importlib.util, os, signal, sys
+from pathlib import Path
+spec = importlib.util.spec_from_file_location('runner', sys.argv[1])
+runner = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(runner)
+def interrupt(*args):
+    raise KeyboardInterrupt
+signal.signal(signal.SIGTERM, interrupt)
+runner.run([sys.executable, '-c', sys.argv[2]], Path.cwd(), dict(os.environ))
+'''
+            process = subprocess.Popen([sys.executable, '-c', supervisor, str(ROOT / 'scripts/test_client_loaders.py'), worker],
+                                       cwd=home, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            try:
+                deadline = time.monotonic() + 5
+                while not (home / 'ready').exists() and process.poll() is None and time.monotonic() < deadline:
+                    time.sleep(0.02)
+                self.assertTrue((home / 'ready').exists(), 'worker did not start')
+                process.terminate()
+                process.communicate(timeout=5)
+                self.assertNotEqual(0, process.returncode)
+                time.sleep(2)
+                self.assertFalse((home / 'survived').exists(), 'descendant survived cancellation')
+            finally:
+                if process.poll() is None:
+                    process.terminate()
+                process.communicate(timeout=5)

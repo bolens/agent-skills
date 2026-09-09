@@ -69,3 +69,18 @@ The macOS job is configured but has not run on the host service in this local-on
 change. Native macOS, WSL2, and other POSIX machines were not available here.
 The conditional case-alias test and documented WSL2 command require native evidence
 before claiming those platform/filesystem combinations were exercised.
+
+## PR review corrections
+
+Two independent reviews of 0e42d26 identified obsolete replacement metadata
+blocking authorized installs and completed renames being misreported when cleanup
+fails. Both are fixed with regressions. Planned replacement sources are validated
+while obsolete target subtrees are excluded from the preflight catalog scan.
+Completed renames are recorded before cleanup. Added SIGTERM/descendant coverage
+for the loader supervisor and nested case-alias coverage for native macOS.
+
+The first hosted macOS run exposed a test-only /var versus /private/var path
+comparison, now normalized. Ubuntu setup failures were an external package-feed
+hash mismatch, before repository tests. Local corrected gate: 178 tests ran,
+177 passed and one case-insensitive filesystem case skipped. Shared source lint
+and portability passed. Updated hosted checks and re-review remain merge gates.

@@ -226,6 +226,11 @@ with patch.object(Path, 'symlink_to', fail_second):
         self.assertEqual(1, result.returncode)
         self.assertIn('share a', result.stdout)
         self.assertEqual([], list((home / 'skills').iterdir()))
+        self.env['PI_CODING_AGENT_DIR'] = str(alias / 'skills/nested')
+        result = self.run_installer('--apply', '--client', 'hermes', '--client', 'pi', '--json')
+        self.assertEqual(1, result.returncode)
+        self.assertIn('overlap', result.stdout)
+        self.assertEqual([], list((home / 'skills').iterdir()))
 
     def test_failed_link_replacement_preserves_old_link(self):
         home = self.home / '.pi/agent/skills'
@@ -249,7 +254,7 @@ with patch.object(Path, 'symlink_to', side_effect=PermissionError('synthetic fil
         result = subprocess.run([sys.executable, '-c', code, str(INSTALLER)], env=self.env,
                                 capture_output=True, text=True, timeout=15)
         self.assertEqual(1, result.returncode)
-        self.assertEqual(old, target.resolve())
+        self.assertEqual(old.resolve(), target.resolve())
         self.assertEqual([target], list(home.iterdir()))
         result = self.run_installer('--apply', '--client', 'pi')
         self.assertEqual(0, result.returncode, result.stdout)
@@ -273,3 +278,54 @@ with patch('fcntl.flock', side_effect=OSError(errno.ENOTSUP, 'synthetic unsuppor
         self.assertEqual(1, result.returncode)
         self.assertIn('does not support directory locking', result.stdout)
         self.assertEqual([], list((self.home / '.pi/agent/skills').iterdir()))
+
+    def test_replacement_ignores_obsolete_metadata_but_check_reports_it(self):
+        home = self.home / '.pi/agent/skills'
+        target = home / 'code-review'
+        target.mkdir(parents=True)
+        (target / 'SKILL.md').write_text('Obsolete independent metadata')
+        self.assertEqual(1, self.run_installer('--check', '--client', 'pi').returncode)
+        self.assertEqual(1, self.run_installer('--apply', '--client', 'pi').returncode)
+        result = self.run_installer('--apply', '--replace', '--client', 'pi')
+        self.assertEqual(0, result.returncode, result.stdout)
+        target.unlink()
+        old = self.home / 'obsolete-source'
+        old.mkdir()
+        (old / 'SKILL.md').write_text('Obsolete symlink source')
+        target.symlink_to(old)
+        result = self.run_installer('--apply', '--client', 'pi')
+        self.assertEqual(0, result.returncode, result.stdout)
+        self.assertEqual(ROOT / 'skills/code-review', target.resolve())
+        self.assertTrue((old / 'SKILL.md').exists())
+
+    def test_cleanup_failure_reports_completed_link_replacement(self):
+        self.assertEqual(0, self.run_installer('--apply', '--client', 'pi').returncode)
+        target = self.home / '.pi/agent/skills/code-review'
+        target.unlink()
+        old = self.home / 'old-source'
+        old.mkdir()
+        target.symlink_to(old)
+        code = '''
+import importlib.util, sys, tempfile
+from pathlib import Path
+from unittest.mock import patch
+sys.path.insert(0, str(Path(sys.argv[1]).parent))
+spec = importlib.util.spec_from_file_location('installer', sys.argv[1])
+module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(module)
+original = tempfile.TemporaryDirectory.cleanup
+def fail_after_cleanup(self):
+    original(self)
+    raise PermissionError('synthetic cleanup failure')
+sys.argv = ['installer', '--apply', '--client', 'pi', '--json']
+with patch.object(tempfile.TemporaryDirectory, 'cleanup', fail_after_cleanup):
+    sys.exit(module.main())
+'''
+        result = subprocess.run([sys.executable, '-c', code, str(INSTALLER)], env=self.env,
+                                capture_output=True, text=True, timeout=15)
+        report = json.loads(result.stdout)
+        self.assertEqual(1, result.returncode)
+        self.assertEqual('partial', report['status'])
+        self.assertTrue(report['changes'][0]['applied'])
+        self.assertEqual(ROOT / 'skills/code-review', target.resolve())
+        self.assertEqual(0, self.run_installer('--check', '--client', 'pi').returncode)
