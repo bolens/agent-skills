@@ -29,6 +29,7 @@ jobs:
           filters: |
             environment:
               - 'devenv.*'
+              - '.devcontainer/**'
               - '.github/workflows/devenv.yml'
               - 'Makefile'
               - 'scripts/**'
