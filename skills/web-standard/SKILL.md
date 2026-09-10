@@ -17,6 +17,8 @@ Use WHATWG/W3C specifications for disputed semantics, MDN and browser compatibil
 
 Read only the reference needed:
 
+- [Standards sources](references/standards-sources.md): select the owning specification, check maturity/version, and distinguish requirements from advisory guidance.
+- [Internationalization](../internationalization/SKILL.md): locale-dependent messages, formatting, Unicode, and RTL behavior.
 - [CSS normalization and resets](references/css-baselines.md): choose a baseline, preserve cascade and control behavior, and verify current browsers without stacking resets.
 - [Browser-native implementation](references/browser-native.md): forms, dialogs/popovers, events, observers, URL/history, and ownership.
 - [Compatibility and HTTP](references/compatibility-and-http.md): progressive enhancement, feature detection, caching, fetch, and response behavior.

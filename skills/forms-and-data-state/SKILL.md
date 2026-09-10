@@ -13,6 +13,8 @@ Read repository guidance, the existing form/data library and version, component 
 
 Identify the resource/user scope, field representation, validation boundary, request identity, server success/error shape, concurrency policy, and persistence behavior. Trace what survives navigation, refresh, account changes, and unmounting. Treat server-side authorization and validation as authoritative even when the client mirrors them for feedback.
 
+Use [internationalization](../internationalization/SKILL.md) for localized input, messages, formatting, or locale switches during editing. Keep server field identifiers stable and translate presentation without losing draft ownership. Use [content clarity](../accessibility/references/content-clarity.md) for actionable instructions and recovery messages.
+
 ## Model the interaction
 
 - Separate editing, validating, submitting, acknowledged, failed, and conflicted states where the workflow needs them. Keep field errors separate from network failures and access/session failures.

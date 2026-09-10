@@ -41,3 +41,5 @@ The 2026-09-06 legacy extension adds [all 62 skill capabilities](006-retrospecti
 - [012: Workflow guidance follow-through](012-workflow-guidance/spec.md)
 
 - [014: Hermes and Pi compatibility](014-hermes-pi-compatibility/spec.md)
+
+- [015: Internationalization and standards guidance](015-internationalization-guidance/spec.md)

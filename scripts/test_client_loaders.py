@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import base64
 import contextlib
+import email.utils
 import hashlib
 import io
 import json
@@ -14,6 +15,8 @@ import subprocess
 import sys
 import tarfile
 import tempfile
+import time
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -37,9 +40,35 @@ def defer_interrupts():
             raise KeyboardInterrupt
 
 
+def retry_delay(value: str | None, fallback: int) -> float:
+    if value is None:
+        return fallback
+    try:
+        delay = float(int(value))
+    except ValueError:
+        try:
+            delay = email.utils.parsedate_to_datetime(value).timestamp() - time.time()
+        except (ValueError, TypeError, OverflowError):
+            return fallback
+    return max(0, delay)
+
+
 def download(url: str, algorithm: str, digest: str) -> bytes:
-    with urllib.request.urlopen(url, timeout=30) as response:
-        data = response.read(MAX_DOWNLOAD + 1)
+    request = urllib.request.Request(url, headers={'User-Agent': 'agent-skills-client-loader-check'})
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(request, timeout=30) as response:
+                data = response.read(MAX_DOWNLOAD + 1)
+            break
+        except urllib.error.HTTPError as error:
+            delay = retry_delay(error.headers.get('Retry-After'), 30 * (attempt + 1))
+            error.close()
+            # Respect longer server delays by failing, not retrying prematurely.
+            if error.code not in (429, 502, 503, 504) or attempt == 2 or delay > 60:
+                raise
+            print(f'Client source HTTP {error.code}; retry {attempt + 1}/2 in {delay:g}s: {url}',
+                  file=sys.stderr, flush=True)
+            time.sleep(delay)
     if len(data) > MAX_DOWNLOAD:
         raise ValueError('client source download exceeds 32 MiB')
     actual = hashlib.new(algorithm, data).digest()

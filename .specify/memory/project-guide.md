@@ -201,3 +201,5 @@ essential decisions and task routing in the entrypoint. Include local examples
 only when they clarify a repository-specific contract; do not replace useful
 instructions with an unexplained list of links. CSS baseline selection belongs
 to [web-standard's reference](../../skills/web-standard/references/css-baselines.md).
+
+Standards-backed application work uses [standards source selection](../../skills/web-standard/references/standards-sources.md) for ownership, document maturity, versions, and evidence limits. Load only the authority relevant to the task; this does not impose new compliance obligations.
