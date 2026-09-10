@@ -17,7 +17,7 @@ License source: [LICENSE](https://github.com/vercel-labs/skills/blob/435076e7898
 Preserve during imports: `SKILL.md`, `references/usage-and-context.md`
 
 Local changes to retain:
-- Keep Codex-native installation boundaries and source-first quality review instead of popularity-led recommendations.
+- Keep target-client installation and reload boundaries, including Codex-native routing, and source-first quality review instead of popularity-led recommendations.
 - Retain host-specific usage and context evidence, representative routing checks, and explicit user intent for invocation-policy changes.
 - Preserve revision-bound candidate reassessment, source independence checks, and scoped correction of earlier evaluation errors.
 

@@ -15,9 +15,9 @@ concurrency:
 
 jobs:
   lint:
-    uses: bolens/.github/.github/workflows/reusable-source-lint.yml@7603518f305fb76f7bb1b9979f2692521f633b82
+    uses: bolens/.github/.github/workflows/reusable-source-lint.yml@96705dc8d8147b92eee283dec1f43e91bd30c4e9
     with:
-      tooling-ref: 7603518f305fb76f7bb1b9979f2692521f633b82
+      tooling-ref: 96705dc8d8147b92eee283dec1f43e91bd30c4e9
   workflow-security:
     uses: bolens/.github/.github/workflows/reusable-actionlint.yml@7603518f305fb76f7bb1b9979f2692521f633b82
     with:

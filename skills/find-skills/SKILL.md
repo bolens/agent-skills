@@ -1,6 +1,6 @@
 ---
 name: find-skills
-description: Discover installable agent skills for a concrete capability, verify their source and contents, compare them with already installed skills, and recommend only additions that materially improve the current skill set. Use when the user asks whether a skill exists, wants skill recommendations, or wants to extend Codex.
+description: Discover installable agent skills for a concrete capability, verify their source and contents, compare them with already installed skills, and recommend only additions that materially improve the current skill set. Use when the user asks whether a skill exists, wants skill recommendations, or wants to extend their agent.
 ---
 
 # Find skills
@@ -32,7 +32,7 @@ Recommend a skill only when it adds non-obvious procedures, maintained domain kn
 - destructive actions, network access, credentials, and external side effects
 - whether a small rewrite is required for the target environment
 
-Reject generic prompt collections, stale migrations, duplicate workflows, and host-specific skills that would misroute Codex.
+Reject generic prompt collections, stale migrations, duplicate workflows, and host-specific skills that would misroute the target agent.
 
 When revisiting an audited candidate, recover its source revision, verdict, and
 reason from existing records. Recheck the facts that could change that verdict,
@@ -48,6 +48,6 @@ Give a short verdict for each serious candidate: what it adds, what overlaps, co
 
 ## Install
 
-Do not install until the user asks. In Codex, use the native `skill-installer` workflow for GitHub paths or curated skills. Preserve the complete skill directory, not only `SKILL.md`, and validate the installed result. Use another package manager only when the user requests it or the source requires it.
+Do not install until the user asks. In Codex, use the native `skill-installer` workflow for GitHub paths or curated skills. Preserve the complete skill directory, not only `SKILL.md`, and validate the installed result. For other clients, use their documented native installation or the repository's existing installer. Verify discovery paths, name precedence, invocation policy, and supporting-file access before claiming compatibility. Use another package manager only when the user requests it or the source requires it.
 
-After installation, state the destination and that the skill becomes available on the next turn.
+After installation, state the destination and the target client's verified reload or restart requirement. Check its catalog when available. Separate installed files from observed discovery and successful execution; do not promise next-turn availability across clients.

@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import contextlib
 import functools
 import hashlib
 import http.server
@@ -12,6 +13,7 @@ import json
 import os
 from pathlib import Path
 import re
+import selectors
 import shutil
 import signal
 import struct
@@ -77,9 +79,14 @@ def arguments() -> argparse.Namespace:
         if parsed.username is not None or parsed.password is not None:
             parser.error("credentials in --url are unsupported; use a repository-native authenticated harness")
     args.viewports = list(dict.fromkeys(args.viewport or MATRICES[args.matrix].split()))
+    if len(args.viewports) > 32:
+        parser.error("at most 32 distinct viewports per run; split larger matrices")
     for viewport in args.viewports:
         if not re.fullmatch(r"[1-9][0-9]{2,4}x[1-9][0-9]{2,4}", viewport):
             parser.error(f"invalid viewport: {viewport}")
+        width, height = map(int, viewport.split("x"))
+        if max(width, height) > 8192 or width * height > 16777216:
+            parser.error(f"viewport exceeds 8192 pixels per side or 16 megapixels: {viewport}")
     candidates = [args.browser] if args.browser else [
         "chromium", "chromium-browser", "google-chrome-stable", "google-chrome", "chrome",
         "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
@@ -91,20 +98,107 @@ def arguments() -> argparse.Namespace:
     return args
 
 
-def run(command: list[str], timeout: int, log: Path) -> None:
-    """Terminate only this invocation's process group, including browser children."""
-    with log.open("wb") as stream:
-        process = subprocess.Popen(command, stdout=stream, stderr=subprocess.STDOUT, start_new_session=True)
+LOG_LIMIT = 1024 * 1024
+
+
+def signal_group(process, signum):
+    """Reap an owned zombie before retrying Darwin's zombie-only EPERM."""
+    try:
+        os.killpg(process.pid, signum)
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        # XNU killpg1 excludes SZOMB members, yielding EPERM for a zombie-only
+        # group. Reap our leader and retry; never hide a persistent denial.
+        process.poll()
         try:
-            code = process.wait(timeout=timeout)
-            if code:
-                raise RuntimeError(f"command exited {code}; see {log.name}")
+            os.killpg(process.pid, signum)
+        except ProcessLookupError:
+            return False
+    return True
+
+
+@contextlib.contextmanager
+def defer_interrupts():
+    """Record ownership or finish cleanup before delivering cancellation."""
+    pending = []
+    previous = {sig: signal.signal(sig, lambda signum, _frame: pending.append(signum))
+                for sig in (signal.SIGINT, signal.SIGTERM)}
+    try:
+        yield
+    finally:
+        for sig, handler in previous.items():
+            signal.signal(sig, handler)
+        if pending:
+            raise KeyboardInterrupt
+
+
+def run(command: list[str], timeout: int, log: Path) -> None:
+    """Bound command time/log bytes and clean only this invocation's group."""
+    deadline = time.monotonic() + timeout
+    process = None
+    with log.open("wb") as stream:
+        try:
+            with defer_interrupts():
+                process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                                           stdin=subprocess.DEVNULL, start_new_session=True)
+            with selectors.DefaultSelector() as selector:
+                selector.register(process.stdout, selectors.EVENT_READ)
+                remaining = LOG_LIMIT
+                while True:
+                    wait = deadline - time.monotonic()
+                    if wait <= 0:
+                        raise subprocess.TimeoutExpired(command, timeout)
+                    if not selector.select(wait):
+                        raise subprocess.TimeoutExpired(command, timeout)
+                    chunk = os.read(process.stdout.fileno(), min(8192, remaining + 1))
+                    if not chunk:
+                        code = process.wait(timeout=max(0.001, deadline - time.monotonic()))
+                        if code:
+                            raise RuntimeError(f"command exited {code}; see {log.name}")
+                        break
+                    stream.write(chunk[:remaining])
+                    if len(chunk) > remaining:
+                        raise RuntimeError(f"command log exceeds {LOG_LIMIT} bytes; see {log.name}")
+                    remaining -= len(chunk)
         finally:
-            try:
-                os.killpg(process.pid, signal.SIGKILL)
-            except ProcessLookupError:
-                pass
-            process.wait()
+            if process is not None:
+                try:
+                    with defer_interrupts():
+                        try:
+                            signal_group(process, signal.SIGKILL)
+                        finally:
+                            process.wait(timeout=1)
+                finally:
+                    process.stdout.close()
+
+
+class BoundedServerLog:
+    """Serialize request-thread writes and keep a fixed diagnostic byte budget."""
+
+    def __init__(self, path):
+        self.stream = path.open("wb")
+        self.lock = threading.Lock()
+        self.remaining = LOG_LIMIT
+        self.truncated = False
+
+    def write(self, text):
+        data = text.encode("utf-8", errors="replace")
+        with self.lock:
+            if not self.stream.closed:
+                self.stream.write(data[:self.remaining])
+                self.truncated |= len(data) > self.remaining
+                self.remaining -= min(len(data), self.remaining)
+        return len(text)
+
+    def flush(self):
+        with self.lock:
+            if not self.stream.closed:
+                self.stream.flush()
+
+    def close(self):
+        with self.lock:
+            self.stream.close()
 
 
 def wait_http(url: str, seconds: int) -> dict:
@@ -133,7 +227,7 @@ def capture(args: argparse.Namespace, evidence: Path, receipt: dict) -> None:
     server_log = None
     try:
         if args.directory:
-            server_log = (evidence / "server.log").open("w")
+            server_log = BoundedServerLog(evidence / "server.log")
 
             class Handler(http.server.SimpleHTTPRequestHandler):
                 def log_message(self, fmt, *values):
@@ -171,9 +265,16 @@ def capture(args: argparse.Namespace, evidence: Path, receipt: dict) -> None:
                 actual = png_size(screenshot)
                 if actual != (width, height):
                     raise RuntimeError(f"{viewport} produced {actual[0]}x{actual[1]} pixels")
-                data = screenshot.read_bytes()
+                digest = hashlib.sha256()
+                size = 0
+                with screenshot.open("rb") as image:
+                    for chunk in iter(lambda: image.read(1024 * 1024), b""):
+                        size += len(chunk)
+                        if size > 128 * 1024 * 1024:
+                            raise RuntimeError(f"{viewport} PNG exceeds 128 MiB")
+                        digest.update(chunk)
                 record = {"viewport": viewport, "width": width, "height": height,
-                          "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest(), "path": screenshot.name}
+                          "bytes": size, "sha256": digest.hexdigest(), "path": screenshot.name}
                 receipt["captures"].append(record)
                 writer.writerow([viewport, width, height, record["bytes"], record["sha256"], args.url])
                 stream.flush()
@@ -200,6 +301,7 @@ def capture(args: argparse.Namespace, evidence: Path, receipt: dict) -> None:
             server.server_close()
         if server_log:
             server_log.close()
+            receipt["server_log"] = {"path": "server.log", "truncated": server_log.truncated}
 
 
 def main() -> int:

@@ -1,4 +1,6 @@
 ---
+compatibility: Requires Python 3 and either the Anthropic SDK with ANTHROPIC_API_KEY or an authenticated Claude CLI. Sends input to the selected Claude backend.
+disable-model-invocation: true
 name: caveman-compress
 description: >
   Compress a memory file such as CLAUDE.md or a todo list into caveman format
@@ -10,6 +12,15 @@ description: >
 ## Purpose
 
 Compress natural language files (CLAUDE.md, todos, preferences) into caveman-speak to reduce input tokens. Compressed version overwrites original. Human-readable backup saved as `<filename>.original.md`, but NOT beside the source file — it lives in an out-of-tree data dir (`$XDG_DATA_HOME/caveman-compress/backups/<parent-dir-name>/`, or `%LOCALAPPDATA%\caveman-compress\backups\<parent-dir-name>\` on Windows) so skill auto-loaders don't re-ingest it as a live file.
+
+## Runtime requirements
+
+This helper calls Claude regardless of which agent loaded the skill. It uses the
+Anthropic Python SDK when installed and ANTHROPIC_API_KEY is set, otherwise the
+authenticated `claude --print` CLI. Check that a supported backend is available
+before running it. A Pi, Hermes, or other host session does not supply that backend.
+Input text crosses the selected model-service boundary; preserve the user's
+authorization for that transfer. Do not substitute a different provider silently.
 
 ## Trigger
 

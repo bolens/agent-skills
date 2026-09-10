@@ -27,3 +27,28 @@ Do not optimistically show irreversible completion when the server has not accep
 Retry only errors and operations that the contract makes retryable, with bounded backoff and cancellation. Authentication, validation, and version conflicts need their own recovery. Preserve enough redacted evidence to diagnose a failure without logging credentials or full sensitive payloads.
 
 Browser reload/unload, offline storage, and a promise resolving are separate persistence boundaries. Define exactly which one the UI's "Saved" message represents.
+
+## Interrupted and offline journeys
+
+Distinguish an unavailable network, failed request, pending local edit, and
+server-confirmed result. An online/offline indicator is only a hint; reconcile
+with the actual request outcome. Keep useful permitted cached content readable
+with its staleness visible instead of blanking the entire interface.
+
+For an ambiguous write failure, offer status reconciliation or a safe recovery
+path before retry. Respect the server's `Retry-After` where applicable, cap retry
+attempts and waits, and stop when the current task is cancelled. Do not automatically
+retry authentication failures, rejected input, or version conflicts.
+[HTTP semantics](https://www.rfc-editor.org/rfc/rfc9110.html) defines method and
+retry semantics; verify the backend's actual idempotency and status contract.
+
+Only persist drafts or add an offline queue when the product requires them.
+Specify storage scope, expiry, schema upgrades, account switches, conflict handling,
+and recovery from denied or exhausted storage. Do not add a service worker to fix
+one request failure. Apply [privacy guidance](../../web-security/references/privacy.md)
+to retained data and [content clarity](../../accessibility/references/content-clarity.md)
+to the pending, failed, and recovered states.
+
+Test connection loss before and after server acceptance, refresh/reconnect,
+repeated recovery actions, and preserved edits. Assert the confirmed server state
+and the user's recoverable work, not just disappearance of an error banner.

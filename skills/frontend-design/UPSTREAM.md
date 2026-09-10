@@ -17,7 +17,7 @@ License source: [skills/frontend-design/LICENSE.txt](https://github.com/anthropi
 Preserve during imports: `SKILL.md`
 
 Local changes to retain:
-- Retain the product-led rewrite, explicit user preferences, browser verification, and focused workflow handoffs.
+- Retain the product-led rewrite, explicit user preferences, user-journey and consumer-interface guidance, browser verification, and focused workflow handoffs.
 - Keep the Apache-2.0 modification notice in SKILL.md.
 - Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior.
 

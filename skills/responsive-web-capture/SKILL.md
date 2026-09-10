@@ -20,6 +20,10 @@ do not run a second capture helper merely to obtain its receipt format.
 - Use `--matrix comprehensive` when a broad viewport audit is requested. It covers small and modern phones, tablets, laptops, 1080p, 1440p, ultrawide, and 4K, with portrait counterparts.
 - Use repeated `--viewport WIDTHxHEIGHT` arguments for a focused regression rerun.
 
+The fallback accepts at most 32 distinct viewports per run, with sides up to 8192 pixels and at most 16,777,216 pixels per image. It hashes PNGs in chunks and rejects files over 128 MiB. Split larger matrices into scoped runs.
+
+Before starting a capture alongside other agents, follow the [shared browser capacity contract](../ci-maintenance/references/setup-contracts.md#browser-workload-ownership). The fallback helper isolates output and ports but does not enforce a host-wide concurrency limit. Use the existing coordinator or supervisor to serialize it when capacity is shared.
+
 The comprehensive matrix is intentionally expensive. Capture representative routes rather than multiplying every route by every viewport without evidence that the cost is useful.
 
 ## Workflow
@@ -50,7 +54,7 @@ PNG dimensions are output pixels. They do not establish `innerWidth`/`innerHeigh
 
 Each run gets a unique directory under `--output/PHASE/NAME/`; the default root is the system temporary directory's `visual-evidence`. Reruns preserve earlier evidence. `--directory` binds a loopback-only server to an automatically assigned port. An explicit occupied `--port` fails rather than reusing another server. This static server has no framework routing or authentication middleware.
 
-`--timeout SECONDS` bounds each browser/contact-sheet command, default 30. `--ready-timeout SECONDS` controls the HTTP probe, default 10. The probe establishes reachability only. Browser processes and the owned server are cleaned up on failure or interruption. `--no-contact-sheet` skips optional montage work. Read browser logs when capture fails. Do not weaken browser sandboxing to make a failed run appear successful.
+`--timeout SECONDS` bounds each browser/contact-sheet command, default 30. `--ready-timeout SECONDS` controls the HTTP probe, default 10. The probe establishes reachability only. Browser processes and the owned server are cleaned up on failure or interruption. Each command log is capped at 1 MiB. Exceeding that limit stops the command and records failure. The server log has its own 1 MiB cap, with truncation recorded in `receipt.json`. Cleanup waits up to one second for the killed command to exit. `--no-contact-sheet` skips optional montage work. Read browser logs when capture fails. Do not weaken browser sandboxing to make a failed run appear successful.
 
 ## Script examples
 

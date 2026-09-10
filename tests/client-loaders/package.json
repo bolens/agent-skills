@@ -1,0 +1,9 @@
+{
+  "name": "agent-skills-client-loader-checks",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "ignore": "7.0.9",
+    "yaml": "2.9.0"
+  }
+}

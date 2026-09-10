@@ -35,6 +35,7 @@ specialized workflows.
 | Check publication content for secrets and private information | [sensitive-info-audit](skills/sensitive-info-audit/SKILL.md) |
 | Design web pages, shared components, and data interactions | [frontend-design](skills/frontend-design/SKILL.md), [design-system](skills/design-system/SKILL.md), [forms-and-data-state](skills/forms-and-data-state/SKILL.md) |
 | Improve accessibility, performance, security, and discoverability | [web-quality-audit](skills/web-quality-audit/SKILL.md), [web-security](skills/web-security/SKILL.md), [technical-seo](skills/technical-seo/SKILL.md) |
+| Implement locale-aware messages, formatting, and RTL interfaces | [internationalization](skills/internationalization/SKILL.md) |
 | Create SVG artwork or integrate interface animation | [svg-design](skills/svg-design/SKILL.md), [svg-animation](skills/svg-animation/SKILL.md), [web-animation](skills/web-animation/SKILL.md), [animation-assets](skills/animation-assets/SKILL.md) |
 | Verify browser behavior across screen sizes | [cli-web-evidence](skills/cli-web-evidence/SKILL.md), [responsive-web-capture](skills/responsive-web-capture/SKILL.md) |
 | Maintain Compose stacks or diagnose a live homelab service | [homelab-stack-maintenance](skills/homelab-stack-maintenance/SKILL.md), [homelab-stack-triage](skills/homelab-stack-triage/SKILL.md) |
@@ -108,23 +109,31 @@ Spec Kit integration under `.agents/skills/speckit-*`.
 
 From the repository root:
 
+The installer requires Python 3.10+ and PyYAML, available in the supplied
+devenv/devcontainer or through `requirements-dev.txt` in a Python environment.
+
 ```sh
 python3 scripts/link-installed.py --apply
 python3 scripts/link-installed.py --check
 ```
 
-`--apply` creates missing links and repoints existing symlinks to this checkout.
+`--plan` previews changes without writing. `--apply` checks the selected catalogs
+for conflicts before creating missing links or repointing existing symlinks.
 It refuses existing files or directories unless `--replace` is supplied.
 `--replace` deletes those copies, so preserve any independent edits first.
 Installation applies to the registered collection, not an individual skill.
-It is not transactional: other links can be updated even if one target is
-refused. It does not remove unregistered or obsolete entries from client homes.
+Preflight conflicts prevent writes. An I/O failure or concurrent change during
+application can still leave a partial install. It reports obsolete repository-owned
+links and conflicting catalog names without removing independent entries.
 Inspect reported problems and rerun `--check` after resolving them.
 
 Set `CODEX_HOME`, `AGENTS_HOME`, or `CLAUDE_HOME` to override the corresponding
 home directory. Edit the source under `skills/`, never an installed copy.
 Because installation uses symlinks, source edits are immediately visible to the
 clients using them. Skill discovery and invocation depend on the client.
+
+For Hermes Agent and Pi, see [client compatibility](docs/client-compatibility.md)
+for optional native installation, invocation-policy differences, and verification.
 
 ## Maintain and validate
 

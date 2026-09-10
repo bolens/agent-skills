@@ -1,0 +1,23 @@
+{
+  "pi": {
+    "version": "0.73.1",
+    "url": "https://registry.npmjs.org/@mariozechner/pi-coding-agent/-/pi-coding-agent-0.73.1.tgz",
+    "integrity": "sha512-gXQh3SaZmWTfVMc4Ao5+LGbVeKvzyO7tolok0nLsZgq9nGjZx/EEU3NM8C+qUnB4Nvs2rswG5qOVgLzQkq0fHQ==",
+    "files": [
+      "package.json",
+      "dist/core/skills.js",
+      "dist/config.js",
+      "dist/utils/frontmatter.js",
+      "dist/utils/paths.js",
+      "dist/utils/child-process.js",
+      "dist/core/source-info.js"
+    ]
+  },
+  "hermes": {
+    "revision": "b2aa855b626ff8688eb34b95c60ee8b6a4af3679",
+    "files": {
+      "agent/skill_utils.py": "bac47fc63121852fc2ae564a50fdd083f865b9e85dd4946fc5be62a19f34fb7e",
+      "hermes_constants.py": "6e6e47b32e4aa8350afbd69e39e7d9648edc2c14558ce7464c2ff7ba3453a3a0"
+    }
+  }
+}

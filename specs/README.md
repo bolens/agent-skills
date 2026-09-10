@@ -16,6 +16,7 @@ identifies existing behavior, source coverage, and verification limits.
 | [009 Local Sentrux analysis](009-sentrux-local-analysis/spec.md) | Optional verified snapshots, comparison identity, and runtime notice retention |
 | [010 Linux platform skills](010-linux-platform-skills/spec.md) | Arch, CachyOS, NixOS, and installation-aware Omarchy routing |
 | [011 Portable development guidance](011-portable-development-guidance/spec.md) | Shared mise, devenv, devcontainer, and CI toolchain ownership |
+| [013 Recent code contracts](013-recent-code-contracts/spec.md) | Dated inventory, Spec Kit integrity, and editor-container setup acceptance with executable evidence |
 
 The retrospective baseline contains contracts for
 [maintenance](006-retrospective-baseline/contracts/maintenance.md),
@@ -38,3 +39,7 @@ The 2026-09-06 legacy extension adds [all 62 skill capabilities](006-retrospecti
 [Archify commands and viewer behavior](006-retrospective-baseline/legacy-archify.md).
 
 - [012: Workflow guidance follow-through](012-workflow-guidance/spec.md)
+
+- [014: Hermes and Pi compatibility](014-hermes-pi-compatibility/spec.md)
+
+- [015: Internationalization and standards guidance](015-internationalization-guidance/spec.md)

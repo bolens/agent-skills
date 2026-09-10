@@ -22,6 +22,33 @@ changed paths, comparing declared exports, or matching exact identifiers.
 Semantic conflict resolution, ranking by impact, and deciding whether findings
 share a cause still require judgment. Successful parsing is not acceptance.
 
+## Continue through the requested endpoint
+
+Keep one coordinator responsible for the user's endpoint. When a task needs a
+specialist skill, use its relevant procedure within the current assignment and
+return its evidence to that coordinator. Continue already-authorized work without
+asking the user to choose the next skill or repeat permission. Carry the original
+requirements, current attempt and candidate, write ownership, evidence, and remaining
+endpoint across each transition. Skill selection does not itself spawn an agent.
+
+| Observed state | Next action within the existing task |
+| --- | --- |
+| Implementation is ready for proof | Run the owning repository checks. Use [verify-and-stop](../../verify-and-stop/SKILL.md) when acceptance or evidence reuse needs a focused pass. |
+| A check fails | Use [systematic-debugging](../../systematic-debugging/SKILL.md) to identify the cause. Apply an in-scope correction if fixes are authorized, then rerun affected proof. |
+| The CI contract is defective | Use [ci-maintenance](../../ci-maintenance/SKILL.md) for the pipeline change, then return its evidence to the current coordinator. |
+| Browser evidence is needed | Use [cli-web-evidence](../../cli-web-evidence/SKILL.md) and acquire the existing host capacity before starting a runner. |
+| Another owner holds a required resource | Record the dependency and owning run, continue independent work, and resume after verified release. A busy result does not trigger a second runner or a product-code fix. |
+| Proof is accepted | Complete the requested commit, artifact, or already-authorized delivery. Use [babysit](../../babysit/SKILL.md) only when PR/release follow-through is part of that endpoint. |
+
+If a named skill is unavailable or denied by the client, use available repository
+commands and permitted task instructions. Report a material capability gap rather
+than inventing a tool, bypassing access controls, or installing another agent.
+A specialist's completion closes its assigned unit, not outstanding integration,
+cleanup, or delivery work. Stop when the endpoint is met. Do not start another
+audit, optimization pass, fleet sweep, or monitoring service merely because a
+skill has a link to one. Skills provide routing instructions, not a background
+scheduler that continues after the session ends.
+
 ## Make acceptance actionable
 
 Choose evidence that could reject the unit before its implementation starts.
@@ -76,3 +103,33 @@ maintenance is authorized. A passing attempt alone does not establish a general
 rule. Keep one-off workarounds scoped, omit secrets and raw logs, and revise a
 lesson when its assumptions change. Do not automatically rewrite global skills
 or convert every failure into a permanent restriction.
+
+## Attempts, cancellation, and uncertain outcomes
+
+Give each assignment an attempt identifier alongside its input revision. Include
+both in progress reports and the final receipt. A delayed result from a replaced
+attempt cannot release dependents or overwrite the current candidate. Reconcile
+its useful evidence explicitly. A receipt names changed paths, final revision,
+checks and their tested revision, owned running processes, and retained artifacts.
+
+Cancellation requests do not transfer ownership. Wait for the worker and its
+owned child processes to stop writing, then inspect the resulting files before
+reassignment or cleanup. Missing heartbeats and elapsed time do not prove that a
+writer is dead. Use the coordination channel or OS ownership evidence. If the
+owner cannot be reached, keep overlapping mutations blocked and continue work
+that does not depend on that resource.
+
+After a timeout or lost acknowledgement of a mutation, inspect its actual outcome
+before retrying. A commit, link change, upload, or service start may have succeeded.
+Prefer operations with inspectable state and idempotent retries. Report partial
+completion per resource and preserve evidence needed to recover it.
+
+Catalog installers, generators, shared browser checks, and deployment helpers
+need resource ownership beyond the Git index. Acquire locks in a stable order,
+fail or wait within a declared budget, and release them only after child cleanup.
+Keep validation inputs stable throughout the check. Independent worktrees still
+share installed client homes, browser capacity, and external services. Avoid
+starting a second full browser matrix when a relevant run is already owned.
+Use a focused check while iterating and have the integration owner run the final
+matrix once against the agreed candidate. Never accept evidence from another
+revision merely to avoid rerunning a necessary check.

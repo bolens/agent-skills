@@ -18,6 +18,7 @@ Preserve during imports: `agents`
 
 Local changes to retain:
 - Describe packaged skill modes and current sibling formats without claiming absent automatic configuration hooks or guaranteed compression savings.
+- Preserve explicit-only invocation in agents metadata and disable-model-invocation frontmatter for Pi and compatible clients.
 
 Updates are audited and merged manually. This fork does not track or represent upstream releases.
 

@@ -24,3 +24,16 @@ updates:
     open-pull-requests-limit: 3
     commit-message:
       prefix: chore(deps)
+
+  - package-ecosystem: npm
+    directory: /tests/client-loaders
+    schedule:
+      interval: monthly
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 3
+
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: monthly

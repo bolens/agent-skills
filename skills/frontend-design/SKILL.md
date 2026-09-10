@@ -32,6 +32,8 @@ Create a distinctive detail when it serves the brief, such as a typographic trea
 
 ## Design behavior alongside appearance
 
+Judge the UI through the user journey: finding the action, understanding its effects, completing it, and recovering when it fails. Preserve semantic names and observable states for assistive technology and browser agents. For developer tools or agent-assisted flows, use the applicable [experience and interface guidance](../codebase-design/references/experience-and-interfaces.md). Keep technical controls in the interface only when they help its audience complete the task.
+
 Include relevant loading, empty, error, success, disabled, selected, and focus states. Ensure primary actions remain discoverable at narrow widths and with long content. Preserve the repository's semantic controls, form behavior, and component APIs while changing appearance.
 
 Use `forms-and-data-state` when submission, autosave, optimistic updates, or request ordering determines those states. Visual feedback must reflect confirmed data and preserve unsaved edits.

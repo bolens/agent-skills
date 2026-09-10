@@ -8,7 +8,7 @@
       "branch": "main",
       "path": "skills/accessibility",
       "audited_ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
-      "local_changes": ["Route responsive visual evidence through responsive-web-capture and functional browser evidence through cli-web-evidence.", "Route runtime and shared-component remediation to motion, asset, and design-system skills; verify explicit reduced-motion states rather than relying on a global duration reset.", "Keep the evidence workflow in SKILL.md and load principles, criterion examples, and testing detail through issue-specific references."]
+      "local_changes": ["Route responsive visual evidence through responsive-web-capture and functional browser evidence through cli-web-evidence.", "Route runtime and shared-component remediation to motion, asset, and design-system skills; verify explicit reduced-motion states rather than relying on a global duration reset.", "Keep the evidence workflow in SKILL.md and load principles, criterion examples, and testing detail through issue-specific references.", "Preserve content-clarity guidance and route locale-dependent implementation through internationalization without treating supplemental guidance as WCAG requirements."]
     },
     "archify": {
       "preserve_paths": ["licenses"],
@@ -34,12 +34,15 @@
       "path": "pstack/skills/blast-radius",
       "audited_ref": "93b00b89ef425a9c1bac0d0b317dfc49c930ac99",
       "local_changes": [
-        "Keep current invocation policy and agents metadata; do not restore the Cursor-specific disable-model-invocation field.",
         "Replace unavailable how, why, and arena dependencies with direct history inspection, code-review routing, and a permitted local fallback.",
-        "Preserve read-only assessment boundaries, isolated proof, explicit evidence gaps, and impact/likelihood/confidence separation."
+        "Preserve read-only assessment boundaries, isolated proof, explicit evidence gaps, and impact/likelihood/confidence separation.",
+        "Preserve explicit-only invocation in agents metadata and disable-model-invocation frontmatter for Pi and compatible clients."
       ]
     },
     "caveman": {
+      "local_changes": [
+        "Preserve explicit-only invocation in agents metadata and disable-model-invocation frontmatter for Pi and compatible clients."
+      ],
       "license": {"spdx": "MIT", "path": "LICENSE", "upstream_path": "LICENSE", "sha256": "94fe75d355887f84ee7eefca68e06d8d082a23dad47a8e1f58a94d98900edf5b"},
       "url": "https://github.com/JuliusBrussee/caveman",
       "branch": "main",
@@ -62,7 +65,10 @@
       "path": "skills/caveman-compress",
       "audited_ref": "3b74643f4d910f496babd4e634b1ba7168816f14",
       "preserve_paths": ["agents"],
-      "local_changes": ["Use an owned temporary directory for candidate validation; preserve neighboring staging files and clean scratch candidates on every exit."]
+      "local_changes": [
+        "Use an owned temporary directory for candidate validation; preserve neighboring staging files and clean scratch candidates on every exit. Document the independent Claude backend and data-transfer requirement across agent hosts, including standard compatibility metadata.",
+        "Preserve explicit-only invocation in agents metadata and disable-model-invocation frontmatter for Pi and compatible clients."
+      ]
     },
     "caveman-help": {
       "license": {"spdx": "MIT", "path": "LICENSE", "upstream_path": "LICENSE", "sha256": "94fe75d355887f84ee7eefca68e06d8d082a23dad47a8e1f58a94d98900edf5b"},
@@ -71,7 +77,10 @@
       "path": "skills/caveman-help",
       "audited_ref": "3b74643f4d910f496babd4e634b1ba7168816f14",
       "preserve_paths": ["agents"],
-      "local_changes": ["Describe packaged skill modes and current sibling formats without claiming absent automatic configuration hooks or guaranteed compression savings."]
+      "local_changes": [
+        "Describe packaged skill modes and current sibling formats without claiming absent automatic configuration hooks or guaranteed compression savings.",
+        "Preserve explicit-only invocation in agents metadata and disable-model-invocation frontmatter for Pi and compatible clients."
+      ]
     },
     "caveman-review": {
       "license": {"spdx": "MIT", "path": "LICENSE", "upstream_path": "LICENSE", "sha256": "94fe75d355887f84ee7eefca68e06d8d082a23dad47a8e1f58a94d98900edf5b"},
@@ -106,7 +115,7 @@
       "audited_ref": "435076e78988e1e6ec40d00b0b1d76bdbbc5419a",
       "preserve_paths": ["SKILL.md", "references/usage-and-context.md"],
       "local_changes": [
-        "Keep Codex-native installation boundaries and source-first quality review instead of popularity-led recommendations.",
+        "Keep target-client installation and reload boundaries, including Codex-native routing, and source-first quality review instead of popularity-led recommendations.",
         "Retain host-specific usage and context evidence, representative routing checks, and explicit user intent for invocation-policy changes.",
         "Preserve revision-bound candidate reassessment, source independence checks, and scoped correction of earlier evaluation errors."
       ]
@@ -120,7 +129,7 @@
         "SKILL.md"
       ],
       "local_changes": [
-        "Retain the product-led rewrite, explicit user preferences, browser verification, and focused workflow handoffs.",
+        "Retain the product-led rewrite, explicit user preferences, user-journey and consumer-interface guidance, browser verification, and focused workflow handoffs.",
         "Keep the Apache-2.0 modification notice in SKILL.md.",
         "Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior."
       ],
@@ -175,7 +184,7 @@
       "branch": "main",
       "path": "skills/web-quality-audit",
       "audited_ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
-      "local_changes": ["Report failed HTML discovery or reads as incomplete and preserve newline filenames in JSON findings.", "Coordinate comprehensive responsive capture and functional browser receipts while keeping evidence types separate.", "Use an env-resolved Bash shebang so the analyzer works outside fixed /bin layouts.", "Link only bundled category skills; route SEO, platform behavior, security, and async-state findings without expanding a read-only audit into implementation.", "Treat source maps as publication content to inspect and llms.txt as optional consumer-specific discovery, not automatic security or search verdicts.", "Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior.", "Keep recurring maintenance checklists in an opt-in reference without expanding one-off audit scope.", "Tie performance and resource recommendations to measured bottlenecks; do not require preconnect, preload, or other recipes on healthy pages."]
+      "local_changes": ["Report failed HTML discovery or reads as incomplete and preserve newline filenames in JSON findings.", "Coordinate comprehensive responsive capture and functional browser receipts while keeping evidence types separate.", "Use an env-resolved Bash shebang so the analyzer works outside fixed /bin layouts.", "Link only bundled category skills; route SEO, platform behavior, security, and async-state findings without expanding a read-only audit into implementation.", "Treat source maps as publication content to inspect and llms.txt as optional consumer-specific discovery, not automatic security or search verdicts.", "Prefer current stable web features and tool versions; require legacy compatibility only for explicit contracts and verify current cross-engine behavior.", "Keep recurring maintenance checklists in an opt-in reference without expanding one-off audit scope.", "Tie performance and resource recommendations to measured bottlenecks; do not require preconnect, preload, or other recipes on healthy pages.", "Route relevant internationalization, content clarity, privacy, and interruption-recovery evidence to their owning skills without expanding audit scope."]
     }
   }
 }

@@ -1,4 +1,5 @@
 ---
+disable-model-invocation: true
 name: caveman-help
 description: >
   Quick-reference card for caveman modes, skills and commands.

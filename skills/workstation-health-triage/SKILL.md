@@ -1,4 +1,5 @@
 ---
+compatibility: Linux probes require Bash, Python 3.9+, and POSIX process groups. Individual system tools are optional and unavailable checks are reported.
 name: workstation-health-triage
 description: Collect and correlate a read-only Linux workstation health snapshot across services, logs, coredumps, resources, storage, mounts, packages, networking, graphics, and the desktop session. Use for broad desktop health checks, recurring instability, post-update verification, or when the failing subsystem is unclear. Do not use for a single known application crash when diagnose-crash is sufficient.
 ---
@@ -13,7 +14,32 @@ Establish current facts before proposing repairs. Keep collection read-only and 
 - **Full:** Run `scripts/collect-health.sh full` when the quick pass is inconclusive. This adds bounded journal, kernel, sensor, network, graphics, and package checks.
 - **Incident:** Start with the quick snapshot, then narrow evidence around the reported time and subsystem. Use `diagnose-crash` for a specific coredump.
 
-The collector accepts `--output PATH`. Keep evidence under `/tmp` unless the user requests a durable artifact. Review it with `sensitive-info-audit` before sharing or committing it.
+The shell entry point requires Bash and Python 3.9+ and supervises probes sequentially.
+It resolves symlinks with Python and does not require GNU path utilities. Probe
+commands target Linux. Process supervision requires POSIX process groups. Defaults
+are 8 seconds per probe, a 60-second collection budget, and 64 KiB of output per
+probe. Use `--probe-timeout`, `--total-timeout`, and `--max-bytes` for a bounded
+increase after identifying missing evidence. Timeouts and truncated output are
+marked and return a nonzero collection status. Unavailable or failed individual
+checks remain labeled in a completed report.
+
+`--output PATH` creates a new private file and refuses existing paths, including
+symlinks. Keep evidence under `/tmp` unless the user requests a durable artifact.
+Partial reports remain available after interruption or failure. On total timeout,
+the collector allows up to 0.1 seconds to append an incomplete marker when the
+output destination remains writable. Review reports
+with `sensitive-info-audit` before sharing or committing them.
+
+Cancellation, timeout, output limits, and normal probe exit all clean up the
+probe's process group, including remaining descendants. Cleanup allows 0.1 seconds
+for TERM before KILL and up to 0.5 seconds to reap the direct child. The collection
+budget also bounds pipe backpressure. Processes stuck in uninterruptible kernel
+I/O cannot be forcibly reaped on a deadline, and descendants that deliberately
+create another session are outside process-group cleanup. Do not use this helper
+to launch daemons. No scratch directories or background collectors are created.
+
+Full mode reads pending updates from existing pacman databases without refreshing
+them. Treat that result as cached information, not update-readiness evidence.
 
 ## Interpret evidence
 

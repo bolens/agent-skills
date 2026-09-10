@@ -55,6 +55,12 @@ jobs:
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: '22'
+      - name: Use Ubuntu package sources
+        # Keep nested browser setup apt calls independent of unrelated vendor feeds.
+        run: |
+          test -s /etc/apt/sources.list.d/ubuntu.sources
+          printf '%s\n' 'Dir::Etc::sourcelist "/etc/apt/sources.list.d/ubuntu.sources";' 'Dir::Etc::sourceparts "-";' |
+            sudo tee /etc/apt/apt.conf.d/99-ci-ubuntu-sources >/dev/null
       - uses: browser-actions/setup-chrome@48ad923757ca74d66703209fe939badbdf80f2f4 # v2
         id: chrome
         with:
@@ -78,6 +84,12 @@ jobs:
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: '22'
+      - name: Use Ubuntu package sources
+        # Keep nested browser setup apt calls independent of unrelated vendor feeds.
+        run: |
+          test -s /etc/apt/sources.list.d/ubuntu.sources
+          printf '%s\n' 'Dir::Etc::sourcelist "/etc/apt/sources.list.d/ubuntu.sources";' 'Dir::Etc::sourceparts "-";' |
+            sudo tee /etc/apt/apt.conf.d/99-ci-ubuntu-sources >/dev/null
       - uses: browser-actions/setup-chrome@48ad923757ca74d66703209fe939badbdf80f2f4 # v2
         id: chrome
         with:
@@ -90,8 +102,22 @@ jobs:
           ARCHIFY_CHROME_NO_SANDBOX: '1'
         run: make test-archify ARCHIFY_TEST_ARGS=--browser
 
+  symlinks-macos:
+    name: Native macOS skill installation
+    runs-on: macos-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - run: python3 -m pip install -r requirements-dev.txt
+      - run: make test-installation
+
   validate:
-    needs: [changes, archify, archify-browser]
+    needs: [changes, archify, archify-browser, symlinks-macos]
     if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -105,11 +131,21 @@ jobs:
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: "22"
+      - name: Use Ubuntu package sources
+        # Keep nested browser setup apt calls independent of unrelated vendor feeds.
+        run: |
+          test -s /etc/apt/sources.list.d/ubuntu.sources
+          printf '%s\n' 'Dir::Etc::sourcelist "/etc/apt/sources.list.d/ubuntu.sources";' 'Dir::Etc::sourceparts "-";' |
+            sudo tee /etc/apt/apt.conf.d/99-ci-ubuntu-sources >/dev/null
       - name: Install lint and inspection tools
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y shellcheck jq ripgrep
+      - name: Install metadata parser
+        run: python3 -m pip install -r requirements-dev.txt
+      - name: Check pinned native client loaders
+        run: make test-client-loaders
       - name: Validate hard forks
         run: make check-fast test portability
-      - name: Require selected Archify checks
+      - name: Require selected validation jobs
         env:
           NEEDS_JSON: ${{ toJSON(needs) }}
         run: |
@@ -122,5 +158,6 @@ jobs:
           expected = "success" if selected == "true" else "skipped"
           valid = jobs["changes"]["result"] == "success" and selected in ("true", "false")
           valid &= all(jobs[name]["result"] == expected for name in ("archify", "archify-browser"))
+          valid &= jobs["symlinks-macos"]["result"] == "success"
           sys.exit(0 if valid else 1)
           PYTHON
