@@ -58,11 +58,19 @@ jobs:
         run: nix profile install github:cachix/devenv/42246161fa3bf7cd18f8334d08c73d6aaa8762d3
       - name: Validate native development environment
         run: devenv test
-      - name: Validate Docker development image
+      - name: Validate Nix development image
         if: runner.os == 'Linux'
         run: |
           python3 scripts/development-container.py build docker
           python3 scripts/development-container.py run docker -- make check-fast test portability
+      - name: Validate devcontainer Dockerfile
+        if: runner.os == 'Linux'
+        run: |
+          docker build --file .devcontainer/Dockerfile --tag agent-skills-devcontainer:ci .devcontainer
+          docker run --rm --init --user "$(id -u):$(id -g)" --env HOME=/tmp \
+            --mount "type=bind,source=${GITHUB_WORKSPACE},target=/workspace" \
+            --workdir /workspace agent-skills-devcontainer:ci \
+            bash -c 'bash .devcontainer/smoke.sh && uv --version && uvx --version && make check-fast test portability'
 
   result:
     name: Development environment
