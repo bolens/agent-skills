@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "devDependencies": {
-    "ignore": "7.0.9",
+    "ignore": "7.0.10",
     "yaml": "2.9.0"
   }
 }
