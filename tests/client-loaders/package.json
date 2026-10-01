@@ -4,6 +4,6 @@
   "type": "module",
   "devDependencies": {
     "ignore": "7.0.9",
-    "yaml": "2.9.0"
+    "yaml": "2.9.1"
   }
 }
