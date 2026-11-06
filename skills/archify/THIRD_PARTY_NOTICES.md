@@ -9,7 +9,7 @@ This fork retains additional full license copies in `licenses/`:
   `renderers/shared/generated-validators.mjs` and its generator inline the
   adapted `ucs2length` runtime helper. Evgeny Poberezkin's notice is retained.
 - [Simple Icons CC0 text](licenses/simple-icons-LICENSE.md) and
-  [disclaimer](licenses/simple-icons-DISCLAIMER.md), copied from version 16.35.0.
+  [disclaimer](licenses/simple-icons-DISCLAIMER.md), copied from version 16.36.0.
 - [JavaScript logo MIT license](licenses/javascript-LICENSE), retaining
   Christopher Williams's copyright notice from the logo source linked below.
 - [Apache-2.0 text](licenses/Apache-2.0.txt), for the Apache-mark entries below.
@@ -33,19 +33,19 @@ particular use is permitted.
 ## Simple Icons
 
 Most of the built-in vector paths and their metadata were generated from
-[Simple Icons 16.35.0](https://github.com/simple-icons/simple-icons/tree/16.35.0).
+[Simple Icons 16.36.0](https://github.com/simple-icons/simple-icons/tree/16.36.0).
 Simple Icons makes its collection work available under
-[CC0 1.0 Universal](https://github.com/simple-icons/simple-icons/blob/16.35.0/LICENSE.md).
+[CC0 1.0 Universal](https://github.com/simple-icons/simple-icons/blob/16.36.0/LICENSE.md).
 
 As Simple Icons explains in its
-[disclaimer](https://github.com/simple-icons/simple-icons/blob/16.35.0/DISCLAIMER.md),
+[disclaimer](https://github.com/simple-icons/simple-icons/blob/16.36.0/DISCLAIMER.md),
 CC0 for the collection does not mean that every underlying icon is CC0. License
 and brand-guideline metadata may be incomplete or change over time. The absence
 of an individual license entry is not a grant of permission.
 
 Archify embeds the selected icons as vector-path data and may render them in a
 user-selected color. The following individual licenses were recorded in the
-pinned Simple Icons 16.35.0 metadata:
+pinned Simple Icons 16.36.0 metadata:
 
 | Mark | Recorded source | Recorded license | Archify treatment |
 |---|---|---|---|
