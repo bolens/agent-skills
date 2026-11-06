@@ -40,7 +40,7 @@ steps:
       ARCHIFY_CHROME_NO_SANDBOX: '1'
     commands:
       - apt-get update
-      - apt-get install -y --no-install-recommends make git python3 zip unzip chromium fonts-liberation fonts-dejavu-core
+      - apt-get install -y --no-install-recommends ca-certificates make git python3 zip unzip chromium fonts-liberation fonts-dejavu-core
       - node --version
       - python3 --version
       - chromium --version
