@@ -56,3 +56,12 @@ canary runs the full harness with real Chromium and all its actual child results
 are reviewed. Verify both new context routing and the existing portable handoff
 against real multi-workflow status payloads before the GitHub retirement is
 published. Current dependency PRs retain their frozen heads throughout this work.
+
+The first actual native full harness identified a test-fixture watchdog race:
+the empty-precheck ordering case deliberately pauses two checks behind filesystem
+and fetch barriers, but shared its unrelated 50 ms network-failure watchdog. That
+watchdog fired under the two-CPU allocation after 95 ms, producing a silent result.
+Both actors now use the existing bounded two-second child-check watchdog and the
+case has the existing five-second parent deadline. The explicit ordering barriers,
+exactly-one-GET and successful-update assertions remain intact. Cache tests,
+production timeout behavior and its separate tests are unchanged.

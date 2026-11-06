@@ -1948,7 +1948,7 @@ test('concurrent checks use one writer and leave a valid cache', async (t) => {
   ));
 });
 
-test('an empty precheck snapshot cannot start a second concurrent network request', async (t) => {
+test('an empty precheck snapshot cannot start a second concurrent network request', { timeout: parentCheckTimeoutMs }, async (t) => {
   const testFixture = fixture();
   t.after(() => fs.rmSync(testFixture.root, { recursive: true, force: true }));
   fs.mkdirSync(stateDirectory(testFixture), { recursive: true });
@@ -1964,9 +1964,11 @@ test('an empty precheck snapshot cannot start a second concurrent network reques
     return new Promise((resolve) => { releaseFetch = resolve; });
   };
 
-  const delayedPrecheck = checkForUpdate(options(testFixture, fetchImpl));
+  // Explicit pause/fetch barriers prove ordering; the watchdog only bounds failure.
+  const orderingWatchdog = { timeoutMs: childCheckTimeoutMs };
+  const delayedPrecheck = checkForUpdate(options(testFixture, fetchImpl, orderingWatchdog));
   await pause.reached;
-  const claimedCheck = checkForUpdate(options(testFixture, fetchImpl));
+  const claimedCheck = checkForUpdate(options(testFixture, fetchImpl, orderingWatchdog));
   await fetchStarted;
   pause.release();
   assert.deepEqual(await delayedPrecheck, { status: 'silent', reason: 'check-in-progress' });
