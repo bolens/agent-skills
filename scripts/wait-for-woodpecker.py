@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Join this exact source revision's native validation without rerunning it."""
+import argparse
 import json
 import os
 import re
@@ -10,7 +11,14 @@ import urllib.request
 REPOSITORY = 'bolens/agent-skills'
 REPOSITORY_ID = 1355138486
 CREATOR_ID = 1218380
-TARGET = re.compile(r'https://woodpecker\.bolens\.dev/repos/28/pipeline/[1-9][0-9]*/1')
+TARGET = re.compile(r'https://woodpecker\.bolens\.dev/repos/28/pipeline/[1-9][0-9]*/[1-9][0-9]*')
+WORKFLOWS = ('portable', 'archify')
+
+
+def workflow_context(event, workflow):
+    if event not in {'pull_request', 'push', 'workflow_dispatch'} or workflow not in WORKFLOWS:
+        raise ValueError('unsupported native workflow context')
+    return 'ci/woodpecker/' + ('pr' if event == 'pull_request' else 'push') + '/' + workflow
 
 
 def select_state(payload, history, sha, context):
@@ -76,6 +84,9 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--workflow', choices=WORKFLOWS, default='portable')
+    args = parser.parse_args()
     if os.environ.get('GITHUB_REPOSITORY') != REPOSITORY:
         raise ValueError('unexpected workflow repository')
     event = os.environ.get('GITHUB_EVENT_NAME')
@@ -89,7 +100,7 @@ def main():
     token = os.environ.get('GH_TOKEN')
     if not token:
         raise ValueError('missing read-only GitHub token')
-    context = 'ci/woodpecker/' + ('pr' if event == 'pull_request' else 'push') + '/portable'
+    context = workflow_context(event, args.workflow)
     opener = urllib.request.build_opener(NoRedirect())
 
     def get(url):

@@ -59,6 +59,28 @@ class Handoff(unittest.TestCase):
     def test_other_event_context_cannot_satisfy_gate(self):
         self.assertEqual(handoff.select_state(*pair(), SHA, 'ci/woodpecker/pr/portable'), 'missing')
 
+    def test_workflow_context_is_allowlisted_and_cannot_reuse_another_workflow(self):
+        self.assertEqual(handoff.workflow_context('pull_request', 'archify'), 'ci/woodpecker/pr/archify')
+        self.assertEqual(handoff.workflow_context('workflow_dispatch', 'portable'), CONTEXT)
+        for event, workflow in [('schedule', 'archify'), ('push', 'publish')]:
+            with self.assertRaises(ValueError):
+                handoff.workflow_context(event, workflow)
+        self.assertEqual(handoff.select_state(*pair(), SHA, 'ci/woodpecker/push/archify'), 'missing')
+
+    def test_dynamic_positive_workflow_index_remains_bound_to_context_and_source(self):
+        data, history = pair()
+        context = 'ci/woodpecker/push/archify'
+        for item in [data['statuses'][0], history[0]]:
+            item['context'] = context
+            item['target_url'] = 'https://woodpecker.bolens.dev/repos/28/pipeline/7/2'
+        self.assertEqual(handoff.select_state(data, history, SHA, context), 'success')
+        self.assertEqual(handoff.select_state(data, history, SHA, CONTEXT), 'missing')
+        for suffix in ['0', '02', '2?other=1', '2/other']:
+            for item in [data['statuses'][0], history[0]]:
+                item['target_url'] = 'https://woodpecker.bolens.dev/repos/28/pipeline/7/' + suffix
+            with self.assertRaises(ValueError):
+                handoff.select_state(data, history, SHA, context)
+
     def test_duplicate_context_is_not_arbitrarily_selected(self):
         data, history = pair()
         data['statuses'].append(dict(data['statuses'][0], state='failure'))

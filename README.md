@@ -161,9 +161,11 @@ availability or section anchors. These checks do not prove every skill's runtime
 behavior; validate changed workflows with relevant task evidence too.
 
 `make check` does not include `make test-archify`, Source lint, actionlint, or
-zizmor. [Woodpecker](.woodpecker/portable.yml) runs the portable gate.
+zizmor. Woodpecker runs the [portable gate](.woodpecker/portable.yml) and selected
+[full Archify harness](.woodpecker/archify.yml) with real Chromium.
 [GitHub CI](.github/workflows/ci.yml) selects Archify jobs for relevant PR paths,
-including provenance changes; main and scheduled CI run those jobs in full. Its
+including provenance changes; automated checks join the full native harness,
+while manual and scheduled CI retain the hosted runtime shards. Its
 weekly schedule also retains the portable environment check. [Source lint](.github/workflows/source-lint.yml) separately calls
 shared source and workflow-security checks. See [RELEASING.md](RELEASING.md) for
 the complete merge gate and local reproduction requirements.
@@ -216,7 +218,14 @@ parser version comes from `requirements-dev.txt` in a disposable virtualenv.
 There are no installation-link changes, publication secrets, privileged
 containers, or host mounts.
 
-GitHub retains the native macOS installation, Archify browser/WebM integration,
+The [Archify pipeline](.woodpecker/archify.yml) follows portable validation and
+runs the unchanged `make test-archify` target with Node 22 and real Chromium.
+Its PR paths match GitHub's selection; main pushes and native manual runs check
+the full harness. Both legacy GitHub shard check names require the same complete
+native result on automated events. Manual and weekly GitHub runs retain their
+actual hosted shards; the serialized WebM/site job remains hosted throughout.
+
+GitHub retains the native macOS installation, serialized Archify WebM/site integration,
 Nix/devcontainer image, source lint, and workflow-security lanes. Its weekly
 schedule retains the portable environment check. For PR/main changes, the stable
 `validate` gate joins the exact native result, binding repository, revision, event

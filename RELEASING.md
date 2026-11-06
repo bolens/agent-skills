@@ -152,10 +152,21 @@ the fork before reproducibility tests. It does not verify the upstream release
 ZIP or publish an archive. Installed skills and links are untouched. Network
 access is required.
 
-CI uses two exhaustive Node test shards and a separate serialized WebM/site
-integration job, with Chrome enabled. Reproduce with `make test-archify
+Automated PR/main checks run the complete Node harness with real Chromium in
+Woodpecker. Both legacy GitHub shard names join that full result; neither may
+reuse the portable workflow's status. Manual and weekly GitHub runs retain two
+exhaustive hosted shards. The separate serialized WebM/site integration job stays
+hosted with real Chrome. Reproduce with `make test-archify
 ARCHIFY_TEST_ARGS=--shard=1/2` (then 2/2), or `ARCHIFY_TEST_ARGS=--browser`.
 Set `ARCHIFY_CHROME` to a headless Chrome executable for browser coverage.
 Dorny selects these jobs for Archify, provenance, runner, or workflow changes;
 main, scheduled, and manual runs validate the full fork. The existing required
 `validate` job also requires every selected Archify job to succeed.
+
+The current full harness contains 1,026 tests. With Chrome configured, its
+ordinary run passes 1,022 and retains four existing skips: two serialized site
+cases run in the separate WebM/site job, one needs an external MCO source fixture,
+and one intentionally requires a Node major other than the canonical 22. Without
+Chrome, a local run instead skips 27 tests; that incomplete browser result cannot
+qualify the native lane. Record actual native workflow/child results, Chromium
+version, and skip reasons before retiring hosted runtime work.
