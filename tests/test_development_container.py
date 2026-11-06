@@ -35,6 +35,21 @@ class DevelopmentContainerTests(unittest.TestCase):
         run.return_value.returncode = 19
         self.assertEqual(MODULE.main(["run", "docker", "--", "false"]), 19)
 
+    @patch.object(MODULE.shutil, "which", return_value="/fixture/tool")
+    @patch.object(MODULE.platform, "machine", return_value="x86_64")
+    @patch.object(MODULE.Path, "mkdir")
+    @patch.object(MODULE.subprocess, "run")
+    def test_failed_copy_uses_devenv2_order_without_loading_an_archive(self, run, _mkdir, _machine, _which):
+        run.return_value.returncode = 23
+        for engine in ("docker", "podman"):
+            with self.subTest(engine=engine):
+                run.reset_mock()
+                self.assertEqual(MODULE.main(["build", engine]), 23)
+                run.assert_called_once()
+                args = run.call_args.args[0]
+                self.assertEqual(args[3:6], ["container", "copy", "--registry"])
+                self.assertTrue(args[6].startswith("docker-archive:" if engine == "docker" else "oci-archive:"))
+
     @patch.object(MODULE.shutil, "which", return_value=None)
     def test_missing_engine_fails_before_running(self, _which):
         with self.assertRaises(SystemExit) as result:
