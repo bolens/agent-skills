@@ -24,7 +24,10 @@ Use a regular clone when the container cannot see a linked worktree's external
 Git directory. Keep credentials in your local development environment.
 
 `bash .devcontainer/smoke.sh` checks the writable Git root, required tool presence
-including Make, and Node 26. Failures identify the missing prerequisite. It
+including Make, and Node 26. It reports the Node, system Python, UV and Ruff
+versions from the built image. The pinned Zizmor tool installation uses the
+image's `/usr/bin/python3`, so UV's default downloadable Python does not choose
+its interpreter. Failures identify the missing prerequisite. It
 does not run the application test suite. No application starts automatically.
 Image references include immutable digests. Dependabot monitors the Dockerfiles
 where supported. Distribution packages resolve from the configured Debian

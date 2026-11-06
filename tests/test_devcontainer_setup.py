@@ -16,6 +16,8 @@ TOOLS = (
     "node",
     "make",
     "shellcheck",
+    "uv",
+    "uvx",
     "ruff",
     "actionlint",
     "hadolint",
