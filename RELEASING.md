@@ -58,8 +58,11 @@ when reviewers are available and permitted.
 
 The Woodpecker `portable` pipeline runs the portable gate and client-loader
 checks. The `validate` job in
-[`.github/workflows/ci.yml`](.github/workflows/ci.yml) also runs the portable gate
-and requires the selected Archify jobs to succeed. The separate
+[`.github/workflows/ci.yml`](.github/workflows/ci.yml) requires the exact trusted
+native result on PRs, main pushes, and manual main runs, and requires the selected
+Archify and native macOS jobs to succeed. Its weekly schedule still executes
+the portable gate on GitHub to retain periodic environment coverage until a
+reviewed native schedule replaces it. The separate
 Source lint workflow runs language lint and workflow-security checks. Verify
 current host protection settings as well as the committed workflows; YAML alone
 does not establish which status names the host requires.

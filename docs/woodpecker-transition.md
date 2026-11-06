@@ -6,9 +6,8 @@ changing installed skill links or granting PR code secrets or host access. Reuse
 macOS installation, selected Archify/browser suites, image-building, source lint,
 and workflow-security jobs in GitHub.
 
-Add and activate the native pipeline first. Require its exact-head PR result and
-all applicable GitHub checks before squash merge, then verify genuine main.
-After both succeed, remove the duplicate portable workload from GitHub while
+The native pipeline has passed its PR and genuine-main acceptance. GitHub’s
+stable `validate` job joins the exact source’s native result while
 preserving its dependency join for selected browser/platform jobs. Native
 failures block delivery; there is no fallback that turns them into a pass.
 
@@ -20,3 +19,11 @@ data migration in this change.
 The local portable gate and workflow lint are submission evidence. Native
 pinned-image execution and any final GitHub workload retirement remain delivery
 gates, and must be recorded from actual host results.
+
+The handoff checks the latest combined status and exact matching raw status ID,
+repository, SHA, event context, publisher and pipeline URL. A newer pending result
+cannot reuse an older success. Missing/pending statuses wait within a bounded
+deadline; failure/error statuses fail immediately. Manual GitHub runs must use
+main and its genuine native push result. Archify/macOS prerequisites still fail
+the aggregate before waiting on native status. The weekly GitHub schedule retains
+its existing portable workload until equivalent native periodic coverage exists.
