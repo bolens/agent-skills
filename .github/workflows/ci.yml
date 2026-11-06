@@ -67,6 +67,9 @@ jobs:
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         # Keep nested browser setup apt calls independent of unrelated vendor feeds.
         run: |
+          test "$RUNNER_ENVIRONMENT" = github-hosted
+          python3 -m unittest discover -s tests -p 'test_browser_package_mirror.py' -v
+          sudo python3 scripts/configure-browser-package-mirror.py --apply-github-hosted
           test -s /etc/apt/sources.list.d/ubuntu.sources
           printf '%s\n' 'Dir::Etc::sourcelist "/etc/apt/sources.list.d/ubuntu.sources";' 'Dir::Etc::sourceparts "-";' |
             sudo tee /etc/apt/apt.conf.d/99-ci-ubuntu-sources >/dev/null
@@ -108,6 +111,9 @@ jobs:
       - name: Use Ubuntu package sources
         # Keep nested browser setup apt calls independent of unrelated vendor feeds.
         run: |
+          test "$RUNNER_ENVIRONMENT" = github-hosted
+          python3 -m unittest discover -s tests -p 'test_browser_package_mirror.py' -v
+          sudo python3 scripts/configure-browser-package-mirror.py --apply-github-hosted
           test -s /etc/apt/sources.list.d/ubuntu.sources
           printf '%s\n' 'Dir::Etc::sourcelist "/etc/apt/sources.list.d/ubuntu.sources";' 'Dir::Etc::sourceparts "-";' |
             sudo tee /etc/apt/apt.conf.d/99-ci-ubuntu-sources >/dev/null
@@ -116,6 +122,7 @@ jobs:
         with:
           install-dependencies: true
       - name: Install WebM decoder
+        timeout-minutes: 5
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y ffmpeg
       - name: Run serialized browser integration
         env:
@@ -177,6 +184,9 @@ jobs:
         if: github.event_name == 'schedule'
         # Keep nested browser setup apt calls independent of unrelated vendor feeds.
         run: |
+          test "$RUNNER_ENVIRONMENT" = github-hosted
+          python3 -m unittest discover -s tests -p 'test_browser_package_mirror.py' -v
+          sudo python3 scripts/configure-browser-package-mirror.py --apply-github-hosted
           test -s /etc/apt/sources.list.d/ubuntu.sources
           printf '%s\n' 'Dir::Etc::sourcelist "/etc/apt/sources.list.d/ubuntu.sources";' 'Dir::Etc::sourceparts "-";' |
             sudo tee /etc/apt/apt.conf.d/99-ci-ubuntu-sources >/dev/null
