@@ -204,3 +204,19 @@ commands between local development and CI without forcing unnecessary migrations
 
 See [third-party notices](THIRD_PARTY_NOTICES.md) for the project license scope,
 retained upstream notices, and dependency or asset exceptions.
+
+## Woodpecker validation
+
+[The portable pipeline](.woodpecker/portable.yml) runs the same client-loader
+checks and `make check-fast test portability` gate as hosted CI on pull requests
+and main pushes. It uses pinned official Node 22 and clone images. Distribution
+packages resolve from Debian's configured repositories; the Python metadata
+parser version comes from `requirements-dev.txt` in a disposable virtualenv.
+There are no installation-link changes, publication secrets, privileged
+containers, or host mounts.
+
+GitHub retains the native macOS installation, Archify browser/WebM integration,
+Nix/devcontainer image, source lint, and workflow-security lanes. Keep its
+duplicate portable gate until actual native PR and main validation pass. Review
+Woodpecker image digests monthly and on security releases; Dependabot's existing
+Dockerfile monitoring does not update YAML image references.
