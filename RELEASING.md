@@ -56,12 +56,14 @@ and resolve actionable feedback, including review nits. For substantive changes,
 use the [independent review workflow](skills/code-review/references/independent-reviews.md)
 when reviewers are available and permitted.
 
-The `validate` job in [`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs
-the portable gate and requires the selected Archify jobs to succeed. The separate
+The Woodpecker `portable` pipeline runs the portable gate and client-loader
+checks. The `validate` job in
+[`.github/workflows/ci.yml`](.github/workflows/ci.yml) also runs the portable gate
+and requires the selected Archify jobs to succeed. The separate
 Source lint workflow runs language lint and workflow-security checks. Verify
 current host protection settings as well as the committed workflows; YAML alone
 does not establish which status names the host requires.
-Require applicable checks on the current PR head. New commits or a base refresh
+Require applicable GitHub and Woodpecker checks on the current PR head. New commits or a base refresh
 need checks for that updated state. A green run on an older head or a queued
 merge is not completion evidence.
 
