@@ -161,9 +161,10 @@ availability or section anchors. These checks do not prove every skill's runtime
 behavior; validate changed workflows with relevant task evidence too.
 
 `make check` does not include `make test-archify`, Source lint, actionlint, or
-zizmor. [CI](.github/workflows/ci.yml) runs the portable gate and selects Archify
-jobs for relevant PR paths, including provenance changes; main and scheduled CI
-run them in full. [Source lint](.github/workflows/source-lint.yml) separately calls
+zizmor. [Woodpecker](.woodpecker/portable.yml) runs the portable gate.
+[GitHub CI](.github/workflows/ci.yml) selects Archify jobs for relevant PR paths,
+including provenance changes; main and scheduled CI run those jobs in full. Its
+weekly schedule also retains the portable environment check. [Source lint](.github/workflows/source-lint.yml) separately calls
 shared source and workflow-security checks. See [RELEASING.md](RELEASING.md) for
 the complete merge gate and local reproduction requirements.
 
@@ -216,7 +217,9 @@ There are no installation-link changes, publication secrets, privileged
 containers, or host mounts.
 
 GitHub retains the native macOS installation, Archify browser/WebM integration,
-Nix/devcontainer image, source lint, and workflow-security lanes. Keep its
-duplicate portable gate until actual native PR and main validation pass. Review
+Nix/devcontainer image, source lint, and workflow-security lanes. Its weekly
+schedule retains the portable environment check. For PR/main changes, the stable
+`validate` gate joins the exact native result, binding repository, revision, event
+context, publisher and pipeline. Review
 Woodpecker image digests monthly and on security releases; Dependabot's existing
 Dockerfile monitoring does not update YAML image references.

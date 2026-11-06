@@ -54,8 +54,8 @@ def main(argv=None):
         archive.parent.mkdir(parents=True, exist_ok=True)
         transport = "docker-archive" if options.engine == "docker" else "oci-archive"
         result = subprocess.run([
-            "devenv", "--system", f"{machine}-linux", "container",
-            "--registry", f"{transport}:{archive}:", "copy", "shell",
+            "devenv", "--system", f"{machine}-linux", "container", "copy",
+            "--registry", f"{transport}:{archive}:", "shell",
         ], cwd=root, check=False)
         if result.returncode:
             return result.returncode

@@ -20,7 +20,7 @@ class LicenseRetention(unittest.TestCase):
             "skills/archify/licenses/Apache-2.0.txt": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
             "skills/archify/licenses/ajv-LICENSE": "a05350a88e318e4f5f2c2a1ff1e2e88daa4dd38e6e78b71cccae422bdc762cc3",
             "skills/archify/licenses/javascript-LICENSE": "0d3f7c086c6b6cf3ea4aac714e9aa3e1fb02e355ce35bd21c56acf8d04390885",
-            "skills/archify/licenses/simple-icons-DISCLAIMER.md": "5757a1f28eff735a8b5e7425478f367812d71e974530f5bedd01219480965f4a",
+            "skills/archify/licenses/simple-icons-DISCLAIMER.md": "f921095158b73e61e675ff99b327930fa95ad6f4cf667d414ffe8ae585205724",
             "skills/archify/licenses/simple-icons-LICENSE.md": "9046848b63a5c92bff14e4accca80bd987e0623b74adf9226ce5198d312b79d5",
         }
         for relative, expected in copies.items():

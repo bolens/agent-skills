@@ -15,6 +15,20 @@ The shell supplies Python, Node.js, Bash, Git, Make, ShellCheck, jq, ripgrep, an
 
 Commit `devenv.lock` with deliberate input updates. Local state and `devenv.local.nix` / `devenv.local.yaml` overrides are ignored. Existing Nix cache settings are used without changing daemon trust.
 
+The CLI and module inputs use devenv 2.4.0. Install the same immutable CLI as CI:
+
+```sh
+nix --accept-flake-config profile add github:cachix/devenv/b904dcb51fe48c30db250038241507f60752f222
+```
+
+The flake-config flag applies only to this pinned CLI installation. It does not
+change daemon trust or apply blanket acceptance to repository inputs. Upgrade the
+CLI, `devenv.yaml`, and `devenv.lock` together; the Nix container exporter is pinned
+to its reviewed compatible revision. Update only the intended inputs, then prove
+`devenv test` on Linux/macOS and the generated Docker image with its nonroot user.
+The image helper uses devenv 2’s `container copy --registry` argument order. Revert
+the helper and all three pins together when returning to devenv 1.
+
 ## Docker and Podman
 
 Build and load the development image, then run a command with a local engine:

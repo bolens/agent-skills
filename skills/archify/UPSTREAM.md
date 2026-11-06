@@ -17,7 +17,7 @@ License source: [archify/LICENSE](https://github.com/tt-a1i/archify/blob/06dd052
 Preserve during imports: `licenses`
 
 Local changes to retain:
-- Keep the fast-uri security override at 3.1.6 or a later audited release.
+- Keep the fast-uri security override at 3.1.9 or a later audited release.
 - Preserve the original error as cause when preview directory watching fails.
 - Retain bundled dependency licenses, third-party attribution additions, and artifact/brand licensing guidance.
 - Keep notice mutation tests independent of the pinned Simple Icons version.
