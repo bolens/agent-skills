@@ -37,13 +37,20 @@ jobs:
               - 'PROVENANCE.json'
               - 'Makefile'
               - '.github/workflows/ci.yml'
+              - '.woodpecker/archify.yml'
+              - 'scripts/wait-for-woodpecker.py'
+              - 'tests/test_woodpecker_handoff.py'
+              - 'tests/test_woodpecker_archify_selection.py'
 
   archify:
     name: Archify tests (${{ matrix.shard }}/2)
     needs: changes
     if: needs.changes.outputs.archify == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: ${{ (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && 30 || 60 }}
+    permissions:
+      contents: read
+      statuses: read
     strategy:
       fail-fast: false
       matrix:
@@ -53,23 +60,37 @@ jobs:
         with:
           persist-credentials: false
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         with:
           node-version: '22'
       - name: Use Ubuntu package sources
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         # Keep nested browser setup apt calls independent of unrelated vendor feeds.
         run: |
           test -s /etc/apt/sources.list.d/ubuntu.sources
           printf '%s\n' 'Dir::Etc::sourcelist "/etc/apt/sources.list.d/ubuntu.sources";' 'Dir::Etc::sourceparts "-";' |
             sudo tee /etc/apt/apt.conf.d/99-ci-ubuntu-sources >/dev/null
       - uses: browser-actions/setup-chrome@48ad923757ca74d66703209fe939badbdf80f2f4 # v2
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         id: chrome
         with:
           install-dependencies: true
       - name: Test local fork in its audited upstream workspace
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         env:
           ARCHIFY_CHROME: ${{ steps.chrome.outputs.chrome-path }}
           ARCHIFY_CHROME_NO_SANDBOX: '1'
         run: make test-archify ARCHIFY_TEST_ARGS=--shard=${{ matrix.shard }}/2
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        if: github.event_name == 'pull_request' || github.event_name == 'push'
+        with:
+          python-version: '3.13'
+      - name: Require exact-revision full native Archify harness
+        if: github.event_name == 'pull_request' || github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TARGET_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: python3 scripts/wait-for-woodpecker.py --workflow archify
 
   archify-browser:
     name: Archify WebM and site integration
