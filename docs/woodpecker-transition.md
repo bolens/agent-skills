@@ -65,3 +65,19 @@ Both actors now use the existing bounded two-second child-check watchdog and the
 case has the existing five-second parent deadline. The explicit ordering barriers,
 exactly-one-GET and successful-update assertions remain intact. Cache tests,
 production timeout behavior and its separate tests are unchanged.
+
+The retained hosted WebM/site job on merged source `b299925` was cancelled after
+its 30-minute job deadline: Ubuntu's Azure mirror took 29m8s to fetch 50.9 MB
+of FFmpeg packages (29.1 kB/s), leaving only 30 seconds for actual integration
+tests. This did not establish a test assertion failure. The exact hosted image
+was Ubuntu 24.04 `20261101.360.1`; its [provider configuration](https://github.com/actions/runner-images/blob/ubuntu24/20261101.360/images/ubuntu/scripts/build/configure-apt-sources.sh)
+uses an Azure-first `mirror+file:/etc/apt/apt-mirrors.txt` source.
+
+The bounded correction selects the official HTTPS Ubuntu archive for that exact
+provider token or known archive URI, preserving security sources, suites and
+signing policy. It applies only in disposable GitHub-hosted Ubuntu jobs, before
+the existing vendor-feed isolation. FFmpeg installation has its own five-minute
+failure bound; the 30-minute job limit and every browser/WebM/site assertion are
+unchanged. Manual and scheduled browser/client-loader paths remain selected as
+before. A successful old-source retry is not substituted for current-source
+validation of this correction.
