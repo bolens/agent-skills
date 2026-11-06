@@ -9,5 +9,13 @@ inputs:
     inputs:
       nixpkgs:
         follows: nixpkgs
+  # Preserve the old lock's hook inputs and compatibility alias across the CLI upgrade.
+  git-hooks:
+    url: github:cachix/git-hooks.nix
+    inputs:
+      nixpkgs:
+        follows: nixpkgs
+  pre-commit-hooks:
+    follows: git-hooks
   mk-shell-bin:
     url: github:rrbutani/nix-mk-shell-bin
