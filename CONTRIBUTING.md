@@ -90,8 +90,9 @@ and report that installation links belong to another checkout. Do not repoint
 them to make validation pass. Report a missing ShellCheck as a coverage gap,
 not a completed shell lint pass.
 
-The separate Source lint workflow also runs shared language linting, actionlint,
-and zizmor. These are not included in the Make targets above. Follow
+The native repository lane and retained Source lint workflow also run shared
+language linting, actionlint and zizmor. Reproduce with
+`bash scripts/ci/check-policy.sh`; these are not included in the Make targets above. Follow
 [the release guide](RELEASING.md#source-lint) for the pinned tooling and reproduction
 instructions, and [Archify test coverage](RELEASING.md#archify-test-coverage) when
 its code, runner, provenance, or selected CI paths change.
