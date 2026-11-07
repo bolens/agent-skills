@@ -6,6 +6,28 @@ changing installed skill links or granting PR code secrets or host access. Reuse
 macOS installation, serialized Archify WebM/site suites, image-building, source lint,
 and workflow-security jobs in GitHub.
 
+## CI organization
+
+The [shared purpose phases](https://github.com/bolens/.github/blob/main/docs/woodpecker-transition.md#ci-organization)
+index the existing commands below. Native portable CI runs
+`make test-client-loaders` followed by `make check-fast test portability`.
+Isolated local checkouts use that portable Make gate; the client-loader command
+retains its opt-in network boundary. Component rows expose the same existing
+targets.
+
+| Phase | Check group / canonical local command | Native workflow / step | Retained hosted owner / boundary |
+| --- | --- | --- | --- |
+| `validate` | Metadata, provenance, managed files and syntax: `make check-fast`; portability: `make portability` | `portable` / `verify` | PR, main push and native manual gate; installed links are untouched |
+| `test` | Portable contracts: `make test`; client loaders: `make test-client-loaders` | `portable` / `verify` | Weekly/manual GitHub portable checks retain fresh execution |
+| `test` | Full Archify harness: `make test-archify` with Node 22 and `ARCHIFY_CHROME` set to a headless Chrome executable | `archify` / `verify`, after `portable` | Selected PR paths, every main push and native manual run; hosted shards retain their scheduled/manual execution |
+| `test` | WebM/site integration: `make test-archify ARCHIFY_TEST_ARGS=--browser` | Separate from the native ordinary harness | Serialized hosted browser job; macOS and actual Docker/editor checks remain distinct |
+
+Source lint, workflow security and the hosted `validate` dependency join keep
+their current names and selectors. `make check` additionally verifies installed
+links from the canonical checkout; isolated worktrees use the portable gate.
+Reviewed `main` delivers the collection, while installation or link changes
+require their own authorized operation.
+
 The portable native pipeline has passed its PR and genuine-main acceptance. GitHub’s
 stable `validate` job joins the exact source’s native result while
 preserving its dependency join for selected browser/platform jobs. Native
@@ -28,7 +50,11 @@ main and its genuine native push result. Archify/macOS prerequisites still fail
 the aggregate before waiting on native status. The weekly GitHub schedule retains
 its existing portable workload until equivalent native periodic coverage exists.
 
-## Full Archify harness proposal
+## Historical Archify rollout
+
+The following records earlier rollout decisions and evidence. The index above
+maps current tracked execution; acceptance still uses the current source's
+actual native and retained hosted results.
 
 The second native workflow uses the same pinned Node 22 image as portable CI,
 distribution Chromium, and the unchanged `make test-archify` command. It follows
