@@ -63,7 +63,8 @@ native result on PRs, main pushes, and manual main runs, and requires the select
 Archify and native macOS jobs to succeed. Its weekly schedule still executes
 the portable gate on GitHub to retain periodic environment coverage until a
 reviewed native schedule replaces it. The separate
-Source lint workflow runs language lint and workflow-security checks. Verify
+native `repository` lane runs the same language lint and workflow-security policy
+as the retained hosted Source lint workflow. Verify
 current host protection settings as well as the committed workflows; YAML alone
 does not establish which status names the host requires.
 Require applicable GitHub and Woodpecker checks on the current PR head. New commits or a base refresh
@@ -129,8 +130,12 @@ those through the affected system's own workflow.
 The [Source lint workflow](.github/workflows/source-lint.yml) checks Python and
 JavaScript files selected by [`.github/source-lint.json`](.github/source-lint.json)
 on pull requests, pushes to `main`, and manual dispatch. Its second reusable job
-runs actionlint and enables the zizmor security audit. Existing native checks
-remain part of the merge gate; `make check` does not run these shared tools.
+runs actionlint and enables the zizmor security audit. The native `repository`
+lane calls `bash scripts/ci/check-policy.sh` for the same policy, using the exact
+SourceLint ref below and the matching hosted actionlint/zizmor versions.
+`make check` does not run these shared tools. See the
+[CI index](docs/woodpecker-transition.md#ci-organization) for prerequisites and
+the retained platform, browser and publication boundaries.
 Use the [shared local reproduction instructions](https://github.com/bolens/.github/blob/96705dc8d8147b92eee283dec1f43e91bd30c4e9/docs/source-lint.md)
 with the same tooling revision pinned in
 [the workflow](.github/workflows/source-lint.yml). Review exclusions when adding
