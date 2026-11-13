@@ -3,8 +3,9 @@
 Move the portable validation workload to an unprivileged Linux container without
 changing installed skill links or granting PR code secrets or host access. Reuse
 `make test-client-loaders` and `make check-fast test portability`; retain the
-macOS installation, serialized Archify WebM/site suites, image-building, source lint,
-and workflow-security jobs in GitHub.
+macOS installation, serialized Archify WebM/site suites and image-building in
+GitHub. The native repository lane also runs the retained hosted source and
+workflow-security policy; duplicate hosted policy checks retain scheduled/manual execution after verified cutover.
 
 ## CI organization
 
@@ -18,15 +19,29 @@ targets.
 | Phase | Check group / canonical local command | Native workflow / step | Retained hosted owner / boundary |
 | --- | --- | --- | --- |
 | `validate` | Metadata, provenance, managed files and syntax: `make check-fast`; portability: `make portability` | `portable` / `verify` | PR, main push and native manual gate; installed links are untouched |
+| `validate` | Source and workflow policy: `bash scripts/ci/check-policy.sh` | `repository` / `source-and-workflow-policy` | PR, main push and native manual; exact shared SourceLint selectors, actionlint and offline zizmor; hosted policy checks retain scheduled/manual execution after verified native cutover |
+| `validate` | Managed Spec Kit integrity: `bash scripts/ci/check-spec-kit.sh` (included in repository policy) | Existing policy step | Immutable C161 validator; hosted PR/push validation retained during native qualification; updater remains scheduled/manual on GitHub |
 | `test` | Portable contracts: `make test`; client loaders: `make test-client-loaders` | `portable` / `verify` | Weekly/manual GitHub portable checks retain fresh execution |
 | `test` | Full Archify harness: `make test-archify` with Node 22 and `ARCHIFY_CHROME` set to a headless Chrome executable | `archify` / `verify`, after `portable` | Selected PR paths, every main push and native manual run; hosted shards retain their scheduled/manual execution |
 | `test` | WebM/site integration: `make test-archify ARCHIFY_TEST_ARGS=--browser` | Separate from the native ordinary harness | Serialized hosted browser job; macOS and actual Docker/editor checks remain distinct |
 
-Source lint, workflow security and the hosted `validate` dependency join keep
-their current names and selectors. `make check` additionally verifies installed
+Hosted Source lint/workflow-security jobs retain scheduled/manual execution; the
+`validate` dependency join keeps its current name and selectors. Native repository policy uses shared tooling
+`96705dc8d8147b92eee283dec1f43e91bd30c4e9`, Node 24, Ruff 0.15.20,
+checksum-verified actionlint 1.7.12 and offline zizmor 1.29.0 at the hosted
+medium severity/confidence thresholds. Its complete selectors retain the
+Archify vendor/generated exclusions. `make check` additionally verifies installed
 links from the canonical checkout; isolated worktrees use the portable gate.
 Reviewed `main` delivers the collection, while installation or link changes
 require their own authorized operation.
+
+The helper needs Node 24, Python 3 with venv/pip, Git, ShellCheck, curl, tar and
+sha256sum. It creates disposable tooling/dependency directories and downloads
+immutable tooling and locked npm dependencies; it does not install host packages.
+Container-only apt commands in the workflow supply those prerequisites.
+The repository lane passed exact-head PR and genuine-main qualification before
+hosted policy retirement. Image and direct tool pins need reviewed updates;
+GitHub Actions dependency automation does not update these Woodpecker references.
 
 The portable native pipeline has passed its PR and genuine-main acceptance. GitHub’s
 stable `validate` job joins the exact source’s native result while
