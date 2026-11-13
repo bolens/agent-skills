@@ -67,6 +67,10 @@ native `repository` lane runs the same language lint and workflow-security polic
 as the disabled hosted Source lint workflow retained in source for rollback. Verify
 current host protection settings as well as the committed workflows; YAML alone
 does not establish which status names the host requires.
+The native-status join retries transient HTTPS disconnects within its existing
+deadline. Each retry reads a fresh combined status and history pair. Native
+failures, invalid identities, authentication errors and malformed responses still
+fail the gate.
 Require applicable GitHub and Woodpecker checks on the current PR head. New commits or a base refresh
 need checks for that updated state. A green run on an older head or a queued
 merge is not completion evidence.
