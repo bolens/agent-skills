@@ -64,7 +64,7 @@ Archify and native macOS jobs to succeed. Its weekly schedule still executes
 the portable gate on GitHub to retain periodic environment coverage until a
 reviewed native schedule replaces it. The separate
 native `repository` lane runs the same language lint and workflow-security policy
-as the retained hosted Source lint workflow. Verify
+as the disabled hosted Source lint workflow retained in source for rollback. Verify
 current host protection settings as well as the committed workflows; YAML alone
 does not establish which status names the host requires.
 Require applicable GitHub and Woodpecker checks on the current PR head. New commits or a base refresh
@@ -127,18 +127,17 @@ those through the affected system's own workflow.
 
 ## Source lint
 
-The [Source lint workflow](.github/workflows/source-lint.yml) checks Python and
-JavaScript files selected by [`.github/source-lint.json`](.github/source-lint.json)
-on pull requests, pushes to `main`, and manual dispatch. Its second reusable job
-runs actionlint and enables the zizmor security audit. The native `repository`
-lane calls `bash scripts/ci/check-policy.sh` for the same policy, using the exact
+The disabled [Source lint workflow](.github/workflows/source-lint.yml) remains
+tracked for rollback. The native `repository` lane checks Python and JavaScript
+files selected by [`.github/source-lint.json`](.github/source-lint.json), then
+runs actionlint and the zizmor security audit. It calls `bash scripts/ci/check-policy.sh` for the same policy, using the exact
 SourceLint ref below and the matching hosted actionlint/zizmor versions.
 `make check` does not run these shared tools. See the
 [CI index](docs/woodpecker-transition.md#ci-organization) for prerequisites and
 the retained platform, browser and publication boundaries.
 Use the [shared local reproduction instructions](https://github.com/bolens/.github/blob/96705dc8d8147b92eee283dec1f43e91bd30c4e9/docs/source-lint.md)
 with the same tooling revision pinned in
-[the workflow](.github/workflows/source-lint.yml). Review exclusions when adding
+[the native helper](scripts/ci/check-policy.sh). Review exclusions when adding
 source files; generated and imported files retain their native validation.
 Require the applicable source and workflow-security checks to pass on the current
 PR head before merging.
@@ -175,3 +174,22 @@ and one intentionally requires a Node major other than the canonical 22. Without
 Chrome, a local run instead skips 27 tests; that incomplete browser result cannot
 qualify the native lane. Record actual native workflow/child results, Chromium
 version, and skip reasons before retiring hosted runtime work.
+
+## Managed integration validation
+
+`bash scripts/ci/check-spec-kit.sh` verifies the current Spec Kit manifests and
+managed files without updating them. The existing native repository-policy
+command, `bash scripts/ci/check-policy.sh`, includes this check in its existing
+container and status context. It downloads only the public validator at
+`bolens/.github@c161a6757130ea687def9eb1e81c6a4190488f07`, verifies its
+SHA-256, limits the download to 64 KiB and 60 seconds, and bounds validation to
+four minutes. Local reproduction needs Bash and Python 3 on Linux/macOS with
+HTTPS access. It uses temporary files and requires no secrets or installed skill links.
+
+Source/workflow policy now runs in Woodpecker. Duplicate GitHub policy workflows
+are disabled, including manual and scheduled execution, after verified cutover.
+Their tracked source remains available for rollback. The mixed
+Spec Kit workflow still runs its hosted read-only PR/push validation while this
+native integration is qualified on actual PR and genuine-main revisions. Its
+scheduled/manual updater remains on GitHub. Preserve all current check names and
+publication/platform boundaries during that qualification.

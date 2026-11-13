@@ -90,7 +90,7 @@ and report that installation links belong to another checkout. Do not repoint
 them to make validation pass. Report a missing ShellCheck as a coverage gap,
 not a completed shell lint pass.
 
-The native repository lane and retained Source lint workflow also run shared
+The native repository lane runs shared
 language linting, actionlint and zizmor. Reproduce with
 `bash scripts/ci/check-policy.sh`; these are not included in the Make targets above. Follow
 [the release guide](RELEASING.md#source-lint) for the pinned tooling and reproduction
