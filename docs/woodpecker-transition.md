@@ -21,7 +21,7 @@ targets.
 | --- | --- | --- | --- |
 | `validate` | Metadata, provenance, managed files and syntax: `make check-fast`; portability: `make portability` | `portable` / `verify` | PR, main push and native manual gate; installed links are untouched |
 | `validate` | Source and workflow policy: `bash scripts/ci/check-policy.sh` | `repository` / `source-and-workflow-policy` | PR, main push and native manual. Exact shared SourceLint selectors, actionlint and offline zizmor. Duplicate hosted policy workflows are disabled after verified native cutover |
-| `validate` | Managed Spec Kit integrity: `bash scripts/ci/check-spec-kit.sh` (included in repository policy) | Existing policy step | Immutable C161 validator. Hosted PR/push validation retained during native qualification. Updater remains scheduled/manual on GitHub |
+| `validate` | Managed Spec Kit integrity: `bash scripts/ci/check-spec-kit.sh` (included in repository policy) | Existing policy step | Immutable C161 validator. Automatic PR/main validation is native. Hosted manual validation and scheduled/manual updater stay active |
 | `test` | Portable contracts: `make test`; client loaders: `make test-client-loaders` | `portable` / `verify` | Weekly/manual GitHub portable checks retain fresh execution |
 | `test` | Full Archify harness: `make test-archify` with Node 22 and `ARCHIFY_CHROME` set to a headless Chrome executable | `archify` / `verify`, after `portable` | Selected PR paths, every main push and native manual run; hosted shards retain their scheduled/manual execution |
 | `test` | WebM/site integration: `make test-archify ARCHIFY_TEST_ARGS=--browser` | Separate from the native ordinary harness | Serialized hosted browser job; macOS and actual Docker/editor checks remain distinct |

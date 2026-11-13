@@ -189,7 +189,13 @@ HTTPS access. It uses temporary files and requires no secrets or installed skill
 Source/workflow policy now runs in Woodpecker. Duplicate GitHub policy workflows
 are disabled, including manual and scheduled execution, after verified cutover.
 Their tracked source remains available for rollback. The mixed
-Spec Kit workflow still runs its hosted read-only PR/push validation while this
-native integration is qualified on actual PR and genuine-main revisions. Its
-scheduled/manual updater remains on GitHub. Preserve all current check names and
-publication/platform boundaries during that qualification.
+Spec Kit workflow stays active for manual read-only validation and its
+scheduled/manual updater. Automatic PR/push validation is covered by the native
+repository-policy gate after exact-head PR and genuine-main acceptance.
+
+The repository maintainer reviews the validator pin during monthly dependency
+maintenance and whenever a shared-validator security fix is published. Review
+the immutable commit and SHA-256 together and require actual native validation
+on the updated source. Existing dependency automation does not monitor this
+embedded supplier pin. Preserve the current check names and publication/platform
+boundaries.

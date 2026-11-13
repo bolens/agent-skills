@@ -166,8 +166,11 @@ zizmor. Woodpecker runs the [portable gate](.woodpecker/portable.yml) and select
 [GitHub CI](.github/workflows/ci.yml) selects Archify jobs for relevant PR paths,
 including provenance changes; automated checks join the full native harness,
 while manual and scheduled CI retain the hosted runtime shards. Its
-weekly schedule also retains the portable environment check. [Source lint](.github/workflows/source-lint.yml) separately calls
-shared source and workflow-security checks. See [RELEASING.md](RELEASING.md) for
+weekly schedule also retains the portable environment check. The native
+[repository lane](.woodpecker/repository.yml) runs shared source, workflow-security
+and managed Spec Kit checks through `bash scripts/ci/check-policy.sh`. The
+duplicate hosted [Source lint](.github/workflows/source-lint.yml) workflow is
+disabled and remains tracked for rollback. See [RELEASING.md](RELEASING.md) for
 the complete merge gate and local reproduction requirements.
 
 Read [CONTRIBUTING.md](CONTRIBUTING.md) before editing and
