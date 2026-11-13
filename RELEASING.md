@@ -64,7 +64,7 @@ Archify and native macOS jobs to succeed. Its weekly schedule still executes
 the portable gate on GitHub to retain periodic environment coverage until a
 reviewed native schedule replaces it. The separate
 native `repository` lane runs the same language lint and workflow-security policy
-as the scheduled/manual hosted Source lint workflow. Verify
+as the disabled hosted Source lint workflow retained in source for rollback. Verify
 current host protection settings as well as the committed workflows; YAML alone
 does not establish which status names the host requires.
 Require applicable GitHub and Woodpecker checks on the current PR head. New commits or a base refresh
@@ -127,11 +127,10 @@ those through the affected system's own workflow.
 
 ## Source lint
 
-The [Source lint workflow](.github/workflows/source-lint.yml) checks Python and
-JavaScript files selected by [`.github/source-lint.json`](.github/source-lint.json)
-on scheduled/manual runs. Its second reusable job
-runs actionlint and enables the zizmor security audit. The native `repository`
-lane calls `bash scripts/ci/check-policy.sh` for the same policy, using the exact
+The disabled [Source lint workflow](.github/workflows/source-lint.yml) remains
+tracked for rollback. The native `repository` lane checks Python and JavaScript
+files selected by [`.github/source-lint.json`](.github/source-lint.json), then
+runs actionlint and the zizmor security audit. It calls `bash scripts/ci/check-policy.sh` for the same policy, using the exact
 SourceLint ref below and the matching hosted actionlint/zizmor versions.
 `make check` does not run these shared tools. See the
 [CI index](docs/woodpecker-transition.md#ci-organization) for prerequisites and
@@ -187,8 +186,9 @@ SHA-256, limits the download to 64 KiB and 60 seconds, and bounds validation to
 four minutes. Local reproduction needs Bash and Python 3 on Linux/macOS with
 HTTPS access. It uses temporary files and requires no secrets or installed skill links.
 
-Source/workflow policy now runs in Woodpecker; duplicate GitHub policy workflows
-retain scheduled/manual execution after their verified cutover. The mixed
+Source/workflow policy now runs in Woodpecker. Duplicate GitHub policy workflows
+are disabled, including manual and scheduled execution, after verified cutover.
+Their tracked source remains available for rollback. The mixed
 Spec Kit workflow still runs its hosted read-only PR/push validation while this
 native integration is qualified on actual PR and genuine-main revisions. Its
 scheduled/manual updater remains on GitHub. Preserve all current check names and
