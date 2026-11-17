@@ -1,6 +1,6 @@
 ---
 name: animation-assets
-description: Integrate, diagnose, and verify authored Lottie JSON, dotLottie, and Rive animations in web interfaces, including player lifecycle, state-machine wiring, asset handoff, accessibility, and loading performance. Use for Lottie/Bodymovin, .lottie, or .riv work, not ordinary DOM animation, static SVG editing, or video production.
+description: Integrate or debug Lottie, dotLottie, and Rive assets in web apps, including playback, state machines, and export compatibility.
 ---
 
 # Animation assets

@@ -1,6 +1,6 @@
 ---
 name: svg-design
-description: Create, refine, and integrate code-native SVG icons, symbols, sprites, logos, and illustrations with consistent geometry, accessible semantics, theming, and safe optimization. Use for static SVG drawing, icon families, SVG cleanup, or vector integration. Use svg-animation for motion and archify for technical architecture diagrams.
+description: Create, edit, or integrate static SVG icons, logos, sprites, and illustrations. Use svg-animation for motion and archify for architecture diagrams.
 ---
 
 # SVG design

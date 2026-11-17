@@ -1,6 +1,6 @@
 ---
 name: web-standard
-description: Implement and verify standards-based web behavior, browser-native controls and APIs, progressive enhancement, cross-browser compatibility, semantic HTML, navigation, and HTTP correctness. Use for web standards or browser-native implementation requests and platform-behavior defects, not every visual edit, SEO audit, or animation task.
+description: Implement or debug browser-native behavior, including semantic HTML, controls, navigation, and platform compatibility. Use for standards-based web behavior.
 ---
 
 # Web standard
