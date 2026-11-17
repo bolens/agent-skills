@@ -6,6 +6,7 @@ from __future__ import annotations
 import ast
 import hashlib
 import json
+import os
 import re
 import subprocess
 from pathlib import Path
@@ -15,6 +16,7 @@ from skill_metadata import read_metadata
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS = ROOT / "skills"
 NAME = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+LOCAL_DIRECTORIES = {".git", ".venv", "venv", ".devenv", ".direnv", "__pycache__", "node_modules"}
 
 
 def fail(message: str) -> None:
@@ -82,13 +84,18 @@ unknown_upstreams = set(upstreams) - set(directories)
 if unknown_upstreams:
     fail(f"upstream records without skills: {', '.join(sorted(unknown_upstreams))}")
 
-for path in ROOT.rglob("*.py"):
-    if ".git" not in path.parts:
-        ast.parse(path.read_text(), filename=str(path))
-for path in ROOT.rglob("*.sh"):
-    subprocess.run(["bash", "-n", str(path)], check=True)
-for path in list(ROOT.rglob("*.mjs")) + list(ROOT.rglob("*.js")):
-    if "node_modules" not in path.parts:
-        subprocess.run(["node", "--check", str(path)], check=True, stdout=subprocess.DEVNULL)
+for directory, children, files in os.walk(ROOT):
+    children[:] = sorted(
+        name for name in children
+        if name not in LOCAL_DIRECTORIES and not name.startswith(".devenv.")
+    )
+    for filename in sorted(files):
+        path = Path(directory) / filename
+        if path.suffix == ".py":
+            ast.parse(path.read_text(), filename=str(path))
+        elif path.suffix == ".sh":
+            subprocess.run(["bash", "-n", str(path)], check=True)
+        elif path.suffix in {".mjs", ".js"}:
+            subprocess.run(["node", "--check", str(path)], check=True, stdout=subprocess.DEVNULL)
 
 print(f"validated {len(directories)} hard-forked skills")
