@@ -122,8 +122,9 @@ for conflicts before creating missing links or repointing existing symlinks.
 It refuses existing files or directories unless `--replace` is supplied.
 `--replace` deletes those copies, so preserve any independent edits first.
 Installation applies to the registered collection, not an individual skill.
-Preflight conflicts prevent writes. An I/O failure or concurrent change during
-application can still leave a partial install. It reports obsolete repository-owned
+Preflight conflicts prevent writes. If a replacement link cannot be created,
+the installer restores the original directory or reports where it was saved if
+restoration fails. An I/O failure or concurrent change can leave a partial install. It reports obsolete repository-owned
 links and conflicting catalog names without removing independent entries.
 Inspect reported problems and rerun `--check` after resolving them.
 

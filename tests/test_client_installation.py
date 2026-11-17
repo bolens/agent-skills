@@ -260,6 +260,55 @@ with patch.object(Path, 'symlink_to', side_effect=PermissionError('synthetic fil
         self.assertEqual(0, result.returncode, result.stdout)
         self.assertEqual(ROOT / 'skills/accessibility', target.resolve())
 
+    def test_failed_replacement_preserves_existing_file_or_directory(self):
+        home = self.home / '.pi/agent/skills'
+        home.mkdir(parents=True)
+        target = home / 'accessibility'
+        code = '''
+import importlib.util, sys
+from pathlib import Path
+from unittest.mock import patch
+sys.path.insert(0, str(Path(sys.argv[1]).parent))
+spec = importlib.util.spec_from_file_location('installer', sys.argv[1])
+module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(module)
+original = Path.rename
+def rename(self, *args, **kwargs):
+    if self.name == 'previous' and reject_restore:
+        raise PermissionError('synthetic restore denial')
+    return original(self, *args, **kwargs)
+reject_restore = sys.argv[2] == 'reject-restore'
+sys.argv = ['installer', '--apply', '--replace', '--client', 'pi', '--json']
+with patch.object(Path, 'symlink_to', side_effect=PermissionError('synthetic link denial')), patch.object(Path, 'rename', rename):
+    sys.exit(module.main())
+'''
+        target.write_text('original file')
+        result = subprocess.run([sys.executable, '-c', code, str(INSTALLER), 'restore'],
+                                env=self.env, capture_output=True, text=True, timeout=15)
+        self.assertEqual(1, result.returncode)
+        self.assertEqual('original file', target.read_text())
+        self.assertEqual([target], list(home.iterdir()))
+        target.unlink()
+
+        target.mkdir()
+        marker = target / 'notes.txt'
+        marker.write_text('original directory content')
+        result = subprocess.run([sys.executable, '-c', code, str(INSTALLER), 'restore'],
+                                env=self.env, capture_output=True, text=True, timeout=15)
+        self.assertEqual(1, result.returncode)
+        self.assertEqual('original directory content', marker.read_text())
+        self.assertEqual([target], list(home.iterdir()))
+
+        result = subprocess.run([sys.executable, '-c', code, str(INSTALLER), 'reject-restore'],
+                                env=self.env, capture_output=True, text=True, timeout=15)
+        self.assertEqual(1, result.returncode)
+        self.assertFalse(target.exists())
+        [staging] = list(home.iterdir())
+        backup = staging / 'previous'
+        report = json.loads(result.stdout)
+        self.assertIn(str(backup), report['issues'][0]['message'])
+        self.assertEqual('original directory content', (backup / 'notes.txt').read_text())
+
     def test_unsupported_filesystem_locking_fails_before_link_writes(self):
         code = '''
 import errno, importlib.util, sys
