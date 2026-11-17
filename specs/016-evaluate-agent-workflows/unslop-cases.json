@@ -1,0 +1,60 @@
+[
+  {
+    "id": "draft-update",
+    "expect_unslop": true,
+    "prompt": "Write a customer-facing status update, under 70 words, about today's delayed invoice emails. Some invoice emails sent from 09:10 to 09:40 UTC were delayed. All affected emails were delivered by 10:05 UTC. Payments and invoice amounts were unaffected. Give me just the update.",
+    "outcome": "Produce a publishable update with the three time boundaries and unaffected payments and invoice amounts, under 70 words."
+  },
+  {
+    "id": "copy-edit",
+    "expect_unslop": true,
+    "prompt": "Edit this README paragraph so it sounds like a human wrote it. Keep the exact command and warning, and return only the revised paragraph. 'In order to seamlessly leverage the power of local previews, simply execute `make preview`. It is important to note that this command does not publish changes.'",
+    "outcome": "Keep `make preview` and the no-publishing warning while removing filler. Return only revised prose."
+  },
+  {
+    "id": "draft-pr",
+    "expect_unslop": true,
+    "prompt": "Draft the body of a pull request from these facts. A failed profile save cleared the name field, forcing people to retype it. This change keeps the draft name when the save fails. The regression test simulates an HTTP 503 and checks that the typed name remains visible. Keep it under 85 words. Draft only.",
+    "outcome": "Write a PR body with problem, changed behavior and exact 503 test evidence, under 85 words. No remote action."
+  },
+  {
+    "id": "named-rewrite",
+    "expect_unslop": true,
+    "named": true,
+    "prompt": "Use $unslop to rewrite this single sentence for an operator runbook. Keep the exact command and condition. 'In order to ensure seamless operational readiness, simply leverage `systemctl --failed` after the reboot.'",
+    "outcome": "Return a direct sentence retaining `systemctl --failed` and the after-reboot condition."
+  },
+  {
+    "id": "code-review",
+    "expect_unslop": false,
+    "prompt": "Review this change read-only. A Go cache had Get return (nil, false) on expiry. This diff replaces that with return entry, false, but one caller ignores the second result and builds a response from entry when it is non-nil. Give an actionable finding based only on these facts.",
+    "outcome": "Identify stale data reaching the caller and a targeted fix. Do not edit or invent source locations."
+  },
+  {
+    "id": "ci-plan",
+    "expect_unslop": false,
+    "prompt": "Our GitHub PR rules require Validate. The job is currently skipped for documentation-only changes, then those PRs sit waiting for a check forever. Design how to change the workflow and verify the result. Keep the existing check identity and outline the change only.",
+    "outcome": "Keep the required check reporting on docs-only and code PRs, suggest a way to keep expensive work conditional, and describe verification."
+  },
+  {
+    "id": "asset-diagnosis",
+    "expect_unslop": false,
+    "prompt": "A .riv checkout success animation appears, but its complete input sometimes does nothing after the checkout component unmounts and mounts again. Give me a focused implementation and verification plan. Work from the symptom and list what you would verify in the asset and player.",
+    "outcome": "Inspect the Rive machine and input, address lifecycle or a stale instance, and plan real remount verification."
+  },
+  {
+    "id": "substantive-edit",
+    "expect_unslop": true,
+    "follow_up": true,
+    "prompt": "Give this rollout note a strict editorial pass for support engineers. Return two short paragraphs with concrete wording and remove the AI-sounding filler. Keep the command `make preview` and this exact warning sentence: This command does not publish changes. Draft: ‘We are excited to announce a seamless new workflow that will empower teammates to effortlessly check a receipt before publication. In order to leverage this workflow, simply run make preview from the repository root. It is important to note that preview still uses sample receipts and expires after 30 minutes. The actual publication process is staying exactly the same. This command does not publish changes.’",
+    "outcome": "Keep repository-root command, sample receipts, 30-minute expiry, unchanged publication flow, and exact warning. Remove filler and return two short paragraphs."
+  },
+  {
+    "id": "named-inspect",
+    "expect_unslop": true,
+    "named": true,
+    "follow_up": true,
+    "prompt": "Use $unslop and read its SKILL.md before editing. Rewrite this support sentence as plain prose. Return just the revised sentence and preserve the exact command and condition: ‘If the service is unhealthy, it is important to note that you should simply leverage `systemctl status api.service` to check its status.’",
+    "outcome": "Observe an entrypoint read, then return one direct sentence preserving the unhealthy condition and exact command."
+  }
+]

@@ -72,3 +72,6 @@ prompt is exploratory, and the plan-based cases leave live execution untested.
 Portable repository validation ran 215 tests with one platform-specific skip.
 The trace parser regression exercised batched reads, metadata-only reads,
 failed reads, file listings, and the completion event.
+
+See the [paired unslop evaluation](unslop-evaluation.md) for the follow-up on
+writing and incidental technical replies.
