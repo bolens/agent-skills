@@ -1,0 +1,92 @@
+[
+  {
+    "id": "rive",
+    "skill": "animation-assets",
+    "prompt": "A .riv checkout success animation appears, but its complete input sometimes does nothing after the checkout component unmounts and mounts again. Give me a focused implementation and verification plan. Work from the symptom and list what you would verify in the asset and player.",
+    "outcome": "Inspect actual Rive state machine and inputs, identify lifecycle or stale instance, suggest mount/unmount proof."
+  },
+  {
+    "id": "ci",
+    "skill": "ci-maintenance",
+    "prompt": "Our GitHub PR rules require Validate. The job is currently skipped for documentation-only changes, then those PRs sit waiting for a check forever. Design how to change the workflow and verify the result. Keep the existing check identity and outline the change only.",
+    "outcome": "Keep a job that reports the required identity on all applicable PRs, select expensive work within the run, verify policy and doc-only/code cases."
+  },
+  {
+    "id": "review",
+    "skill": "code-review",
+    "prompt": "Review this change read-only. A Go cache had Get return (nil, false) on expiry. This diff replaces that with return entry, false, but one caller ignores the second result and builds a response from entry when it is non-nil. Give an actionable finding based only on these facts.",
+    "outcome": "Identify stale data reaching caller, tie to change and propose a focused fix without editing or inventing source locations."
+  },
+  {
+    "id": "git",
+    "skill": "git-hygiene",
+    "prompt": "I have a five-month-old PR from another contributor. The base now appears to solve the same user complaint via a different component. I want to pick up this PR. What do you check before touching Git, and how do you preserve credit if we still need the work? Do not change refs.",
+    "outcome": "Check whether behavior is superseded before rebasing, preserve verified authorship/co-authorship, avoid ref changes."
+  },
+  {
+    "id": "architecture",
+    "skill": "improve-codebase-architecture",
+    "prompt": "Across our codebase, pricing policy is split among the checkout API, invoicing worker, and three UI components, each with its own rounding. Give a plan for auditing and ranking architectural improvements across this subsystem. Use only this scenario.",
+    "outcome": "Trace ownership and impact, rank evidence-backed changes, avoid choosing a redesign from the description alone."
+  },
+  {
+    "id": "config",
+    "skill": "managed-config-drift",
+    "prompt": "After an update, my live Linux app config behaves differently from its managed repo. ~/.config/app is a symlink and the package also ships defaults. Audit the possible drift and exact read-only inspection I should do to determine ownership. Do not inspect my real machine.",
+    "outcome": "Trace live symlink, managed source and packaged defaults, distinguish generated/legitimate drift, avoid real inspection or writes."
+  },
+  {
+    "id": "secrets",
+    "skill": "sensitive-info-audit",
+    "prompt": "Before making a previously private repo public, how should I review its commit history, tracked files, and diagnostic attachments for credentials or private data? Give a procedure. Do not inspect any real files or publish anything.",
+    "outcome": "Cover exact publication boundary including history and attachments, redaction, and verification without disclosure."
+  },
+  {
+    "id": "hooks",
+    "skill": "setup-pre-commit",
+    "prompt": "Set out how to add local commit-time formatting to a Python repo that already runs Ruff and pytest. It should check staged changes and let CI keep running the full suite. Give a plan only.",
+    "outcome": "Reuse repo tooling, handle staged/partially staged files, keep costly full suite in CI and include verification."
+  },
+  {
+    "id": "static-svg",
+    "skill": "svg-design",
+    "prompt": "Plan a static SVG icon family for a dashboard with a share, archive and download icon. All three need to share a stroke weight and grid and support per-theme color. Explain how to handle repeated inline instances and accessible names.",
+    "outcome": "Consistent grid/stroke, theming, repeated IDs if applicable, meaningful accessible name or decorative markup."
+  },
+  {
+    "id": "upstream",
+    "skill": "sync-skill-upstreams",
+    "prompt": "In agent-skills, a tracked fork's upstream branch moved. Describe how you would decide whether to import it, preserving our local changes and audited revision. No network requests or edits for this exercise.",
+    "outcome": "Compare pinned revision and actual subtree, preserve local changes and licenses, update audit pin only after validated import."
+  },
+  {
+    "id": "css-motion",
+    "skill": "web-animation",
+    "prompt": "I need a CSS page transition for a settings UI. Users can navigate twice before the first transition ends and can switch on reduced motion while the app is open. Give a focused implementation and verification plan.",
+    "outcome": "Handle interrupted navigation, reduced-motion changes, cleanup and verifiable final state."
+  },
+  {
+    "id": "native-dialog",
+    "skill": "web-standard",
+    "prompt": "Design a browser-native dialog for editing a saved name. Explain how opening, Escape, focus restore, and Back should interact. Identify what is native and what needs explicit integration. Give an implementation plan.",
+    "outcome": "Correctly distinguish showModal, Escape/cancel, focus restore and application history integration."
+  },
+  {
+    "id": "health",
+    "skill": "workstation-health-triage",
+    "prompt": "Since the last Linux update my desktop has intermittent pauses during video calls, builds and idle, and there is no known crashing process. Plan a short read-only triage session to isolate where the pauses come from. Do not inspect my machine.",
+    "outcome": "Broad bounded read-only collection, correlate timestamps across subsystems, narrow based on evidence."
+  },
+  {
+    "id": "explicit-ci",
+    "skill": "ci-maintenance",
+    "prompt": "Use $ci-maintenance. A repository changed a required job name and the old status is still required. Explain how to sequence the workflow and settings migration. Plan only.",
+    "outcome": "Preserve required gating through a sequenced transition, verify check names and settings, avoid changing host state."
+  },
+  {
+    "id": "negative",
+    "skill": null,
+    "prompt": "Convert 2 hours and 15 minutes to minutes. Reply with the number only.",
+    "outcome": "Answer 135 without loading unrelated skill instructions."
+  }
+]

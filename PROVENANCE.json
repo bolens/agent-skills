@@ -624,6 +624,24 @@
       }
     },
     {
+      "name": "evaluate-agent-workflows",
+      "hard_fork": true,
+      "origin": {
+        "type": "local-original",
+        "ref": "local://codex/skills/evaluate-agent-workflows",
+        "imported_from": "${CODEX_HOME:-$HOME/.codex}/skills/evaluate-agent-workflows"
+      },
+      "install_targets": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/evaluate-agent-workflows",
+        "${AGENTS_HOME:-$HOME/.agents}/skills/evaluate-agent-workflows",
+        "${CLAUDE_HOME:-$HOME/.claude}/skills/evaluate-agent-workflows"
+      ],
+      "optional_install_targets": {
+        "pi": "${PI_CODING_AGENT_DIR:-$HOME/.pi/agent}/skills/evaluate-agent-workflows",
+        "hermes": "${HERMES_HOME:-$HOME/.hermes}/skills/evaluate-agent-workflows"
+      }
+    },
+    {
       "name": "find-skills",
       "hard_fork": true,
       "origin": {

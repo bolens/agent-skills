@@ -24,6 +24,7 @@ specialized workflows.
 | Task | Start here |
 | --- | --- |
 | Evaluate skill additions or review upstream changes | [find-skills](skills/find-skills/SKILL.md), [sync-skill-upstreams](skills/sync-skill-upstreams/SKILL.md) |
+| Compare how agents select skills and complete tasks | [evaluate-agent-workflows](skills/evaluate-agent-workflows/SKILL.md) |
 | Coordinate concurrent agents, branches, and worktrees | [git-hygiene](skills/git-hygiene/SKILL.md) |
 | Audit repositories and carry shared fixes across the fleet | [audit-repo-fleet](skills/audit-repo-fleet/SKILL.md) |
 | Build or improve CI and reusable workflow contracts | [ci-maintenance](skills/ci-maintenance/SKILL.md) |
