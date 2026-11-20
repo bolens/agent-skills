@@ -1,6 +1,6 @@
 ---
 name: sensitive-info-audit
-description: Audit a repository, patch, diagnostic bundle, or publication candidate for secrets and privacy-sensitive information before sharing, pushing, publishing, or making it public. Use when public exposure is planned or the user asks for a secret, credential, PII, privacy, or sensitive-data review. Report and redact findings safely; do not print secret values or rewrite history without explicit authorization.
+description: Scan a repo, patch, or bundle for secrets and private data before sharing or when requested. Report findings with sensitive values redacted.
 ---
 
 # Sensitive information audit

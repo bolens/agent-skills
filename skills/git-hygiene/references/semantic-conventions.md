@@ -19,7 +19,9 @@ migration details in the body. A breaking change can have any type.
 Apply the same format to PR titles as this collection's naming default. Write
 the title from the complete final diff and revise it when scope changes.
 For example, `fix(parser): retain empty fields` or
-`feat(config)!: require explicit profiles`. Keep PR descriptions readable prose.
+`feat(config)!: require explicit profiles`. Open the PR description with the problem or desired outcome.
+Explain the behavioral change and the check that demonstrates it. Include
+implementation detail when it helps the reviewer judge the change.
 
 Inspect what the merge strategy and release parser actually consume. Before
 squash merge, verify the final commit subject and body retain the intended type,

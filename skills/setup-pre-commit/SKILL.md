@@ -1,6 +1,6 @@
 ---
 name: setup-pre-commit
-description: Set up or improve repository pre-commit checks using the project's existing language, package manager, formatter, linter, type checker, and tests. Use when the user asks for pre-commit hooks, staged-file checks, commit-time validation, Husky, pre-commit, Lefthook, or similar tooling in Node, Python, Go, Rust, shell, or mixed repositories.
+description: Set up or improve local Git hooks and staged-file checks using the repo’s existing tools. Covers Husky, pre-commit, and Lefthook.
 ---
 
 # Set Up Pre-Commit Checks

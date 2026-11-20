@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: Perform an evidence-led, read-only review of a branch, pull request, commit, staged changes, or working-tree diff. Trace affected callers and contracts to find correctness, security, compatibility, lifecycle, test, and delivery regressions. Use for code or diff review; use improve-codebase-architecture for a broad architecture survey.
+description: Review a PR, branch, commit, or local diff for regressions. Trace affected callers and contracts and return evidence-backed findings. Keep the review read-only.
 ---
 
 # Code review

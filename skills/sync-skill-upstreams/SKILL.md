@@ -1,6 +1,6 @@
 ---
 name: sync-skill-upstreams
-description: Audit and update externally sourced skills maintained as hard forks while preserving local customizations, provenance, invocation policy, and validation. Use when checking specialized skills for upstream changes, reviewing an upstream skill release, or importing audited upstream work into the personal agent-skills repository. Do not auto-merge unattended updates.
+description: Check upstream revisions or import reviewed changes into agent-skills hard forks. Preserve local changes, licenses, and invocation policy.
 ---
 
 # Sync skill upstreams

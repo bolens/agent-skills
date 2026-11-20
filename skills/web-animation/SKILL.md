@@ -1,6 +1,6 @@
 ---
 name: web-animation
-description: Design, implement, debug, and verify interface motion, timelines, scroll choreography, gestures, and page transitions using CSS, WAAPI, GSAP, Motion for React (formerly Framer Motion), Anime.js, or framework-native transitions. Use for web animation work, not static visual design or video rendering. Route Lottie and Rive assets to animation-assets and SVG geometry to svg-animation.
+description: Implement or debug web motion, including transitions, gestures, and scroll effects. Use animation-assets for Lottie or Rive and svg-animation for SVG geometry.
 ---
 
 # Web animation

@@ -1,13 +1,17 @@
 ---
 name: unslop
-description: Remove AI-generated writing tells from all user-facing prose. Apply this strict final editing pass to every response and written artifact while preserving exact code, quotations, required formats, and technical meaning.
+description: Draft or edit reader-facing prose when writing is the requested deliverable, such as a README, PR description, announcement, or email. Use for rewrites and copy edits that need clearer, more natural wording.
 ---
 
 # Unslop
 
-Make the writing sound authored. AI residue is a defect. Remove it before sending any user-facing prose.
+Use this editing pass when the user asks for a prose draft, rewrite, or style
+review, invokes the skill by name, or an active workflow calls for it on a
+specific artifact. Routine answers, progress updates, and prose incidental to
+code, diagnosis, or verification use the task's normal writing guidance.
 
-This rule is strict. Do not soften it into optional style advice. Preserve exact code, identifiers, commands, error text, quotations, citations, legal language, and user-mandated formats. Everywhere else, rewrite aggressively.
+Cut generic phrasing while preserving exact code, identifiers, commands, errors,
+quotations, citations, legal language, technical meaning, and required formats.
 
 ## Final pass
 
@@ -17,7 +21,8 @@ This rule is strict. Do not soften it into optional style advice. Preserve exact
 4. Vary sentence length naturally. Break any sentence that makes the reader backtrack.
 5. Read the result as a skeptical human. Rewrite anything that sounds generated, promotional, bloodless, or over-arranged.
 
-Do not announce this pass. Return only the cleaned writing.
+For a rewrite, return the edited text in the requested format. Include critique
+or a change summary when the user asks for one.
 
 ## Hard bans
 

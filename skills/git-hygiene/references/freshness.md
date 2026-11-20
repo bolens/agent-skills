@@ -59,6 +59,20 @@ queue or tested synthetic-merge contract when that owns integration. Record the
 head and base actually tested rather than promise an impossible permanently
 latest state. Keep [babysit](../../babysit/SKILL.md) as the delivery coordinator.
 
+## When reviving an older PR
+
+Recover the original goal from the PR, linked issue, and review history. Check
+whether the current base already delivers it or moved the behavior to another
+owner. If the goal is already covered, report the evidence before spending
+time on a rebase. If it still matters but the implementation no longer fits,
+identify the smallest rework and carry it out when the request covers it.
+
+For an authorized rebase, compare the original and rebased commit ranges
+with `git range-diff`. Inspect the final aggregate diff and run checks for the
+behavior the PR is meant to preserve. When taking over someone else's branch,
+keep their commit authorship and co-author trailers. If the repository squashes,
+carry verified contributor credit into the proposed squash message.
+
 ## When the feature is complete
 
 For local-only work, leave the committed feature intact and report its relation

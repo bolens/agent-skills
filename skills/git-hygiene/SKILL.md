@@ -1,6 +1,6 @@
 ---
 name: git-hygiene
-description: Coordinate Git writes, worktree isolation, focused commits, and integration for concurrent agents across repository surfaces. Use for shared-checkout work, parallel implementation, mixed staged changes, branch handoffs, PR freshness checks, or post-merge synchronization and cleanup. Commit-message-only requests and read-only reviews keep their own workflows.
+description: Coordinate Git writes across agents or worktrees. Use for mixed staged changes, branch freshness, scoped commits, integration, or post-merge cleanup.
 ---
 
 # Git hygiene for concurrent agents
@@ -20,19 +20,16 @@ git diff --cached --stat
 git worktree list --porcelain
 ```
 
-Inspect full diffs for paths the task may touch. Treat existing changes as owned by someone else until their purpose is established. A clean status does not prove no other agent is working. Confirm assignments through the available coordination channel. Stop mutations on an unexpected HEAD change, overlapping edits, or an operation owned by another task, while continuing independent inspection.
+Inspect diffs for paths the task may touch and preserve existing work. When
+another writer is active, confirm ownership with them before touching overlapping
+paths. Pause affected writes on an unexpected HEAD change, overlapping edits, or
+another writer's Git operation. Continue independent inspection.
 
-Record assignments in the existing task channel or repository convention:
-
-| Field | Required information |
-|---|---|
-| Identity | Task, owner, repository root, worktree, branch, base SHA |
-| Write scope | Owned paths, shared paths, and excluded paths |
-| Dependencies | Producer/consumer contracts and prerequisite revisions |
-| Verification | Relevant checks, generated outputs, isolated test resources |
-| Handoff | Integration owner, expected commit or patch, remaining work |
-
-Assign shared manifests, lockfiles, schemas, migrations, generated clients, root configuration, and changelogs explicitly. Separate directories can still share a contract. Give each shared file one writer at a time. Agree on interface changes before consumers depend on them. Workers request a scope change before editing outside their assignment.
+For a shared checkout or handoff, record the worktree, branch, base SHA, owned
+paths, dependencies, verification, and expected commit in the existing task
+channel or repository convention. Give shared manifests, lockfiles, generated
+files, and root configuration one writer at a time. Agree on interface changes
+before consumers depend on them.
 
 For work with several dependent units or a failed handoff, use [work-unit dependencies and correction](references/work-units.md). Identify assignment attempts and confirm cancellation cleanup before reassigning resources. Define acceptance evidence before assignment, preserve unaffected accepted work, and return failures to their responsible owner. This applies to serial coordination too and does not grant permission to delegate. Follow its [task transitions](references/work-units.md#continue-through-the-requested-endpoint) when moving between implementation, checks, and authorized delivery.
 
