@@ -199,6 +199,38 @@ def lock_catalogs(stack, homes, apply):
             raise
 
 
+def replace_directory(target: Path, source: Path, previous, row: dict) -> None:
+    """Preserve the previous directory until the replacement link is in place."""
+    staging = Path(tempfile.mkdtemp(prefix='.agent-skills-link-', dir=target.parent))
+    backup = staging / 'previous'
+    try:
+        if snapshot(target) != previous:
+            raise ValueError(f'target changed during replacement: {target}')
+        target.rename(backup)
+    except (OSError, ValueError):
+        staging.rmdir()
+        raise
+
+    try:
+        target.symlink_to(source, target_is_directory=True)
+    except (OSError, KeyboardInterrupt) as install_error:
+        try:
+            if snapshot(target) is not None:
+                raise FileExistsError(f'target is occupied: {target}')
+            backup.rename(target)
+        except OSError as restore_error:
+            raise OSError(
+                f'could not install {target}: {install_error}. '
+                f'Could not restore the original directory: {restore_error}. '
+                f'The original directory is saved at {backup}'
+            ) from restore_error
+        staging.rmdir()
+        raise
+
+    row['applied'] = True
+    shutil.rmtree(staging)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     mode = parser.add_mutually_exclusive_group(required=True)
@@ -229,9 +261,13 @@ def main() -> int:
                 for (target, source, previous), row in zip(changes, report['changes']):
                     if snapshot(target) != previous:
                         raise ValueError(f'target changed after preflight; stopping: {target}')
-                    if target.is_symlink():
-                        # Build the replacement before touching the old link. The
-                        # temporary directory is on the destination filesystem.
+                    if previous is None:
+                        target.symlink_to(source, target_is_directory=True)
+                        row['applied'] = True
+                    elif target.is_dir() and not target.is_symlink():
+                        replace_directory(target, source, previous, row)
+                    else:
+                        # Create the candidate before atomically replacing a file or symlink.
                         with tempfile.TemporaryDirectory(prefix='.agent-skills-link-', dir=target.parent) as directory:
                             candidate = Path(directory) / 'link'
                             candidate.symlink_to(source, target_is_directory=True)
@@ -239,14 +275,6 @@ def main() -> int:
                                 raise ValueError(f'target changed during replacement: {target}')
                             os.replace(candidate, target)
                             row['applied'] = True
-                        continue
-                    elif target.exists():
-                        if target.is_dir():
-                            shutil.rmtree(target)
-                        else:
-                            target.unlink()
-                    target.symlink_to(source, target_is_directory=True)
-                    row['applied'] = True
     except BlockingIOError as error:
         report['issues'].append(issue('busy', str(error)))
     except (OSError, ValueError, RuntimeError) as error:

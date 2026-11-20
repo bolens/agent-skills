@@ -47,5 +47,6 @@ runtime proof. A topic without an implementation stays explicitly unimplemented.
 
 - [Editor setup](../.vscode/README.md)
 - [Skill workflow audit, 2026-09-07](audits/2026-09-07-skill-workflows.md)
+- [GPT-6.2 and upstream skill audit, 2026-11-17](audits/2026-11-17-model-and-upstream-review.md)
 
 - [Woodpecker portable CI handoff](woodpecker-transition.md)

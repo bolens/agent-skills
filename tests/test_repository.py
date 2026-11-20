@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -76,6 +77,34 @@ class RepositoryContract(unittest.TestCase):
             for home in ("agents", "claude"):
                 for entry in self.manifest["skills"]:
                     self.assertTrue((root / home / "skills" / entry["name"]).is_symlink())
+
+    def test_syntax_validation_skips_local_dependencies_but_checks_owned_files(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            scripts = root / "scripts"
+            scripts.mkdir()
+            (root / "skills").mkdir()
+            (root / "PROVENANCE.json").write_text('{"skills": []}')
+            (root / "UPSTREAMS.json").write_text('{"skills": {}}')
+            for name in ("validate.py", "skill_metadata.py"):
+                shutil.copyfile(ROOT / "scripts" / name, scripts / name)
+            for relative_path, contents in (
+                (".venv/dependency.py", "def broken("),
+                (".devenv.local/node_modules/package/setup.sh", "if"),
+                ("scripts/node_modules/package/index.js", "function ("),
+            ):
+                dependency = root / relative_path
+                dependency.parent.mkdir(parents=True, exist_ok=True)
+                dependency.write_text(contents)
+
+            command = [sys.executable, str(scripts / "validate.py")]
+            result = subprocess.run(command, capture_output=True, text=True, timeout=10)
+            self.assertEqual(0, result.returncode, result.stderr)
+
+            (scripts / "owned.py").write_text("def broken(")
+            result = subprocess.run(command, capture_output=True, text=True, timeout=10)
+            self.assertNotEqual(0, result.returncode)
+            self.assertIn("owned.py", result.stderr)
 
     def test_hook_installer_supports_linked_worktrees(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

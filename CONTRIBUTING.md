@@ -126,8 +126,10 @@ The hook runs the fast gate only. It does not replace the full delivery check.
 Use [sync-skill-upstreams](skills/sync-skill-upstreams/SKILL.md) for imports.
 `python3 scripts/audit-upstreams.py` queries upstream branch tips and reports
 whether they differ from the audited revisions. It does not import changes or
-establish that a candidate is compatible. `--check` also returns failure when
-an update is available. Lookup errors are reported separately.
+establish that a candidate is compatible. Each Git lookup has a 30-second
+timeout and runs without terminal prompts. A failed lookup is reported for each
+affected skill while other remotes are still checked. `--check` also returns
+failure when an update is available.
 
 The comparison is tip equality, not an ancestry or subtree-diff check. A different
 tip may be unrelated to the imported path or reflect rewritten history. Exit 0

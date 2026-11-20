@@ -1,7 +1,9 @@
+import http.client
 import importlib.util
 import json
 from pathlib import Path
 import unittest
+import urllib.error
 
 spec = importlib.util.spec_from_file_location('handoff', Path(__file__).resolve().parents[1] / 'scripts/wait-for-woodpecker.py')
 handoff = importlib.util.module_from_spec(spec)
@@ -119,6 +121,94 @@ class Handoff(unittest.TestCase):
             handoff.wait(lambda: (data, history), SHA, CONTEXT, clock=lambda: clock[0],
                          sleep=lambda seconds: clock.__setitem__(0, clock[0] + seconds), timeout=16)
         self.assertEqual(clock[0], 16)
+
+    def test_transient_read_uses_a_fresh_pair_before_accepting_success(self):
+        responses = iter([http.client.RemoteDisconnected('connection closed'),
+                          pair('pending'), pair('success')])
+        clock = [0]
+        reads = []
+
+        def read():
+            reads.append(clock[0])
+            response = next(responses)
+            if isinstance(response, Exception):
+                raise response
+            return response
+
+        handoff.wait(read, SHA, CONTEXT, clock=lambda: clock[0],
+                     sleep=lambda seconds: clock.__setitem__(0, clock[0] + seconds), timeout=45)
+        self.assertEqual(reads, [0, 15, 30])
+
+    def test_narrow_socket_failures_and_wrappers_use_the_same_deadline(self):
+        for error in [http.client.RemoteDisconnected('closed'), ConnectionResetError('reset'),
+                      TimeoutError('timed out'),
+                      urllib.error.URLError(http.client.RemoteDisconnected('closed')),
+                      urllib.error.URLError(ConnectionResetError('reset')),
+                      urllib.error.URLError(TimeoutError('timed out'))]:
+            with self.subTest(error=repr(error)):
+                clock = [0]
+                reads = []
+
+                def read():
+                    reads.append(clock[0])
+                    raise error
+
+                with self.assertRaises(TimeoutError):
+                    handoff.wait(read, SHA, CONTEXT, clock=lambda: clock[0],
+                                 sleep=lambda seconds: clock.__setitem__(0, clock[0] + seconds),
+                                 timeout=31)
+                self.assertEqual(reads, [0, 15, 30])
+                self.assertEqual(clock[0], 31)
+
+    def test_fatal_lookup_errors_do_not_retry(self):
+        for error in [urllib.error.HTTPError('https://api.github.com/', 401, 'Unauthorized', {}, None),
+                      urllib.error.HTTPError('https://api.github.com/', 503, 'Unavailable', {}, None),
+                      urllib.error.URLError('certificate verification failed'),
+                      RuntimeError('unexpected GitHub API redirect'),
+                      json.JSONDecodeError('invalid JSON', '', 0)]:
+            with self.subTest(error=repr(error)), self.assertRaises(type(error)):
+                def read():
+                    raise error
+
+                handoff.wait(read, SHA, CONTEXT,
+                             sleep=lambda seconds: self.fail('fatal lookup must not retry'))
+            if isinstance(error, urllib.error.HTTPError):
+                error.close()
+
+    def test_malformed_or_wrong_identity_pair_does_not_retry(self):
+        for data, history in [(None, []), pair()]:
+            if data is not None:
+                history[0]['creator']['id'] = 42
+            with self.subTest(data=data), self.assertRaises((AttributeError, ValueError)):
+                handoff.wait(lambda: (data, history), SHA, CONTEXT,
+                             sleep=lambda seconds: self.fail('invalid pair must not retry'))
+
+    def test_transport_retry_does_not_hide_native_failure(self):
+        clock = [0]
+        reads = []
+
+        def read():
+            reads.append(clock[0])
+            if len(reads) == 1:
+                raise http.client.RemoteDisconnected('closed')
+            return pair('failure')
+
+        with self.assertRaisesRegex(RuntimeError, 'native validation failed'):
+            handoff.wait(read, SHA, CONTEXT, clock=lambda: clock[0],
+                         sleep=lambda seconds: clock.__setitem__(0, clock[0] + seconds), timeout=45)
+        self.assertEqual(reads, [0, 15])
+        self.assertEqual(clock[0], 15)
+
+    def test_success_finishing_after_deadline_is_rejected(self):
+        clock = [0]
+
+        def read():
+            clock[0] = 31
+            return pair('success')
+
+        with self.assertRaises(TimeoutError):
+            handoff.wait(read, SHA, CONTEXT, clock=lambda: clock[0], timeout=30,
+                         sleep=lambda seconds: self.fail('expired read must not sleep'))
 
 
 if __name__ == '__main__':

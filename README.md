@@ -24,6 +24,7 @@ specialized workflows.
 | Task | Start here |
 | --- | --- |
 | Evaluate skill additions or review upstream changes | [find-skills](skills/find-skills/SKILL.md), [sync-skill-upstreams](skills/sync-skill-upstreams/SKILL.md) |
+| Compare how agents select skills and complete tasks | [evaluate-agent-workflows](skills/evaluate-agent-workflows/SKILL.md) |
 | Coordinate concurrent agents, branches, and worktrees | [git-hygiene](skills/git-hygiene/SKILL.md) |
 | Audit repositories and carry shared fixes across the fleet | [audit-repo-fleet](skills/audit-repo-fleet/SKILL.md) |
 | Build or improve CI and reusable workflow contracts | [ci-maintenance](skills/ci-maintenance/SKILL.md) |
@@ -122,8 +123,9 @@ for conflicts before creating missing links or repointing existing symlinks.
 It refuses existing files or directories unless `--replace` is supplied.
 `--replace` deletes those copies, so preserve any independent edits first.
 Installation applies to the registered collection, not an individual skill.
-Preflight conflicts prevent writes. An I/O failure or concurrent change during
-application can still leave a partial install. It reports obsolete repository-owned
+Preflight conflicts prevent writes. If a replacement link cannot be created,
+the installer restores the original directory or reports where it was saved if
+restoration fails. An I/O failure or concurrent change can leave a partial install. It reports obsolete repository-owned
 links and conflicting catalog names without removing independent entries.
 Inspect reported problems and rerun `--check` after resolving them.
 
@@ -166,8 +168,11 @@ zizmor. Woodpecker runs the [portable gate](.woodpecker/portable.yml) and select
 [GitHub CI](.github/workflows/ci.yml) selects Archify jobs for relevant PR paths,
 including provenance changes; automated checks join the full native harness,
 while manual and scheduled CI retain the hosted runtime shards. Its
-weekly schedule also retains the portable environment check. [Source lint](.github/workflows/source-lint.yml) separately calls
-shared source and workflow-security checks. See [RELEASING.md](RELEASING.md) for
+weekly schedule also retains the portable environment check. The native
+[repository lane](.woodpecker/repository.yml) runs shared source, workflow-security
+and managed Spec Kit checks through `bash scripts/ci/check-policy.sh`. The
+duplicate hosted [Source lint](.github/workflows/source-lint.yml) workflow is
+disabled and remains tracked for rollback. See [RELEASING.md](RELEASING.md) for
 the complete merge gate and local reproduction requirements.
 
 Read [CONTRIBUTING.md](CONTRIBUTING.md) before editing and

@@ -1,6 +1,6 @@
 ---
 name: improve-codebase-architecture
-description: Audit a repository or broad subsystem for architectural friction, then rank evidence-backed improvement opportunities. Use for architecture reviews, technical-debt surveys, or requests to decide what structural work matters next. For a known interface or refactor that needs concrete design options, use codebase-design instead.
+description: Audit a codebase or broad subsystem for architectural friction and rank improvements. Use codebase-design for a specific design decision.
 ---
 
 # Improve Codebase Architecture

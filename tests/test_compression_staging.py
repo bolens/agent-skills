@@ -13,7 +13,7 @@ SPEC = importlib.util.spec_from_file_location('caveman_fixture', SCRIPTS / '__in
 PACKAGE = importlib.util.module_from_spec(SPEC)
 sys.modules[SPEC.name] = PACKAGE
 SPEC.loader.exec_module(PACKAGE)
-from caveman_fixture import compress
+compress = importlib.import_module("caveman_fixture.compress")
 
 
 class CompressionStagingTests(unittest.TestCase):

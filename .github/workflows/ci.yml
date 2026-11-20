@@ -146,7 +146,8 @@ jobs:
 
   validate:
     needs: [changes, archify, archify-browser, symlinks-macos]
-    if: always()
+    # Keep failed/skipped dependency checks, but let superseded runs cancel.
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
     permissions:

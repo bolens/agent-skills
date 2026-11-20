@@ -67,6 +67,10 @@ native `repository` lane runs the same language lint and workflow-security polic
 as the disabled hosted Source lint workflow retained in source for rollback. Verify
 current host protection settings as well as the committed workflows; YAML alone
 does not establish which status names the host requires.
+The native-status join retries transient HTTPS disconnects within its existing
+deadline. Each retry reads a fresh combined status and history pair. Native
+failures, invalid identities, authentication errors and malformed responses still
+fail the gate.
 Require applicable GitHub and Woodpecker checks on the current PR head. New commits or a base refresh
 need checks for that updated state. A green run on an older head or a queued
 merge is not completion evidence.
@@ -189,7 +193,13 @@ HTTPS access. It uses temporary files and requires no secrets or installed skill
 Source/workflow policy now runs in Woodpecker. Duplicate GitHub policy workflows
 are disabled, including manual and scheduled execution, after verified cutover.
 Their tracked source remains available for rollback. The mixed
-Spec Kit workflow still runs its hosted read-only PR/push validation while this
-native integration is qualified on actual PR and genuine-main revisions. Its
-scheduled/manual updater remains on GitHub. Preserve all current check names and
-publication/platform boundaries during that qualification.
+Spec Kit workflow stays active for manual read-only validation and its
+scheduled/manual updater. Automatic PR/push validation is covered by the native
+repository-policy gate after exact-head PR and genuine-main acceptance.
+
+The repository maintainer reviews the validator pin during monthly dependency
+maintenance and whenever a shared-validator security fix is published. Review
+the immutable commit and SHA-256 together and require actual native validation
+on the updated source. Existing dependency automation does not monitor this
+embedded supplier pin. Preserve the current check names and publication/platform
+boundaries.
