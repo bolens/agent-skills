@@ -18,6 +18,14 @@ class AgentWorkflowTrace(unittest.TestCase):
             ("failed-read", "cat .agents/skills/blocked/SKILL.md", 1, heading.format("blocked") + "# Blocked"),
             ("listed", "rg --files -g SKILL.md", 0, ".agents/skills/listed/SKILL.md"),
             ("metadata-only", "head -4 .agents/skills/metadata/SKILL.md", 0, heading.format("metadata")),
+            ("composite", "cat notes.md; test -f skills/other/SKILL.md", 0, heading.format("other") + "# Notes"),
+            ("mismatched", "cat skills/foo/SKILL.md", 0, heading.format("unrelated") + "# Unrelated"),
+            (
+                "crlf-read",
+                '/bin/bash -lc "sed -n \'1,20p\' skills/windows/SKILL.md"',
+                0,
+                (heading.format("windows") + "# Windows\n").replace("\n", "\r\n"),
+            ),
             (
                 "batched-read",
                 "cat .agents/skills/{header,one,two}/SKILL.md",
@@ -44,7 +52,7 @@ class AgentWorkflowTrace(unittest.TestCase):
         self.assertEqual(
             {
                 "turn_status": "completed",
-                "skill_reads": {"one": "batched-read", "two": "batched-read"},
+                "skill_reads": {"one": "batched-read", "two": "batched-read", "windows": "crlf-read"},
                 "usage": {"output_tokens": 100},
             },
             json.loads(result.stdout),
